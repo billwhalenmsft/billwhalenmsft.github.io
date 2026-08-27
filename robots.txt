@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://billwhalenmsft.github.io/sitemap.xml

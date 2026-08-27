@@ -1,0 +1,1903 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bill Whalen builds practical AI systems, agent teams, Dynamics 365 accelerators, and tools people can launch and use.">
+  <meta name="author" content="Bill Whalen">
+  <meta name="theme-color" content="#b11f4b">
+  <link rel="canonical" href="https://billwhalenmsft.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bill Whalen | AI Systems Builder">
+  <meta property="og:description" content="Applied AI, agent systems, business applications, and launch-ready public projects.">
+  <meta property="og:url" content="https://billwhalenmsft.github.io/">
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/90707284?v=4">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Bill Whalen | AI Systems Builder">
+  <meta name="twitter:description" content="Applied AI, agent systems, business applications, and launch-ready public projects.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
+  <title>Bill Whalen | AI Systems Builder</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Bill Whalen",
+      "url": "https://billwhalenmsft.github.io/",
+      "image": "https://avatars.githubusercontent.com/u/90707284?v=4",
+      "jobTitle": "Technologist and AI Systems Builder",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Microsoft"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Minneapolis"
+      },
+      "sameAs": [
+        "https://github.com/billwhalenmsft",
+        "https://www.linkedin.com/in/williamjaywhalen/"
+      ],
+      "knowsAbout": [
+        "Artificial intelligence",
+        "AI agents",
+        "Microsoft Copilot",
+        "Dynamics 365",
+        "Power Platform",
+        "Dataverse",
+        "Azure",
+        "TypeScript",
+        "Model Context Protocol"
+      ]
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 6rem;
+    }
+
+    body {
+      min-width: 20rem;
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 12% 8%, var(--cp-accent-soft), var(--cp-bg) 26rem),
+        var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+      text-rendering: optimizeLegibility;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(to right, var(--cp-border) 1px, var(--cp-sheen) 1px),
+        linear-gradient(to bottom, var(--cp-border) 1px, var(--cp-sheen) 1px);
+      background-size: 4rem 4rem;
+      content: "";
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: var(--cp-accent-soft);
+    }
+
+    button {
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    svg {
+      display: block;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    ::selection {
+      background: var(--cp-highlight);
+      color: var(--cp-text);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--cp-accent);
+      outline-offset: 3px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 100;
+      padding: 0.65rem 0.85rem;
+      border-radius: 0.625rem;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font-weight: 700;
+      text-decoration: none;
+      transform: translateY(-160%);
+      transition: transform 160ms ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .shell {
+      width: min(100% - 2rem, 74rem);
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-bg-elevated);
+    }
+
+    .nav {
+      position: relative;
+      display: flex;
+      min-height: 4.5rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--cp-text);
+      font-weight: 760;
+      letter-spacing: -0.025em;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 2.25rem;
+      height: 2.25rem;
+      place-items: center;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 0.625rem;
+      background: var(--cp-text);
+      color: var(--cp-bg);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: -0.08em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-links a,
+    .mobile-panel a {
+      color: var(--cp-text-muted);
+      font-size: 0.92rem;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .mobile-panel a:hover {
+      color: var(--cp-accent);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .icon-button,
+    .menu-button {
+      display: inline-grid;
+      width: 2.5rem;
+      height: 2.5rem;
+      place-items: center;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      cursor: pointer;
+    }
+
+    .icon-button:hover,
+    .menu-button:hover {
+      border-color: var(--cp-border-strong);
+      background: var(--cp-surface-soft);
+    }
+
+    .menu-button {
+      display: none;
+    }
+
+    .mobile-panel {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      display: grid;
+      width: min(18rem, calc(100vw - 2rem));
+      gap: 0.25rem;
+      padding: 0.5rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-panel-strong);
+      box-shadow: var(--cp-shadow);
+    }
+
+    .mobile-panel a {
+      padding: 0.8rem;
+      border-radius: 0.625rem;
+    }
+
+    .mobile-panel a:hover {
+      background: var(--cp-accent-soft);
+    }
+
+    .hero {
+      display: grid;
+      min-height: calc(100vh - 4.5rem);
+      grid-template-columns: minmax(0, 1.18fr) minmax(18rem, 0.82fr);
+      align-items: center;
+      gap: clamp(2rem, 6vw, 5rem);
+      padding-block: clamp(4.5rem, 10vw, 8rem);
+    }
+
+    .eyebrow,
+    .section-kicker,
+    .code-label,
+    .card-label {
+      color: var(--cp-accent);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.78rem;
+      font-weight: 760;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .eyebrow::before {
+      width: 2rem;
+      height: 2px;
+      background: var(--cp-accent);
+      content: "";
+    }
+
+    .hero h1 {
+      max-width: 14ch;
+      margin-bottom: 1.5rem;
+      font-size: clamp(3.1rem, 7.4vw, 6.4rem);
+      font-weight: 820;
+      letter-spacing: -0.065em;
+    }
+
+    .hero h1 span {
+      color: var(--cp-accent);
+    }
+
+    .hero-copy {
+      max-width: 42rem;
+      margin-bottom: 2rem;
+      color: var(--cp-text-soft);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+    }
+
+    .hero-actions,
+    .section-actions,
+    .card-actions,
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 2.75rem;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.72rem 1rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font-weight: 720;
+      text-decoration: none;
+      transition:
+        transform 150ms ease,
+        border-color 150ms ease,
+        background 150ms ease;
+    }
+
+    .button:hover {
+      border-color: var(--cp-border-strong);
+      background: var(--cp-surface-soft);
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+
+    .button-primary:hover {
+      border-color: var(--cp-accent-hover);
+      background: var(--cp-accent-hover);
+    }
+
+    .button-quiet {
+      border-color: var(--cp-border);
+      background: var(--cp-bg-elevated);
+    }
+
+    .button-small {
+      min-height: 2.35rem;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.84rem;
+    }
+
+    .hero-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      margin: 2rem 0 0;
+      padding: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.88rem;
+      list-style: none;
+    }
+
+    .hero-proof li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .proof-dot {
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 50%;
+      background: var(--cp-success);
+    }
+
+    .profile-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border);
+    }
+
+    .profile-card::after {
+      position: absolute;
+      right: -4rem;
+      bottom: -5rem;
+      width: 13rem;
+      height: 13rem;
+      border: 2rem solid var(--cp-accent-soft);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+
+    .window-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-surface-soft);
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .window-dots span {
+      width: 0.52rem;
+      height: 0.52rem;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 50%;
+      background: var(--cp-border);
+    }
+
+    .window-title {
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.75rem;
+    }
+
+    .profile-body {
+      position: relative;
+      z-index: 1;
+      padding: clamp(1.35rem, 4vw, 2rem);
+    }
+
+    .identity {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .avatar {
+      width: 4.5rem;
+      height: 4.5rem;
+      flex: 0 0 auto;
+      border: 3px solid var(--cp-surface);
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px var(--cp-accent);
+      object-fit: cover;
+    }
+
+    .identity h2 {
+      margin-bottom: 0.25rem;
+      font-size: 1.5rem;
+    }
+
+    .identity p {
+      margin-bottom: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.92rem;
+    }
+
+    .profile-code {
+      display: grid;
+      gap: 0.75rem;
+      margin: 0;
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.86rem;
+    }
+
+    .profile-code div {
+      display: grid;
+      grid-template-columns: 6.5rem 1fr;
+      gap: 0.75rem;
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid var(--cp-border);
+    }
+
+    .profile-code div:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .profile-code dt {
+      color: var(--cp-text-muted);
+    }
+
+    .profile-code dd {
+      margin: 0;
+      color: var(--cp-text);
+    }
+
+    .online {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--cp-success);
+      font-weight: 700;
+    }
+
+    .online::before {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--cp-success);
+      content: "";
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    .section {
+      padding-block: clamp(4.5rem, 9vw, 7.5rem);
+      border-top: 1px solid var(--cp-border);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.65fr);
+      align-items: end;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-heading h2 {
+      max-width: 14ch;
+      margin: 0.55rem 0 0;
+      font-size: clamp(2.25rem, 5vw, 4.25rem);
+    }
+
+    .section-heading p {
+      margin-bottom: 0;
+      color: var(--cp-text-muted);
+      font-size: 1rem;
+    }
+
+    .project-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-chip {
+      min-height: 2.35rem;
+      padding: 0.5rem 0.8rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface);
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 680;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--cp-border-strong);
+    }
+
+    .filter-chip[aria-pressed="true"] {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+
+    .search-wrap {
+      position: relative;
+      width: min(18rem, 100%);
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      top: 50%;
+      left: 0.8rem;
+      color: var(--cp-text-muted);
+      pointer-events: none;
+      transform: translateY(-50%);
+    }
+
+    .project-search {
+      width: 100%;
+      min-height: 2.5rem;
+      padding: 0.55rem 0.75rem 0.55rem 2.55rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+    }
+
+    .project-search::placeholder {
+      color: var(--cp-text-muted);
+    }
+
+    .project-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      color: var(--cp-text-muted);
+      font-size: 0.82rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .project-card {
+      display: flex;
+      min-height: 23rem;
+      flex-direction: column;
+      padding: 1.25rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border);
+      transition:
+        transform 170ms ease,
+        border-color 170ms ease;
+    }
+
+    .project-card:hover {
+      border-color: var(--cp-border-strong);
+      transform: translateY(-4px);
+    }
+
+    .project-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-icon {
+      display: grid;
+      width: 2.75rem;
+      height: 2.75rem;
+      place-items: center;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .status::before {
+      width: 0.46rem;
+      height: 0.46rem;
+      border-radius: 50%;
+      background: var(--cp-border-strong);
+      content: "";
+    }
+
+    .status-live::before {
+      background: var(--cp-success);
+    }
+
+    .project-card h3 {
+      margin-bottom: 0.75rem;
+      font-size: 1.35rem;
+      letter-spacing: -0.035em;
+    }
+
+    .project-card p {
+      margin-bottom: 1.15rem;
+      color: var(--cp-text-muted);
+      font-size: 0.91rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0 0 1.25rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tags li,
+    .stack-list li {
+      padding: 0.28rem 0.52rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.68rem;
+    }
+
+    .card-actions {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--cp-border);
+    }
+
+    .no-results {
+      padding: 3rem 1rem;
+      border: 1px dashed var(--cp-border-strong);
+      border-radius: 16px;
+      color: var(--cp-text-muted);
+      text-align: center;
+    }
+
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .capability-card {
+      grid-column: span 4;
+      min-height: 17rem;
+      padding: 1.4rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border);
+    }
+
+    .capability-card-wide {
+      grid-column: span 8;
+    }
+
+    .capability-card-accent {
+      background: var(--cp-text);
+      color: var(--cp-bg);
+    }
+
+    .capability-card-accent .card-label,
+    .capability-card-accent p {
+      color: var(--cp-bg);
+    }
+
+    .capability-card h3 {
+      margin: 1.5rem 0 0.75rem;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+    }
+
+    .capability-card p {
+      margin-bottom: 0;
+      color: var(--cp-text-muted);
+    }
+
+    .system-flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .flow-step {
+      padding: 0.8rem 0.65rem;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 0.625rem;
+      color: var(--cp-bg);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.72rem;
+      text-align: center;
+    }
+
+    .flow-arrow {
+      color: var(--cp-accent);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .resume-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 1rem;
+    }
+
+    .about-panel,
+    .principles-panel {
+      padding: clamp(1.4rem, 4vw, 2.25rem);
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border);
+    }
+
+    .about-panel h2 {
+      margin: 0.55rem 0 1.25rem;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+    }
+
+    .about-panel p {
+      color: var(--cp-text-soft);
+      font-size: 1.02rem;
+    }
+
+    .about-panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    .principle-list {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .principle-list li {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 1rem;
+      padding-block: 1.3rem;
+      border-bottom: 1px solid var(--cp-border);
+    }
+
+    .principle-list li:first-child {
+      padding-top: 0;
+    }
+
+    .principle-list li:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .principle-number {
+      color: var(--cp-accent);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .principle-list h3 {
+      margin-bottom: 0.35rem;
+      font-size: 1.12rem;
+    }
+
+    .principle-list p {
+      margin-bottom: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.9rem;
+    }
+
+    .stack-panel {
+      margin-top: 1rem;
+      padding: 1.4rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-bg-elevated);
+    }
+
+    .stack-panel h3 {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      letter-spacing: -0.015em;
+    }
+
+    .stack-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .contact-card {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) auto;
+      align-items: center;
+      gap: 2rem;
+      padding: clamp(1.75rem, 6vw, 4rem);
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 16px;
+      background: var(--cp-text);
+      color: var(--cp-bg);
+    }
+
+    .contact-card::before {
+      position: absolute;
+      top: -6rem;
+      right: 8%;
+      width: 12rem;
+      height: 12rem;
+      border: 2rem solid var(--cp-accent);
+      border-radius: 50%;
+      content: "";
+      opacity: 0.38;
+      pointer-events: none;
+    }
+
+    .contact-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-card .section-kicker {
+      color: var(--cp-accent);
+    }
+
+    .contact-card h2 {
+      max-width: 17ch;
+      margin: 0.55rem 0 0.85rem;
+      font-size: clamp(2.3rem, 5vw, 4.5rem);
+    }
+
+    .contact-card p {
+      max-width: 43rem;
+      margin-bottom: 0;
+      color: var(--cp-bg);
+      opacity: 0.78;
+    }
+
+    .contact-card .button-quiet {
+      border-color: var(--cp-border-strong);
+      background: var(--cp-bg);
+      color: var(--cp-text);
+    }
+
+    .site-footer {
+      padding-block: 2rem;
+      border-top: 1px solid var(--cp-border);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      color: var(--cp-text-muted);
+      font-size: 0.8rem;
+    }
+
+    .footer-inner p {
+      max-width: 48rem;
+      margin-bottom: 0;
+    }
+
+    .footer-links {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 1rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--cp-accent);
+    }
+
+    dialog {
+      width: min(37rem, calc(100% - 2rem));
+      max-height: min(42rem, calc(100vh - 2rem));
+      margin: auto;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 16px;
+      background: var(--cp-panel-strong);
+      color: var(--cp-text);
+      box-shadow: var(--cp-shadow);
+    }
+
+    dialog::backdrop {
+      background: var(--cp-overlay);
+    }
+
+    .command-head {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem;
+      border-bottom: 1px solid var(--cp-border);
+    }
+
+    .command-search {
+      width: 100%;
+      border: 0;
+      background: var(--cp-panel-strong);
+      color: var(--cp-text);
+      outline: 0;
+    }
+
+    .key {
+      padding: 0.22rem 0.4rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.35rem;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.68rem;
+    }
+
+    .command-list {
+      display: grid;
+      max-height: 30rem;
+      gap: 0.25rem;
+      margin: 0;
+      padding: 0.55rem;
+      overflow-y: auto;
+      list-style: none;
+    }
+
+    .command-list a {
+      display: grid;
+      grid-template-columns: 2rem 1fr auto;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem;
+      border-radius: 0.625rem;
+      text-decoration: none;
+    }
+
+    .command-list a:hover,
+    .command-list a:focus {
+      background: var(--cp-accent-soft);
+    }
+
+    .command-list strong {
+      display: block;
+      font-size: 0.9rem;
+    }
+
+    .command-list span {
+      color: var(--cp-text-muted);
+      font-size: 0.75rem;
+    }
+
+    .command-icon {
+      display: grid;
+      width: 2rem;
+      height: 2rem;
+      place-items: center;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.5rem;
+      color: var(--cp-accent);
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.48;
+        transform: scale(0.82);
+      }
+    }
+
+    @media (max-width: 62rem) {
+      .hero {
+        min-height: auto;
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        max-width: 12ch;
+      }
+
+      .profile-card {
+        max-width: 38rem;
+      }
+
+      .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .capability-card,
+      .capability-card-wide {
+        grid-column: span 6;
+      }
+
+      .resume-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 46rem) {
+      html {
+        scroll-padding-top: 5rem;
+      }
+
+      .shell {
+        width: min(100% - 1.25rem, 74rem);
+      }
+
+      .nav {
+        min-height: 4rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .menu-button {
+        display: inline-grid;
+      }
+
+      .hero {
+        padding-block: 4rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.8rem, 15vw, 4.5rem);
+      }
+
+      .section {
+        padding-block: 4rem;
+      }
+
+      .section-heading {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .project-tools {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .search-wrap {
+        width: 100%;
+      }
+
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-card {
+        min-height: auto;
+      }
+
+      .capability-card,
+      .capability-card-wide {
+        grid-column: 1 / -1;
+        min-height: auto;
+      }
+
+      .system-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-arrow {
+        transform: rotate(90deg);
+      }
+
+      .contact-card {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Bill Whalen, home">
+        <span class="brand-mark" aria-hidden="true">BW</span>
+        <span>Bill Whalen</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#about">Resume</a>
+        <a href="#contact">Connect</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="icon-button" id="commandButton" type="button" aria-label="Open quick launch">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="icon-button" id="themeButton" type="button" aria-label="Switch theme">
+          <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation" aria-controls="mobileMenu" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-panel" id="mobileMenu" hidden>
+        <a href="#work">Work</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#about">Resume</a>
+        <a href="#contact">Connect</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" id="top" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">AI systems builder &middot; Microsoft technologist</p>
+        <h1 id="hero-title">I turn messy work into <span>tools people use.</span></h1>
+        <p class="hero-copy">
+          I design practical AI systems, agent teams, and business applications that move from idea to working proof fast - without giving up the human judgment that matters.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#work">
+            Launch something
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="button" href="https://github.com/billwhalenmsft" target="_blank" rel="noreferrer">
+            GitHub profile
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 5h11v11M19 5 5 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <ul class="hero-proof" aria-label="Profile highlights">
+          <li><span class="proof-dot" aria-hidden="true"></span>29 public repositories</li>
+          <li><span class="proof-dot" aria-hidden="true"></span>Minneapolis, Minnesota</li>
+          <li><span class="proof-dot" aria-hidden="true"></span>Human control by design</li>
+        </ul>
+      </div>
+
+      <aside class="profile-card" aria-label="Builder profile">
+        <div class="window-bar">
+          <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+          <span class="window-title">builder.profile</span>
+          <span class="online">shipping</span>
+        </div>
+        <div class="profile-body">
+          <div class="identity">
+            <img class="avatar" src="https://avatars.githubusercontent.com/u/90707284?v=4" alt="Bill Whalen" width="72" height="72">
+            <div>
+              <h2>Bill Whalen</h2>
+              <p>Applied AI + business systems</p>
+            </div>
+          </div>
+          <dl class="profile-code">
+            <div><dt>focus</dt><dd>practical AI</dd></div>
+            <div><dt>default</dt><dd>outcome first</dd></div>
+            <div><dt>interface</dt><dd>voice / web / agents</dd></div>
+            <div><dt>platforms</dt><dd>Copilot / D365 / Azure</dd></div>
+            <div><dt>guardrail</dt><dd>humans at consequential gates</dd></div>
+          </dl>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Selected public work</span>
+            <h2 id="work-title">Launch something useful.</h2>
+          </div>
+          <p>
+            Customer-neutral projects only. Internal systems and customer engagements stay off this page. Open a live prototype or go directly to the source.
+          </p>
+        </div>
+
+        <div class="project-tools">
+          <div class="filters" aria-label="Filter projects">
+            <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-chip" type="button" data-filter="live" aria-pressed="false">Live</button>
+            <button class="filter-chip" type="button" data-filter="ai" aria-pressed="false">Agents + AI</button>
+            <button class="filter-chip" type="button" data-filter="business" aria-pressed="false">Business apps</button>
+            <button class="filter-chip" type="button" data-filter="open" aria-pressed="false">Open source</button>
+            <button class="filter-chip" type="button" data-filter="personal" aria-pressed="false">Personal lab</button>
+          </div>
+          <label class="search-wrap">
+            <span class="sr-only">Search projects</span>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/>
+              <path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <input class="project-search" id="projectSearch" type="search" placeholder="Search projects" autocomplete="off">
+          </label>
+        </div>
+
+        <div class="project-meta-row" aria-live="polite">
+          <span id="projectCount">9 projects</span>
+          <a href="https://github.com/billwhalenmsft?tab=repositories" target="_blank" rel="noreferrer">View every public repository &rarr;</a>
+        </div>
+
+        <div class="project-grid" id="projectGrid">
+          <article class="project-card" data-tags="live ai business">
+            <div class="project-card-top">
+              <span class="project-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 5h16v14H4zM4 10h16M9 10v9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="status status-live">Live prototype</span>
+            </div>
+            <h3>Freight Triage Control Tower</h3>
+            <p>Turns flagged shipment email into owned, SLA-backed triage work with queues, item detail, aging, and resolution views.</p>
+            <ul class="tags">
+              <li>Power Apps</li><li>Dataverse</li><li>Copilot Studio</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button button-primary button-small" href="https://billwhalenmsft.github.io/freight-triage-control-tower/" target="_blank" rel="noreferrer">Launch</a>
+              <a class="button button-small" href="https://github.com/billwhalenmsft/freight-triage-control-tower" target="_blank" rel="noreferrer">Source</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-tags="live ai open">
+            <div class="project-card-top">
+              <span class="project-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M8 4h8l4 4v8l-4 4H8l-4-4V8zM9 9h.01M15 9h.01M8.5 15c1-1 2.17-1.5 3.5-1.5s2.5.5 3.5 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="status status-live">Live game</span>
+            </div>
+            <h3>Prompt Escape</h3>
+            <p>A multiplayer prompt-engineering escape room that turns clearer instructions, constraints, and creativity into a playable team challenge.</p>
+            <ul class="tags">
+              <li>TypeScript</li><li>GitHub Copilot</li><li>AI learning</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button button-primary button-small" href="https://prompt-escape-hackfest.azurewebsites.net/" target="_blank" rel="noreferrer">Play</a>
+              <a class="button button-small" href="https://github.com/billwhalenmsft/PromptEscape" target="_blank" rel="noreferrer">Source</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-tags="ai business open">
+            <div class="project-card-top">
+              <span class="project-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 18V8l7-4 7 4v10M8 20v-7h8v7M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="status">MIT accelerator</span>
+            </div>
+            <h3>SellerSphere</h3>
+            <p>A voice-first seller reference for Dynamics 365, Copilot Studio, Microsoft 365 context, and Azure AI Speech with clear implementation guardrails.</p>
+            <ul class="tags">
+              <li>Dynamics 365</li><li>Copilot Studio</li><li>Azure AI Speech</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button button-primary button-small" href="https://github.com/billwhalenmsft/sellersphere-partner-accelerator" target="_blank" rel="noreferrer">Explore kit</a>
+              <a class="button button-small" href="https://billwhalenmsft.github.io/sellersphere-partner-accelerator/" target="_blank" rel="noreferrer">Release page</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-tags="ai open">
+            <div class="project-card-top">
+              <span class="project-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 4v4m0 8v4M4 12h4m8 0h4M7 7l2.5 2.5m5 5L17 17m0-10-2.5 2.5m-5 5L7 17M12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="status">Starter kit</span>
+            </div>
+            <h3>Agent Team Starter Kit</h3>
+            <p>A configurable agent team using GitHub Issues as the work queue, specialized personas, outcome gates, Azure Functions, and OpenAI.</p>
+            <ul class="tags">
+              <li>Multi-agent</li><li>GitHub Actions</li><li>Azure</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button button-primary button-small" href="https://github.com/billwhalenmsft/agent-team-starter-kit" target="_blank" rel="noreferrer">Open kit</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-tags="business open">
+            <div class="project-card-top">
+              <span class="project-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/>
+                  <circle cx="16.5" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+                  <path d="M3.5 19c.5-3.2 2-5 4.5-5s4 1.8 4.5 5M13 18.5c.4-2.4 1.57-3.7 3.5-3.7 1.93 0 3.1 1.3 3.5 3.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="status">Community solution</span>
+            </div>
+            <h3>Customer 360 for Entities</h3>
+            <p>An adaptive D365 and Dataverse web resource that unifies cases, orders, entitlements, contacts, and operational context on core forms.</p>
+            <ul class="tags">
+              <li>Dynamics 365</li><li>Dataverse</li><li>JavaScript</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button button-primary button-small" href="https://github.com/billwhalenmsft/customer-360-for-entities" target="_blank" rel="noreferrer">View solution</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-tags="personal open">
+            <div class="project-card-top">
+              <span class="project-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="m4 11 8-7 8 7M6.5 10v10h11V10M9 20v-6h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="status">Personal lab</span>
+            </div>
+            <h3>Home Assistant Estate Panel</h3>
+            <p>A local-first React control surface and migration playbook for replacing a subscription smart-home stack with Home Assistant.</p>
+            <ul class="tags">
+              <li>React</li><li>TypeScript</li><li>Local first</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button button-primary button-small" href="https://github.com/billwhalenmsft/react-for-home-assistant" target="_blank" rel="noreferrer">Explore build</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-tags="ai business open">
+            <div class="project-card-top">
+              <span class="project-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 4h10v4H7zM5 8h14v12H5zM8 13h8M8 16h5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="status">Community accelerator</span>
+            </div>
+            <h3>Warranty + Claims Operations</h3>
+            <p>A Power Platform starter with Copilot Studio agents, Canvas Apps, flows, and Dataverse tables for warranty and claims workflows.</p>
+            <ul class="tags">
+              <li>Power Platform</li><li>Copilot Studio</li><li>Dataverse</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button button-primary button-small" href="https://github.com/billwhalenmsft/warranty-claim-operations-powerplatform" target="_blank" rel="noreferrer">Open accelerator</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-tags="ai business open">
+            <div class="project-card-top">
+              <span class="project-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 17.5V10a7 7 0 0 1 14 0v7.5M5 14H3v4h4v-4H5Zm14 0h2v4h-4v-4h2ZM9 20h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="status">Hackathon prototype</span>
+            </div>
+            <h3>Deal to Glory</h3>
+            <p>A voice-first multi-agent flow that turns a spoken seller update into structured CRM, attainment, and recognition actions using synthetic data.</p>
+            <ul class="tags">
+              <li>Multi-agent</li><li>Voice</li><li>TypeScript</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button button-primary button-small" href="https://github.com/billwhalenmsft/agents-league-deal-to-glory" target="_blank" rel="noreferrer">View prototype</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-tags="ai open">
+            <div class="project-card-top">
+              <span class="project-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M8 7.5A3.5 3.5 0 1 1 11.5 11H8a3.5 3.5 0 1 0 3.5 3.5V11M16 7.5A3.5 3.5 0 1 0 12.5 11H16a3.5 3.5 0 1 1-3.5 3.5V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="status">Hands-on lab</span>
+            </div>
+            <h3>Copilot Studio + MCP Lab</h3>
+            <p>A hands-on MCP server lab showing how to deploy a tool and connect it to both GitHub Copilot and Microsoft Copilot Studio.</p>
+            <ul class="tags">
+              <li>MCP</li><li>Copilot Studio</li><li>Azure</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button button-primary button-small" href="https://github.com/billwhalenmsft/jokeservermcp" target="_blank" rel="noreferrer">Start lab</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="no-results" id="noResults" hidden>
+          No projects match that filter. Try another category or clear the search.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="capabilities" aria-labelledby="capabilities-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Builder profile</span>
+            <h2 id="capabilities-title">From rough idea to working system.</h2>
+          </div>
+          <p>
+            I work across the whole path: framing the outcome, shaping the architecture, building the interface, wiring the platform, and making the handoff usable.
+          </p>
+        </div>
+
+        <div class="capability-grid">
+          <article class="capability-card capability-card-wide capability-card-accent">
+            <span class="card-label">01 / Agentic systems</span>
+            <h3>Agents that do work, not just chat.</h3>
+            <p>Orchestration, tools, grounding, MCP, evaluation, feedback loops, and explicit human gates.</p>
+            <div class="system-flow" aria-label="Agent system flow">
+              <span class="flow-step">signal</span>
+              <span class="flow-arrow" aria-hidden="true">&rarr;</span>
+              <span class="flow-step">reason + act</span>
+              <span class="flow-arrow" aria-hidden="true">&rarr;</span>
+              <span class="flow-step">review</span>
+              <span class="flow-arrow" aria-hidden="true">&rarr;</span>
+              <span class="flow-step">outcome</span>
+            </div>
+          </article>
+
+          <article class="capability-card">
+            <span class="card-label">02 / Business apps</span>
+            <h3>AI inside the flow of work.</h3>
+            <p>Dynamics 365, Dataverse, Power Apps, Power Automate, and Copilot Studio experiences grounded in real operational jobs.</p>
+          </article>
+
+          <article class="capability-card">
+            <span class="card-label">03 / Product craft</span>
+            <h3>Make the idea tangible.</h3>
+            <p>Responsive prototypes, voice-first interfaces, control towers, web resources, and demo systems people can test instead of imagine.</p>
+          </article>
+
+          <article class="capability-card capability-card-wide">
+            <span class="card-label">04 / Operating design</span>
+            <h3>Build the control plane around the model.</h3>
+            <p>Clear ownership, evidence, observability, security boundaries, portable skills, and reviewable actions turn one-off AI moments into reliable ways of working.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="shell">
+        <div class="resume-grid">
+          <article class="about-panel">
+            <span class="section-kicker">Digital resume</span>
+            <h2 id="about-title">Technologist. Builder. Systems thinker.</h2>
+            <p>
+              I am Bill Whalen, a Minneapolis-based technologist at Microsoft. I work at the seam between people, AI, and business systems: finding a stubborn workflow, framing the real outcome, and making the idea tangible enough to test.
+            </p>
+            <p>
+              The artifact might be a multi-agent team, a Dynamics 365 accelerator, a voice-first interface, an operating system for field work, or a game. The common thread is practical: working software, clear boundaries, and an adoption path.
+            </p>
+          </article>
+
+          <article class="principles-panel" aria-labelledby="principles-title">
+            <span class="section-kicker">How I work</span>
+            <h2 class="sr-only" id="principles-title">Working principles</h2>
+            <ol class="principle-list">
+              <li>
+                <span class="principle-number">01</span>
+                <div><h3>Start with the outcome.</h3><p>Define what changes for the person doing the work before choosing the model or platform.</p></div>
+              </li>
+              <li>
+                <span class="principle-number">02</span>
+                <div><h3>Build the proof.</h3><p>A working prototype creates better decisions than another round of abstract architecture.</p></div>
+              </li>
+              <li>
+                <span class="principle-number">03</span>
+                <div><h3>Keep humans at the consequential gates.</h3><p>Automation should increase leverage without hiding uncertainty, ownership, or irreversible action.</p></div>
+              </li>
+              <li>
+                <span class="principle-number">04</span>
+                <div><h3>Package what survives.</h3><p>Turn validated patterns into accelerators, skills, and handoffs other builders can use responsibly.</p></div>
+              </li>
+            </ol>
+          </article>
+        </div>
+
+        <div class="stack-panel">
+          <h3>Technologies I reach for</h3>
+          <ul class="stack-list">
+            <li>Microsoft Copilot</li><li>Copilot Studio</li><li>Azure AI</li><li>Dynamics 365</li>
+            <li>Power Platform</li><li>Dataverse</li><li>React</li><li>TypeScript</li>
+            <li>JavaScript</li><li>PowerShell</li><li>GitHub Actions</li><li>MCP</li><li>Home Assistant</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="shell">
+        <div class="contact-card">
+          <div>
+            <span class="section-kicker">Connect</span>
+            <h2 id="contact-title">Bring me the messy workflow.</h2>
+            <p>Especially if it sits between AI, people, and a business system - that is usually where the interesting work begins.</p>
+          </div>
+          <div class="contact-actions">
+            <a class="button button-primary" href="https://www.linkedin.com/in/williamjaywhalen/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="button button-quiet" href="https://github.com/billwhalenmsft" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner shell">
+      <p>
+        &copy; <span id="year">2026</span> Bill Whalen. Personal portfolio; views are my own. Community projects are provided as-is and are not Microsoft products or supported offerings.
+      </p>
+      <div class="footer-links">
+        <a href="#top">Top</a>
+        <a href="https://github.com/billwhalenmsft" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="commandDialog" aria-labelledby="commandTitle">
+    <div class="command-head">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <label class="sr-only" id="commandTitle" for="commandSearch">Quick launch</label>
+      <input class="command-search" id="commandSearch" type="search" placeholder="Jump to a project or section" autocomplete="off">
+      <span class="key">esc</span>
+    </div>
+    <ul class="command-list" id="commandList"></ul>
+  </dialog>
+
+  <script>
+    const projectCards = [...document.querySelectorAll(".project-card")];
+    const filterButtons = [...document.querySelectorAll(".filter-chip")];
+    const projectSearch = document.getElementById("projectSearch");
+    const projectCount = document.getElementById("projectCount");
+    const noResults = document.getElementById("noResults");
+    let activeFilter = "all";
+
+    function applyProjectFilters() {
+      const query = projectSearch.value.trim().toLowerCase();
+      let visible = 0;
+
+      projectCards.forEach((card) => {
+        const matchesFilter = activeFilter === "all" || card.dataset.tags.split(" ").includes(activeFilter);
+        const matchesQuery = !query || card.textContent.toLowerCase().includes(query);
+        const show = matchesFilter && matchesQuery;
+        card.hidden = !show;
+        if (show) visible += 1;
+      });
+
+      projectCount.textContent = `${visible} ${visible === 1 ? "project" : "projects"}`;
+      noResults.hidden = visible !== 0;
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        filterButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+        applyProjectFilters();
+      });
+    });
+
+    projectSearch.addEventListener("input", applyProjectFilters);
+
+    const themeButton = document.getElementById("themeButton");
+    const themeIcon = document.getElementById("themeIcon");
+
+    function updateThemeButton() {
+      const isDark = document.documentElement.dataset.theme === "dark";
+      themeButton.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} theme`);
+      themeIcon.innerHTML = isDark
+        ? '<path d="M20 15.2A8.2 8.2 0 0 1 8.8 4 8.2 8.2 0 1 0 20 15.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>'
+        : '<path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>';
+    }
+
+    themeButton.addEventListener("click", () => {
+      const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = nextTheme;
+      const url = new URL(window.location.href);
+      url.searchParams.set("scoutTheme", nextTheme);
+      window.history.replaceState({}, "", url);
+      updateThemeButton();
+    });
+    updateThemeButton();
+
+    const menuButton = document.getElementById("menuButton");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    function closeMobileMenu() {
+      mobileMenu.hidden = true;
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Open navigation");
+    }
+
+    menuButton.addEventListener("click", () => {
+      const willOpen = mobileMenu.hidden;
+      mobileMenu.hidden = !willOpen;
+      menuButton.setAttribute("aria-expanded", String(willOpen));
+      menuButton.setAttribute("aria-label", willOpen ? "Close navigation" : "Open navigation");
+    });
+
+    mobileMenu.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMobileMenu));
+    document.addEventListener("click", (event) => {
+      if (!mobileMenu.hidden && !mobileMenu.contains(event.target) && !menuButton.contains(event.target)) {
+        closeMobileMenu();
+      }
+    });
+
+    const commandDialog = document.getElementById("commandDialog");
+    const commandButton = document.getElementById("commandButton");
+    const commandSearch = document.getElementById("commandSearch");
+    const commandList = document.getElementById("commandList");
+
+    const commands = [
+      ...projectCards.map((card) => {
+        const title = card.querySelector("h3").textContent;
+        const link = card.querySelector(".card-actions a");
+        const status = card.querySelector(".status").textContent.trim();
+        return { title, subtitle: status, href: link.href, external: true, icon: ">" };
+      }),
+      { title: "Selected work", subtitle: "Section", href: "#work", external: false, icon: "#" },
+      { title: "Capabilities", subtitle: "Section", href: "#capabilities", external: false, icon: "#" },
+      { title: "Digital resume", subtitle: "Section", href: "#about", external: false, icon: "#" },
+      { title: "Connect", subtitle: "Section", href: "#contact", external: false, icon: "#" }
+    ];
+
+    function renderCommands() {
+      const query = commandSearch.value.trim().toLowerCase();
+      const matches = commands.filter((command) =>
+        `${command.title} ${command.subtitle}`.toLowerCase().includes(query)
+      );
+
+      commandList.innerHTML = "";
+      matches.forEach((command) => {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = command.href;
+        if (command.external) {
+          link.target = "_blank";
+          link.rel = "noreferrer";
+        }
+
+        const icon = document.createElement("span");
+        icon.className = "command-icon";
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = command.icon;
+
+        const text = document.createElement("span");
+        const strong = document.createElement("strong");
+        const small = document.createElement("span");
+        strong.textContent = command.title;
+        small.textContent = command.subtitle;
+        text.append(strong, small);
+
+        const hint = document.createElement("span");
+        hint.textContent = command.external ? "open" : "jump";
+        link.append(icon, text, hint);
+        link.addEventListener("click", () => commandDialog.close());
+        item.append(link);
+        commandList.append(item);
+      });
+    }
+
+    function openCommandDialog() {
+      commandSearch.value = "";
+      renderCommands();
+      commandDialog.showModal();
+      commandSearch.focus();
+    }
+
+    commandButton.addEventListener("click", openCommandDialog);
+    commandSearch.addEventListener("input", renderCommands);
+    commandDialog.addEventListener("click", (event) => {
+      if (event.target === commandDialog) commandDialog.close();
+    });
+    document.addEventListener("keydown", (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        commandDialog.open ? commandDialog.close() : openCommandDialog();
+      }
+    });
+
+    document.getElementById("year").textContent = String(new Date().getFullYear());
+  </script>
+</body>
+</html>
