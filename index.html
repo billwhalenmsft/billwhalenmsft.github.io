@@ -1418,6 +1418,14 @@
       display: none;
     }
 
+    html[data-brand="atomic"] .online {
+      color: var(--cp-accent);
+    }
+
+    html[data-brand="atomic"] .online::before {
+      background: var(--cp-accent);
+    }
+
     html[data-brand="atomic"] .profile-body {
       background: var(--cp-surface-soft);
     }
@@ -1662,7 +1670,7 @@
 
   <header class="site-header">
     <nav class="nav shell" aria-label="Primary navigation">
-      <a class="brand" href="#top" aria-label="Bill Whalen, home">
+      <a class="brand" href="#top">
         <span class="brand-mark" aria-hidden="true">BW</span>
         <span class="brand-copy"><strong>Bill Whalen</strong><small>THE ATOMIC COLLECTION</small></span>
       </a>
