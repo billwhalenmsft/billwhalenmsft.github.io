@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-brand="atomic">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,6 +67,40 @@
       --cp-sheen: rgba(255, 255, 255, 0.04);
       --cp-highlight: rgba(253, 142, 161, 0.12);
     }
+    html[data-brand="atomic"] {
+      color-scheme: light;
+      --cp-bg: #FFFFFF;
+      --cp-bg-elevated: #FFFFFF;
+      --cp-surface: #FFFFFF;
+      --cp-surface-soft: #EAF3FF;
+      --cp-border: #B9CAE0;
+      --cp-border-strong: #0057B8;
+      --cp-text: #142D4E;
+      --cp-text-muted: #003B7A;
+      --cp-text-soft: #142D4E;
+      --cp-accent: #0057B8;
+      --cp-accent-hover: #003B7A;
+      --cp-accent-soft: #EAF3FF;
+      --cp-accent-fg: #FFFFFF;
+      --cp-link: #003B7A;
+      --cp-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.14);
+      --cp-overlay: rgba(20, 45, 78, 0.48);
+      --cp-panel: #FFFFFF;
+      --cp-panel-strong: #FFFFFF;
+      --cp-sheen: #FFFFFF;
+      --cp-highlight: #EAF3FF;
+    }
+    html[data-brand="atomic"][data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #07182C;
+      --cp-surface: #0D2745;
+      --cp-border: #365D85;
+      --cp-text: #F5F9FF;
+      --cp-text-muted: #B9D8FA;
+      --cp-accent: #78B4F8;
+      --cp-accent-hover: #A8D2FF;
+      --cp-accent-fg: #07182C;
+    }
     * { box-sizing: border-box; }
     body {
       display: grid;
@@ -110,10 +144,10 @@
 </head>
 <body>
   <main>
-    <p>404 / route not found</p>
-    <h1>This tool moved.</h1>
-    <p>The launchpad is still online. Head home and choose another route.</p>
-    <a href="/">Back to Bill's launchpad</a>
+    <p>404 / ROUTE NOT FOUND</p>
+    <h1>This path is between releases.</h1>
+    <p>The Atomic Collection is still online. Return home to explore the current public work.</p>
+    <a href="/">Back to the collection</a>
   </main>
 </body>
 </html>
