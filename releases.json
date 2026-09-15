@@ -1,26 +1,35 @@
 {
-  "version": 2,
-  "title": "Bill Whalen public solution releases",
+  "version": 3,
+  "title": "Bill Whalen solution journal manifest",
   "updated": "2026-09-14",
   "policy": {
-    "evidence": "Public sources only",
+    "publicationModes": [
+      "public-release",
+      "info-only"
+    ],
+    "evidence": "Public releases cite public sources; info-only showcases publish descriptions only",
     "valueLabels": [
       "measured",
       "observed",
       "designed"
     ],
     "activityLabel": "Last public push is a repository-history fact, not adoption evidence",
+    "infoOnlyLabel": "Owner-reviewed as-of is not a code, deployment, adoption, or activity signal",
     "excludedSurfaces": [
       "private evidence",
       "customer-identifying content",
+      "source for info-only work",
       "email subscriptions",
       "live MCP endpoint"
     ]
   },
-  "releaseCount": 10,
+  "recordCount": 15,
+  "releaseCount": 9,
+  "infoOnlyCount": 6,
   "releases": [
     {
       "slug": "home-assistant-estate-panel",
+      "publicationMode": "public-release",
       "title": "Home Assistant Estate Panel",
       "summary": "A self-hosted React and TypeScript reference build that combines native Home Assistant cards with custom estate controls on a shared connection and layout.",
       "category": "Personal systems",
@@ -134,6 +143,7 @@
     },
     {
       "slug": "freight-triage-control-tower",
+      "publicationMode": "public-release",
       "title": "Freight Triage Control Tower",
       "summary": "A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.",
       "category": "Business applications",
@@ -226,6 +236,7 @@
     },
     {
       "slug": "customer-news-hub",
+      "publicationMode": "public-release",
       "title": "Customer News Hub",
       "summary": "An explicitly unpublished static reference interface for exploring how sample product updates could be filtered, scanned, and opened as a digest.",
       "category": "Information design",
@@ -319,6 +330,7 @@
     },
     {
       "slug": "customer-360-for-entities",
+      "publicationMode": "public-release",
       "title": "Customer 360 for Entities",
       "summary": "An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work already happens.",
       "category": "Business applications",
@@ -410,115 +422,8 @@
       }
     },
     {
-      "slug": "sellersphere",
-      "title": "SellerSphere Partner Accelerator",
-      "summary": "A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.",
-      "category": "Business applications",
-      "tags": [
-        "Dynamics 365",
-        "Copilot Studio",
-        "Azure AI Speech",
-        "MSAL"
-      ],
-      "status": "approved",
-      "maturity": "Buildable reference accelerator",
-      "published": "2026-09-14",
-      "updated": "2026-09-14",
-      "sourceUrls": [
-        "https://github.com/billwhalenmsft/sellersphere-partner-accelerator"
-      ],
-      "publicActivity": {
-        "repositoryCreated": "2026-08-08",
-        "lastPublicPush": "2026-08-08",
-        "source": "https://api.github.com/repos/billwhalenmsft/sellersphere-partner-accelerator"
-      },
-      "publicLinks": [
-        {
-          "label": "Public release page",
-          "url": "https://billwhalenmsft.github.io/sellersphere-partner-accelerator/",
-          "type": "release"
-        }
-      ],
-      "originalState": "A field demonstration can be tightly coupled to one tenant, configured agent, data model, and preview feature set, which makes it unsafe and impractical to share as a reusable implementation reference.",
-      "delivered": "The public repository delivers sanitized desktop web-resource source, architecture, build and configuration guidance, an agent-instruction baseline, security controls, and sample workflows while excluding configured tenant artifacts and experimental bindings.",
-      "outcome": "The accelerator is designed to help a consumer build and govern its own voice-first Dynamics 365 reference experience without representing the package as a turnkey product or preapproved architecture.",
-      "valueEvidence": {
-        "level": "designed",
-        "statement": "Designed value: a safer starting point for consumer-owned voice, Copilot Studio, and Dynamics 365 integration with explicit approval before consequential actions."
-      },
-      "capabilities": [
-        "Hosts a desktop web resource inside a Dynamics 365 model-driven application.",
-        "Uses delegated MSAL authentication to reach a consumer-owned Copilot Studio agent and approved context.",
-        "Documents optional Azure AI Speech and Translator integration.",
-        "Separates proposed actions and draft communications from approved CRM writes or sends."
-      ],
-      "architecture": [
-        {
-          "label": "Seller web resource",
-          "detail": "A desktop model-driven-app web resource captures the user request and optional speech input."
-        },
-        {
-          "label": "Delegated identity",
-          "detail": "MSAL obtains delegated access for the consumer-owned agent and approved data context."
-        },
-        {
-          "label": "Proposed action",
-          "detail": "Copilot Studio and approved tools assemble a proposed CRM action or draft communication."
-        },
-        {
-          "label": "Explicit approval",
-          "detail": "The user approves a CRM update and separately authorizes any communication send."
-        }
-      ],
-      "guardrails": [
-        "Agent instructions limit execution to approved tools and prohibit guessed CRM identifiers.",
-        "CRM writes require explicit approval, communications remain drafts by default, and sending requires separate authorization.",
-        "Ambiguous requests require clarification rather than silent assumptions."
-      ],
-      "limitations": [
-        "This is source-level reference material, not a production app, managed solution, supported Microsoft offering, one-click deployment, or preapproved governance design.",
-        "Consumers must build, configure, secure, test, and govern their own deployment; mobile authentication is disabled.",
-        "The web resource can retain up to five conversations with business context in browser localStorage, requiring explicit privacy, retention, shared-device, and clearing controls.",
-        "The repository-declared Pages site is a release and terms landing page, not the authenticated application."
-      ],
-      "provenance": [
-        {
-          "label": "SellerSphere Partner Accelerator public repository",
-          "url": "https://github.com/billwhalenmsft/sellersphere-partner-accelerator",
-          "note": "Public notice, release scope, architecture, agent instructions, web-resource source, license, third-party notice, Pages metadata, and history support this entry."
-        }
-      ],
-      "attribution": [
-        {
-          "name": "@azure/msal-browser",
-          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
-          "relationship": "Third-party authentication library attributed in the repository notice; the implementation prefers a tenant-hosted copy with Microsoft CDN fallback.",
-          "license": "MIT"
-        }
-      ],
-      "visual": {
-        "type": "inline-svg",
-        "alt": "A Dynamics 365 web resource uses delegated identity and approved tools to propose an action that remains gated by explicit user approval.",
-        "nodes": [
-          "Seller web resource",
-          "Delegated identity",
-          "Proposed action",
-          "Explicit approval"
-        ]
-      },
-      "article": {
-        "slug": "sellersphere",
-        "title": "Share the accelerator, not the tenant",
-        "dek": "SellerSphere turns a tenant-coupled field demonstration into sanitized source, architecture, instructions, and approval boundaries that another builder must configure and govern.",
-        "feed": true
-      },
-      "urls": {
-        "solution": "https://billwhalenmsft.github.io/journal/sellersphere/",
-        "article": "https://billwhalenmsft.github.io/blog/sellersphere/"
-      }
-    },
-    {
       "slug": "agent-team-starter-kit",
+      "publicationMode": "public-release",
       "title": "Agent Team Starter Kit",
       "summary": "A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.",
       "category": "Agents and AI",
@@ -611,6 +516,7 @@
     },
     {
       "slug": "warranty-claims-operations",
+      "publicationMode": "public-release",
       "title": "Warranty + Claims Operations",
       "summary": "A Power Platform accelerator for structuring warranty and claims intake, review, supporting flows, and human-owned decisions.",
       "category": "Business applications",
@@ -703,6 +609,7 @@
     },
     {
       "slug": "prompt-escape",
+      "publicationMode": "public-release",
       "title": "Prompt Escape",
       "summary": "A multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge.",
       "category": "Agents and AI",
@@ -795,6 +702,7 @@
     },
     {
       "slug": "deal-to-glory",
+      "publicationMode": "public-release",
       "title": "Deal to Glory",
       "summary": "A single-commit hackathon MVP that visualizes a deterministic, agent-styled seller workflow from voice or text input through CRM, illustrative attainment, recognition, and simulated notification stages.",
       "category": "Agents and AI",
@@ -908,6 +816,7 @@
     },
     {
       "slug": "copilot-studio-mcp-lab",
+      "publicationMode": "public-release",
       "title": "Copilot Studio + MCP Lab",
       "summary": "A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.",
       "category": "Developer labs",
@@ -997,6 +906,434 @@
       "urls": {
         "solution": "https://billwhalenmsft.github.io/journal/copilot-studio-mcp-lab/",
         "article": "https://billwhalenmsft.github.io/blog/copilot-studio-mcp-lab/"
+      }
+    }
+  ],
+  "infoOnly": [
+    {
+      "slug": "se-os",
+      "publicationMode": "info-only",
+      "title": "SE OS",
+      "summary": "A private, customer-neutral solution-engineering operating system for turning ambiguous work into governed discovery, proofs, reusable accelerators, evidence, and handoffs.",
+      "category": "Operating systems",
+      "tags": [
+        "Solution engineering",
+        "Discovery",
+        "Proof orchestration",
+        "Handoffs"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-14",
+      "originalState": "Ambiguous requests can move across discovery, proof work, reusable assets, evidence, and handoffs without one visible structure for ownership or consequential decisions.",
+      "delivered": "The private build organizes those stages as a governed operating pattern with reusable work units, explicit evidence, accountable owners, and human review at consequential gates.",
+      "outcome": "The design is intended to make solution-engineering work easier to frame, inspect, reuse, and hand off without hiding judgment or claiming automated delivery.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a clearer path from ambiguous request to governed proof, reusable evidence, and accountable handoff."
+      },
+      "capabilities": [
+        "Frames ambiguous requests into explicit outcomes and discovery questions.",
+        "Coordinates proof work, reusable accelerators, evidence, and handoffs.",
+        "Keeps ownership and decision gates visible throughout the workflow.",
+        "Packages patterns that can be reviewed before reuse."
+      ],
+      "architecture": [
+        {
+          "label": "Ambiguous request",
+          "detail": "A loosely defined need enters through an owner-visible intake."
+        },
+        {
+          "label": "Discovery and framing",
+          "detail": "The work is shaped into an outcome, constraints, evidence needs, and a responsible owner."
+        },
+        {
+          "label": "Governed proof",
+          "detail": "Reusable patterns and proof work advance through explicit review points."
+        },
+        {
+          "label": "Evidence and handoff",
+          "detail": "A person reviews the evidence and accepts, redirects, or hands off the next action."
+        }
+      ],
+      "guardrails": [
+        "Humans remain at consequential gates and retain ownership of decisions and external commitments.",
+        "Reusable assets require review before they are applied in a new context.",
+        "Evidence and uncertainty stay visible rather than being converted into automatic success claims."
+      ],
+      "limitations": [
+        "Information-only description; source and operational materials are not published.",
+        "This private active build is not a Microsoft product or officially supported offering.",
+        "No public evidence establishes adoption, production use, savings, ROI, or customer outcomes."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "An ambiguous request moves through discovery, a governed proof, and a human-reviewed evidence handoff.",
+        "nodes": [
+          "Ambiguous request",
+          "Discovery and framing",
+          "Governed proof",
+          "Evidence and handoff"
+        ]
+      },
+      "urls": {
+        "showcase": "https://billwhalenmsft.github.io/journal/se-os/"
+      }
+    },
+    {
+      "slug": "mcaps-os-app-store",
+      "publicationMode": "info-only",
+      "title": "MCAPS OS + App Store",
+      "summary": "A modular private operating surface and curated pattern catalog described only through generic catalog, installation, review, and owner-control concepts.",
+      "category": "Operating systems",
+      "tags": [
+        "Modular workspace",
+        "Pattern catalog",
+        "Review gates",
+        "Private build"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-14",
+      "originalState": "Useful working patterns can remain scattered across tools and people, making it difficult to discover, review, install, and govern a reusable capability consistently.",
+      "delivered": "The private concept combines a modular operating surface with a curated catalog where generic patterns can be described, reviewed, installed deliberately, and managed by an accountable owner.",
+      "outcome": "The design is intended to make reusable operating patterns easier to find and adopt responsibly without exposing private data sources or enabling automatic installation.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a reviewable catalog path from discoverable pattern to owner-approved installation and use."
+      },
+      "capabilities": [
+        "Organizes modular working capabilities in one private operating surface.",
+        "Describes reusable patterns through a curated catalog.",
+        "Separates discovery from installation and installation from activation.",
+        "Keeps ownership, review status, and removal paths explicit."
+      ],
+      "architecture": [
+        {
+          "label": "Curated pattern",
+          "detail": "A reusable capability is described in generic, reviewable terms."
+        },
+        {
+          "label": "Review gate",
+          "detail": "An owner checks purpose, boundaries, provenance, and fit before installation."
+        },
+        {
+          "label": "Deliberate install",
+          "detail": "An approved pattern is added to the private operating surface without exposing data-source details."
+        },
+        {
+          "label": "Owner-controlled use",
+          "detail": "Activation, updates, and removal remain visible and accountable."
+        }
+      ],
+      "guardrails": [
+        "Catalog presence does not authorize installation or use.",
+        "Owners review provenance, permissions, and boundaries before activation.",
+        "No private data-source names, credentials, or operational content are described publicly."
+      ],
+      "limitations": [
+        "Information-only description; source, catalog contents, installation packages, and operational materials are not published.",
+        "This private active build is not a Microsoft product, marketplace, or officially supported offering.",
+        "No public evidence establishes adoption, production scale, savings, or customer outcomes."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A curated pattern passes through an owner review gate before deliberate installation and controlled use.",
+        "nodes": [
+          "Curated pattern",
+          "Review gate",
+          "Deliberate install",
+          "Owner-controlled use"
+        ]
+      },
+      "urls": {
+        "showcase": "https://billwhalenmsft.github.io/journal/mcaps-os-app-store/"
+      }
+    },
+    {
+      "slug": "program-iq",
+      "publicationMode": "info-only",
+      "title": "Program IQ",
+      "summary": "A private program-execution view for bringing milestones, ownership, evidence, risks, decisions, and next actions into one reviewable operating picture.",
+      "category": "Program execution",
+      "tags": [
+        "Milestones",
+        "Ownership",
+        "Evidence",
+        "Risk"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-14",
+      "originalState": "Program status can be spread across updates, milestone trackers, risk notes, decisions, and follow-up lists without a shared line of sight from evidence to next action.",
+      "delivered": "The private build shapes a high-level execution view around milestones, accountable owners, supporting evidence, visible risks, recorded decisions, and explicit next actions.",
+      "outcome": "The design is intended to support more focused program reviews and clearer follow-through without replacing owner judgment or treating incomplete evidence as certainty.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: one reviewable program picture connecting milestones, evidence, risks, decisions, ownership, and next actions."
+      },
+      "capabilities": [
+        "Connects milestones to accountable owners and evidence.",
+        "Keeps risks, decisions, and unresolved questions visible.",
+        "Makes next actions and review status explicit.",
+        "Supports a consistent human-led program review rhythm."
+      ],
+      "architecture": [
+        {
+          "label": "Program goals",
+          "detail": "A bounded set of outcomes and milestones defines the review scope."
+        },
+        {
+          "label": "Ownership ledger",
+          "detail": "Each milestone and next action has an accountable owner."
+        },
+        {
+          "label": "Evidence and risk",
+          "detail": "Supporting evidence, gaps, risks, and decisions remain linked and visible."
+        },
+        {
+          "label": "Human review",
+          "detail": "Program owners decide priorities, commitments, and next actions."
+        }
+      ],
+      "guardrails": [
+        "Evidence gaps remain explicit and are not converted into automatic status confidence.",
+        "Owners retain authority for commitments, escalations, and priority changes.",
+        "The public description omits program names, participants, dates, metrics, and operating data."
+      ],
+      "limitations": [
+        "Information-only description; source and operational materials are not published.",
+        "This private active build is not a Microsoft product or officially supported offering.",
+        "No public evidence establishes improved delivery, forecast accuracy, adoption, or measured program outcomes."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Program goals connect to ownership, evidence and risk, and a human review of decisions and next actions.",
+        "nodes": [
+          "Program goals",
+          "Ownership ledger",
+          "Evidence and risk",
+          "Human review"
+        ]
+      },
+      "urls": {
+        "showcase": "https://billwhalenmsft.github.io/journal/program-iq/"
+      }
+    },
+    {
+      "slug": "field-service-tech-home",
+      "publicationMode": "info-only",
+      "title": "Field Service Tech Home",
+      "summary": "A supportive private mobile technician-home concept for work execution, productivity, quality, parts, and AI-guided recommendations without punitive monitoring.",
+      "category": "Field operations",
+      "tags": [
+        "Mobile work",
+        "Technician experience",
+        "Parts",
+        "AI guidance"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-14",
+      "originalState": "A mobile technician may need to move among work details, parts, quality checks, productivity context, and guidance while staying focused on the task and customer interaction.",
+      "delivered": "The private concept brings those needs into a supportive mobile home with prioritized work context, parts and quality cues, and AI-guided recommendations that remain advisory.",
+      "outcome": "The design is intended to reduce avoidable context switching and support consistent field execution without turning the experience into punitive worker monitoring.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a supportive mobile starting point for work context, parts, quality, productivity, and optional AI guidance."
+      },
+      "capabilities": [
+        "Presents prioritized work and next-step context in a mobile home.",
+        "Brings parts and quality cues closer to task execution.",
+        "Offers AI-guided recommendations as optional assistance.",
+        "Frames productivity as support for the technician rather than surveillance."
+      ],
+      "architecture": [
+        {
+          "label": "Work context",
+          "detail": "A bounded view of assigned work, task needs, parts, and quality cues starts the experience."
+        },
+        {
+          "label": "Mobile home",
+          "detail": "The technician sees a focused, supportive summary rather than a monitoring dashboard."
+        },
+        {
+          "label": "AI guidance",
+          "detail": "Recommendations surface as optional suggestions with visible context."
+        },
+        {
+          "label": "Technician decision",
+          "detail": "The technician accepts, ignores, or adapts guidance and remains responsible for the work."
+        }
+      ],
+      "guardrails": [
+        "AI guidance is advisory and can be ignored or adapted by the technician.",
+        "The concept explicitly rejects punitive scoring and hidden worker surveillance.",
+        "Consequential work, safety, and quality decisions remain with authorized people and established procedures."
+      ],
+      "limitations": [
+        "Information-only concept; source, operational materials, data models, and screens are not published.",
+        "This private active build is not a Microsoft product or officially supported offering.",
+        "No public evidence establishes productivity, quality, safety, adoption, or customer outcomes."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Work context flows into a supportive mobile home, optional AI guidance, and a technician-owned decision.",
+        "nodes": [
+          "Work context",
+          "Mobile home",
+          "AI guidance",
+          "Technician decision"
+        ]
+      },
+      "urls": {
+        "showcase": "https://billwhalenmsft.github.io/journal/field-service-tech-home/"
+      }
+    },
+    {
+      "slug": "sales-service-agent-extensibility",
+      "publicationMode": "info-only",
+      "title": "Sales & Service Agent Extensibility Patterns",
+      "summary": "A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.",
+      "category": "Agent patterns",
+      "tags": [
+        "Agent assistance",
+        "CRM context",
+        "Tool governance",
+        "Approvals"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-14",
+      "originalState": "Agent experiences can connect prompts, business context, tools, and CRM actions without a reusable pattern for permissions, proposed changes, approval, and accountability.",
+      "delivered": "The private work packages high-level sales and service patterns that separate user intent, approved context and tools, proposed actions, explicit approval, and governed CRM execution.",
+      "outcome": "The design is intended to make agent extensibility easier to reason about and reuse while preserving human control over consequential business actions.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: reusable sales and service patterns that keep context, tools, approvals, and CRM actions visibly separated."
+      },
+      "capabilities": [
+        "Frames reusable patterns for sales and service agent assistance.",
+        "Separates approved context retrieval from tool execution.",
+        "Treats CRM changes and outbound actions as proposals before approval.",
+        "Makes permissions, ownership, and audit expectations explicit."
+      ],
+      "architecture": [
+        {
+          "label": "User intent",
+          "detail": "A person states the goal and remains the accountable requester."
+        },
+        {
+          "label": "Approved context",
+          "detail": "The pattern limits retrieval and tools to authorized business context."
+        },
+        {
+          "label": "Proposed action",
+          "detail": "The agent prepares a reviewable change, draft, or next action."
+        },
+        {
+          "label": "Explicit approval",
+          "detail": "An authorized person approves, rejects, or edits consequential CRM execution."
+        }
+      ],
+      "guardrails": [
+        "Tools and context remain allowlisted and permission-bound.",
+        "Consequential CRM writes and outbound actions require explicit human approval.",
+        "Ambiguity, missing identifiers, and weak evidence trigger clarification rather than silent action."
+      ],
+      "limitations": [
+        "Information-only pattern set; source, implementation details, operational materials, and configured systems are not published.",
+        "This private active work is not a Microsoft product, reference architecture, or officially supported offering.",
+        "No public evidence establishes production readiness, adoption, accuracy, savings, or business outcomes."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "User intent moves through approved context and a proposed action to explicit human approval.",
+        "nodes": [
+          "User intent",
+          "Approved context",
+          "Proposed action",
+          "Explicit approval"
+        ]
+      },
+      "urls": {
+        "showcase": "https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/"
+      }
+    },
+    {
+      "slug": "pipeline-consumption-unified-view",
+      "publicationMode": "info-only",
+      "title": "Pipeline-to-Consumption Unified View",
+      "summary": "A private decision-support pattern connecting opportunity context, milestones, adoption signals, evidence, risks, and next actions without exposing account data or forecast claims.",
+      "category": "Decision support",
+      "tags": [
+        "Opportunity context",
+        "Milestones",
+        "Evidence",
+        "Next actions"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-14",
+      "originalState": "Opportunity context, milestones, adoption signals, evidence, risks, and follow-up can live in separate views, making it difficult to discuss whether planned work and observable signals align.",
+      "delivered": "The private pattern brings those high-level decision inputs into one owner-reviewed view that emphasizes evidence quality, mismatches, risks, and explicit next actions.",
+      "outcome": "The design is intended to support better-informed human prioritization without publishing account information, asserting forecast accuracy, or treating correlation as causation.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: one evidence-aware view connecting opportunity context, milestones, adoption signals, risks, and owner-approved next actions."
+      },
+      "capabilities": [
+        "Connects opportunity context and milestones to observable adoption signals.",
+        "Keeps evidence strength, mismatches, and risks visible.",
+        "Separates decision support from automated forecast or commitment claims.",
+        "Records owner-reviewed next actions and open questions."
+      ],
+      "architecture": [
+        {
+          "label": "Opportunity context",
+          "detail": "A generic opportunity and milestone frame establishes the decision question."
+        },
+        {
+          "label": "Adoption signals",
+          "detail": "High-level observable signals are considered without exposing account data."
+        },
+        {
+          "label": "Evidence and risk",
+          "detail": "Alignment, gaps, uncertainty, and risks remain explicit."
+        },
+        {
+          "label": "Owner next action",
+          "detail": "A person decides what to validate, prioritize, or follow up next."
+        }
+      ],
+      "guardrails": [
+        "The view is decision support and does not automate forecasts, commitments, or external reporting.",
+        "Correlation and timing signals are not presented as causation or measured business impact.",
+        "The public description contains no account, opportunity, milestone, consumption, or forecast data."
+      ],
+      "limitations": [
+        "Information-only description; source, data mappings, operational materials, and working views are not published.",
+        "This private active build is not a Microsoft product or officially supported offering.",
+        "No public evidence establishes forecast accuracy, adoption, production use, savings, ROI, or customer outcomes."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Opportunity context and adoption signals meet an evidence-and-risk review before an owner chooses the next action.",
+        "nodes": [
+          "Opportunity context",
+          "Adoption signals",
+          "Evidence and risk",
+          "Owner next action"
+        ]
+      },
+      "urls": {
+        "showcase": "https://billwhalenmsft.github.io/journal/pipeline-consumption-unified-view/"
       }
     }
   ]

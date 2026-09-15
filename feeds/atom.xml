@@ -47,16 +47,6 @@
     <author><name>Bill Whalen</name></author>
   </entry>
   <entry>
-    <title>Share the accelerator, not the tenant</title>
-    <id>https://billwhalenmsft.github.io/blog/sellersphere/</id>
-    <link href="https://billwhalenmsft.github.io/blog/sellersphere/"/>
-    <published>2026-09-14T12:00:00Z</published>
-    <updated>2026-09-14T12:00:00Z</updated>
-    <summary>A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.</summary>
-    <category term="Business applications"/>
-    <author><name>Bill Whalen</name></author>
-  </entry>
-  <entry>
     <title>Making multi-agent work visible</title>
     <id>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</id>
     <link href="https://billwhalenmsft.github.io/blog/agent-team-starter-kit/"/>

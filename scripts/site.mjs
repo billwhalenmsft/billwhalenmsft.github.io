@@ -292,6 +292,7 @@ h3 { font-size: 1.15rem; }
   background: var(--cp-success);
   content: "";
 }
+.status-info::before { background: var(--cp-warning); }
 .section { padding-block: clamp(4rem, 8vw, 6.5rem); border-top: 1px solid var(--cp-border); }
 .section-heading {
   display: grid;
@@ -417,6 +418,23 @@ h3 { font-size: 1.15rem; }
   font-size: 0.76rem;
 }
 .result-count { margin: -0.5rem 0 1rem; color: var(--cp-text-muted); font-size: 0.82rem; }
+.journal-lane + .journal-lane { margin-top: 3rem; }
+.lane-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.lane-heading h3 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+.lane-heading p { max-width: 40rem; margin: 0; color: var(--cp-text-muted); font-size: 0.88rem; }
+.info-boundary {
+  margin: 0 0 1rem;
+  padding: 1rem 1.15rem;
+  border-left: 3px solid var(--cp-warning);
+  background: var(--cp-surface);
+  color: var(--cp-text-muted);
+}
 .no-results { padding: 2rem; border: 1px dashed var(--cp-border-strong); border-radius: 16px; text-align: center; }
 .site-footer { padding-block: 2rem; border-top: 1px solid var(--cp-border); }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
@@ -432,6 +450,7 @@ h3 { font-size: 1.15rem; }
   .nav-links { order: 3; width: 100%; justify-content: space-between; padding-bottom: 0.5rem; }
   .section-heading, .flow-grid, .release-grid, .split-grid, .architecture-notes { grid-template-columns: 1fr; }
   .filter-bar { align-items: stretch; flex-direction: column; }
+  .lane-heading { align-items: flex-start; flex-direction: column; }
   .search { width: 100%; }
   .release-card { min-height: auto; }
   .footer-inner { align-items: flex-start; flex-direction: column; }
@@ -470,10 +489,20 @@ function evidenceLabel(level) {
 }
 
 export function orderedReleases(catalog) {
-  return [...catalog.releases].sort((left, right) =>
+  return catalog.releases
+    .filter((release) => release.publicationMode === "public-release")
+    .sort((left, right) =>
     right.publicActivity.lastPublicPush.localeCompare(left.publicActivity.lastPublicPush)
       || left.title.localeCompare(right.title)
   );
+}
+
+export function orderedInfoOnly(catalog) {
+  return catalog.releases
+    .filter((release) => release.publicationMode === "info-only")
+    .sort((left, right) =>
+      right.ownerReviewedAsOf.localeCompare(left.ownerReviewedAsOf)
+    );
 }
 
 function evidenceUrls(release) {
@@ -612,66 +641,93 @@ function architectureSvg(release, prefix) {
 }
 
 function releaseCard(release) {
+  const infoOnly = release.publicationMode === "info-only";
   const searchable = [
     release.title,
     release.summary,
     release.category,
     release.maturity,
+    release.publicationMode,
     release.valueEvidence.level,
     ...release.tags
   ].join(" ").toLowerCase();
+  const activity = infoOnly
+    ? `Owner-reviewed as of <time datetime="${release.ownerReviewedAsOf}">${release.ownerReviewedAsOf}</time> &middot; not a code, adoption, or activity signal`
+    : `Last public push <time datetime="${release.publicActivity.lastPublicPush}">${release.publicActivity.lastPublicPush}</time>`;
+  const actions = infoOnly
+    ? `<a class="button button-primary button-small" href="/journal/${release.slug}/">Info-only showcase</a>`
+    : `<a class="button button-primary button-small" href="/journal/${release.slug}/">Solution entry</a>
+    <a class="button button-small" href="/blog/${release.article.slug}/">Read the article</a>`;
 
-  return `<article class="release-card" data-release="${escapeHtml(release.slug)}" data-category="${escapeHtml(release.category)}" data-search="${escapeHtml(searchable)}">
-  <span class="status">${escapeHtml(release.maturity)}</span>
+  return `<article class="release-card" data-release="${escapeHtml(release.slug)}" data-mode="${release.publicationMode}" data-category="${escapeHtml(release.category)}" data-search="${escapeHtml(searchable)}">
+  <span class="status${infoOnly ? " status-info" : ""}">${escapeHtml(release.maturity)}</span>
   <p class="eyebrow">${escapeHtml(release.category)}</p>
   <h2>${escapeHtml(release.title)}</h2>
   <p>${escapeHtml(release.summary)}</p>
-  <p class="activity-line">Last public push <time datetime="${release.publicActivity.lastPublicPush}">${release.publicActivity.lastPublicPush}</time></p>
+  <p class="activity-line">${activity}</p>
   <ul class="tag-list">${release.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}</ul>
   <p><strong>Evidence:</strong> ${escapeHtml(release.valueEvidence.statement)}</p>
+${infoOnly ? `<p><strong>Public boundary:</strong> ${escapeHtml(release.publicBoundary)}</p>` : ""}
   <div class="card-actions">
-    <a class="button button-primary button-small" href="/journal/${release.slug}/">Solution entry</a>
-    <a class="button button-small" href="/blog/${release.article.slug}/">Read the article</a>
+    ${actions}
   </div>
 </article>`;
 }
 
 function journalIndex(catalog) {
   const releases = orderedReleases(catalog);
-  const categories = [...new Set(releases.map((release) => release.category))].sort();
+  const infoOnly = orderedInfoOnly(catalog);
+  const entries = [...releases, ...infoOnly];
+  const categories = [...new Set(entries.map((release) => release.category))].sort();
   const filters = [
     `<button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>`,
+    `<button class="filter-chip" type="button" data-filter="public-release" aria-pressed="false">Public releases</button>`,
+    `<button class="filter-chip" type="button" data-filter="info-only" aria-pressed="false">Info-only active work</button>`,
     ...categories.map((category) => `<button class="filter-chip" type="button" data-filter="${escapeHtml(category)}" aria-pressed="false">${escapeHtml(category)}</button>`)
   ].join("\n");
   const body = `    <section class="hero shell" aria-labelledby="journal-title">
       <div>
         <p class="eyebrow">Public-safe solution journal</p>
         <h1 id="journal-title">Build notes with the evidence attached.</h1>
-        <p class="hero-copy">${catalog.releases.length} customer-neutral release entries show the original workflow, what the public project delivers, the value it is designed to enable, and the boundaries that still matter.</p>
+        <p class="hero-copy">${releases.length} sourced public releases and ${infoOnly.length} information-only showcases explain the original state, what is being built, designed value, human controls, and the boundary around what is not published.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#releases">Explore releases</a>
+          <a class="button button-primary" href="#releases">Explore the journal</a>
           <a class="button" href="/subscribe/">Follow the journal</a>
         </div>
       </div>
       <aside class="evidence-card" aria-label="Journal evidence policy">
         <span class="label">Evidence policy</span>
-        <strong>Public proof only.</strong>
-        <p>No customer identities, private telemetry, internal evidence, or invented business results. Intended value is labeled as designed value rather than a measured claim.</p>
+        <strong>Two clearly separated lanes.</strong>
+        <p>Public releases cite public proof. Info-only active work has no source or download links and discloses that source and operational materials are not published.</p>
       </aside>
     </section>
     <section class="section" id="releases" aria-labelledby="releases-title">
       <div class="shell">
         <div class="section-heading">
-          <div><span class="section-kicker">Release catalog</span><h2 id="releases-title">Current entries.</h2></div>
-          <p>Sorted by the exact last public repository push date. Filter by solution family or search titles, technologies, maturity, and evidence language.</p>
+          <div><span class="section-kicker">Journal catalog</span><h2 id="releases-title">Current entries.</h2></div>
+          <p>Public releases use exact repository push facts. Info-only work uses an owner-reviewed as-of date that is not a code, adoption, or activity signal.</p>
         </div>
         <div class="filter-bar">
           <div class="filters" role="group" aria-label="Filter journal entries">${filters}</div>
-          <label><span class="label">Search</span><input class="search" id="releaseSearch" type="search" autocomplete="off" placeholder="Search releases"></label>
+          <label><span class="label">Search</span><input class="search" id="releaseSearch" type="search" autocomplete="off" placeholder="Search journal"></label>
         </div>
-        <p class="result-count" id="releaseCount" aria-live="polite">${catalog.releases.length} releases</p>
-        <div class="release-grid" id="releaseGrid">${releases.map(releaseCard).join("\n")}</div>
-        <div class="no-results" id="noResults" hidden>No releases match that filter. Try another category or clear the search.</div>
+        <p class="result-count" id="releaseCount" aria-live="polite">${entries.length} entries &middot; ${releases.length} public releases &middot; ${infoOnly.length} info-only showcases</p>
+        <section class="journal-lane" id="publicLane" aria-labelledby="public-lane-title">
+          <div class="lane-heading">
+            <h3 id="public-lane-title">Public releases</h3>
+            <p>Source-backed entries ordered by exact last public repository push.</p>
+          </div>
+          <div class="release-grid">${releases.map(releaseCard).join("\n")}</div>
+        </section>
+        <section class="journal-lane" id="infoLane" aria-labelledby="info-lane-title">
+          <div class="lane-heading">
+            <h3 id="info-lane-title">Info-only active work</h3>
+            <p>Owner-reviewed descriptions ordered by the disclosed as-of date, not by code, deployment, adoption, or results.</p>
+          </div>
+          <p class="info-boundary"><strong>Information-only.</strong> Source and operational materials are not published. These private active builds are not Microsoft products or officially supported offerings.</p>
+          <div class="release-grid">${infoOnly.map(releaseCard).join("\n")}</div>
+        </section>
+        <div class="no-results" id="noResults" hidden>No journal entries match that filter. Try another category or clear the search.</div>
       </div>
     </section>`;
 
@@ -681,17 +737,21 @@ function journalIndex(catalog) {
   const search = document.getElementById("releaseSearch");
   const count = document.getElementById("releaseCount");
   const noResults = document.getElementById("noResults");
+  const publicLane = document.getElementById("publicLane");
+  const infoLane = document.getElementById("infoLane");
   let activeFilter = "all";
   function applyFilters() {
     const query = search.value.trim().toLowerCase();
     let visible = 0;
     cards.forEach((card) => {
-      const show = (activeFilter === "all" || card.dataset.category === activeFilter)
+      const show = (activeFilter === "all" || card.dataset.mode === activeFilter || card.dataset.category === activeFilter)
         && (!query || card.dataset.search.includes(query));
       card.hidden = !show;
       if (show) visible += 1;
     });
-    count.textContent = \`\${visible} \${visible === 1 ? "release" : "releases"}\`;
+    publicLane.hidden = ![...publicLane.querySelectorAll(".release-card")].some((card) => !card.hidden);
+    infoLane.hidden = ![...infoLane.querySelectorAll(".release-card")].some((card) => !card.hidden);
+    count.textContent = \`\${visible} \${visible === 1 ? "entry" : "entries"}\`;
     noResults.hidden = visible !== 0;
   }
   filters.forEach((filter) => filter.addEventListener("click", () => {
@@ -710,9 +770,9 @@ function journalIndex(catalog) {
       "@type": "CollectionPage",
       name: "Bill Whalen solution journal",
       url: `${SITE_URL}/journal/`,
-      description: "Customer-neutral public solution entries grounded in public project evidence.",
-      numberOfItems: catalog.releases.length,
-      hasPart: releases.map((release) => ({
+      description: "Customer-neutral public releases and clearly separated information-only active-work showcases.",
+      numberOfItems: entries.length,
+      hasPart: entries.map((release) => ({
         "@type": "CreativeWork",
         name: release.title,
         url: `${SITE_URL}/journal/${release.slug}/`
@@ -853,6 +913,94 @@ ${(release.publicLinks || []).map((link) => `<a class="button" href="${escapeHtm
   });
 }
 
+function infoOnlyPage(release) {
+  const canonical = `${SITE_URL}/journal/${release.slug}/`;
+  const body = `    <article>
+      <header class="hero shell">
+        <div>
+          <p class="eyebrow">Info-only active work &middot; ${escapeHtml(release.category)}</p>
+          <h1>${escapeHtml(release.title)}</h1>
+          <p class="hero-copy">${escapeHtml(release.summary)}</p>
+          <div class="meta-row">
+            <span>Information-only</span>
+            <span>Private active build</span>
+            <span>Owner-reviewed as of ${release.ownerReviewedAsOf}</span>
+            <span>Not a code, adoption, or activity signal</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button button-primary" href="/journal/#infoLane">Browse info-only work</a>
+          </div>
+        </div>
+        <aside class="evidence-card">
+          <span class="label">Public boundary</span>
+          <strong>${escapeHtml(release.publicBoundary)}</strong>
+          <p>No source, download, repository, operational-data, or private architecture links are provided for this showcase.</p>
+        </aside>
+      </header>
+      <section class="section" aria-labelledby="${release.slug}-flow">
+        <div class="shell">
+          <div class="section-heading">
+            <div><span class="section-kicker">Original state to designed value</span><h2 id="${release.slug}-flow">What the private build is exploring.</h2></div>
+            <p>Customer-neutral framing only. This description does not establish deployment, adoption, or results.</p>
+          </div>
+          <div class="flow-grid">
+            <article class="panel"><span class="label">01 / Original state</span><h3>Before the pattern</h3><p>${escapeHtml(release.originalState)}</p></article>
+            <article class="panel"><span class="label">02 / Being built</span><h3>What is being delivered</h3><p>${escapeHtml(release.delivered)}</p></article>
+            <article class="panel"><span class="label">03 / Designed value</span><h3>Value hypothesis</h3><p>${escapeHtml(release.outcome)}</p></article>
+          </div>
+          <div class="callout"><p><strong>Evidence label:</strong> ${escapeHtml(release.valueEvidence.statement)}</p></div>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="${release.slug}-architecture">
+        <div class="shell">
+          <div class="section-heading">
+            <div><span class="section-kicker">Synthetic overview</span><h2 id="${release.slug}-architecture">A high-level public-safe pattern.</h2></div>
+            <p>${escapeHtml(release.visual.alt)}</p>
+          </div>
+          ${architectureSvg(release, `info-${release.slug}`)}
+          ${architectureNotes(release)}
+        </div>
+      </section>
+      <section class="section" aria-labelledby="${release.slug}-controls">
+        <div class="shell detail-grid">
+          <div>
+            <span class="section-kicker">Capabilities</span>
+            <h2 id="${release.slug}-controls">What the concept is designed to support.</h2>
+            <ul class="plain-list">${release.capabilities.map((capability) => `<li>${escapeHtml(capability)}</li>`).join("")}</ul>
+          </div>
+          <div>
+            <article class="panel">
+              <span class="label">Human control and guardrails</span>
+              <ul class="plain-list">${release.guardrails.map((guardrail) => `<li>${escapeHtml(guardrail)}</li>`).join("")}</ul>
+            </article>
+            <article class="panel" style="margin-top: 1rem;">
+              <span class="label">Limitations and disclosure</span>
+              <ul class="plain-list">${release.limitations.map((limitation) => `<li>${escapeHtml(limitation)}</li>`).join("")}</ul>
+            </article>
+          </div>
+        </div>
+      </section>
+    </article>`;
+
+  return page({
+    title: `${release.title} | Info-only active work`,
+    description: release.summary,
+    canonical,
+    type: "article",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      headline: release.title,
+      description: release.summary,
+      dateModified: release.ownerReviewedAsOf,
+      author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
+      url: canonical,
+      usageInfo: release.publicBoundary
+    },
+    body
+  });
+}
+
 function articlePage(release) {
   const canonical = `${SITE_URL}/blog/${release.article.slug}/`;
   const body = `    <article>
@@ -921,11 +1069,12 @@ ${(release.publicLinks || []).map((link) => `<a class="button" href="${escapeHtm
 }
 
 function subscribePage(catalog) {
+  const releaseCount = orderedReleases(catalog).length;
   const body = `    <section class="hero shell" aria-labelledby="subscribe-title">
       <div>
         <p class="eyebrow">Follow the public journal</p>
         <h1 id="subscribe-title">Subscribe without a subscriber list.</h1>
-        <p class="hero-copy">RSS and Atom carry all ${catalog.releases.length} approved releases. Add either feed URL to the reader you already use; this site does not collect email addresses.</p>
+        <p class="hero-copy">RSS and Atom carry all ${releaseCount} approved public releases. Info-only active work is deliberately excluded. Add either feed URL to the reader you already use; this site does not collect email addresses.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="/feeds/rss.xml">Open RSS 2.0</a>
           <a class="button" href="/feeds/atom.xml">Open Atom</a>
@@ -933,7 +1082,7 @@ function subscribePage(catalog) {
       </div>
       <aside class="evidence-card">
         <span class="label">What is live</span>
-        <strong>RSS 2.0 and Atom for ${catalog.releases.length} releases.</strong>
+        <strong>RSS 2.0 and Atom for ${releaseCount} public releases.</strong>
         <p>No email newsletter, signup form, tracking pixel, or subscriber database is connected.</p>
       </aside>
     </section>
@@ -951,6 +1100,9 @@ function subscribePage(catalog) {
           <p>Copy <code>${SITE_URL}/feeds/atom.xml</code> into an Atom-compatible reader. It is generated from the same approved release records.</p>
           <a class="button button-small" href="/feeds/atom.xml">View Atom</a>
         </article>
+      </div>
+      <div class="shell callout">
+        <p><strong>Info-only work is not syndicated.</strong> Those showcases describe private active builds without source or operational materials and do not appear in RSS or Atom.</p>
       </div>
       <div class="shell callout">
         <p><strong>Planned, not live:</strong> a future separately hosted MCP service may expose only approved public manifest records through read-only operations. GitHub Pages cannot host that service, and there is no MCP endpoint on this site today.</p>
@@ -974,22 +1126,33 @@ function subscribePage(catalog) {
 
 function manifest(catalog) {
   const releases = orderedReleases(catalog);
+  const infoOnly = orderedInfoOnly(catalog);
   return {
-    version: 2,
-    title: "Bill Whalen public solution releases",
+    version: 3,
+    title: "Bill Whalen solution journal manifest",
     updated: catalog.updated,
     policy: {
-      evidence: "Public sources only",
+      publicationModes: ["public-release", "info-only"],
+      evidence: "Public releases cite public sources; info-only showcases publish descriptions only",
       valueLabels: ["measured", "observed", "designed"],
       activityLabel: "Last public push is a repository-history fact, not adoption evidence",
-      excludedSurfaces: ["private evidence", "customer-identifying content", "email subscriptions", "live MCP endpoint"]
+      infoOnlyLabel: "Owner-reviewed as-of is not a code, deployment, adoption, or activity signal",
+      excludedSurfaces: ["private evidence", "customer-identifying content", "source for info-only work", "email subscriptions", "live MCP endpoint"]
     },
+    recordCount: releases.length + infoOnly.length,
     releaseCount: releases.length,
+    infoOnlyCount: infoOnly.length,
     releases: releases.map((release) => ({
       ...release,
       urls: {
         solution: `${SITE_URL}/journal/${release.slug}/`,
         article: `${SITE_URL}/blog/${release.article.slug}/`
+      }
+    })),
+    infoOnly: infoOnly.map((release) => ({
+      ...release,
+      urls: {
+        showcase: `${SITE_URL}/journal/${release.slug}/`
       }
     }))
   };
@@ -1054,6 +1217,7 @@ ${entries}
 
 export function sitemapEntries(catalog) {
   const releases = orderedReleases(catalog);
+  const infoOnly = orderedInfoOnly(catalog);
   return [
     { url: `${SITE_URL}/`, updated: catalog.updated, priority: "1.0" },
     { url: `${SITE_URL}/journal/`, updated: catalog.updated, priority: "0.9" },
@@ -1061,7 +1225,12 @@ export function sitemapEntries(catalog) {
     ...releases.flatMap((release) => [
       { url: `${SITE_URL}/journal/${release.slug}/`, updated: release.updated, priority: "0.8" },
       { url: `${SITE_URL}/blog/${release.article.slug}/`, updated: release.updated, priority: "0.7" }
-    ])
+    ]),
+    ...infoOnly.map((release) => ({
+      url: `${SITE_URL}/journal/${release.slug}/`,
+      updated: release.ownerReviewedAsOf,
+      priority: "0.6"
+    }))
   ];
 }
 
@@ -1097,6 +1266,9 @@ export async function buildOutputs() {
   for (const release of orderedReleases(catalog)) {
     outputs.set(`journal/${release.slug}/index.html`, solutionPage(release));
     outputs.set(`blog/${release.article.slug}/index.html`, articlePage(release));
+  }
+  for (const release of orderedInfoOnly(catalog)) {
+    outputs.set(`journal/${release.slug}/index.html`, infoOnlyPage(release));
   }
 
   return { catalog, outputs };

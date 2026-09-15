@@ -8,13 +8,13 @@ Static source for `https://billwhalenmsft.github.io/`.
 - A searchable and filterable launcher for verified public projects.
 - The approved White and Blue Atomic visual system, with a compatible dark preference.
 - A keyboard quick launcher with `Ctrl+K` or `Cmd+K`.
-- A public-safe solution journal with ten release entries and companion illustrated field notes, ordered by the exact last public repository push date.
+- A public-safe solution journal with nine public releases and six clearly separated information-only showcases.
 - A generated public release manifest, RSS 2.0 feed, Atom feed, sitemap, metadata, JSON-LD, and custom 404 page.
 - A dependency-free Node.js generator and validation suite for future manually reviewed releases.
 
 ## Content boundary
 
-The portfolio intentionally includes customer-neutral public work only. Customer-specific engagements, Microsoft-internal systems, private evidence, and unsupported claims are excluded.
+The portfolio includes customer-neutral public releases and tightly bounded information-only descriptions. Customer-specific engagements, private source, operational data, screenshots, private architecture, and unsupported claims are excluded.
 
 Community projects are shared as-is and are not Microsoft products or supported offerings.
 
@@ -30,9 +30,9 @@ npm test
 python -m http.server 4173
 ```
 
-Open `http://localhost:4173/`, then review `/journal/`, one solution entry, one companion article, `/subscribe/`, `/feeds/rss.xml`, `/feeds/atom.xml`, and `/releases.json`.
+Open `http://localhost:4173/`, then review `/journal/`, one public release, one companion article, one info-only showcase, `/subscribe/`, `/feeds/rss.xml`, `/feeds/atom.xml`, and `/releases.json`.
 
-Canonical release data lives in `content/releases.json`. Each record carries exact public repository creation and last-push dates from GitHub's public API; those dates describe repository history, not adoption or customer activity. Generated output is committed so GitHub Pages can publish directly from the repository root. `npm run generate:check` fails when committed output does not match the catalog.
+Canonical journal data lives in `content/releases.json`. Public releases carry exact repository creation and last-push dates from GitHub's public API; those dates describe repository history, not adoption. Info-only showcases carry an owner-reviewed as-of date, contain no source URLs, and are excluded from RSS and Atom. Generated output is committed so GitHub Pages can publish directly from the repository root. `npm run generate:check` fails when committed output does not match the catalog.
 
 For each future release:
 

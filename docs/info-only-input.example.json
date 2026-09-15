@@ -1,0 +1,60 @@
+{
+  "slug": "stable-info-only-slug",
+  "publicationMode": "info-only",
+  "title": "Information-only showcase title",
+  "summary": "Customer-neutral description with no source, download, repository, operational-data, or private architecture details.",
+  "category": "Operating systems",
+  "tags": [
+    "Public-safe capability"
+  ],
+  "status": "draft",
+  "maturity": "Information-only / Private active build",
+  "ownerReviewedAsOf": "YYYY-MM-DD",
+  "originalState": "Describe the generic workflow before the private build.",
+  "delivered": "Describe what is being built at a high level without implementation details.",
+  "outcome": "Describe intended value without adoption, production, customer-result, savings, or ROI claims.",
+  "valueEvidence": {
+    "level": "designed",
+    "statement": "Designed value: state the value hypothesis explicitly."
+  },
+  "capabilities": [
+    "A high-level customer-neutral capability"
+  ],
+  "architecture": [
+    {
+      "label": "Input",
+      "detail": "Generic public-safe input"
+    },
+    {
+      "label": "Review",
+      "detail": "Human framing or control step"
+    },
+    {
+      "label": "Pattern",
+      "detail": "High-level capability with no private architecture"
+    },
+    {
+      "label": "Human decision",
+      "detail": "Consequential decision remains with a person"
+    }
+  ],
+  "guardrails": [
+    "A public-safe human-control boundary"
+  ],
+  "limitations": [
+    "Information-only description; source and operational materials are not published.",
+    "This private active build is not a Microsoft product or officially supported offering.",
+    "No public evidence establishes adoption, production use, ROI, savings, or customer outcomes."
+  ],
+  "publicBoundary": "Information-only. Source and operational materials are not published.",
+  "visual": {
+    "type": "inline-svg",
+    "alt": "Concise description of the synthetic high-level diagram.",
+    "nodes": [
+      "Input",
+      "Review",
+      "Pattern",
+      "Human decision"
+    ]
+  }
+}

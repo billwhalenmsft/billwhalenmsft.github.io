@@ -1,8 +1,9 @@
 import { execFileSync } from "node:child_process";
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import {
   buildOutputs,
+  orderedInfoOnly,
   orderedReleases,
   ROOT,
   SITE_URL,
@@ -107,6 +108,21 @@ async function readJson(path) {
   return JSON.parse(await readFile(resolve(ROOT, path), "utf8"));
 }
 
+async function generatedPageDirectories(parent) {
+  const result = [];
+  const entries = await readdir(resolve(ROOT, parent), { withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    try {
+      await access(resolve(ROOT, parent, entry.name, "index.html"));
+      result.push(entry.name);
+    } catch {
+      // Empty directories are not deployed Git content.
+    }
+  }
+  return result.sort();
+}
+
 const { catalog, outputs } = await buildOutputs();
 const allowlist = await readJson("config/public-source-allowlist.json");
 const denyConfig = await readJson("config/public-safety-deny-patterns.json");
@@ -114,13 +130,11 @@ const protectedConfig = await readJson("config/protected-routes.json");
 const allowlistedRepositories = new Set(allowlist.repositories);
 const allowedEvidence = new Set(["measured", "observed", "designed"]);
 
-check(catalog.version === 2, "Catalog version must be 2.");
+check(catalog.version === 3, "Catalog version must be 3.");
 check(dateIsValid(catalog.updated), "Catalog updated date must use YYYY-MM-DD.");
-check(catalog.expectedReleaseCount === 10, "V2 expectedReleaseCount must be 10.");
-check(
-  Array.isArray(catalog.releases) && catalog.releases.length === catalog.expectedReleaseCount,
-  "Catalog must contain exactly 10 releases."
-);
+check(catalog.expectedPublicReleaseCount === 9, "Catalog must expect exactly 9 public releases.");
+check(catalog.expectedInfoOnlyCount === 6, "Catalog must expect exactly 6 info-only showcases.");
+check(Array.isArray(catalog.releases), "Catalog records must be an array.");
 
 const releaseSlugs = new Set();
 const articleSlugs = new Set();
@@ -144,31 +158,14 @@ for (const release of catalog.releases) {
   }
 
   check(release.status === "approved", `${slug}: only approved releases may be generated.`);
-  check(dateIsValid(release.published), `${slug}: published must use YYYY-MM-DD.`);
-  check(dateIsValid(release.updated), `${slug}: updated must use YYYY-MM-DD.`);
-  check(release.updated >= release.published, `${slug}: updated cannot precede published.`);
+  check(
+    ["public-release", "info-only"].includes(release.publicationMode),
+    `${slug}: publicationMode must be public-release or info-only.`
+  );
   requireStrings(release.tags, "tags", slug);
   requireStrings(release.capabilities, "capabilities", slug);
   requireStrings(release.guardrails, "guardrails", slug);
   requireStrings(release.limitations, "limitations", slug);
-  requireStrings(release.sourceUrls, "sourceUrls", slug);
-  check(release.sourceUrls.length === 1, `${slug}: V2 requires one exact canonical repository source URL.`);
-  check(!releaseRepositories.has(release.sourceUrls[0]), `${slug}: duplicate canonical repository source URL.`);
-  releaseRepositories.add(release.sourceUrls[0]);
-  check(dateIsValid(release.publicActivity?.repositoryCreated), `${slug}: publicActivity.repositoryCreated must use YYYY-MM-DD.`);
-  check(dateIsValid(release.publicActivity?.lastPublicPush), `${slug}: publicActivity.lastPublicPush must use YYYY-MM-DD.`);
-  check(
-    release.publicActivity?.lastPublicPush >= release.publicActivity?.repositoryCreated,
-    `${slug}: last public push cannot precede repository creation.`
-  );
-  const expectedApiSource = release.sourceUrls?.[0]?.replace(
-    "https://github.com/",
-    "https://api.github.com/repos/"
-  );
-  check(
-    release.publicActivity?.source === expectedApiSource,
-    `${slug}: public activity source must be the exact public GitHub repository API URL.`
-  );
 
   check(
     release.valueEvidence && allowedEvidence.has(release.valueEvidence.level),
@@ -191,43 +188,6 @@ for (const release of catalog.releases) {
     check(isNonEmptyString(step.detail), `${slug}: architecture[${index}].detail is required.`);
   });
 
-  check(Array.isArray(release.provenance) && release.provenance.length > 0, `${slug}: provenance is required.`);
-  release.provenance?.forEach((source, index) => {
-    check(isNonEmptyString(source.label), `${slug}: provenance[${index}].label is required.`);
-    check(isNonEmptyString(source.url), `${slug}: provenance[${index}].url is required.`);
-    check(isNonEmptyString(source.note), `${slug}: provenance[${index}].note is required.`);
-    check(
-      allowlist.repositories.some((repository) => source.url === repository || source.url.startsWith(`${repository}/`)),
-      `${slug}: provenance URL is outside the exact-project source allowlist: ${source.url}`
-    );
-  });
-
-  release.sourceUrls?.forEach((url) => check(
-    allowlistedRepositories.has(url),
-    `${slug}: source URL is not an exact allowlisted repository: ${url}`
-  ));
-  release.publicLinks?.forEach((link, index) => {
-    check(isNonEmptyString(link.label), `${slug}: publicLinks[${index}].label is required.`);
-    check(/^https:\/\//.test(link.url), `${slug}: publicLinks[${index}].url must be public HTTPS.`);
-    let publicLinkHost = "";
-    try {
-      publicLinkHost = new URL(link.url).hostname;
-    } catch {
-      // The URL format check below reports the invalid value.
-    }
-    check(
-      publicLinkHost === "billwhalenmsft.github.io",
-      `${slug}: publicLinks[${index}].url must use the approved public Pages host.`
-    );
-    check(["demo", "documentation", "release"].includes(link.type), `${slug}: publicLinks[${index}].type is invalid.`);
-  });
-  release.attribution?.forEach((item, index) => {
-    check(isNonEmptyString(item.name), `${slug}: attribution[${index}].name is required.`);
-    check(/^https:\/\//.test(item.url), `${slug}: attribution[${index}].url must be public HTTPS.`);
-    check(isNonEmptyString(item.relationship), `${slug}: attribution[${index}].relationship is required.`);
-    check(isNonEmptyString(item.license), `${slug}: attribution[${index}].license is required.`);
-  });
-
   check(release.visual?.type === "inline-svg", `${slug}: visual.type must be inline-svg.`);
   check(isNonEmptyString(release.visual?.alt), `${slug}: visual.alt is required.`);
   check(
@@ -236,25 +196,131 @@ for (const release of catalog.releases) {
   );
   requireStrings(release.visual?.nodes, "visual.nodes", slug);
 
-  check(isNonEmptyString(release.article?.slug), `${slug}: article.slug is required.`);
-  check(!articleSlugs.has(release.article?.slug), `${slug}: duplicate article slug.`);
-  articleSlugs.add(release.article?.slug);
-  check(isNonEmptyString(release.article?.title), `${slug}: article.title is required.`);
-  check(isNonEmptyString(release.article?.dek), `${slug}: article.dek is required.`);
-  check(release.article?.feed === true, `${slug}: approved V2 companion article must be included in feeds.`);
+  if (release.publicationMode === "public-release") {
+    check(dateIsValid(release.published), `${slug}: published must use YYYY-MM-DD.`);
+    check(dateIsValid(release.updated), `${slug}: updated must use YYYY-MM-DD.`);
+    check(release.updated >= release.published, `${slug}: updated cannot precede published.`);
+    requireStrings(release.sourceUrls, "sourceUrls", slug);
+    check(release.sourceUrls.length === 1, `${slug}: public release requires one exact canonical repository URL.`);
+    check(!releaseRepositories.has(release.sourceUrls[0]), `${slug}: duplicate canonical repository source URL.`);
+    releaseRepositories.add(release.sourceUrls[0]);
+    check(dateIsValid(release.publicActivity?.repositoryCreated), `${slug}: publicActivity.repositoryCreated must use YYYY-MM-DD.`);
+    check(dateIsValid(release.publicActivity?.lastPublicPush), `${slug}: publicActivity.lastPublicPush must use YYYY-MM-DD.`);
+    check(
+      release.publicActivity?.lastPublicPush >= release.publicActivity?.repositoryCreated,
+      `${slug}: last public push cannot precede repository creation.`
+    );
+    const expectedApiSource = release.sourceUrls?.[0]?.replace(
+      "https://github.com/",
+      "https://api.github.com/repos/"
+    );
+    check(
+      release.publicActivity?.source === expectedApiSource,
+      `${slug}: public activity source must be the exact public GitHub repository API URL.`
+    );
+
+    check(Array.isArray(release.provenance) && release.provenance.length > 0, `${slug}: provenance is required.`);
+    release.provenance?.forEach((source, index) => {
+      check(isNonEmptyString(source.label), `${slug}: provenance[${index}].label is required.`);
+      check(isNonEmptyString(source.url), `${slug}: provenance[${index}].url is required.`);
+      check(isNonEmptyString(source.note), `${slug}: provenance[${index}].note is required.`);
+      check(
+        allowlist.repositories.some((repository) => source.url === repository || source.url.startsWith(`${repository}/`)),
+        `${slug}: provenance URL is outside the exact-project source allowlist: ${source.url}`
+      );
+    });
+
+    release.sourceUrls?.forEach((url) => check(
+      allowlistedRepositories.has(url),
+      `${slug}: source URL is not an exact allowlisted repository: ${url}`
+    ));
+    release.publicLinks?.forEach((link, index) => {
+      check(isNonEmptyString(link.label), `${slug}: publicLinks[${index}].label is required.`);
+      check(/^https:\/\//.test(link.url), `${slug}: publicLinks[${index}].url must be public HTTPS.`);
+      let publicLinkHost = "";
+      try {
+        publicLinkHost = new URL(link.url).hostname;
+      } catch {
+        // The URL format check reports the invalid value.
+      }
+      check(
+        publicLinkHost === "billwhalenmsft.github.io",
+        `${slug}: publicLinks[${index}].url must use the approved public Pages host.`
+      );
+      check(["demo", "documentation", "release"].includes(link.type), `${slug}: publicLinks[${index}].type is invalid.`);
+    });
+    release.attribution?.forEach((item, index) => {
+      check(isNonEmptyString(item.name), `${slug}: attribution[${index}].name is required.`);
+      check(/^https:\/\//.test(item.url), `${slug}: attribution[${index}].url must be public HTTPS.`);
+      check(isNonEmptyString(item.relationship), `${slug}: attribution[${index}].relationship is required.`);
+      check(isNonEmptyString(item.license), `${slug}: attribution[${index}].license is required.`);
+    });
+
+    check(isNonEmptyString(release.article?.slug), `${slug}: article.slug is required.`);
+    check(!articleSlugs.has(release.article?.slug), `${slug}: duplicate article slug.`);
+    articleSlugs.add(release.article?.slug);
+    check(isNonEmptyString(release.article?.title), `${slug}: article.title is required.`);
+    check(isNonEmptyString(release.article?.dek), `${slug}: article.dek is required.`);
+    check(release.article?.feed === true, `${slug}: approved public-release article must be included in feeds.`);
+  } else if (release.publicationMode === "info-only") {
+    check(dateIsValid(release.ownerReviewedAsOf), `${slug}: ownerReviewedAsOf must use YYYY-MM-DD.`);
+    check(release.valueEvidence?.level === "designed", `${slug}: info-only value evidence must be designed.`);
+    check(
+      release.publicBoundary === "Information-only. Source and operational materials are not published.",
+      `${slug}: info-only public boundary disclosure is required verbatim.`
+    );
+    check(/Information-only/i.test(release.maturity), `${slug}: maturity must visibly say Information-only.`);
+    check(/Private active build/i.test(release.maturity), `${slug}: maturity must visibly say Private active build.`);
+    for (const forbiddenField of [
+      "sourceUrls",
+      "publicActivity",
+      "publicLinks",
+      "provenance",
+      "attribution",
+      "article",
+      "published"
+    ]) {
+      check(
+        !Object.hasOwn(release, forbiddenField),
+        `${slug}: info-only record must not contain ${forbiddenField}.`
+      );
+    }
+    check(!/https?:\/\//i.test(JSON.stringify(release)), `${slug}: info-only record must not contain URLs.`);
+    check(
+      release.limitations.some((limitation) => /not a Microsoft product/i.test(limitation)),
+      `${slug}: info-only limitations must state that the build is not a Microsoft product.`
+    );
+  }
 }
-pass("Catalog schema, approvals, evidence labels, and exact public source allowlist checked.");
-check(allowlist.repositories.length === catalog.expectedReleaseCount, "Source allowlist must contain exactly 10 repositories.");
-check(
-  JSON.stringify([...releaseRepositories].sort()) === JSON.stringify([...allowlistedRepositories].sort()),
-  "Approved releases and the exact-project source allowlist must match one-to-one."
-);
+pass("Publication modes, approvals, evidence labels, and public-safe record schema checked.");
 
 const ordered = orderedReleases(catalog);
+const orderedInfo = orderedInfoOnly(catalog);
+check(ordered.length === catalog.expectedPublicReleaseCount, "Catalog must contain exactly 9 public releases.");
+check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 6 info-only showcases.");
+check(
+  catalog.releases.length === catalog.expectedPublicReleaseCount + catalog.expectedInfoOnlyCount,
+  "Catalog must contain exactly 15 total records."
+);
+check(
+  allowlist.repositories.length === catalog.expectedPublicReleaseCount,
+  "Source allowlist must contain exactly 9 public repositories."
+);
+check(
+  JSON.stringify([...releaseRepositories].sort()) === JSON.stringify([...allowlistedRepositories].sort()),
+  "Public releases and the exact-project source allowlist must match one-to-one."
+);
+
 for (let index = 1; index < ordered.length; index += 1) {
   check(
     ordered[index - 1].publicActivity.lastPublicPush >= ordered[index].publicActivity.lastPublicPush,
     "Journal release order must be newest last-public-push first."
+  );
+}
+for (let index = 1; index < orderedInfo.length; index += 1) {
+  check(
+    orderedInfo[index - 1].ownerReviewedAsOf >= orderedInfo[index].ownerReviewedAsOf,
+    "Info-only showcases must be ordered by owner-reviewed as-of date."
   );
 }
 pass("Exact repository creation and last-public-push facts and ordering checked.");
@@ -302,7 +368,7 @@ for (const relativePath of ["index.html", "404.html"]) {
 }
 
 const home = diskHtml.get("index.html");
-check((home.match(/class="project-card"/g) || []).length === 9, "Homepage must retain all nine accepted project cards.");
+check((home.match(/class="project-card"/g) || []).length === 8, "Homepage must contain the eight correctly attributed project cards.");
 check(home.includes('id="hero-title">I build AI <span>people use.</span></h1>'), "Homepage accepted hero changed.");
 check(home.includes('id="projectSearch"'), "Homepage project search is missing.");
 check(home.includes('id="commandDialog"'), "Homepage keyboard quick launcher is missing.");
@@ -316,17 +382,37 @@ check(
   JSON.stringify(homepageLatestSlugs) === JSON.stringify(expectedLatestSlugs),
   "Homepage latest-releases surface must contain the four newest last-public-push releases in order."
 );
-pass("Accepted homepage hero, nine cards, search/filter, theme, and keyboard surfaces checked.");
+check(
+  (home.match(/data-info-showcase="[^"]+"/g) || []).length === catalog.expectedInfoOnlyCount,
+  "Homepage must contain exactly six info-only showcase cards."
+);
+pass("Homepage hero, attributed projects, active-work cards, search/filter, theme, and keyboard surfaces checked.");
 
 const journalHtml = outputs.get("journal/index.html");
 const journalReleaseSlugs = [...journalHtml.matchAll(/data-release="([^"]+)"/g)].map((match) => match[1]);
 check(
-  JSON.stringify(journalReleaseSlugs) === JSON.stringify(ordered.map((release) => release.slug)),
-  "Journal cards must be ordered by newest last public push."
+  JSON.stringify(journalReleaseSlugs)
+    === JSON.stringify([...ordered, ...orderedInfo].map((release) => release.slug)),
+  "Journal cards must keep public-release and info-only ordering separate."
 );
+check(journalHtml.includes('data-filter="public-release"'), "Journal requires a Public releases filter.");
+check(journalHtml.includes('data-filter="info-only"'), "Journal requires an Info-only active work filter.");
 check(
-  outputs.get("subscribe/index.html").includes(`all ${catalog.expectedReleaseCount} approved releases`),
+  outputs.get("subscribe/index.html").includes(`all ${catalog.expectedPublicReleaseCount} approved public releases`),
   "Subscription page must state the exact approved release count."
+);
+
+const journalDirectories = await generatedPageDirectories("journal");
+const expectedJournalDirectories = [...ordered, ...orderedInfo].map((release) => release.slug).sort();
+check(
+  JSON.stringify(journalDirectories) === JSON.stringify(expectedJournalDirectories),
+  "Journal directory set must exactly match approved public and info-only records."
+);
+const blogDirectories = await generatedPageDirectories("blog");
+const expectedBlogDirectories = ordered.map((release) => release.article.slug).sort();
+check(
+  JSON.stringify(blogDirectories) === JSON.stringify(expectedBlogDirectories),
+  "Blog directory set must exactly match public-release companion articles."
 );
 
 for (const [relativePath, html] of diskHtml) {
@@ -365,10 +451,10 @@ const rssXml = outputs.get("feeds/rss.xml");
 const atomXml = outputs.get("feeds/atom.xml");
 check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(rssXml), "RSS must declare UTF-8 XML.");
 check(/<rss version="2.0"/.test(rssXml), "RSS 2.0 root is missing.");
-check((rssXml.match(/<item>/g) || []).length === catalog.releases.length, "RSS item count must match feed releases.");
+check((rssXml.match(/<item>/g) || []).length === ordered.length, "RSS item count must match public releases.");
 check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(atomXml), "Atom must declare UTF-8 XML.");
 check(/<feed xmlns="http:\/\/www.w3.org\/2005\/Atom">/.test(atomXml), "Atom root is missing.");
-check((atomXml.match(/<entry>/g) || []).length === catalog.releases.length, "Atom entry count must match feed releases.");
+check((atomXml.match(/<entry>/g) || []).length === ordered.length, "Atom entry count must match public releases.");
 
 const sitemapXml = outputs.get("sitemap.xml");
 const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
@@ -380,12 +466,19 @@ check(
 check(!sitemapXml.includes("engagements/"), "Protected engagements must not appear in the sitemap.");
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));
-check(publicManifest.version === 2, "Public release manifest version must be 2.");
-check(publicManifest.releaseCount === catalog.expectedReleaseCount, "Public release manifest count must be exactly 10.");
+check(publicManifest.version === 3, "Public release manifest version must be 3.");
+check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 15.");
+check(publicManifest.releaseCount === catalog.expectedPublicReleaseCount, "Manifest public release count must be exactly 9.");
+check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 6.");
 check(
   JSON.stringify(publicManifest.releases.map((release) => release.slug))
     === JSON.stringify(ordered.map((release) => release.slug)),
   "Public release manifest must use last-public-push ordering."
+);
+check(
+  JSON.stringify(publicManifest.infoOnly.map((release) => release.slug))
+    === JSON.stringify(orderedInfo.map((release) => release.slug)),
+  "Info-only manifest records must use owner-reviewed as-of ordering."
 );
 pass("RSS, Atom, public manifest, and exact sitemap coverage checked.");
 
@@ -395,5 +488,5 @@ if (errors.length > 0) {
   process.exitCode = 1;
 } else {
   checks.forEach((message) => console.log(`PASS: ${message}`));
-  console.log(`Validated ${catalog.releases.length} releases and ${outputs.size} generated files.`);
+  console.log(`Validated ${ordered.length} public releases, ${orderedInfo.length} info-only showcases, and ${outputs.size} generated files.`);
 }

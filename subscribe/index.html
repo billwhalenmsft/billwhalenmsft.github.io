@@ -311,6 +311,7 @@
       background: var(--cp-success);
       content: "";
     }
+    .status-info::before { background: var(--cp-warning); }
     .section { padding-block: clamp(4rem, 8vw, 6.5rem); border-top: 1px solid var(--cp-border); }
     .section-heading {
       display: grid;
@@ -436,6 +437,23 @@
       font-size: 0.76rem;
     }
     .result-count { margin: -0.5rem 0 1rem; color: var(--cp-text-muted); font-size: 0.82rem; }
+    .journal-lane + .journal-lane { margin-top: 3rem; }
+    .lane-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .lane-heading h3 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+    .lane-heading p { max-width: 40rem; margin: 0; color: var(--cp-text-muted); font-size: 0.88rem; }
+    .info-boundary {
+      margin: 0 0 1rem;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--cp-warning);
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+    }
     .no-results { padding: 2rem; border: 1px dashed var(--cp-border-strong); border-radius: 16px; text-align: center; }
     .site-footer { padding-block: 2rem; border-top: 1px solid var(--cp-border); }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
@@ -451,6 +469,7 @@
       .nav-links { order: 3; width: 100%; justify-content: space-between; padding-bottom: 0.5rem; }
       .section-heading, .flow-grid, .release-grid, .split-grid, .architecture-notes { grid-template-columns: 1fr; }
       .filter-bar { align-items: stretch; flex-direction: column; }
+      .lane-heading { align-items: flex-start; flex-direction: column; }
       .search { width: 100%; }
       .release-card { min-height: auto; }
       .footer-inner { align-items: flex-start; flex-direction: column; }
@@ -494,7 +513,7 @@
       <div>
         <p class="eyebrow">Follow the public journal</p>
         <h1 id="subscribe-title">Subscribe without a subscriber list.</h1>
-        <p class="hero-copy">RSS and Atom carry all 10 approved releases. Add either feed URL to the reader you already use; this site does not collect email addresses.</p>
+        <p class="hero-copy">RSS and Atom carry all 9 approved public releases. Info-only active work is deliberately excluded. Add either feed URL to the reader you already use; this site does not collect email addresses.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="/feeds/rss.xml">Open RSS 2.0</a>
           <a class="button" href="/feeds/atom.xml">Open Atom</a>
@@ -502,7 +521,7 @@
       </div>
       <aside class="evidence-card">
         <span class="label">What is live</span>
-        <strong>RSS 2.0 and Atom for 10 releases.</strong>
+        <strong>RSS 2.0 and Atom for 9 public releases.</strong>
         <p>No email newsletter, signup form, tracking pixel, or subscriber database is connected.</p>
       </aside>
     </section>
@@ -520,6 +539,9 @@
           <p>Copy <code>https://billwhalenmsft.github.io/feeds/atom.xml</code> into an Atom-compatible reader. It is generated from the same approved release records.</p>
           <a class="button button-small" href="/feeds/atom.xml">View Atom</a>
         </article>
+      </div>
+      <div class="shell callout">
+        <p><strong>Info-only work is not syndicated.</strong> Those showcases describe private active builds without source or operational materials and do not appear in RSS or Atom.</p>
       </div>
       <div class="shell callout">
         <p><strong>Planned, not live:</strong> a future separately hosted MCP service may expose only approved public manifest records through read-only operations. GitHub Pages cannot host that service, and there is no MCP endpoint on this site today.</p>

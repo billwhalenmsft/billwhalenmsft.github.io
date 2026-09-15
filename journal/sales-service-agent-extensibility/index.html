@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.">
+  <meta name="description" content="A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.">
   <meta name="author" content="Bill Whalen">
   <meta name="theme-color" content="#0057B8">
-  <link rel="canonical" href="https://billwhalenmsft.github.io/journal/sellersphere/">
+  <link rel="canonical" href="https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/">
   <link rel="alternate" type="application/rss+xml" title="Bill Whalen solution journal RSS" href="https://billwhalenmsft.github.io/feeds/rss.xml">
   <link rel="alternate" type="application/atom+xml" title="Bill Whalen solution journal Atom" href="https://billwhalenmsft.github.io/feeds/atom.xml">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="SellerSphere Partner Accelerator | Solution journal">
-  <meta property="og:description" content="A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.">
-  <meta property="og:url" content="https://billwhalenmsft.github.io/journal/sellersphere/">
+  <meta property="og:title" content="Sales &amp; Service Agent Extensibility Patterns | Info-only active work">
+  <meta property="og:description" content="A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.">
+  <meta property="og:url" content="https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="SellerSphere Partner Accelerator | Solution journal">
-  <meta name="twitter:description" content="A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.">
+  <meta name="twitter:title" content="Sales &amp; Service Agent Extensibility Patterns | Info-only active work">
+  <meta name="twitter:description" content="A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
-  <title>SellerSphere Partner Accelerator | Solution journal</title>
+  <title>Sales &amp; Service Agent Extensibility Patterns | Info-only active work</title>
   <script>
   (() => {
     const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -30,21 +30,16 @@
     {
       "@context": "https://schema.org",
       "@type": "CreativeWork",
-      "headline": "SellerSphere Partner Accelerator",
-      "description": "A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.",
-      "datePublished": "2026-09-14",
+      "headline": "Sales & Service Agent Extensibility Patterns",
+      "description": "A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.",
       "dateModified": "2026-09-14",
       "author": {
         "@type": "Person",
         "name": "Bill Whalen",
         "url": "https://billwhalenmsft.github.io"
       },
-      "url": "https://billwhalenmsft.github.io/journal/sellersphere/",
-      "isBasedOn": [
-        "https://github.com/billwhalenmsft/sellersphere-partner-accelerator",
-        "https://billwhalenmsft.github.io/sellersphere-partner-accelerator/"
-      ],
-      "dateCreated": "2026-08-08"
+      "url": "https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/",
+      "usageInfo": "Information-only. Source and operational materials are not published."
     }
   </script>
   <style>
@@ -323,6 +318,7 @@
       background: var(--cp-success);
       content: "";
     }
+    .status-info::before { background: var(--cp-warning); }
     .section { padding-block: clamp(4rem, 8vw, 6.5rem); border-top: 1px solid var(--cp-border); }
     .section-heading {
       display: grid;
@@ -448,6 +444,23 @@
       font-size: 0.76rem;
     }
     .result-count { margin: -0.5rem 0 1rem; color: var(--cp-text-muted); font-size: 0.82rem; }
+    .journal-lane + .journal-lane { margin-top: 3rem; }
+    .lane-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .lane-heading h3 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+    .lane-heading p { max-width: 40rem; margin: 0; color: var(--cp-text-muted); font-size: 0.88rem; }
+    .info-boundary {
+      margin: 0 0 1rem;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--cp-warning);
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+    }
     .no-results { padding: 2rem; border: 1px dashed var(--cp-border-strong); border-radius: 16px; text-align: center; }
     .site-footer { padding-block: 2rem; border-top: 1px solid var(--cp-border); }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
@@ -463,6 +476,7 @@
       .nav-links { order: 3; width: 100%; justify-content: space-between; padding-bottom: 0.5rem; }
       .section-heading, .flow-grid, .release-grid, .split-grid, .architecture-notes { grid-template-columns: 1fr; }
       .filter-bar { align-items: stretch; flex-direction: column; }
+      .lane-heading { align-items: flex-start; flex-direction: column; }
       .search { width: 100%; }
       .release-card { min-height: auto; }
       .footer-inner { align-items: flex-start; flex-direction: column; }
@@ -505,73 +519,71 @@
     <article>
       <header class="hero shell">
         <div>
-          <p class="eyebrow">Solution entry &middot; Business applications</p>
-          <h1>SellerSphere Partner Accelerator</h1>
-          <p class="hero-copy">A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.</p>
+          <p class="eyebrow">Info-only active work &middot; Agent patterns</p>
+          <h1>Sales &amp; Service Agent Extensibility Patterns</h1>
+          <p class="hero-copy">A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.</p>
           <div class="meta-row">
-            <span>Published 2026-09-14</span>
-            <span>Updated 2026-09-14</span>
-            <span>Repository created 2026-08-08</span>
-            <span>Last public push 2026-08-08</span>
-            <span>Buildable reference accelerator</span>
+            <span>Information-only</span>
+            <span>Private active build</span>
+            <span>Owner-reviewed as of 2026-09-14</span>
+            <span>Not a code, adoption, or activity signal</span>
           </div>
           <div class="hero-actions">
-            <a class="button button-primary" href="https://github.com/billwhalenmsft/sellersphere-partner-accelerator" rel="noreferrer">Explore public proof</a>
-<a class="button" href="https://billwhalenmsft.github.io/sellersphere-partner-accelerator/" rel="noreferrer">Public release page</a>
-            <a class="button" href="/blog/sellersphere/">Read the field note</a>
+            <a class="button button-primary" href="/journal/#infoLane">Browse info-only work</a>
           </div>
         </div>
         <aside class="evidence-card">
-          <span class="label">Evidence label</span>
-          <strong>Designed value: a safer starting point for consumer-owned voice, Copilot Studio, and Dynamics 365 integration with explicit approval before consequential actions.</strong>
-          <p>This label is part of the release record. It distinguishes intended or observed value from a measured result.</p>
+          <span class="label">Public boundary</span>
+          <strong>Information-only. Source and operational materials are not published.</strong>
+          <p>No source, download, repository, operational-data, or private architecture links are provided for this showcase.</p>
         </aside>
       </header>
-      <section class="section" aria-labelledby="sellersphere-flow">
+      <section class="section" aria-labelledby="sales-service-agent-extensibility-flow">
         <div class="shell">
           <div class="section-heading">
-            <div><span class="section-kicker">Original state to outcome</span><h2 id="sellersphere-flow">What changed in the design.</h2></div>
-            <p>Customer-neutral framing keeps the pattern reusable without claiming private results.</p>
+            <div><span class="section-kicker">Original state to designed value</span><h2 id="sales-service-agent-extensibility-flow">What the private build is exploring.</h2></div>
+            <p>Customer-neutral framing only. This description does not establish deployment, adoption, or results.</p>
           </div>
           <div class="flow-grid">
-            <article class="panel"><span class="label">01 / Original state</span><h3>Before the solution</h3><p>A field demonstration can be tightly coupled to one tenant, configured agent, data model, and preview feature set, which makes it unsafe and impractical to share as a reusable implementation reference.</p></article>
-            <article class="panel"><span class="label">02 / Delivered</span><h3>What was built</h3><p>The public repository delivers sanitized desktop web-resource source, architecture, build and configuration guidance, an agent-instruction baseline, security controls, and sample workflows while excluding configured tenant artifacts and experimental bindings.</p></article>
-            <article class="panel"><span class="label">03 / Outcome</span><h3>Value enabled</h3><p>The accelerator is designed to help a consumer build and govern its own voice-first Dynamics 365 reference experience without representing the package as a turnkey product or preapproved architecture.</p></article>
+            <article class="panel"><span class="label">01 / Original state</span><h3>Before the pattern</h3><p>Agent experiences can connect prompts, business context, tools, and CRM actions without a reusable pattern for permissions, proposed changes, approval, and accountability.</p></article>
+            <article class="panel"><span class="label">02 / Being built</span><h3>What is being delivered</h3><p>The private work packages high-level sales and service patterns that separate user intent, approved context and tools, proposed actions, explicit approval, and governed CRM execution.</p></article>
+            <article class="panel"><span class="label">03 / Designed value</span><h3>Value hypothesis</h3><p>The design is intended to make agent extensibility easier to reason about and reuse while preserving human control over consequential business actions.</p></article>
           </div>
+          <div class="callout"><p><strong>Evidence label:</strong> Designed value: reusable sales and service patterns that keep context, tools, approvals, and CRM actions visibly separated.</p></div>
         </div>
       </section>
-      <section class="section" aria-labelledby="sellersphere-architecture">
+      <section class="section" aria-labelledby="sales-service-agent-extensibility-architecture">
         <div class="shell">
           <div class="section-heading">
-            <div><span class="section-kicker">Architecture</span><h2 id="sellersphere-architecture">How the public pattern fits together.</h2></div>
-            <p>A Dynamics 365 web resource uses delegated identity and approved tools to propose an action that remains gated by explicit user approval.</p>
+            <div><span class="section-kicker">Synthetic overview</span><h2 id="sales-service-agent-extensibility-architecture">A high-level public-safe pattern.</h2></div>
+            <p>User intent moves through approved context and a proposed action to explicit human approval.</p>
           </div>
           <div class="architecture">
-  <svg viewBox="0 0 960 290" role="img" aria-labelledby="solution-sellersphere-title solution-sellersphere-desc">
-    <title id="solution-sellersphere-title">SellerSphere Partner Accelerator architecture</title>
-    <desc id="solution-sellersphere-desc">A Dynamics 365 web resource uses delegated identity and approved tools to propose an action that remains gated by explicit user approval.</desc>
+  <svg viewBox="0 0 960 290" role="img" aria-labelledby="info-sales-service-agent-extensibility-title info-sales-service-agent-extensibility-desc">
+    <title id="info-sales-service-agent-extensibility-title">Sales &amp; Service Agent Extensibility Patterns architecture</title>
+    <desc id="info-sales-service-agent-extensibility-desc">User intent moves through approved context and a proposed action to explicit human approval.</desc>
     <defs>
-      <marker id="solution-sellersphere-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <marker id="info-sales-service-agent-extensibility-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--cp-accent)"/>
       </marker>
     </defs>
     <g>
       <rect class="node" x="20" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="38" y="102" font-size="16">01</text>
-      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">Seller web resource</text>
-      <path class="arrow" d="M230 145H252" fill="none" stroke-width="4" marker-end="url(#solution-sellersphere-arrow)"/>
+      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">User intent</text>
+      <path class="arrow" d="M230 145H252" fill="none" stroke-width="4" marker-end="url(#info-sales-service-agent-extensibility-arrow)"/>
     </g>
 <g>
       <rect class="node" x="260" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="278" y="102" font-size="16">02</text>
-      <text x="365" y="148" font-size="18" font-weight="700" text-anchor="middle">Delegated identity</text>
-      <path class="arrow" d="M470 145H492" fill="none" stroke-width="4" marker-end="url(#solution-sellersphere-arrow)"/>
+      <text x="365" y="148" font-size="18" font-weight="700" text-anchor="middle">Approved context</text>
+      <path class="arrow" d="M470 145H492" fill="none" stroke-width="4" marker-end="url(#info-sales-service-agent-extensibility-arrow)"/>
     </g>
 <g>
       <rect class="node" x="500" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="518" y="102" font-size="16">03</text>
       <text x="605" y="148" font-size="18" font-weight="700" text-anchor="middle">Proposed action</text>
-      <path class="arrow" d="M710 145H732" fill="none" stroke-width="4" marker-end="url(#solution-sellersphere-arrow)"/>
+      <path class="arrow" d="M710 145H732" fill="none" stroke-width="4" marker-end="url(#info-sales-service-agent-extensibility-arrow)"/>
     </g>
 <g>
       <rect class="node" x="740" y="70" width="210" height="150" rx="16"/>
@@ -582,61 +594,40 @@
   </svg>
 </div>
           <div class="architecture-notes"><article class="architecture-note">
-  <span class="label">01 / Seller web resource</span>
-  <p>A desktop model-driven-app web resource captures the user request and optional speech input.</p>
+  <span class="label">01 / User intent</span>
+  <p>A person states the goal and remains the accountable requester.</p>
 </article>
 <article class="architecture-note">
-  <span class="label">02 / Delegated identity</span>
-  <p>MSAL obtains delegated access for the consumer-owned agent and approved data context.</p>
+  <span class="label">02 / Approved context</span>
+  <p>The pattern limits retrieval and tools to authorized business context.</p>
 </article>
 <article class="architecture-note">
   <span class="label">03 / Proposed action</span>
-  <p>Copilot Studio and approved tools assemble a proposed CRM action or draft communication.</p>
+  <p>The agent prepares a reviewable change, draft, or next action.</p>
 </article>
 <article class="architecture-note">
   <span class="label">04 / Explicit approval</span>
-  <p>The user approves a CRM update and separately authorizes any communication send.</p>
+  <p>An authorized person approves, rejects, or edits consequential CRM execution.</p>
 </article></div>
         </div>
       </section>
-      <section class="section" aria-labelledby="sellersphere-boundaries">
+      <section class="section" aria-labelledby="sales-service-agent-extensibility-controls">
         <div class="shell detail-grid">
           <div>
             <span class="section-kicker">Capabilities</span>
-            <h2>What the project demonstrates.</h2>
-            <ul class="plain-list"><li>Hosts a desktop web resource inside a Dynamics 365 model-driven application.</li><li>Uses delegated MSAL authentication to reach a consumer-owned Copilot Studio agent and approved context.</li><li>Documents optional Azure AI Speech and Translator integration.</li><li>Separates proposed actions and draft communications from approved CRM writes or sends.</li></ul>
+            <h2 id="sales-service-agent-extensibility-controls">What the concept is designed to support.</h2>
+            <ul class="plain-list"><li>Frames reusable patterns for sales and service agent assistance.</li><li>Separates approved context retrieval from tool execution.</li><li>Treats CRM changes and outbound actions as proposals before approval.</li><li>Makes permissions, ownership, and audit expectations explicit.</li></ul>
           </div>
           <div>
             <article class="panel">
               <span class="label">Human control and guardrails</span>
-              <ul class="plain-list"><li>Agent instructions limit execution to approved tools and prohibit guessed CRM identifiers.</li><li>CRM writes require explicit approval, communications remain drafts by default, and sending requires separate authorization.</li><li>Ambiguous requests require clarification rather than silent assumptions.</li></ul>
+              <ul class="plain-list"><li>Tools and context remain allowlisted and permission-bound.</li><li>Consequential CRM writes and outbound actions require explicit human approval.</li><li>Ambiguity, missing identifiers, and weak evidence trigger clarification rather than silent action.</li></ul>
             </article>
             <article class="panel" style="margin-top: 1rem;">
-              <span class="label">Limitations</span>
-              <ul class="plain-list"><li>This is source-level reference material, not a production app, managed solution, supported Microsoft offering, one-click deployment, or preapproved governance design.</li><li>Consumers must build, configure, secure, test, and govern their own deployment; mobile authentication is disabled.</li><li>The web resource can retain up to five conversations with business context in browser localStorage, requiring explicit privacy, retention, shared-device, and clearing controls.</li><li>The repository-declared Pages site is a release and terms landing page, not the authenticated application.</li></ul>
+              <span class="label">Limitations and disclosure</span>
+              <ul class="plain-list"><li>Information-only pattern set; source, implementation details, operational materials, and configured systems are not published.</li><li>This private active work is not a Microsoft product, reference architecture, or officially supported offering.</li><li>No public evidence establishes production readiness, adoption, accuracy, savings, or business outcomes.</li></ul>
             </article>
           </div>
-        </div>
-      </section>
-      <section class="section" aria-labelledby="sellersphere-sources">
-        <div class="shell split-grid">
-          <div><span class="section-kicker">Public provenance</span><h2 id="sellersphere-sources">Follow the evidence.</h2><p>These public sources support the entry. No private customer material or internal evidence was used.</p></div>
-          <div><ul class="source-list"><li>
-  <a href="https://github.com/billwhalenmsft/sellersphere-partner-accelerator" rel="noreferrer">SellerSphere Partner Accelerator public repository</a>
-  <small>Public notice, release scope, architecture, agent instructions, web-resource source, license, third-party notice, Pages metadata, and history support this entry.</small>
-</li>
-<li>
-  <a href="https://api.github.com/repos/billwhalenmsft/sellersphere-partner-accelerator" rel="noreferrer">GitHub public repository metadata</a>
-  <small>Repository created 2026-08-08; last public push 2026-08-08. These are repository facts, not adoption evidence.</small>
-</li>
-<li>
-  <a href="https://billwhalenmsft.github.io/sellersphere-partner-accelerator/" rel="noreferrer">Public release page</a>
-  <small>Public release link declared by the project.</small>
-</li>
-<li>
-  <a href="https://github.com/AzureAD/microsoft-authentication-library-for-js" rel="noreferrer">Attribution: @azure/msal-browser</a>
-  <small>Third-party authentication library attributed in the repository notice; the implementation prefers a tenant-hosted copy with Microsoft CDN fallback. License: MIT.</small>
-</li></ul></div>
         </div>
       </section>
     </article>

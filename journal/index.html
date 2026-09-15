@@ -32,8 +32,8 @@
       "@type": "CollectionPage",
       "name": "Bill Whalen solution journal",
       "url": "https://billwhalenmsft.github.io/journal/",
-      "description": "Customer-neutral public solution entries grounded in public project evidence.",
-      "numberOfItems": 10,
+      "description": "Customer-neutral public releases and clearly separated information-only active-work showcases.",
+      "numberOfItems": 15,
       "hasPart": [
         {
           "@type": "CreativeWork",
@@ -54,11 +54,6 @@
           "@type": "CreativeWork",
           "name": "Customer 360 for Entities",
           "url": "https://billwhalenmsft.github.io/journal/customer-360-for-entities/"
-        },
-        {
-          "@type": "CreativeWork",
-          "name": "SellerSphere Partner Accelerator",
-          "url": "https://billwhalenmsft.github.io/journal/sellersphere/"
         },
         {
           "@type": "CreativeWork",
@@ -84,6 +79,36 @@
           "@type": "CreativeWork",
           "name": "Copilot Studio + MCP Lab",
           "url": "https://billwhalenmsft.github.io/journal/copilot-studio-mcp-lab/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "SE OS",
+          "url": "https://billwhalenmsft.github.io/journal/se-os/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "MCAPS OS + App Store",
+          "url": "https://billwhalenmsft.github.io/journal/mcaps-os-app-store/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Program IQ",
+          "url": "https://billwhalenmsft.github.io/journal/program-iq/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Field Service Tech Home",
+          "url": "https://billwhalenmsft.github.io/journal/field-service-tech-home/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Sales & Service Agent Extensibility Patterns",
+          "url": "https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Pipeline-to-Consumption Unified View",
+          "url": "https://billwhalenmsft.github.io/journal/pipeline-consumption-unified-view/"
         }
       ]
     }
@@ -364,6 +389,7 @@
       background: var(--cp-success);
       content: "";
     }
+    .status-info::before { background: var(--cp-warning); }
     .section { padding-block: clamp(4rem, 8vw, 6.5rem); border-top: 1px solid var(--cp-border); }
     .section-heading {
       display: grid;
@@ -489,6 +515,23 @@
       font-size: 0.76rem;
     }
     .result-count { margin: -0.5rem 0 1rem; color: var(--cp-text-muted); font-size: 0.82rem; }
+    .journal-lane + .journal-lane { margin-top: 3rem; }
+    .lane-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .lane-heading h3 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+    .lane-heading p { max-width: 40rem; margin: 0; color: var(--cp-text-muted); font-size: 0.88rem; }
+    .info-boundary {
+      margin: 0 0 1rem;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--cp-warning);
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+    }
     .no-results { padding: 2rem; border: 1px dashed var(--cp-border-strong); border-radius: 16px; text-align: center; }
     .site-footer { padding-block: 2rem; border-top: 1px solid var(--cp-border); }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
@@ -504,6 +547,7 @@
       .nav-links { order: 3; width: 100%; justify-content: space-between; padding-bottom: 0.5rem; }
       .section-heading, .flow-grid, .release-grid, .split-grid, .architecture-notes { grid-template-columns: 1fr; }
       .filter-bar { align-items: stretch; flex-direction: column; }
+      .lane-heading { align-items: flex-start; flex-direction: column; }
       .search { width: 100%; }
       .release-card { min-height: auto; }
       .footer-inner { align-items: flex-start; flex-direction: column; }
@@ -547,35 +591,47 @@
       <div>
         <p class="eyebrow">Public-safe solution journal</p>
         <h1 id="journal-title">Build notes with the evidence attached.</h1>
-        <p class="hero-copy">10 customer-neutral release entries show the original workflow, what the public project delivers, the value it is designed to enable, and the boundaries that still matter.</p>
+        <p class="hero-copy">9 sourced public releases and 6 information-only showcases explain the original state, what is being built, designed value, human controls, and the boundary around what is not published.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#releases">Explore releases</a>
+          <a class="button button-primary" href="#releases">Explore the journal</a>
           <a class="button" href="/subscribe/">Follow the journal</a>
         </div>
       </div>
       <aside class="evidence-card" aria-label="Journal evidence policy">
         <span class="label">Evidence policy</span>
-        <strong>Public proof only.</strong>
-        <p>No customer identities, private telemetry, internal evidence, or invented business results. Intended value is labeled as designed value rather than a measured claim.</p>
+        <strong>Two clearly separated lanes.</strong>
+        <p>Public releases cite public proof. Info-only active work has no source or download links and discloses that source and operational materials are not published.</p>
       </aside>
     </section>
     <section class="section" id="releases" aria-labelledby="releases-title">
       <div class="shell">
         <div class="section-heading">
-          <div><span class="section-kicker">Release catalog</span><h2 id="releases-title">Current entries.</h2></div>
-          <p>Sorted by the exact last public repository push date. Filter by solution family or search titles, technologies, maturity, and evidence language.</p>
+          <div><span class="section-kicker">Journal catalog</span><h2 id="releases-title">Current entries.</h2></div>
+          <p>Public releases use exact repository push facts. Info-only work uses an owner-reviewed as-of date that is not a code, adoption, or activity signal.</p>
         </div>
         <div class="filter-bar">
           <div class="filters" role="group" aria-label="Filter journal entries"><button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>
+<button class="filter-chip" type="button" data-filter="public-release" aria-pressed="false">Public releases</button>
+<button class="filter-chip" type="button" data-filter="info-only" aria-pressed="false">Info-only active work</button>
+<button class="filter-chip" type="button" data-filter="Agent patterns" aria-pressed="false">Agent patterns</button>
 <button class="filter-chip" type="button" data-filter="Agents and AI" aria-pressed="false">Agents and AI</button>
 <button class="filter-chip" type="button" data-filter="Business applications" aria-pressed="false">Business applications</button>
+<button class="filter-chip" type="button" data-filter="Decision support" aria-pressed="false">Decision support</button>
 <button class="filter-chip" type="button" data-filter="Developer labs" aria-pressed="false">Developer labs</button>
+<button class="filter-chip" type="button" data-filter="Field operations" aria-pressed="false">Field operations</button>
 <button class="filter-chip" type="button" data-filter="Information design" aria-pressed="false">Information design</button>
-<button class="filter-chip" type="button" data-filter="Personal systems" aria-pressed="false">Personal systems</button></div>
-          <label><span class="label">Search</span><input class="search" id="releaseSearch" type="search" autocomplete="off" placeholder="Search releases"></label>
+<button class="filter-chip" type="button" data-filter="Operating systems" aria-pressed="false">Operating systems</button>
+<button class="filter-chip" type="button" data-filter="Personal systems" aria-pressed="false">Personal systems</button>
+<button class="filter-chip" type="button" data-filter="Program execution" aria-pressed="false">Program execution</button></div>
+          <label><span class="label">Search</span><input class="search" id="releaseSearch" type="search" autocomplete="off" placeholder="Search journal"></label>
         </div>
-        <p class="result-count" id="releaseCount" aria-live="polite">10 releases</p>
-        <div class="release-grid" id="releaseGrid"><article class="release-card" data-release="home-assistant-estate-panel" data-category="Personal systems" data-search="home assistant estate panel a self-hosted react and typescript reference build that combines native home assistant cards with custom estate controls on a shared connection and layout. personal systems self-hosted reference build designed home assistant react typescript local-first">
+        <p class="result-count" id="releaseCount" aria-live="polite">15 entries &middot; 9 public releases &middot; 6 info-only showcases</p>
+        <section class="journal-lane" id="publicLane" aria-labelledby="public-lane-title">
+          <div class="lane-heading">
+            <h3 id="public-lane-title">Public releases</h3>
+            <p>Source-backed entries ordered by exact last public repository push.</p>
+          </div>
+          <div class="release-grid"><article class="release-card" data-release="home-assistant-estate-panel" data-mode="public-release" data-category="Personal systems" data-search="home assistant estate panel a self-hosted react and typescript reference build that combines native home assistant cards with custom estate controls on a shared connection and layout. personal systems self-hosted reference build public-release designed home assistant react typescript local-first">
   <span class="status">Self-hosted reference build</span>
   <p class="eyebrow">Personal systems</p>
   <h2>Home Assistant Estate Panel</h2>
@@ -583,12 +639,13 @@
   <p class="activity-line">Last public push <time datetime="2026-09-14">2026-09-14</time></p>
   <ul class="tag-list"><li>Home Assistant</li><li>React</li><li>TypeScript</li><li>Local-first</li></ul>
   <p><strong>Evidence:</strong> Designed value: a coherent self-hosted estate view with selective live updates, reusable Home Assistant cards, and confirmation before security-reducing actions.</p>
+
   <div class="card-actions">
     <a class="button button-primary button-small" href="/journal/home-assistant-estate-panel/">Solution entry</a>
     <a class="button button-small" href="/blog/home-assistant-estate-panel/">Read the article</a>
   </div>
 </article>
-<article class="release-card" data-release="freight-triage-control-tower" data-category="Business applications" data-search="freight triage control tower a public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views. business applications public sample-data prototype designed power apps code apps react typescript operations">
+<article class="release-card" data-release="freight-triage-control-tower" data-mode="public-release" data-category="Business applications" data-search="freight triage control tower a public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views. business applications public sample-data prototype public-release designed power apps code apps react typescript operations">
   <span class="status">Public sample-data prototype</span>
   <p class="eyebrow">Business applications</p>
   <h2>Freight Triage Control Tower</h2>
@@ -596,12 +653,13 @@
   <p class="activity-line">Last public push <time datetime="2026-09-10">2026-09-10</time></p>
   <ul class="tag-list"><li>Power Apps Code Apps</li><li>React</li><li>TypeScript</li><li>Operations</li></ul>
   <p><strong>Evidence:</strong> Designed value: a shared queue for freight exceptions with clearer ownership, aging, priority, and resolution state.</p>
+
   <div class="card-actions">
     <a class="button button-primary button-small" href="/journal/freight-triage-control-tower/">Solution entry</a>
     <a class="button button-small" href="/blog/freight-triage-control-tower/">Read the article</a>
   </div>
 </article>
-<article class="release-card" data-release="customer-news-hub" data-category="Information design" data-search="customer news hub an explicitly unpublished static reference interface for exploring how sample product updates could be filtered, scanned, and opened as a digest. information design illustrative unpublished demo designed static web javascript content filtering illustrative data">
+<article class="release-card" data-release="customer-news-hub" data-mode="public-release" data-category="Information design" data-search="customer news hub an explicitly unpublished static reference interface for exploring how sample product updates could be filtered, scanned, and opened as a digest. information design illustrative unpublished demo public-release designed static web javascript content filtering illustrative data">
   <span class="status">Illustrative unpublished demo</span>
   <p class="eyebrow">Information design</p>
   <h2>Customer News Hub</h2>
@@ -609,12 +667,13 @@
   <p class="activity-line">Last public push <time datetime="2026-09-07">2026-09-07</time></p>
   <ul class="tag-list"><li>Static web</li><li>JavaScript</li><li>Content filtering</li><li>Illustrative data</li></ul>
   <p><strong>Evidence:</strong> Designed value: a filterable reference pattern for turning a broad product-update stream into a more focused, reviewable digest.</p>
+
   <div class="card-actions">
     <a class="button button-primary button-small" href="/journal/customer-news-hub/">Solution entry</a>
     <a class="button button-small" href="/blog/customer-news-hub/">Read the article</a>
   </div>
 </article>
-<article class="release-card" data-release="customer-360-for-entities" data-category="Business applications" data-search="customer 360 for entities an adaptive dynamics 365 and dataverse web resource that brings related operational context into the forms where work already happens. business applications public community solution designed dynamics 365 dataverse javascript model-driven apps">
+<article class="release-card" data-release="customer-360-for-entities" data-mode="public-release" data-category="Business applications" data-search="customer 360 for entities an adaptive dynamics 365 and dataverse web resource that brings related operational context into the forms where work already happens. business applications public community solution public-release designed dynamics 365 dataverse javascript model-driven apps">
   <span class="status">Public community solution</span>
   <p class="eyebrow">Business applications</p>
   <h2>Customer 360 for Entities</h2>
@@ -622,25 +681,13 @@
   <p class="activity-line">Last public push <time datetime="2026-08-26">2026-08-26</time></p>
   <ul class="tag-list"><li>Dynamics 365</li><li>Dataverse</li><li>JavaScript</li><li>Model-driven apps</li></ul>
   <p><strong>Evidence:</strong> Designed value: less navigation between related records and a more coherent operational view at the point of work.</p>
+
   <div class="card-actions">
     <a class="button button-primary button-small" href="/journal/customer-360-for-entities/">Solution entry</a>
     <a class="button button-small" href="/blog/customer-360-for-entities/">Read the article</a>
   </div>
 </article>
-<article class="release-card" data-release="sellersphere" data-category="Business applications" data-search="sellersphere partner accelerator a sanitized, buildable reference accelerator for a voice-first dynamics 365 seller experience with consumer-owned configuration and explicit approval gates. business applications buildable reference accelerator designed dynamics 365 copilot studio azure ai speech msal">
-  <span class="status">Buildable reference accelerator</span>
-  <p class="eyebrow">Business applications</p>
-  <h2>SellerSphere Partner Accelerator</h2>
-  <p>A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.</p>
-  <p class="activity-line">Last public push <time datetime="2026-08-08">2026-08-08</time></p>
-  <ul class="tag-list"><li>Dynamics 365</li><li>Copilot Studio</li><li>Azure AI Speech</li><li>MSAL</li></ul>
-  <p><strong>Evidence:</strong> Designed value: a safer starting point for consumer-owned voice, Copilot Studio, and Dynamics 365 integration with explicit approval before consequential actions.</p>
-  <div class="card-actions">
-    <a class="button button-primary button-small" href="/journal/sellersphere/">Solution entry</a>
-    <a class="button button-small" href="/blog/sellersphere/">Read the article</a>
-  </div>
-</article>
-<article class="release-card" data-release="agent-team-starter-kit" data-category="Agents and AI" data-search="agent team starter kit a configurable generator and template set for scaffolding specialized ai agent roles around a visible github issues work queue and outcome gates. agents and ai public scaffolding kit designed multi-agent github actions azure functions azure openai">
+<article class="release-card" data-release="agent-team-starter-kit" data-mode="public-release" data-category="Agents and AI" data-search="agent team starter kit a configurable generator and template set for scaffolding specialized ai agent roles around a visible github issues work queue and outcome gates. agents and ai public scaffolding kit public-release designed multi-agent github actions azure functions azure openai">
   <span class="status">Public scaffolding kit</span>
   <p class="eyebrow">Agents and AI</p>
   <h2>Agent Team Starter Kit</h2>
@@ -648,12 +695,13 @@
   <p class="activity-line">Last public push <time datetime="2026-06-02">2026-06-02</time></p>
   <ul class="tag-list"><li>Multi-agent</li><li>GitHub Actions</li><li>Azure Functions</li><li>Azure OpenAI</li></ul>
   <p><strong>Evidence:</strong> Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work.</p>
+
   <div class="card-actions">
     <a class="button button-primary button-small" href="/journal/agent-team-starter-kit/">Solution entry</a>
     <a class="button button-small" href="/blog/agent-team-starter-kit/">Read the article</a>
   </div>
 </article>
-<article class="release-card" data-release="warranty-claims-operations" data-category="Business applications" data-search="warranty + claims operations a power platform accelerator for structuring warranty and claims intake, review, supporting flows, and human-owned decisions. business applications public community accelerator designed power platform copilot studio dataverse claims operations">
+<article class="release-card" data-release="warranty-claims-operations" data-mode="public-release" data-category="Business applications" data-search="warranty + claims operations a power platform accelerator for structuring warranty and claims intake, review, supporting flows, and human-owned decisions. business applications public community accelerator public-release designed power platform copilot studio dataverse claims operations">
   <span class="status">Public community accelerator</span>
   <p class="eyebrow">Business applications</p>
   <h2>Warranty + Claims Operations</h2>
@@ -661,12 +709,13 @@
   <p class="activity-line">Last public push <time datetime="2026-05-06">2026-05-06</time></p>
   <ul class="tag-list"><li>Power Platform</li><li>Copilot Studio</li><li>Dataverse</li><li>Claims operations</li></ul>
   <p><strong>Evidence:</strong> Designed value: more consistent claims intake and review with visible status, supporting context, and human-owned decisions.</p>
+
   <div class="card-actions">
     <a class="button button-primary button-small" href="/journal/warranty-claims-operations/">Solution entry</a>
     <a class="button button-small" href="/blog/warranty-claims-operations/">Read the article</a>
   </div>
 </article>
-<article class="release-card" data-release="prompt-escape" data-category="Agents and AI" data-search="prompt escape a multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge. agents and ai public hackathon prototype designed typescript prompt engineering github copilot team learning">
+<article class="release-card" data-release="prompt-escape" data-mode="public-release" data-category="Agents and AI" data-search="prompt escape a multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge. agents and ai public hackathon prototype public-release designed typescript prompt engineering github copilot team learning">
   <span class="status">Public hackathon prototype</span>
   <p class="eyebrow">Agents and AI</p>
   <h2>Prompt Escape</h2>
@@ -674,12 +723,13 @@
   <p class="activity-line">Last public push <time datetime="2026-03-06">2026-03-06</time></p>
   <ul class="tag-list"><li>TypeScript</li><li>Prompt engineering</li><li>GitHub Copilot</li><li>Team learning</li></ul>
   <p><strong>Evidence:</strong> Designed value: an experiential way for teams to practice clearer prompts, constraints, iteration, and collaborative problem solving.</p>
+
   <div class="card-actions">
     <a class="button button-primary button-small" href="/journal/prompt-escape/">Solution entry</a>
     <a class="button button-small" href="/blog/prompt-escape/">Read the article</a>
   </div>
 </article>
-<article class="release-card" data-release="deal-to-glory" data-category="Agents and AI" data-search="deal to glory a single-commit hackathon mvp that visualizes a deterministic, agent-styled seller workflow from voice or text input through crm, illustrative attainment, recognition, and simulated notification stages. agents and ai single-commit hackathon mvp designed typescript express web speech server-sent events">
+<article class="release-card" data-release="deal-to-glory" data-mode="public-release" data-category="Agents and AI" data-search="deal to glory a single-commit hackathon mvp that visualizes a deterministic, agent-styled seller workflow from voice or text input through crm, illustrative attainment, recognition, and simulated notification stages. agents and ai single-commit hackathon mvp public-release designed typescript express web speech server-sent events">
   <span class="status">Single-commit hackathon MVP</span>
   <p class="eyebrow">Agents and AI</p>
   <h2>Deal to Glory</h2>
@@ -687,12 +737,13 @@
   <p class="activity-line">Last public push <time datetime="2026-02-12">2026-02-12</time></p>
   <ul class="tag-list"><li>TypeScript</li><li>Express</li><li>Web Speech</li><li>Server-Sent Events</li></ul>
   <p><strong>Evidence:</strong> Designed value: a tangible visualization of how one seller update could pass through structured CRM, calculation, recognition, and notification stages.</p>
+
   <div class="card-actions">
     <a class="button button-primary button-small" href="/journal/deal-to-glory/">Solution entry</a>
     <a class="button button-small" href="/blog/deal-to-glory/">Read the article</a>
   </div>
 </article>
-<article class="release-card" data-release="copilot-studio-mcp-lab" data-category="Developer labs" data-search="copilot studio + mcp lab a hands-on public lab for deploying a small model context protocol tool server and adding it as a tool in microsoft copilot studio. developer labs public hands-on lab designed model context protocol copilot studio azure container apps typescript">
+<article class="release-card" data-release="copilot-studio-mcp-lab" data-mode="public-release" data-category="Developer labs" data-search="copilot studio + mcp lab a hands-on public lab for deploying a small model context protocol tool server and adding it as a tool in microsoft copilot studio. developer labs public hands-on lab public-release designed model context protocol copilot studio azure container apps typescript">
   <span class="status">Public hands-on lab</span>
   <p class="eyebrow">Developer labs</p>
   <h2>Copilot Studio + MCP Lab</h2>
@@ -700,12 +751,99 @@
   <p class="activity-line">Last public push <time datetime="2025-07-21">2025-07-21</time></p>
   <ul class="tag-list"><li>Model Context Protocol</li><li>Copilot Studio</li><li>Azure Container Apps</li><li>TypeScript</li></ul>
   <p><strong>Evidence:</strong> Designed value: a compact end-to-end MCP reference that makes server, tool, client, and invocation responsibilities easier to see.</p>
+
   <div class="card-actions">
     <a class="button button-primary button-small" href="/journal/copilot-studio-mcp-lab/">Solution entry</a>
     <a class="button button-small" href="/blog/copilot-studio-mcp-lab/">Read the article</a>
   </div>
 </article></div>
-        <div class="no-results" id="noResults" hidden>No releases match that filter. Try another category or clear the search.</div>
+        </section>
+        <section class="journal-lane" id="infoLane" aria-labelledby="info-lane-title">
+          <div class="lane-heading">
+            <h3 id="info-lane-title">Info-only active work</h3>
+            <p>Owner-reviewed descriptions ordered by the disclosed as-of date, not by code, deployment, adoption, or results.</p>
+          </div>
+          <p class="info-boundary"><strong>Information-only.</strong> Source and operational materials are not published. These private active builds are not Microsoft products or officially supported offerings.</p>
+          <div class="release-grid"><article class="release-card" data-release="se-os" data-mode="info-only" data-category="Operating systems" data-search="se os a private, customer-neutral solution-engineering operating system for turning ambiguous work into governed discovery, proofs, reusable accelerators, evidence, and handoffs. operating systems information-only / private active build info-only designed solution engineering discovery proof orchestration handoffs">
+  <span class="status status-info">Information-only / Private active build</span>
+  <p class="eyebrow">Operating systems</p>
+  <h2>SE OS</h2>
+  <p>A private, customer-neutral solution-engineering operating system for turning ambiguous work into governed discovery, proofs, reusable accelerators, evidence, and handoffs.</p>
+  <p class="activity-line">Owner-reviewed as of <time datetime="2026-09-14">2026-09-14</time> &middot; not a code, adoption, or activity signal</p>
+  <ul class="tag-list"><li>Solution engineering</li><li>Discovery</li><li>Proof orchestration</li><li>Handoffs</li></ul>
+  <p><strong>Evidence:</strong> Designed value: a clearer path from ambiguous request to governed proof, reusable evidence, and accountable handoff.</p>
+<p><strong>Public boundary:</strong> Information-only. Source and operational materials are not published.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/se-os/">Info-only showcase</a>
+  </div>
+</article>
+<article class="release-card" data-release="mcaps-os-app-store" data-mode="info-only" data-category="Operating systems" data-search="mcaps os + app store a modular private operating surface and curated pattern catalog described only through generic catalog, installation, review, and owner-control concepts. operating systems information-only / private active build info-only designed modular workspace pattern catalog review gates private build">
+  <span class="status status-info">Information-only / Private active build</span>
+  <p class="eyebrow">Operating systems</p>
+  <h2>MCAPS OS + App Store</h2>
+  <p>A modular private operating surface and curated pattern catalog described only through generic catalog, installation, review, and owner-control concepts.</p>
+  <p class="activity-line">Owner-reviewed as of <time datetime="2026-09-14">2026-09-14</time> &middot; not a code, adoption, or activity signal</p>
+  <ul class="tag-list"><li>Modular workspace</li><li>Pattern catalog</li><li>Review gates</li><li>Private build</li></ul>
+  <p><strong>Evidence:</strong> Designed value: a reviewable catalog path from discoverable pattern to owner-approved installation and use.</p>
+<p><strong>Public boundary:</strong> Information-only. Source and operational materials are not published.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/mcaps-os-app-store/">Info-only showcase</a>
+  </div>
+</article>
+<article class="release-card" data-release="program-iq" data-mode="info-only" data-category="Program execution" data-search="program iq a private program-execution view for bringing milestones, ownership, evidence, risks, decisions, and next actions into one reviewable operating picture. program execution information-only / private active build info-only designed milestones ownership evidence risk">
+  <span class="status status-info">Information-only / Private active build</span>
+  <p class="eyebrow">Program execution</p>
+  <h2>Program IQ</h2>
+  <p>A private program-execution view for bringing milestones, ownership, evidence, risks, decisions, and next actions into one reviewable operating picture.</p>
+  <p class="activity-line">Owner-reviewed as of <time datetime="2026-09-14">2026-09-14</time> &middot; not a code, adoption, or activity signal</p>
+  <ul class="tag-list"><li>Milestones</li><li>Ownership</li><li>Evidence</li><li>Risk</li></ul>
+  <p><strong>Evidence:</strong> Designed value: one reviewable program picture connecting milestones, evidence, risks, decisions, ownership, and next actions.</p>
+<p><strong>Public boundary:</strong> Information-only. Source and operational materials are not published.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/program-iq/">Info-only showcase</a>
+  </div>
+</article>
+<article class="release-card" data-release="field-service-tech-home" data-mode="info-only" data-category="Field operations" data-search="field service tech home a supportive private mobile technician-home concept for work execution, productivity, quality, parts, and ai-guided recommendations without punitive monitoring. field operations information-only / private active build info-only designed mobile work technician experience parts ai guidance">
+  <span class="status status-info">Information-only / Private active build</span>
+  <p class="eyebrow">Field operations</p>
+  <h2>Field Service Tech Home</h2>
+  <p>A supportive private mobile technician-home concept for work execution, productivity, quality, parts, and AI-guided recommendations without punitive monitoring.</p>
+  <p class="activity-line">Owner-reviewed as of <time datetime="2026-09-14">2026-09-14</time> &middot; not a code, adoption, or activity signal</p>
+  <ul class="tag-list"><li>Mobile work</li><li>Technician experience</li><li>Parts</li><li>AI guidance</li></ul>
+  <p><strong>Evidence:</strong> Designed value: a supportive mobile starting point for work context, parts, quality, productivity, and optional AI guidance.</p>
+<p><strong>Public boundary:</strong> Information-only. Source and operational materials are not published.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/field-service-tech-home/">Info-only showcase</a>
+  </div>
+</article>
+<article class="release-card" data-release="sales-service-agent-extensibility" data-mode="info-only" data-category="Agent patterns" data-search="sales &amp; service agent extensibility patterns a private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and crm actions. agent patterns information-only / private active build info-only designed agent assistance crm context tool governance approvals">
+  <span class="status status-info">Information-only / Private active build</span>
+  <p class="eyebrow">Agent patterns</p>
+  <h2>Sales &amp; Service Agent Extensibility Patterns</h2>
+  <p>A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.</p>
+  <p class="activity-line">Owner-reviewed as of <time datetime="2026-09-14">2026-09-14</time> &middot; not a code, adoption, or activity signal</p>
+  <ul class="tag-list"><li>Agent assistance</li><li>CRM context</li><li>Tool governance</li><li>Approvals</li></ul>
+  <p><strong>Evidence:</strong> Designed value: reusable sales and service patterns that keep context, tools, approvals, and CRM actions visibly separated.</p>
+<p><strong>Public boundary:</strong> Information-only. Source and operational materials are not published.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/sales-service-agent-extensibility/">Info-only showcase</a>
+  </div>
+</article>
+<article class="release-card" data-release="pipeline-consumption-unified-view" data-mode="info-only" data-category="Decision support" data-search="pipeline-to-consumption unified view a private decision-support pattern connecting opportunity context, milestones, adoption signals, evidence, risks, and next actions without exposing account data or forecast claims. decision support information-only / private active build info-only designed opportunity context milestones evidence next actions">
+  <span class="status status-info">Information-only / Private active build</span>
+  <p class="eyebrow">Decision support</p>
+  <h2>Pipeline-to-Consumption Unified View</h2>
+  <p>A private decision-support pattern connecting opportunity context, milestones, adoption signals, evidence, risks, and next actions without exposing account data or forecast claims.</p>
+  <p class="activity-line">Owner-reviewed as of <time datetime="2026-09-14">2026-09-14</time> &middot; not a code, adoption, or activity signal</p>
+  <ul class="tag-list"><li>Opportunity context</li><li>Milestones</li><li>Evidence</li><li>Next actions</li></ul>
+  <p><strong>Evidence:</strong> Designed value: one evidence-aware view connecting opportunity context, milestones, adoption signals, risks, and owner-approved next actions.</p>
+<p><strong>Public boundary:</strong> Information-only. Source and operational materials are not published.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/pipeline-consumption-unified-view/">Info-only showcase</a>
+  </div>
+</article></div>
+        </section>
+        <div class="no-results" id="noResults" hidden>No journal entries match that filter. Try another category or clear the search.</div>
       </div>
     </section>
   </main>
@@ -739,17 +877,21 @@
   const search = document.getElementById("releaseSearch");
   const count = document.getElementById("releaseCount");
   const noResults = document.getElementById("noResults");
+  const publicLane = document.getElementById("publicLane");
+  const infoLane = document.getElementById("infoLane");
   let activeFilter = "all";
   function applyFilters() {
     const query = search.value.trim().toLowerCase();
     let visible = 0;
     cards.forEach((card) => {
-      const show = (activeFilter === "all" || card.dataset.category === activeFilter)
+      const show = (activeFilter === "all" || card.dataset.mode === activeFilter || card.dataset.category === activeFilter)
         && (!query || card.dataset.search.includes(query));
       card.hidden = !show;
       if (show) visible += 1;
     });
-    count.textContent = `${visible} ${visible === 1 ? "release" : "releases"}`;
+    publicLane.hidden = ![...publicLane.querySelectorAll(".release-card")].some((card) => !card.hidden);
+    infoLane.hidden = ![...infoLane.querySelectorAll(".release-card")].some((card) => !card.hidden);
+    count.textContent = `${visible} ${visible === 1 ? "entry" : "entries"}`;
     noResults.hidden = visible !== 0;
   }
   filters.forEach((filter) => filter.addEventListener("click", () => {

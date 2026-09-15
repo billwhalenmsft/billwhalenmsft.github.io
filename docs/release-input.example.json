@@ -1,5 +1,6 @@
 {
   "slug": "stable-public-slug",
+  "publicationMode": "public-release",
   "title": "Public solution title",
   "summary": "Customer-neutral summary grounded in an allowlisted public source.",
   "category": "Agents and AI",

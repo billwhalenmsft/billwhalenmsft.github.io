@@ -53,15 +53,22 @@
         "url": "https://billwhalenmsft.github.io/journal/"
       },
       "knowsAbout": [
-        "Artificial intelligence",
         "AI agents",
         "Microsoft Copilot",
-        "Dynamics 365",
-        "Power Platform",
-        "Dataverse",
-        "Azure",
-        "TypeScript",
-        "Model Context Protocol"
+        "Microsoft Copilot Studio",
+        "Anthropic Claude",
+        "Azure AI and OpenAI",
+        "GitHub Copilot",
+        "Model Context Protocol",
+        "Dynamics 365 and Salesforce",
+        "Pega",
+        "Microsoft Power Platform",
+        "Dataverse, Power Apps, and Power Automate",
+        "Microsoft Azure and Azure Functions",
+        "REST APIs and custom connectors",
+        "React, TypeScript, and JavaScript",
+        "Python, PowerShell, and GitHub Actions",
+        "Home Assistant"
       ]
     }
   </script>
@@ -314,8 +321,8 @@
     .icon-button,
     .menu-button {
       display: inline-grid;
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 2.75rem;
+      height: 2.75rem;
       place-items: center;
       border: 1px solid var(--cp-border);
       border-radius: 0.625rem;
@@ -462,7 +469,7 @@
     }
 
     .button-small {
-      min-height: 2.35rem;
+      min-height: 2.75rem;
       padding: 0.55rem 0.75rem;
       font-size: 0.84rem;
     }
@@ -667,7 +674,7 @@
     }
 
     .filter-chip {
-      min-height: 2.35rem;
+      min-height: 2.75rem;
       padding: 0.5rem 0.8rem;
       border: 1px solid var(--cp-border);
       border-radius: 999px;
@@ -791,6 +798,10 @@
 
     .status-live::before {
       background: var(--cp-success);
+    }
+
+    .status-info::before {
+      background: var(--cp-warning);
     }
 
     .project-card h3 {
@@ -984,9 +995,39 @@
     }
 
     .stack-panel h3 {
-      margin-bottom: 1rem;
-      font-size: 1rem;
+      margin-bottom: 0.35rem;
+      font-size: clamp(1.35rem, 3vw, 1.8rem);
       letter-spacing: -0.015em;
+    }
+
+    .stack-intro {
+      max-width: 48rem;
+      margin-bottom: 1.25rem;
+      color: var(--cp-text-muted);
+      font-size: 0.92rem;
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .stack-group {
+      min-width: 0;
+      padding: 1rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+    }
+
+    .stack-group h4 {
+      margin: 0 0 0.85rem;
+      color: var(--cp-accent);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .stack-list {
@@ -1208,6 +1249,10 @@
       .resume-grid {
         grid-template-columns: 1fr;
       }
+
+      .stack-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 46rem) {
@@ -1258,6 +1303,10 @@
       }
 
       .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stack-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1671,8 +1720,8 @@
 
       .icon-button,
       .menu-button {
-        width: 2.25rem;
-        height: 2.25rem;
+        width: 2.75rem;
+        height: 2.75rem;
       }
     }
   </style>
@@ -1691,6 +1740,7 @@
         <a href="#work">Work</a>
         <a href="#capabilities">Capabilities</a>
         <a href="#about">Resume</a>
+        <a href="#active-work">Active work</a>
         <a href="/journal/">Solution journal</a>
         <a href="#contact">Connect</a>
       </div>
@@ -1717,6 +1767,7 @@
         <a href="#work">Work</a>
         <a href="#capabilities">Capabilities</a>
         <a href="#about">Resume</a>
+        <a href="#active-work">Active work</a>
         <a href="/journal/">Solution journal</a>
         <a href="#contact">Connect</a>
       </div>
@@ -1795,7 +1846,7 @@
             <h2 id="work-title">The collection.</h2>
           </div>
           <p>
-            Nine customer-neutral projects, reconciled from the live portfolio. Open a public prototype or go directly to its public source.
+            Eight customer-neutral projects, reconciled from the live portfolio. Open a public prototype or go directly to its public source.
           </p>
         </div>
 
@@ -1819,7 +1870,7 @@
         </div>
 
         <div class="project-meta-row" aria-live="polite">
-          <span id="projectCount">9 projects</span>
+          <span id="projectCount">8 projects</span>
           <a href="https://github.com/billwhalenmsft?tab=repositories" target="_blank" rel="noreferrer">View every public repository &rarr;</a>
         </div>
 
@@ -1861,26 +1912,6 @@
             <div class="card-actions">
               <a class="button button-primary button-small" href="/journal/prompt-escape/">Journal</a>
               <a class="button button-small" href="https://github.com/billwhalenmsft/PromptEscape" target="_blank" rel="noreferrer">Source</a>
-            </div>
-          </article>
-
-          <article class="project-card" data-tags="ai business open">
-            <div class="project-card-top" data-art="CONTEXT / VOICE / REVIEW / ACTION">
-              <span class="project-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 18V8l7-4 7 4v10M8 20v-7h8v7M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <span class="status">MIT accelerator</span>
-            </div>
-            <h3>SellerSphere</h3>
-            <p>A voice-first seller reference for Dynamics 365, Copilot Studio, Microsoft 365 context, and Azure AI Speech with clear implementation guardrails.</p>
-            <ul class="tags">
-              <li>Dynamics 365</li><li>Copilot Studio</li><li>Azure AI Speech</li>
-            </ul>
-            <div class="card-actions">
-              <a class="button button-primary button-small" href="https://github.com/billwhalenmsft/sellersphere-partner-accelerator" target="_blank" rel="noreferrer">Explore kit</a>
-              <a class="button button-small" href="https://billwhalenmsft.github.io/sellersphere-partner-accelerator/" target="_blank" rel="noreferrer">Release page</a>
             </div>
           </article>
 
@@ -2096,11 +2127,98 @@
 
         <div class="stack-panel">
           <h3>Technologies I reach for</h3>
-          <ul class="stack-list">
-            <li>Microsoft Copilot</li><li>Copilot Studio</li><li>Azure AI</li><li>Dynamics 365</li>
-            <li>Power Platform</li><li>Dataverse</li><li>React</li><li>TypeScript</li>
-            <li>JavaScript</li><li>PowerShell</li><li>GitHub Actions</li><li>MCP</li><li>Home Assistant</li>
-          </ul>
+          <p class="stack-intro">A working toolkit I choose from based on the workflow, platform boundary, and proof that needs to be built.</p>
+          <div class="stack-grid" aria-label="Working toolkit by category">
+            <section class="stack-group" aria-labelledby="stack-ai">
+              <h4 id="stack-ai">AI &amp; agents</h4>
+              <ul class="stack-list">
+                <li>Microsoft Copilot</li><li>Copilot Studio</li><li>Anthropic Claude</li>
+                <li>Azure AI</li><li>OpenAI</li><li>GitHub Copilot</li><li>MCP</li>
+              </ul>
+            </section>
+            <section class="stack-group" aria-labelledby="stack-business">
+              <h4 id="stack-business">CRM &amp; business apps</h4>
+              <ul class="stack-list">
+                <li>Dynamics 365</li><li>Salesforce</li><li>Pega</li><li>Power Platform</li>
+                <li>Dataverse</li><li>Power Apps</li><li>Power Automate</li>
+              </ul>
+            </section>
+            <section class="stack-group" aria-labelledby="stack-cloud">
+              <h4 id="stack-cloud">Cloud &amp; integration</h4>
+              <ul class="stack-list">
+                <li>Microsoft Azure</li><li>Azure Functions</li><li>REST APIs</li>
+                <li>Custom connectors</li><li>Workflow automation</li>
+              </ul>
+            </section>
+            <section class="stack-group" aria-labelledby="stack-engineering">
+              <h4 id="stack-engineering">Product engineering</h4>
+              <ul class="stack-list">
+                <li>React</li><li>TypeScript</li><li>JavaScript</li><li>Python</li>
+                <li>PowerShell</li><li>GitHub Actions</li><li>Home Assistant</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section release-section" id="active-work" aria-labelledby="active-work-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Information-only active work</span>
+            <h2 id="active-work-title">Private builds. Public boundaries.</h2>
+          </div>
+          <p>
+            Six customer-neutral showcases describe what is being explored without publishing source, operational materials, private architecture, or result claims.
+          </p>
+        </div>
+
+        <p class="release-boundary"><strong>Information-only.</strong> Source and operational materials are not published. These private active builds are not Microsoft products or officially supported offerings. Owner-reviewed as of 2026-09-14 is not a code, deployment, adoption, or activity signal.</p>
+
+        <div class="release-grid">
+          <article class="release-card" data-info-showcase="se-os">
+            <span class="status status-info">Information-only / Private active build</span>
+            <h3>SE OS</h3>
+            <p>A solution-engineering operating pattern for turning ambiguous work into governed discovery, proofs, reusable accelerators, evidence, and handoffs.</p>
+            <code>owner-reviewed as of / 2026-09-14</code>
+            <a class="button button-primary button-small" href="/journal/se-os/">View showcase</a>
+          </article>
+          <article class="release-card" data-info-showcase="mcaps-os-app-store">
+            <span class="status status-info">Information-only / Private active build</span>
+            <h3>MCAPS OS + App Store</h3>
+            <p>A modular private operating surface and curated pattern catalog with deliberate review, installation, activation, and removal concepts.</p>
+            <code>owner-reviewed as of / 2026-09-14</code>
+            <a class="button button-small" href="/journal/mcaps-os-app-store/">View showcase</a>
+          </article>
+          <article class="release-card" data-info-showcase="program-iq">
+            <span class="status status-info">Information-only / Private active build</span>
+            <h3>Program IQ</h3>
+            <p>A program-execution view connecting milestones, ownership, evidence, risks, decisions, and next actions.</p>
+            <code>owner-reviewed as of / 2026-09-14</code>
+            <a class="button button-small" href="/journal/program-iq/">View showcase</a>
+          </article>
+          <article class="release-card" data-info-showcase="field-service-tech-home">
+            <span class="status status-info">Information-only / Private active build</span>
+            <h3>Field Service Tech Home</h3>
+            <p>A supportive mobile technician-home concept for work execution, parts, quality, productivity, and optional AI guidance.</p>
+            <code>owner-reviewed as of / 2026-09-14</code>
+            <a class="button button-small" href="/journal/field-service-tech-home/">View showcase</a>
+          </article>
+          <article class="release-card" data-info-showcase="sales-service-agent-extensibility">
+            <span class="status status-info">Information-only / Private active build</span>
+            <h3>Sales &amp; Service Agent Extensibility Patterns</h3>
+            <p>Reusable patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.</p>
+            <code>owner-reviewed as of / 2026-09-14</code>
+            <a class="button button-small" href="/journal/sales-service-agent-extensibility/">View showcase</a>
+          </article>
+          <article class="release-card" data-info-showcase="pipeline-consumption-unified-view">
+            <span class="status status-info">Information-only / Private active build</span>
+            <h3>Pipeline-to-Consumption Unified View</h3>
+            <p>A decision-support pattern connecting opportunity context, milestones, adoption signals, evidence, risks, and next actions.</p>
+            <code>owner-reviewed as of / 2026-09-14</code>
+            <a class="button button-small" href="/journal/pipeline-consumption-unified-view/">View showcase</a>
+          </article>
         </div>
       </div>
     </section>
@@ -2113,7 +2231,7 @@
             <h2 id="release-title">Follow what I am building.</h2>
           </div>
           <p>
-            Ten public-safe solution entries explain the workflow, build, designed value, architecture, guardrails, limitations, and public proof. Latest order uses repository push history, not adoption.
+            Nine public-safe solution entries explain the workflow, build, designed value, architecture, guardrails, limitations, and public proof. Latest order uses repository push history, not adoption.
           </p>
         </div>
 
@@ -2147,7 +2265,7 @@
             <a class="button button-small" href="/journal/customer-360-for-entities/">Read the entry</a>
           </article>
         </div>
-        <p class="release-boundary"><strong>Live now:</strong> ten reviewed solution entries, companion articles, a public release manifest, RSS, and Atom. <a href="/journal/">Open the full journal</a> or <a href="/subscribe/">choose a feed</a>. <strong>Not live:</strong> email subscriptions and MCP.</p>
+        <p class="release-boundary"><strong>Live now:</strong> nine reviewed public releases, six clearly separated info-only showcases, companion articles for public releases, a public manifest, RSS, and Atom. <a href="/journal/">Open the full journal</a> or <a href="/subscribe/">choose a feed</a>. <strong>Not live:</strong> email subscriptions and MCP.</p>
       </div>
     </section>
 
@@ -2289,6 +2407,7 @@
       { title: "Selected work", subtitle: "Section", href: "#work", external: false, icon: "#" },
       { title: "Capabilities", subtitle: "Section", href: "#capabilities", external: false, icon: "#" },
       { title: "Digital resume", subtitle: "Section", href: "#about", external: false, icon: "#" },
+      { title: "Info-only active work", subtitle: "Section", href: "#active-work", external: false, icon: "#" },
       { title: "Solution journal", subtitle: "Public releases", href: "/journal/", external: false, icon: "#" },
       { title: "Connect", subtitle: "Section", href: "#contact", external: false, icon: "#" }
     ];
