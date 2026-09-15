@@ -13,6 +13,18 @@
   "sourceUrls": [
     "https://github.com/billwhalenmsft/allowlisted-public-repository"
   ],
+  "publicActivity": {
+    "repositoryCreated": "YYYY-MM-DD",
+    "lastPublicPush": "YYYY-MM-DD",
+    "source": "https://api.github.com/repos/billwhalenmsft/allowlisted-public-repository"
+  },
+  "publicLinks": [
+    {
+      "label": "Public project page",
+      "url": "https://billwhalenmsft.github.io/allowlisted-public-project/",
+      "type": "demo"
+    }
+  ],
   "originalState": "Describe the workflow before the solution without identifying a customer.",
   "delivered": "Describe what the public project packages or demonstrates.",
   "outcome": "Describe the value the design enables without implying measured results.",
@@ -48,6 +60,14 @@
       "label": "Public repository",
       "url": "https://github.com/billwhalenmsft/allowlisted-public-repository",
       "note": "Identify the README, docs, source, or release evidence used."
+    }
+  ],
+  "attribution": [
+    {
+      "name": "Upstream project or framework",
+      "url": "https://github.com/owner/upstream",
+      "relationship": "State whether this project is a fork, derivative, dependency, or integration.",
+      "license": "Publicly verified SPDX identifier or explicit unknown"
     }
   ],
   "visual": {

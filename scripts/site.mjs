@@ -410,6 +410,12 @@ h3 { font-size: 1.15rem; }
   font-family: Consolas, "Courier New", Courier, monospace;
   font-size: 0.76rem;
 }
+.activity-line {
+  margin: 0 0 1rem;
+  color: var(--cp-text-muted);
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 0.76rem;
+}
 .result-count { margin: -0.5rem 0 1rem; color: var(--cp-text-muted); font-size: 0.82rem; }
 .no-results { padding: 2rem; border: 1px dashed var(--cp-border-strong); border-radius: 16px; text-align: center; }
 .site-footer { padding-block: 2rem; border-top: 1px solid var(--cp-border); }
@@ -461,6 +467,20 @@ function safeJson(value) {
 
 function evidenceLabel(level) {
   return `${level[0].toUpperCase()}${level.slice(1)} value`;
+}
+
+export function orderedReleases(catalog) {
+  return [...catalog.releases].sort((left, right) =>
+    right.publicActivity.lastPublicPush.localeCompare(left.publicActivity.lastPublicPush)
+      || left.title.localeCompare(right.title)
+  );
+}
+
+function evidenceUrls(release) {
+  return [
+    ...release.sourceUrls,
+    ...(release.publicLinks || []).map((link) => link.url)
+  ];
 }
 
 function nav() {
@@ -601,11 +621,12 @@ function releaseCard(release) {
     ...release.tags
   ].join(" ").toLowerCase();
 
-  return `<article class="release-card" data-category="${escapeHtml(release.category)}" data-search="${escapeHtml(searchable)}">
+  return `<article class="release-card" data-release="${escapeHtml(release.slug)}" data-category="${escapeHtml(release.category)}" data-search="${escapeHtml(searchable)}">
   <span class="status">${escapeHtml(release.maturity)}</span>
   <p class="eyebrow">${escapeHtml(release.category)}</p>
   <h2>${escapeHtml(release.title)}</h2>
   <p>${escapeHtml(release.summary)}</p>
+  <p class="activity-line">Last public push <time datetime="${release.publicActivity.lastPublicPush}">${release.publicActivity.lastPublicPush}</time></p>
   <ul class="tag-list">${release.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}</ul>
   <p><strong>Evidence:</strong> ${escapeHtml(release.valueEvidence.statement)}</p>
   <div class="card-actions">
@@ -616,7 +637,8 @@ function releaseCard(release) {
 }
 
 function journalIndex(catalog) {
-  const categories = [...new Set(catalog.releases.map((release) => release.category))].sort();
+  const releases = orderedReleases(catalog);
+  const categories = [...new Set(releases.map((release) => release.category))].sort();
   const filters = [
     `<button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>`,
     ...categories.map((category) => `<button class="filter-chip" type="button" data-filter="${escapeHtml(category)}" aria-pressed="false">${escapeHtml(category)}</button>`)
@@ -625,7 +647,7 @@ function journalIndex(catalog) {
       <div>
         <p class="eyebrow">Public-safe solution journal</p>
         <h1 id="journal-title">Build notes with the evidence attached.</h1>
-        <p class="hero-copy">Six customer-neutral release entries show the original workflow, what the public project delivers, the value it is designed to enable, and the boundaries that still matter.</p>
+        <p class="hero-copy">${catalog.releases.length} customer-neutral release entries show the original workflow, what the public project delivers, the value it is designed to enable, and the boundaries that still matter.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#releases">Explore releases</a>
           <a class="button" href="/subscribe/">Follow the journal</a>
@@ -641,14 +663,14 @@ function journalIndex(catalog) {
       <div class="shell">
         <div class="section-heading">
           <div><span class="section-kicker">Release catalog</span><h2 id="releases-title">Current entries.</h2></div>
-          <p>Filter by solution family or search titles, technologies, maturity, and evidence language.</p>
+          <p>Sorted by the exact last public repository push date. Filter by solution family or search titles, technologies, maturity, and evidence language.</p>
         </div>
         <div class="filter-bar">
           <div class="filters" role="group" aria-label="Filter journal entries">${filters}</div>
           <label><span class="label">Search</span><input class="search" id="releaseSearch" type="search" autocomplete="off" placeholder="Search releases"></label>
         </div>
         <p class="result-count" id="releaseCount" aria-live="polite">${catalog.releases.length} releases</p>
-        <div class="release-grid" id="releaseGrid">${catalog.releases.map(releaseCard).join("\n")}</div>
+        <div class="release-grid" id="releaseGrid">${releases.map(releaseCard).join("\n")}</div>
         <div class="no-results" id="noResults" hidden>No releases match that filter. Try another category or clear the search.</div>
       </div>
     </section>`;
@@ -689,7 +711,8 @@ function journalIndex(catalog) {
       name: "Bill Whalen solution journal",
       url: `${SITE_URL}/journal/`,
       description: "Customer-neutral public solution entries grounded in public project evidence.",
-      hasPart: catalog.releases.map((release) => ({
+      numberOfItems: catalog.releases.length,
+      hasPart: releases.map((release) => ({
         "@type": "CreativeWork",
         name: release.title,
         url: `${SITE_URL}/journal/${release.slug}/`
@@ -708,7 +731,25 @@ function architectureNotes(release) {
 }
 
 function sourceList(release) {
-  return `<ul class="source-list">${release.provenance.map((source) => `<li>
+  const sources = [
+    ...release.provenance,
+    {
+      label: "GitHub public repository metadata",
+      url: release.publicActivity.source,
+      note: `Repository created ${release.publicActivity.repositoryCreated}; last public push ${release.publicActivity.lastPublicPush}. These are repository facts, not adoption evidence.`
+    },
+    ...(release.publicLinks || []).map((link) => ({
+      label: link.label,
+      url: link.url,
+      note: `Public ${link.type} link declared by the project.`
+    })),
+    ...(release.attribution || []).map((item) => ({
+      label: `Attribution: ${item.name}`,
+      url: item.url,
+      note: `${item.relationship} License: ${item.license}.`
+    }))
+  ];
+  return `<ul class="source-list">${sources.map((source) => `<li>
   <a href="${escapeHtml(source.url)}" rel="noreferrer">${escapeHtml(source.label)}</a>
   <small>${escapeHtml(source.note)}</small>
 </li>`).join("\n")}</ul>`;
@@ -725,10 +766,13 @@ function solutionPage(release) {
           <div class="meta-row">
             <span>Published ${release.published}</span>
             <span>Updated ${release.updated}</span>
+            <span>Repository created ${release.publicActivity.repositoryCreated}</span>
+            <span>Last public push ${release.publicActivity.lastPublicPush}</span>
             <span>${escapeHtml(release.maturity)}</span>
           </div>
           <div class="hero-actions">
             <a class="button button-primary" href="${escapeHtml(release.sourceUrls[0])}" rel="noreferrer">Explore public proof</a>
+${(release.publicLinks || []).map((link) => `<a class="button" href="${escapeHtml(link.url)}" rel="noreferrer">${escapeHtml(link.label)}</a>`).join("\n")}
             <a class="button" href="/blog/${release.article.slug}/">Read the field note</a>
           </div>
         </div>
@@ -802,7 +846,8 @@ function solutionPage(release) {
       dateModified: release.updated,
       author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
       url: canonical,
-      isBasedOn: release.sourceUrls
+      isBasedOn: evidenceUrls(release),
+      dateCreated: release.publicActivity.repositoryCreated
     },
     body
   });
@@ -816,10 +861,11 @@ function articlePage(release) {
           <p class="eyebrow">Field note &middot; ${escapeHtml(release.category)}</p>
           <h1>${escapeHtml(release.article.title)}</h1>
           <p class="hero-copy">${escapeHtml(release.article.dek)}</p>
-          <div class="meta-row"><span>Bill Whalen</span><span>${release.published}</span><span>${evidenceLabel(release.valueEvidence.level)}</span></div>
+          <div class="meta-row"><span>Bill Whalen</span><span>${release.published}</span><span>Last public push ${release.publicActivity.lastPublicPush}</span><span>${evidenceLabel(release.valueEvidence.level)}</span></div>
           <div class="hero-actions">
             <a class="button button-primary" href="/journal/${release.slug}/">Open solution entry</a>
             <a class="button" href="${escapeHtml(release.sourceUrls[0])}" rel="noreferrer">View public source</a>
+${(release.publicLinks || []).map((link) => `<a class="button" href="${escapeHtml(link.url)}" rel="noreferrer">${escapeHtml(link.label)}</a>`).join("\n")}
           </div>
         </div>
         <aside class="evidence-card">
@@ -867,18 +913,19 @@ function articlePage(release) {
       dateModified: release.updated,
       author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
       mainEntityOfPage: canonical,
-      isBasedOn: release.sourceUrls
+      isBasedOn: evidenceUrls(release),
+      dateCreated: release.publicActivity.repositoryCreated
     },
     body
   });
 }
 
-function subscribePage() {
+function subscribePage(catalog) {
   const body = `    <section class="hero shell" aria-labelledby="subscribe-title">
       <div>
         <p class="eyebrow">Follow the public journal</p>
         <h1 id="subscribe-title">Subscribe without a subscriber list.</h1>
-        <p class="hero-copy">RSS and Atom are the live subscription options. Add either feed URL to the reader you already use; this site does not collect email addresses.</p>
+        <p class="hero-copy">RSS and Atom carry all ${catalog.releases.length} approved releases. Add either feed URL to the reader you already use; this site does not collect email addresses.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="/feeds/rss.xml">Open RSS 2.0</a>
           <a class="button" href="/feeds/atom.xml">Open Atom</a>
@@ -886,7 +933,7 @@ function subscribePage() {
       </div>
       <aside class="evidence-card">
         <span class="label">What is live</span>
-        <strong>RSS 2.0 and Atom.</strong>
+        <strong>RSS 2.0 and Atom for ${catalog.releases.length} releases.</strong>
         <p>No email newsletter, signup form, tracking pixel, or subscriber database is connected.</p>
       </aside>
     </section>
@@ -926,16 +973,19 @@ function subscribePage() {
 }
 
 function manifest(catalog) {
+  const releases = orderedReleases(catalog);
   return {
-    version: 1,
+    version: 2,
     title: "Bill Whalen public solution releases",
     updated: catalog.updated,
     policy: {
       evidence: "Public sources only",
       valueLabels: ["measured", "observed", "designed"],
+      activityLabel: "Last public push is a repository-history fact, not adoption evidence",
       excludedSurfaces: ["private evidence", "customer-identifying content", "email subscriptions", "live MCP endpoint"]
     },
-    releases: catalog.releases.map((release) => ({
+    releaseCount: releases.length,
+    releases: releases.map((release) => ({
       ...release,
       urls: {
         solution: `${SITE_URL}/journal/${release.slug}/`,
@@ -946,7 +996,7 @@ function manifest(catalog) {
 }
 
 function rss(catalog) {
-  const items = catalog.releases.filter((release) => release.article.feed).map((release) => {
+  const items = orderedReleases(catalog).filter((release) => release.article.feed).map((release) => {
     const url = `${SITE_URL}/blog/${release.article.slug}/`;
     const description = `${release.summary} ${release.valueEvidence.statement}`;
     return `    <item>
@@ -975,7 +1025,7 @@ ${items}
 }
 
 function atom(catalog) {
-  const entries = catalog.releases.filter((release) => release.article.feed).map((release) => {
+  const entries = orderedReleases(catalog).filter((release) => release.article.feed).map((release) => {
     const url = `${SITE_URL}/blog/${release.article.slug}/`;
     return `  <entry>
     <title>${escapeXml(release.article.title)}</title>
@@ -1003,11 +1053,12 @@ ${entries}
 }
 
 export function sitemapEntries(catalog) {
+  const releases = orderedReleases(catalog);
   return [
     { url: `${SITE_URL}/`, updated: catalog.updated, priority: "1.0" },
     { url: `${SITE_URL}/journal/`, updated: catalog.updated, priority: "0.9" },
     { url: `${SITE_URL}/subscribe/`, updated: catalog.updated, priority: "0.5" },
-    ...catalog.releases.flatMap((release) => [
+    ...releases.flatMap((release) => [
       { url: `${SITE_URL}/journal/${release.slug}/`, updated: release.updated, priority: "0.8" },
       { url: `${SITE_URL}/blog/${release.article.slug}/`, updated: release.updated, priority: "0.7" }
     ])
@@ -1036,14 +1087,14 @@ export async function buildOutputs() {
   const catalog = await loadCatalog();
   const outputs = new Map([
     ["journal/index.html", journalIndex(catalog)],
-    ["subscribe/index.html", subscribePage()],
+    ["subscribe/index.html", subscribePage(catalog)],
     ["feeds/rss.xml", rss(catalog)],
     ["feeds/atom.xml", atom(catalog)],
     ["releases.json", `${JSON.stringify(manifest(catalog), null, 2)}\n`],
     ["sitemap.xml", sitemap(catalog)]
   ]);
 
-  for (const release of catalog.releases) {
+  for (const release of orderedReleases(catalog)) {
     outputs.set(`journal/${release.slug}/index.html`, solutionPage(release));
     outputs.set(`blog/${release.article.slug}/index.html`, articlePage(release));
   }

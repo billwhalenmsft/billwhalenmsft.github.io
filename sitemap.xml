@@ -19,13 +19,37 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://billwhalenmsft.github.io/journal/agent-team-starter-kit/</loc>
+    <loc>https://billwhalenmsft.github.io/journal/home-assistant-estate-panel/</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</loc>
+    <loc>https://billwhalenmsft.github.io/blog/home-assistant-estate-panel/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://billwhalenmsft.github.io/journal/freight-triage-control-tower/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://billwhalenmsft.github.io/journal/customer-news-hub/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://billwhalenmsft.github.io/blog/customer-news-hub/</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -43,13 +67,25 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://billwhalenmsft.github.io/journal/freight-triage-control-tower/</loc>
+    <loc>https://billwhalenmsft.github.io/journal/sellersphere/</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</loc>
+    <loc>https://billwhalenmsft.github.io/blog/sellersphere/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://billwhalenmsft.github.io/journal/agent-team-starter-kit/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -74,6 +110,18 @@
   </url>
   <url>
     <loc>https://billwhalenmsft.github.io/blog/prompt-escape/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://billwhalenmsft.github.io/journal/deal-to-glory/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://billwhalenmsft.github.io/blog/deal-to-glory/</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

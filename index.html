@@ -1569,7 +1569,7 @@
 
     .release-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
     }
 
@@ -1924,7 +1924,7 @@
             </div>
           </article>
 
-          <article class="project-card" data-tags="personal open">
+          <article class="project-card" data-tags="personal">
             <div class="project-card-top" data-art="LOCAL / CONTROL / AUTOMATION / HOME">
               <span class="project-icon" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -1962,7 +1962,7 @@
             </div>
           </article>
 
-          <article class="project-card" data-tags="ai business open">
+          <article class="project-card" data-tags="ai business">
             <div class="project-card-top" data-art="VOICE / AGENTS / CRM / RECOGNITION">
               <span class="project-icon" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -1972,9 +1972,9 @@
               <span class="status">Hackathon prototype</span>
             </div>
             <h3>Deal to Glory</h3>
-            <p>A voice-first multi-agent flow that turns a spoken seller update into structured CRM, attainment, and recognition actions using synthetic data.</p>
+            <p>A voice-first deterministic five-stage prototype for CRM updates, illustrative attainment, recognition copy, and simulated notification.</p>
             <ul class="tags">
-              <li>Multi-agent</li><li>Voice</li><li>TypeScript</li>
+              <li>TypeScript</li><li>Web Speech</li><li>Server-Sent Events</li>
             </ul>
             <div class="card-actions">
               <a class="button button-primary button-small" href="https://github.com/billwhalenmsft/agents-league-deal-to-glory" target="_blank" rel="noreferrer">View prototype</a>
@@ -2109,37 +2109,45 @@
       <div class="shell">
         <div class="section-heading">
           <div>
-            <span class="section-kicker">Solution journal</span>
+            <span class="section-kicker">Latest public releases</span>
             <h2 id="release-title">Follow what I am building.</h2>
           </div>
           <p>
-            Six public-safe solution entries and companion field notes now explain the workflow, build, designed value, architecture, guardrails, limitations, and public proof.
+            Ten public-safe solution entries explain the workflow, build, designed value, architecture, guardrails, limitations, and public proof. Latest order uses repository push history, not adoption.
           </p>
         </div>
 
         <div class="release-grid">
-          <article class="release-card">
-            <span class="status status-live">Live catalog</span>
-            <h3>Solution entries</h3>
-            <p>Compact release cards lead to illustrated detail pages grounded in allowlisted public repositories and explicit evidence labels.</p>
-            <code>release record &rarr; solution page</code>
-            <a class="button button-primary button-small" href="/journal/">Open the journal</a>
+          <article class="release-card" data-latest-release="home-assistant-estate-panel">
+            <span class="status status-live">Newest journal entry</span>
+            <h3>Home Assistant Estate Panel</h3>
+            <p>A self-hosted React and TypeScript reference build that combines native Home Assistant cards with custom estate controls.</p>
+            <code>last public push / 2026-09-14</code>
+            <a class="button button-primary button-small" href="/journal/home-assistant-estate-panel/">Read the entry</a>
           </article>
-          <article class="release-card">
-            <span class="status status-live">RSS + Atom live</span>
-            <h3>Field notes + feeds</h3>
-            <p>Companion articles, RSS 2.0, and Atom derive from the same approved records. No email signup or subscriber-address store is connected.</p>
-            <code>release record &rarr; article / rss / atom</code>
-            <a class="button button-small" href="/subscribe/">Choose a feed</a>
+          <article class="release-card" data-latest-release="freight-triage-control-tower">
+            <span class="status">Sample-data prototype</span>
+            <h3>Freight Triage Control Tower</h3>
+            <p>A browser prototype that models fictional freight email as owned triage work with queue, aging, SLA, and resolution views.</p>
+            <code>last public push / 2026-09-10</code>
+            <a class="button button-small" href="/journal/freight-triage-control-tower/">Read the entry</a>
           </article>
-          <article class="release-card">
-            <span class="status">Planned / no endpoint</span>
-            <h3>Read-only MCP</h3>
-            <p>A separately hosted MCP service may later expose only approved public releases. GitHub Pages cannot host that server, and none is connected here.</p>
-            <code>release record &rarr; public read operations</code>
+          <article class="release-card" data-latest-release="customer-news-hub">
+            <span class="status">Illustrative unpublished demo</span>
+            <h3>Customer News Hub</h3>
+            <p>A static reference interface for exploring how sample product updates could be filtered, scanned, and opened as a digest.</p>
+            <code>last public push / 2026-09-07</code>
+            <a class="button button-small" href="/journal/customer-news-hub/">Read the entry</a>
+          </article>
+          <article class="release-card" data-latest-release="customer-360-for-entities">
+            <span class="status">Community solution</span>
+            <h3>Customer 360 for Entities</h3>
+            <p>An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work happens.</p>
+            <code>last public push / 2026-08-26</code>
+            <a class="button button-small" href="/journal/customer-360-for-entities/">Read the entry</a>
           </article>
         </div>
-        <p class="release-boundary"><strong>Live now:</strong> the reviewed solution journal, companion articles, public release manifest, RSS, and Atom. <strong>Not live:</strong> email subscriptions and MCP.</p>
+        <p class="release-boundary"><strong>Live now:</strong> ten reviewed solution entries, companion articles, a public release manifest, RSS, and Atom. <a href="/journal/">Open the full journal</a> or <a href="/subscribe/">choose a feed</a>. <strong>Not live:</strong> email subscriptions and MCP.</p>
       </div>
     </section>
 

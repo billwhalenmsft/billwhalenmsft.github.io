@@ -16,6 +16,8 @@ Use this checklist for an exact, nominated public project. Keep private review n
 
 - [ ] One exact public repository is nominated and allowlisted.
 - [ ] All statements are supported by the listed public provenance URLs.
+- [ ] Repository-created and last-public-push dates match the exact public GitHub API record and are not described as adoption, activity, or customer use.
+- [ ] Any fork, derivative, or upstream framework has explicit ownership, relationship, and license attribution.
 - [ ] Original state, delivered solution, and outcome are customer-neutral.
 - [ ] Value evidence is labeled `measured`, `observed`, or `designed`; intended value is not phrased as a measured result.
 - [ ] No adoption, time-saved, ROI, production-use, or customer-result claim is inferred.

@@ -7,13 +7,33 @@
   <updated>2026-09-14T12:00:00Z</updated>
   <author><name>Bill Whalen</name></author>
   <entry>
-    <title>Making multi-agent work visible</title>
-    <id>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</id>
-    <link href="https://billwhalenmsft.github.io/blog/agent-team-starter-kit/"/>
+    <title>One local control surface, explicit sensitive-action gates</title>
+    <id>https://billwhalenmsft.github.io/blog/home-assistant-estate-panel/</id>
+    <link href="https://billwhalenmsft.github.io/blog/home-assistant-estate-panel/"/>
     <published>2026-09-14T12:00:00Z</published>
     <updated>2026-09-14T12:00:00Z</updated>
-    <summary>A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.</summary>
-    <category term="Agents and AI"/>
+    <summary>A self-hosted React and TypeScript reference build that combines native Home Assistant cards with custom estate controls on a shared connection and layout.</summary>
+    <category term="Personal systems"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+  <entry>
+    <title>Turn freight exceptions into owned work</title>
+    <id>https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</id>
+    <link href="https://billwhalenmsft.github.io/blog/freight-triage-control-tower/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.</summary>
+    <category term="Business applications"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+  <entry>
+    <title>Prototype the reading experience before the ingestion service</title>
+    <id>https://billwhalenmsft.github.io/blog/customer-news-hub/</id>
+    <link href="https://billwhalenmsft.github.io/blog/customer-news-hub/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>An explicitly unpublished static reference interface for exploring how sample product updates could be filtered, scanned, and opened as a digest.</summary>
+    <category term="Information design"/>
     <author><name>Bill Whalen</name></author>
   </entry>
   <entry>
@@ -27,13 +47,23 @@
     <author><name>Bill Whalen</name></author>
   </entry>
   <entry>
-    <title>Turn freight exceptions into owned work</title>
-    <id>https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</id>
-    <link href="https://billwhalenmsft.github.io/blog/freight-triage-control-tower/"/>
+    <title>Share the accelerator, not the tenant</title>
+    <id>https://billwhalenmsft.github.io/blog/sellersphere/</id>
+    <link href="https://billwhalenmsft.github.io/blog/sellersphere/"/>
     <published>2026-09-14T12:00:00Z</published>
     <updated>2026-09-14T12:00:00Z</updated>
-    <summary>A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.</summary>
+    <summary>A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.</summary>
     <category term="Business applications"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+  <entry>
+    <title>Making multi-agent work visible</title>
+    <id>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</id>
+    <link href="https://billwhalenmsft.github.io/blog/agent-team-starter-kit/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.</summary>
+    <category term="Agents and AI"/>
     <author><name>Bill Whalen</name></author>
   </entry>
   <entry>
@@ -53,6 +83,16 @@
     <published>2026-09-14T12:00:00Z</published>
     <updated>2026-09-14T12:00:00Z</updated>
     <summary>A multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge.</summary>
+    <category term="Agents and AI"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+  <entry>
+    <title>A seller workflow demo is not an autonomous agent system</title>
+    <id>https://billwhalenmsft.github.io/blog/deal-to-glory/</id>
+    <link href="https://billwhalenmsft.github.io/blog/deal-to-glory/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>A single-commit hackathon MVP that visualizes a deterministic, agent-styled seller workflow from voice or text input through CRM, illustrative attainment, recognition, and simulated notification stages.</summary>
     <category term="Agents and AI"/>
     <author><name>Bill Whalen</name></author>
   </entry>

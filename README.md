@@ -8,7 +8,7 @@ Static source for `https://billwhalenmsft.github.io/`.
 - A searchable and filterable launcher for verified public projects.
 - The approved White and Blue Atomic visual system, with a compatible dark preference.
 - A keyboard quick launcher with `Ctrl+K` or `Cmd+K`.
-- A public-safe solution journal with six release entries and companion illustrated field notes.
+- A public-safe solution journal with ten release entries and companion illustrated field notes, ordered by the exact last public repository push date.
 - A generated public release manifest, RSS 2.0 feed, Atom feed, sitemap, metadata, JSON-LD, and custom 404 page.
 - A dependency-free Node.js generator and validation suite for future manually reviewed releases.
 
@@ -32,7 +32,7 @@ python -m http.server 4173
 
 Open `http://localhost:4173/`, then review `/journal/`, one solution entry, one companion article, `/subscribe/`, `/feeds/rss.xml`, `/feeds/atom.xml`, and `/releases.json`.
 
-Canonical release data lives in `content/releases.json`. Generated output is committed so GitHub Pages can publish directly from the repository root. `npm run generate:check` fails when committed output does not match the catalog.
+Canonical release data lives in `content/releases.json`. Each record carries exact public repository creation and last-push dates from GitHub's public API; those dates describe repository history, not adoption or customer activity. Generated output is committed so GitHub Pages can publish directly from the repository root. `npm run generate:check` fails when committed output does not match the catalog.
 
 For each future release:
 

@@ -1,5 +1,6 @@
 {
-  "version": 1,
+  "version": 2,
+  "expectedReleaseCount": 10,
   "updated": "2026-09-14",
   "releases": [
     {
@@ -20,6 +21,11 @@
       "sourceUrls": [
         "https://github.com/billwhalenmsft/agent-team-starter-kit"
       ],
+      "publicActivity": {
+        "repositoryCreated": "2026-04-15",
+        "lastPublicPush": "2026-06-02",
+        "source": "https://api.github.com/repos/billwhalenmsft/agent-team-starter-kit"
+      },
       "originalState": "Complex work can arrive as an unstructured request with unclear ownership, hidden handoffs, and no durable record of what each specialist contributed.",
       "delivered": "The public starter kit packages a Python generator, configurable persona and workflow templates, GitHub Issues and Actions patterns, and Azure Functions and Azure OpenAI integration scaffolding.",
       "outcome": "The pattern is designed to make multi-agent work easier to assign, inspect, and govern while keeping the work item and its history visible to people.",
@@ -103,6 +109,11 @@
       "sourceUrls": [
         "https://github.com/billwhalenmsft/customer-360-for-entities"
       ],
+      "publicActivity": {
+        "repositoryCreated": "2026-04-30",
+        "lastPublicPush": "2026-08-26",
+        "source": "https://api.github.com/repos/billwhalenmsft/customer-360-for-entities"
+      },
       "originalState": "A person working in a business record can have to open multiple forms or related lists to assemble the cases, orders, entitlements, contacts, and other context needed for the next action.",
       "delivered": "The public solution provides an adaptive JavaScript web resource for Dynamics 365 and Dataverse forms that retrieves and presents related entity context in one place.",
       "outcome": "The design is intended to reduce context switching and make the surrounding record history easier to scan before a person chooses the next action.",
@@ -186,6 +197,11 @@
       "sourceUrls": [
         "https://github.com/billwhalenmsft/freight-triage-control-tower"
       ],
+      "publicActivity": {
+        "repositoryCreated": "2026-06-18",
+        "lastPublicPush": "2026-09-10",
+        "source": "https://api.github.com/repos/billwhalenmsft/freight-triage-control-tower"
+      },
       "originalState": "Exception signals can remain trapped in email and ad hoc follow-up, making ownership, age, priority, and resolution status difficult to see across an operations team.",
       "delivered": "The public React and TypeScript Power Apps Code App packages control-tower lanes, owner assignment, email-thread context, SLA views, and resolution actions over fictional sample data persisted in browser localStorage.",
       "outcome": "The design is intended to turn scattered exception signals into explicit work items with visible ownership and service-level context.",
@@ -269,6 +285,11 @@
       "sourceUrls": [
         "https://github.com/billwhalenmsft/warranty-claim-operations-powerplatform"
       ],
+      "publicActivity": {
+        "repositoryCreated": "2026-05-06",
+        "lastPublicPush": "2026-05-06",
+        "source": "https://api.github.com/repos/billwhalenmsft/warranty-claim-operations-powerplatform"
+      },
       "originalState": "Warranty and claims work can span inconsistent intake, supporting documents, policy checks, status questions, and handoffs that are difficult to trace as one case.",
       "delivered": "The public accelerator packages Dataverse tables, Canvas Apps, Power Automate flows, and Copilot Studio agents as a starting point for warranty and claims operations.",
       "outcome": "The design is intended to create a more consistent case record, guide information gathering, and keep approval or exception decisions with accountable people.",
@@ -352,6 +373,11 @@
       "sourceUrls": [
         "https://github.com/billwhalenmsft/PromptEscape"
       ],
+      "publicActivity": {
+        "repositoryCreated": "2026-02-12",
+        "lastPublicPush": "2026-03-06",
+        "source": "https://api.github.com/repos/billwhalenmsft/PromptEscape"
+      },
       "originalState": "Prompting concepts can stay abstract when learners only read examples instead of working through a shared problem with constraints, feedback, and room to iterate.",
       "delivered": "The public project delivers a TypeScript and Express escape-room game with solo, cooperative, and versus modes, deterministic prompt scoring, hints, and themed challenges.",
       "outcome": "The experience is designed to make prompt quality discussable and memorable through practice, comparison, and team reflection.",
@@ -435,6 +461,11 @@
       "sourceUrls": [
         "https://github.com/billwhalenmsft/jokeservermcp"
       ],
+      "publicActivity": {
+        "repositoryCreated": "2025-07-21",
+        "lastPublicPush": "2025-07-21",
+        "source": "https://api.github.com/repos/billwhalenmsft/jokeservermcp"
+      },
       "originalState": "MCP concepts can be difficult to connect to practice when the protocol, server deployment, tool definition, client configuration, and invocation path are learned separately.",
       "delivered": "The public lab uses a deliberately small TypeScript joke server to walk through MCP tools, Azure Container Apps deployment, a custom connector, and connection from Microsoft Copilot Studio.",
       "outcome": "The lab is designed to give builders a bounded end-to-end reference they can inspect before adapting the pattern to a real tool.",
@@ -498,6 +529,417 @@
         "slug": "copilot-studio-mcp-lab",
         "title": "Use a tiny tool to see the whole MCP path",
         "dek": "A deliberately small joke server makes the protocol boundary, deployment step, client connection, and user invocation easy to inspect.",
+        "feed": true
+      }
+    },
+    {
+      "slug": "home-assistant-estate-panel",
+      "title": "Home Assistant Estate Panel",
+      "summary": "A self-hosted React and TypeScript reference build that combines native Home Assistant cards with custom estate controls on a shared connection and layout.",
+      "category": "Personal systems",
+      "tags": [
+        "Home Assistant",
+        "React",
+        "TypeScript",
+        "Local-first"
+      ],
+      "status": "approved",
+      "maturity": "Self-hosted reference build",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/react-for-home-assistant"
+      ],
+      "publicActivity": {
+        "repositoryCreated": "2026-08-17",
+        "lastPublicPush": "2026-09-14",
+        "source": "https://api.github.com/repos/billwhalenmsft/react-for-home-assistant"
+      },
+      "originalState": "A self-hosted smart-home estate can accumulate separate dashboards, device views, and integration-specific controls that make routine status checks and actions harder to coordinate.",
+      "delivered": "The public repository implements a full-page Home Assistant panel and Lovelace custom card using React, TypeScript, selective websocket subscriptions, native and community card wrappers, invented sample configuration, and confirmation dialogs for security-reducing actions.",
+      "outcome": "The pattern is designed to create one adaptable local control surface while keeping real estate configuration outside the public repository and preserving deliberate review for sensitive actions.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a coherent self-hosted estate view with selective live updates, reusable Home Assistant cards, and confirmation before security-reducing actions."
+      },
+      "capabilities": [
+        "Registers both a full-page Home Assistant panel and a Lovelace custom card.",
+        "Uses home-assistant-js-websocket with selective useSyncExternalStore subscriptions.",
+        "Wraps built-in and community Home Assistant cards alongside custom React components.",
+        "Separates invented sample configuration from git-ignored local household configuration."
+      ],
+      "architecture": [
+        {
+          "label": "Home Assistant",
+          "detail": "An existing self-hosted Home Assistant environment provides entities, services, and the authenticated connection."
+        },
+        {
+          "label": "Selective store",
+          "detail": "Websocket-backed external-store subscriptions update only the entity views that need new state."
+        },
+        {
+          "label": "React panel",
+          "detail": "Custom components and wrapped Home Assistant cards share one estate layout."
+        },
+        {
+          "label": "Confirmed action",
+          "detail": "Security-reducing operations require an explicit confirmation before a service call is sent."
+        }
+      ],
+      "guardrails": [
+        "The committed sample estate is invented; real household configuration belongs in a git-ignored local file.",
+        "Security-reducing actions use confirmation dialogs before Home Assistant service calls.",
+        "The design remains self-hosted and does not claim to replace professional monitoring."
+      ],
+      "limitations": [
+        "The card wrapper relies on window.loadCardHelpers(), which Home Assistant explicitly does not expose as a public API and may change.",
+        "An existing Home Assistant environment is required, and several community integrations are described as tinker-grade rather than supported dependencies.",
+        "The repository has no project LICENSE; dependency licenses do not grant reuse rights for the repository's original code.",
+        "No public evidence establishes reliability, security effectiveness, savings, adoption, or household outcomes."
+      ],
+      "provenance": [
+        {
+          "label": "Home Assistant Estate Panel public repository",
+          "url": "https://github.com/billwhalenmsft/react-for-home-assistant",
+          "note": "Public application entry points, entity-store hooks, card wrapper, invented sample configuration, confirmation flow, README, package manifests, and history support this entry."
+        }
+      ],
+      "attribution": [
+        {
+          "name": "home-assistant-js-websocket",
+          "url": "https://github.com/home-assistant/home-assistant-js-websocket",
+          "relationship": "Upstream websocket client dependency maintained by the Home Assistant project.",
+          "license": "Apache-2.0 in the repository lock metadata"
+        },
+        {
+          "name": "React and ReactDOM",
+          "url": "https://github.com/facebook/react",
+          "relationship": "Upstream user-interface framework dependencies; not owned by this repository.",
+          "license": "MIT in the repository lock metadata"
+        },
+        {
+          "name": "Vite",
+          "url": "https://github.com/vitejs/vite",
+          "relationship": "Upstream build-tool dependency; not owned by this repository.",
+          "license": "MIT in the repository lock metadata"
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Home Assistant entity state flows through selective websocket subscriptions into a React estate panel, with confirmation before sensitive actions.",
+        "nodes": [
+          "Home Assistant",
+          "Selective store",
+          "React panel",
+          "Confirmed action"
+        ]
+      },
+      "article": {
+        "slug": "home-assistant-estate-panel",
+        "title": "One local control surface, explicit sensitive-action gates",
+        "dek": "A React reference build combines Home Assistant cards and custom estate controls without publishing real household configuration or treating self-monitoring as a supported service.",
+        "feed": true
+      }
+    },
+    {
+      "slug": "customer-news-hub",
+      "title": "Customer News Hub",
+      "summary": "An explicitly unpublished static reference interface for exploring how sample product updates could be filtered, scanned, and opened as a digest.",
+      "category": "Information design",
+      "tags": [
+        "Static web",
+        "JavaScript",
+        "Content filtering",
+        "Illustrative data"
+      ],
+      "status": "approved",
+      "maturity": "Illustrative unpublished demo",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/customer-news-hub"
+      ],
+      "publicActivity": {
+        "repositoryCreated": "2026-09-07",
+        "lastPublicPush": "2026-09-07",
+        "source": "https://api.github.com/repos/billwhalenmsft/customer-news-hub"
+      },
+      "originalState": "People following product changes can face a long stream of announcements without an easy way to narrow the material by product, workload, category, persona, or a specific question.",
+      "delivered": "The public repository packages a static HTML, CSS, and JavaScript reference interface with embedded sample items, product and persona filters, card and digest views, a details dialog, escaped rendered values, and manifest/hash metadata.",
+      "outcome": "The design is intended to make a future public update digest easier to scan and tailor while keeping this build clearly separated from live announcements or an operating ingestion service.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a filterable reference pattern for turning a broad product-update stream into a more focused, reviewable digest."
+      },
+      "capabilities": [
+        "Filters illustrative items by product, workload, category, persona, and free text.",
+        "Offers both card and digest reading views.",
+        "Uses a details dialog for deeper item context without leaving the interface.",
+        "Escapes rendered values and publishes manifest/hash metadata for the static sample package."
+      ],
+      "architecture": [
+        {
+          "label": "Demo digest",
+          "detail": "Hand-authored illustrative records provide the only content source in the public repository."
+        },
+        {
+          "label": "Client filters",
+          "detail": "Browser JavaScript applies product, workload, category, persona, and text filters."
+        },
+        {
+          "label": "Reading views",
+          "detail": "Card and digest layouts present the filtered sample records."
+        },
+        {
+          "label": "User review",
+          "detail": "A person opens details and follows any source link rather than relying on an automated action."
+        }
+      ],
+      "guardrails": [
+        "The interface and manifest identify the experience as demo, illustrative, and unpublished.",
+        "Rendered data values are escaped before insertion into the interface.",
+        "The repository's robots file blocks indexing, and this journal does not link to the reachable but unapproved Pages build."
+      ],
+      "limitations": [
+        "Every bundled item is hand-authored demo data rather than a live product announcement.",
+        "No live-source adapter, ingestion backend, or update process is implemented in the repository.",
+        "The repository manifest says publicState is false, the page labels itself unpublished, and robots.txt disallows indexing.",
+        "A bundled illustrative source link returned 404 during public verification, and the repository has no project LICENSE."
+      ],
+      "provenance": [
+        {
+          "label": "Customer News Hub public repository",
+          "url": "https://github.com/billwhalenmsft/customer-news-hub",
+          "note": "Public static source, embedded sample digest, filters, rendering code, manifest, robots policy, and repository history support this entry."
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Illustrative digest records pass through browser filters into card or digest views for user review.",
+        "nodes": [
+          "Demo digest",
+          "Client filters",
+          "Reading views",
+          "User review"
+        ]
+      },
+      "article": {
+        "slug": "customer-news-hub",
+        "title": "Prototype the reading experience before the ingestion service",
+        "dek": "An unpublished static demo makes the filter and digest interaction tangible while clearly separating sample content from live product news.",
+        "feed": true
+      }
+    },
+    {
+      "slug": "sellersphere",
+      "title": "SellerSphere Partner Accelerator",
+      "summary": "A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates.",
+      "category": "Business applications",
+      "tags": [
+        "Dynamics 365",
+        "Copilot Studio",
+        "Azure AI Speech",
+        "MSAL"
+      ],
+      "status": "approved",
+      "maturity": "Buildable reference accelerator",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/sellersphere-partner-accelerator"
+      ],
+      "publicActivity": {
+        "repositoryCreated": "2026-08-08",
+        "lastPublicPush": "2026-08-08",
+        "source": "https://api.github.com/repos/billwhalenmsft/sellersphere-partner-accelerator"
+      },
+      "publicLinks": [
+        {
+          "label": "Public release page",
+          "url": "https://billwhalenmsft.github.io/sellersphere-partner-accelerator/",
+          "type": "release"
+        }
+      ],
+      "originalState": "A field demonstration can be tightly coupled to one tenant, configured agent, data model, and preview feature set, which makes it unsafe and impractical to share as a reusable implementation reference.",
+      "delivered": "The public repository delivers sanitized desktop web-resource source, architecture, build and configuration guidance, an agent-instruction baseline, security controls, and sample workflows while excluding configured tenant artifacts and experimental bindings.",
+      "outcome": "The accelerator is designed to help a consumer build and govern its own voice-first Dynamics 365 reference experience without representing the package as a turnkey product or preapproved architecture.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a safer starting point for consumer-owned voice, Copilot Studio, and Dynamics 365 integration with explicit approval before consequential actions."
+      },
+      "capabilities": [
+        "Hosts a desktop web resource inside a Dynamics 365 model-driven application.",
+        "Uses delegated MSAL authentication to reach a consumer-owned Copilot Studio agent and approved context.",
+        "Documents optional Azure AI Speech and Translator integration.",
+        "Separates proposed actions and draft communications from approved CRM writes or sends."
+      ],
+      "architecture": [
+        {
+          "label": "Seller web resource",
+          "detail": "A desktop model-driven-app web resource captures the user request and optional speech input."
+        },
+        {
+          "label": "Delegated identity",
+          "detail": "MSAL obtains delegated access for the consumer-owned agent and approved data context."
+        },
+        {
+          "label": "Proposed action",
+          "detail": "Copilot Studio and approved tools assemble a proposed CRM action or draft communication."
+        },
+        {
+          "label": "Explicit approval",
+          "detail": "The user approves a CRM update and separately authorizes any communication send."
+        }
+      ],
+      "guardrails": [
+        "Agent instructions limit execution to approved tools and prohibit guessed CRM identifiers.",
+        "CRM writes require explicit approval, communications remain drafts by default, and sending requires separate authorization.",
+        "Ambiguous requests require clarification rather than silent assumptions."
+      ],
+      "limitations": [
+        "This is source-level reference material, not a production app, managed solution, supported Microsoft offering, one-click deployment, or preapproved governance design.",
+        "Consumers must build, configure, secure, test, and govern their own deployment; mobile authentication is disabled.",
+        "The web resource can retain up to five conversations with business context in browser localStorage, requiring explicit privacy, retention, shared-device, and clearing controls.",
+        "The repository-declared Pages site is a release and terms landing page, not the authenticated application."
+      ],
+      "provenance": [
+        {
+          "label": "SellerSphere Partner Accelerator public repository",
+          "url": "https://github.com/billwhalenmsft/sellersphere-partner-accelerator",
+          "note": "Public notice, release scope, architecture, agent instructions, web-resource source, license, third-party notice, Pages metadata, and history support this entry."
+        }
+      ],
+      "attribution": [
+        {
+          "name": "@azure/msal-browser",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
+          "relationship": "Third-party authentication library attributed in the repository notice; the implementation prefers a tenant-hosted copy with Microsoft CDN fallback.",
+          "license": "MIT"
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A Dynamics 365 web resource uses delegated identity and approved tools to propose an action that remains gated by explicit user approval.",
+        "nodes": [
+          "Seller web resource",
+          "Delegated identity",
+          "Proposed action",
+          "Explicit approval"
+        ]
+      },
+      "article": {
+        "slug": "sellersphere",
+        "title": "Share the accelerator, not the tenant",
+        "dek": "SellerSphere turns a tenant-coupled field demonstration into sanitized source, architecture, instructions, and approval boundaries that another builder must configure and govern.",
+        "feed": true
+      }
+    },
+    {
+      "slug": "deal-to-glory",
+      "title": "Deal to Glory",
+      "summary": "A single-commit hackathon MVP that visualizes a deterministic, agent-styled seller workflow from voice or text input through CRM, illustrative attainment, recognition, and simulated notification stages.",
+      "category": "Agents and AI",
+      "tags": [
+        "TypeScript",
+        "Express",
+        "Web Speech",
+        "Server-Sent Events"
+      ],
+      "status": "approved",
+      "maturity": "Single-commit hackathon MVP",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/agents-league-deal-to-glory"
+      ],
+      "publicActivity": {
+        "repositoryCreated": "2026-02-12",
+        "lastPublicPush": "2026-02-12",
+        "source": "https://api.github.com/repos/billwhalenmsft/agents-league-deal-to-glory"
+      },
+      "originalState": "A spoken seller update may need to be translated into structured CRM intent, an opportunity action, an illustrative attainment view, recognition language, and a communication payload across separate steps.",
+      "delivered": "The public MVP implements a sequential TypeScript pipeline with keyword-based intent extraction, a mock or configured Dataverse opportunity stage, illustrative commission and attainment calculation, recognition copy, simulated notification output, Express Server-Sent Events, and browser speech or text input.",
+      "outcome": "The prototype is designed to make a multi-stage seller workflow visible as one narrated sequence, not to establish autonomous AI behavior, production safety, or measured seller impact.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a tangible visualization of how one seller update could pass through structured CRM, calculation, recognition, and notification stages."
+      },
+      "capabilities": [
+        "Accepts browser Web Speech or text input and streams stage progress with Server-Sent Events.",
+        "Uses deterministic keyword extraction rather than an external AI model for deal intent.",
+        "Runs a mock path or an optional configured Dataverse opportunity update.",
+        "Produces illustrative attainment, recognition, and simulated notification payloads."
+      ],
+      "architecture": [
+        {
+          "label": "Voice or text",
+          "detail": "The browser captures a seller update through Web Speech or typed input."
+        },
+        {
+          "label": "Deterministic stages",
+          "detail": "Sequential TypeScript stages extract intent and compose the workflow."
+        },
+        {
+          "label": "CRM and calculation",
+          "detail": "A mock or configured Dataverse action is followed by illustrative attainment logic."
+        },
+        {
+          "label": "Simulated notice",
+          "detail": "Recognition and notification payloads are composed, but the Teams-style send is simulated."
+        }
+      ],
+      "guardrails": [
+        "The journal labels the stages deterministic and agent-styled rather than claiming five autonomous AI agents.",
+        "Attainment and commission values are illustrative rather than financial evidence.",
+        "A real Dataverse deployment should add an explicit approval gate before any mutation; the current optional write path does not provide one."
+      ],
+      "limitations": [
+        "When Dataverse is configured, speech completion starts the pipeline and the opportunity stage can write without an explicit user approval gate.",
+        "The notification endpoint logs intent and returns success without sending a real Teams message, while the payload marks the channel simulated.",
+        "The server enables unrestricted CORS with no authentication middleware, and browser what-if values are inserted through innerHTML without escaping.",
+        "Date handling is hard-coded around 2026, and the repository has no LICENSE file even though package.json says MIT."
+      ],
+      "provenance": [
+        {
+          "label": "Deal to Glory public repository",
+          "url": "https://github.com/billwhalenmsft/agents-league-deal-to-glory",
+          "note": "Public orchestrator, voice-intake, opportunity, notification, server, browser, package metadata, README, and single-commit history support this entry."
+        }
+      ],
+      "attribution": [
+        {
+          "name": "Express",
+          "url": "https://github.com/expressjs/express",
+          "relationship": "Upstream web-server dependency; not owned by this repository.",
+          "license": "MIT in package metadata"
+        },
+        {
+          "name": "@azure/identity",
+          "url": "https://github.com/Azure/azure-sdk-for-js",
+          "relationship": "Upstream Azure identity dependency used by the optional Dataverse path.",
+          "license": "MIT in package metadata"
+        },
+        {
+          "name": "TypeScript",
+          "url": "https://github.com/microsoft/TypeScript",
+          "relationship": "Upstream language and build dependency; not owned by this repository.",
+          "license": "Apache-2.0 in package metadata"
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Voice or text input moves through deterministic TypeScript stages, a mock or configured CRM and calculation step, and a simulated notification.",
+        "nodes": [
+          "Voice or text",
+          "Deterministic stages",
+          "CRM and calculation",
+          "Simulated notice"
+        ]
+      },
+      "article": {
+        "slug": "deal-to-glory",
+        "title": "A seller workflow demo is not an autonomous agent system",
+        "dek": "Deal to Glory makes a five-stage workflow visible while its source reveals the important limits: deterministic extraction, illustrative calculations, simulated notification, and an ungated optional CRM write path.",
         "feed": true
       }
     }

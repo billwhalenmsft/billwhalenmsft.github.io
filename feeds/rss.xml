@@ -8,12 +8,28 @@
     <lastBuildDate>Mon, 14 Sep 2026 12:00:00 GMT</lastBuildDate>
     <atom:link href="https://billwhalenmsft.github.io/feeds/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Making multi-agent work visible</title>
-      <link>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</link>
-      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</guid>
+      <title>One local control surface, explicit sensitive-action gates</title>
+      <link>https://billwhalenmsft.github.io/blog/home-assistant-estate-panel/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/home-assistant-estate-panel/</guid>
       <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
-      <description>A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates. Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work.</description>
-      <category>Agents and AI</category>
+      <description>A self-hosted React and TypeScript reference build that combines native Home Assistant cards with custom estate controls on a shared connection and layout. Designed value: a coherent self-hosted estate view with selective live updates, reusable Home Assistant cards, and confirmation before security-reducing actions.</description>
+      <category>Personal systems</category>
+    </item>
+    <item>
+      <title>Turn freight exceptions into owned work</title>
+      <link>https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views. Designed value: a shared queue for freight exceptions with clearer ownership, aging, priority, and resolution state.</description>
+      <category>Business applications</category>
+    </item>
+    <item>
+      <title>Prototype the reading experience before the ingestion service</title>
+      <link>https://billwhalenmsft.github.io/blog/customer-news-hub/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/customer-news-hub/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>An explicitly unpublished static reference interface for exploring how sample product updates could be filtered, scanned, and opened as a digest. Designed value: a filterable reference pattern for turning a broad product-update stream into a more focused, reviewable digest.</description>
+      <category>Information design</category>
     </item>
     <item>
       <title>Bring the surrounding record into the work</title>
@@ -24,12 +40,20 @@
       <category>Business applications</category>
     </item>
     <item>
-      <title>Turn freight exceptions into owned work</title>
-      <link>https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</link>
-      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</guid>
+      <title>Share the accelerator, not the tenant</title>
+      <link>https://billwhalenmsft.github.io/blog/sellersphere/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/sellersphere/</guid>
       <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
-      <description>A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views. Designed value: a shared queue for freight exceptions with clearer ownership, aging, priority, and resolution state.</description>
+      <description>A sanitized, buildable reference accelerator for a voice-first Dynamics 365 seller experience with consumer-owned configuration and explicit approval gates. Designed value: a safer starting point for consumer-owned voice, Copilot Studio, and Dynamics 365 integration with explicit approval before consequential actions.</description>
       <category>Business applications</category>
+    </item>
+    <item>
+      <title>Making multi-agent work visible</title>
+      <link>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates. Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work.</description>
+      <category>Agents and AI</category>
     </item>
     <item>
       <title>Keep claims assistance separate from claims authority</title>
@@ -45,6 +69,14 @@
       <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/prompt-escape/</guid>
       <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
       <description>A multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge. Designed value: an experiential way for teams to practice clearer prompts, constraints, iteration, and collaborative problem solving.</description>
+      <category>Agents and AI</category>
+    </item>
+    <item>
+      <title>A seller workflow demo is not an autonomous agent system</title>
+      <link>https://billwhalenmsft.github.io/blog/deal-to-glory/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/deal-to-glory/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>A single-commit hackathon MVP that visualizes a deterministic, agent-styled seller workflow from voice or text input through CRM, illustrative attainment, recognition, and simulated notification stages. Designed value: a tangible visualization of how one seller update could pass through structured CRM, calculation, recognition, and notification stages.</description>
       <category>Agents and AI</category>
     </item>
     <item>
