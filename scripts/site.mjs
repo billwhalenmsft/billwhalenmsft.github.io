@@ -951,6 +951,7 @@ function infoOnlyPage(release) {
             <article class="panel"><span class="label">03 / Designed value</span><h3>Value hypothesis</h3><p>${escapeHtml(release.outcome)}</p></article>
           </div>
           <div class="callout"><p><strong>Evidence label:</strong> ${escapeHtml(release.valueEvidence.statement)}</p></div>
+${release.foundationNote ? `<div class="callout"><p><strong>Foundation attribution:</strong> ${escapeHtml(release.foundationNote)}</p></div>` : ""}
         </div>
       </section>
       <section class="section" aria-labelledby="${release.slug}-architecture">
@@ -1130,7 +1131,7 @@ function manifest(catalog) {
   const releases = orderedReleases(catalog);
   const infoOnly = orderedInfoOnly(catalog);
   return {
-    version: 5,
+    version: 6,
     title: "Bill Whalen solution journal manifest",
     updated: catalog.updated,
     policy: {

@@ -47,6 +47,7 @@
     "This private active build is not a Microsoft product or officially supported offering.",
     "No public evidence establishes adoption, production use, ROI, savings, or customer outcomes."
   ],
+  "foundationNote": "Optional plain-text upstream attribution. Do not add source or download links to the info-only record.",
   "publicBoundary": "Information-only. Source and operational materials are not published.",
   "visual": {
     "type": "inline-svg",

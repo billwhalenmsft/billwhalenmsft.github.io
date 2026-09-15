@@ -1,14 +1,14 @@
 {
-  "version": 5,
+  "version": 6,
   "expectedPublicReleaseCount": 9,
-  "expectedInfoOnlyCount": 8,
+  "expectedInfoOnlyCount": 9,
   "updated": "2026-09-15",
   "releases": [
     {
       "slug": "agent-team-starter-kit",
       "publicationMode": "public-release",
       "featuredOnHome": true,
-      "homepageRank": 10,
+      "homepageRank": 11,
       "title": "Agent Team Starter Kit",
       "summary": "A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.",
       "category": "Agents and AI",
@@ -99,7 +99,7 @@
       "slug": "customer-360-for-entities",
       "publicationMode": "public-release",
       "featuredOnHome": true,
-      "homepageRank": 8,
+      "homepageRank": 9,
       "title": "Customer 360 for Entities",
       "summary": "An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work already happens.",
       "category": "Business applications",
@@ -190,7 +190,7 @@
       "slug": "freight-triage-control-tower",
       "publicationMode": "public-release",
       "featuredOnHome": true,
-      "homepageRank": 9,
+      "homepageRank": 10,
       "title": "Freight Triage Control Tower",
       "summary": "A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.",
       "category": "Business applications",
@@ -1005,7 +1005,7 @@
       "slug": "program-iq",
       "publicationMode": "info-only",
       "featuredOnHome": true,
-      "homepageRank": 6,
+      "homepageRank": 7,
       "title": "Program IQ",
       "summary": "A private program-execution view for bringing milestones, ownership, evidence, risks, decisions, and next actions into one reviewable operating picture.",
       "category": "Program execution",
@@ -1075,7 +1075,7 @@
       "slug": "field-service-tech-home",
       "publicationMode": "info-only",
       "featuredOnHome": true,
-      "homepageRank": 7,
+      "homepageRank": 8,
       "title": "Field Service Tech Home",
       "summary": "A supportive private mobile technician-home concept for work execution, productivity, quality, parts, and AI-guided recommendations without punitive monitoring.",
       "category": "Field operations",
@@ -1145,7 +1145,7 @@
       "slug": "sales-agent-extensibility",
       "publicationMode": "info-only",
       "featuredOnHome": true,
-      "homepageRank": 4,
+      "homepageRank": 5,
       "title": "Sales Agent Extensibility Pattern",
       "summary": "A private, customer-neutral pattern connecting seller and CRM context, agent assistance, approved tools, next actions, human approvals, and durable receipts.",
       "category": "Agent patterns",
@@ -1215,7 +1215,7 @@
       "slug": "service-agent-extensibility",
       "publicationMode": "info-only",
       "featuredOnHome": true,
-      "homepageRank": 5,
+      "homepageRank": 6,
       "title": "Service Agent Extensibility Pattern",
       "summary": "A private, customer-neutral pattern connecting case context, knowledge and tool assistance, action proposals, approvals, evidence, and customer-owned execution.",
       "category": "Agent patterns",
@@ -1349,6 +1349,78 @@
           "NEURON.md review",
           "Portable core",
           "Thin host adapter"
+        ]
+      }
+    },
+    {
+      "slug": "v-team-mesh-hivemind",
+      "publicationMode": "info-only",
+      "featuredOnHome": true,
+      "homepageRank": 4,
+      "title": "V-Team Mesh + Hivemind",
+      "summary": "An evolving working model for coordinating scoped specialist roles, independent review, accountable synthesis, human approval, and trusted knowledge carried forward.",
+      "category": "Agent patterns",
+      "tags": [
+        "Specialist roles",
+        "Independent review",
+        "Accountable coordination",
+        "Trusted knowledge"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-15",
+      "originalState": "Complex work can require several specialist perspectives, but loosely pooled agents can blur ownership, mix unreviewed context, and carry weak assumptions into later work.",
+      "delivered": "The private concept defines scoped specialist roles, accountable coordination, independent review, human-approved synthesis, and a deliberate path for carrying only reviewed knowledge forward.",
+      "outcome": "The design is intended to combine specialist depth with traceable coordination and reusable trusted knowledge without implying shared consciousness, unrestricted data pooling, or autonomous authority.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a reviewable mesh of specialist roles that preserves accountability, independent critique, human approval, and trusted knowledge carry-forward."
+      },
+      "capabilities": [
+        "Assigns bounded objectives to scoped specialist roles.",
+        "Separates independent review from synthesis and execution.",
+        "Keeps coordination, evidence, and ownership visible.",
+        "Carries forward only knowledge that has been reviewed and approved."
+      ],
+      "architecture": [
+        {
+          "label": "Scoped objective",
+          "detail": "A bounded question, owner, constraints, and evidence needs define the work."
+        },
+        {
+          "label": "Specialist mesh",
+          "detail": "Distinct roles contribute independently within explicit scopes."
+        },
+        {
+          "label": "Independent review",
+          "detail": "Critique and synthesis remain separate so disagreements and gaps stay visible."
+        },
+        {
+          "label": "Human-approved memory",
+          "detail": "A person approves the outcome and decides what reviewed knowledge may carry forward."
+        }
+      ],
+      "guardrails": [
+        "Roles receive only the context needed for their scoped objective.",
+        "Independent review and human approval precede consequential action or knowledge carry-forward.",
+        "The model does not pool unrestricted private or customer data and does not claim autonomous shared consciousness."
+      ],
+      "limitations": [
+        "Information-only concept; source, agent definitions, prompts, coordination logic, memory stores, and operational materials are not published.",
+        "This private active build is not a Microsoft product or an officially supported offering.",
+        "V-Team Mesh + Hivemind is Bill's evolving working model, not an upstream RAPP or RAPP/1 feature and not a proven integration.",
+        "No public evidence establishes production readiness, adoption, coordination quality, savings, or customer outcomes."
+      ],
+      "foundationNote": "RAPP and RAPP/1 are public projects published by Kody Wildfeuer. These foundations inform Bill's approach to persistent agent identity, traceable memory, and reusable work. V-Team Mesh + Hivemind is Bill's evolving working model, not an upstream RAPP or RAPP/1 feature or a proven integration.",
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A scoped objective moves through distinct specialist roles and independent review to human-approved knowledge carry-forward.",
+        "nodes": [
+          "Scoped objective",
+          "Specialist mesh",
+          "Independent review",
+          "Human-approved memory"
         ]
       }
     },

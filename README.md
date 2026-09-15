@@ -8,8 +8,8 @@ Static source for `https://billwhalenmsft.github.io/`.
 - A searchable and filterable launcher for verified public projects.
 - The approved White and Blue Atomic visual system, with a compatible dark preference.
 - A keyboard quick launcher with `Ctrl+K` or `Cmd+K`.
-- A public-safe solution journal with nine public releases and eight clearly separated information-only showcases.
-- A metadata-ranked homepage gallery with exactly ten featured current-work entries.
+- A public-safe solution journal with nine public releases and nine clearly separated information-only showcases.
+- A metadata-ranked homepage gallery with exactly eleven featured current-work entries.
 - A generated public release manifest, RSS 2.0 feed, Atom feed, sitemap, metadata, JSON-LD, and custom 404 page.
 - A dependency-free Node.js generator and validation suite for future manually reviewed releases.
 

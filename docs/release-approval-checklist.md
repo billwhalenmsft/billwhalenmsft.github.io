@@ -28,6 +28,7 @@ Use this checklist for either an exact public release or an owner-reviewed infor
 - [ ] Human decision points, consequential action gates, prerequisites, and limitations are explicit.
 - [ ] The solution page, companion article, RSS, Atom, public manifest, and sitemap agree with the canonical record.
 - [ ] Every info-only record uses `designed` value, the required public-boundary disclosure, an owner-reviewed as-of date, no URLs, and no RSS/Atom item.
+- [ ] Any info-only foundation attribution is concise plain text, separates Bill's work from upstream authorship, and does not turn upstream projects into portfolio release records.
 - [ ] `engagements/field-service-scheduling/**` hashes match `config/protected-routes.json` and the route is absent from navigation, catalog, sitemap, feeds, search, and MCP plans.
 - [ ] `npm test` passes from a clean checkout after generation.
 - [ ] Bill reviewed the exact manifest and commit and manually merged the pull request.
