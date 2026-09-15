@@ -130,10 +130,10 @@ const protectedConfig = await readJson("config/protected-routes.json");
 const allowlistedRepositories = new Set(allowlist.repositories);
 const allowedEvidence = new Set(["measured", "observed", "designed"]);
 
-check(catalog.version === 4, "Catalog version must be 4.");
+check(catalog.version === 5, "Catalog version must be 5.");
 check(dateIsValid(catalog.updated), "Catalog updated date must use YYYY-MM-DD.");
 check(catalog.expectedPublicReleaseCount === 9, "Catalog must expect exactly 9 public releases.");
-check(catalog.expectedInfoOnlyCount === 7, "Catalog must expect exactly 7 info-only showcases.");
+check(catalog.expectedInfoOnlyCount === 8, "Catalog must expect exactly 8 info-only showcases.");
 check(Array.isArray(catalog.releases), "Catalog records must be an array.");
 
 const releaseSlugs = new Set();
@@ -165,8 +165,8 @@ for (const release of catalog.releases) {
   check(typeof release.featuredOnHome === "boolean", `${slug}: featuredOnHome must be explicit.`);
   if (release.featuredOnHome) {
     check(
-      Number.isInteger(release.homepageRank) && release.homepageRank >= 1 && release.homepageRank <= 9,
-      `${slug}: featured records require homepageRank from 1 through 9.`
+      Number.isInteger(release.homepageRank) && release.homepageRank >= 1 && release.homepageRank <= 10,
+      `${slug}: featured records require homepageRank from 1 through 10.`
     );
   } else {
     check(!Object.hasOwn(release, "homepageRank"), `${slug}: non-featured records must not have homepageRank.`);
@@ -274,9 +274,15 @@ for (const release of catalog.releases) {
   } else if (release.publicationMode === "info-only") {
     check(dateIsValid(release.ownerReviewedAsOf), `${slug}: ownerReviewedAsOf must use YYYY-MM-DD.`);
     check(release.valueEvidence?.level === "designed", `${slug}: info-only value evidence must be designed.`);
+    const standardInfoOnlyBoundary =
+      "Information-only. Source and operational materials are not published.";
+    const portableNeuronBoundary =
+      "Information-only. Source, package, and operational materials are not published pending rights and licensing clearance.";
     check(
-      release.publicBoundary === "Information-only. Source and operational materials are not published.",
-      `${slug}: info-only public boundary disclosure is required verbatim.`
+      release.publicBoundary === (slug === "portable-neuron"
+        ? portableNeuronBoundary
+        : standardInfoOnlyBoundary),
+      `${slug}: exact info-only public boundary disclosure is required.`
     );
     check(/Information-only/i.test(release.maturity), `${slug}: maturity must visibly say Information-only.`);
     check(/Private active build/i.test(release.maturity), `${slug}: maturity must visibly say Private active build.`);
@@ -299,6 +305,12 @@ for (const release of catalog.releases) {
       release.limitations.some((limitation) => /not a Microsoft product/i.test(limitation)),
       `${slug}: info-only limitations must state that the build is not a Microsoft product.`
     );
+    if (slug === "portable-neuron") {
+      check(
+        !/\b(?:source code|binary|binaries|archive|dependency metadata|repository)\b/i.test(release.summary),
+        `${slug}: homepage-safe summary must not imply publication of restricted package materials.`
+      );
+    }
   }
 }
 pass("Publication modes, approvals, evidence labels, and public-safe record schema checked.");
@@ -306,10 +318,10 @@ pass("Publication modes, approvals, evidence labels, and public-safe record sche
 const ordered = orderedReleases(catalog);
 const orderedInfo = orderedInfoOnly(catalog);
 check(ordered.length === catalog.expectedPublicReleaseCount, "Catalog must contain exactly 9 public releases.");
-check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 7 info-only showcases.");
+check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 8 info-only showcases.");
 check(
   catalog.releases.length === catalog.expectedPublicReleaseCount + catalog.expectedInfoOnlyCount,
-  "Catalog must contain exactly 16 total records."
+  "Catalog must contain exactly 17 total records."
 );
 check(
   allowlist.repositories.length === catalog.expectedPublicReleaseCount,
@@ -337,11 +349,11 @@ pass("Exact repository creation and last-public-push facts and ordering checked.
 const featured = catalog.releases
   .filter((release) => release.featuredOnHome)
   .sort((left, right) => left.homepageRank - right.homepageRank);
-check(featured.length === 9, "Homepage curation must contain exactly 9 featured records.");
+check(featured.length === 10, "Homepage curation must contain exactly 10 featured records.");
 check(
   JSON.stringify(featured.map((release) => release.homepageRank))
-    === JSON.stringify([1, 2, 3, 4, 5, 6, 7, 8, 9]),
-  "Homepage ranks must be unique and contiguous from 1 through 9."
+    === JSON.stringify([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+  "Homepage ranks must be unique and contiguous from 1 through 10."
 );
 
 const publicText = [
@@ -387,7 +399,7 @@ for (const relativePath of ["index.html", "404.html"]) {
 }
 
 const home = diskHtml.get("index.html");
-check((home.match(/class="project-card"/g) || []).length === 9, "Homepage must contain exactly nine featured project cards.");
+check((home.match(/class="project-card"/g) || []).length === 10, "Homepage must contain exactly ten featured project cards.");
 check(home.includes('id="hero-title">I build AI <span>people use.</span></h1>'), "Homepage accepted hero changed.");
 check(home.includes('id="projectSearch"'), "Homepage project search is missing.");
 check(home.includes('id="commandDialog"'), "Homepage keyboard quick launcher is missing.");
@@ -485,10 +497,10 @@ check(
 check(!sitemapXml.includes("engagements/"), "Protected engagements must not appear in the sitemap.");
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));
-check(publicManifest.version === 4, "Public release manifest version must be 4.");
-check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 16.");
+check(publicManifest.version === 5, "Public release manifest version must be 5.");
+check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 17.");
 check(publicManifest.releaseCount === catalog.expectedPublicReleaseCount, "Manifest public release count must be exactly 9.");
-check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 7.");
+check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 8.");
 check(
   JSON.stringify(publicManifest.releases.map((release) => release.slug))
     === JSON.stringify(ordered.map((release) => release.slug)),

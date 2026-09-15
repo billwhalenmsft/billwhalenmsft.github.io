@@ -1130,7 +1130,7 @@ function manifest(catalog) {
   const releases = orderedReleases(catalog);
   const infoOnly = orderedInfoOnly(catalog);
   return {
-    version: 4,
+    version: 5,
     title: "Bill Whalen solution journal manifest",
     updated: catalog.updated,
     policy: {

@@ -1,14 +1,14 @@
 {
-  "version": 4,
+  "version": 5,
   "expectedPublicReleaseCount": 9,
-  "expectedInfoOnlyCount": 7,
-  "updated": "2026-09-14",
+  "expectedInfoOnlyCount": 8,
+  "updated": "2026-09-15",
   "releases": [
     {
       "slug": "agent-team-starter-kit",
       "publicationMode": "public-release",
       "featuredOnHome": true,
-      "homepageRank": 9,
+      "homepageRank": 10,
       "title": "Agent Team Starter Kit",
       "summary": "A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.",
       "category": "Agents and AI",
@@ -99,7 +99,7 @@
       "slug": "customer-360-for-entities",
       "publicationMode": "public-release",
       "featuredOnHome": true,
-      "homepageRank": 7,
+      "homepageRank": 8,
       "title": "Customer 360 for Entities",
       "summary": "An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work already happens.",
       "category": "Business applications",
@@ -190,7 +190,7 @@
       "slug": "freight-triage-control-tower",
       "publicationMode": "public-release",
       "featuredOnHome": true,
-      "homepageRank": 8,
+      "homepageRank": 9,
       "title": "Freight Triage Control Tower",
       "summary": "A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.",
       "category": "Business applications",
@@ -1005,7 +1005,7 @@
       "slug": "program-iq",
       "publicationMode": "info-only",
       "featuredOnHome": true,
-      "homepageRank": 5,
+      "homepageRank": 6,
       "title": "Program IQ",
       "summary": "A private program-execution view for bringing milestones, ownership, evidence, risks, decisions, and next actions into one reviewable operating picture.",
       "category": "Program execution",
@@ -1075,7 +1075,7 @@
       "slug": "field-service-tech-home",
       "publicationMode": "info-only",
       "featuredOnHome": true,
-      "homepageRank": 6,
+      "homepageRank": 7,
       "title": "Field Service Tech Home",
       "summary": "A supportive private mobile technician-home concept for work execution, productivity, quality, parts, and AI-guided recommendations without punitive monitoring.",
       "category": "Field operations",
@@ -1145,7 +1145,7 @@
       "slug": "sales-agent-extensibility",
       "publicationMode": "info-only",
       "featuredOnHome": true,
-      "homepageRank": 3,
+      "homepageRank": 4,
       "title": "Sales Agent Extensibility Pattern",
       "summary": "A private, customer-neutral pattern connecting seller and CRM context, agent assistance, approved tools, next actions, human approvals, and durable receipts.",
       "category": "Agent patterns",
@@ -1215,7 +1215,7 @@
       "slug": "service-agent-extensibility",
       "publicationMode": "info-only",
       "featuredOnHome": true,
-      "homepageRank": 4,
+      "homepageRank": 5,
       "title": "Service Agent Extensibility Pattern",
       "summary": "A private, customer-neutral pattern connecting case context, knowledge and tool assistance, action proposals, approvals, evidence, and customer-owned execution.",
       "category": "Agent patterns",
@@ -1278,6 +1278,77 @@
           "Knowledge and tools",
           "Proposal and evidence",
           "Customer-owned execution"
+        ]
+      }
+    },
+    {
+      "slug": "portable-neuron",
+      "publicationMode": "info-only",
+      "featuredOnHome": true,
+      "homepageRank": 3,
+      "title": "Portable Neuron",
+      "summary": "A provider-neutral portability and packaging concept for reusable agent knowledge and behavior, centered on a human-reviewed NEURON.md interoperability profile and optional thin host adapters.",
+      "category": "Agent patterns",
+      "tags": [
+        "Portability",
+        "Agent knowledge",
+        "Interoperability",
+        "Human review"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-15",
+      "originalState": "Reusable agent knowledge and behavior can become coupled to one provider, host, packaging format, or runtime, making review, transfer, and controlled reuse difficult.",
+      "delivered": "The private concept defines a provider-neutral package boundary with human-reviewed NEURON.md as the interoperability profile and optional thin adapters that translate the reviewed profile into host-specific integration points.",
+      "outcome": "The design is intended to make reusable agent knowledge and behavior easier to inspect, move, adapt, and govern without claiming universal compatibility or hiding host-specific constraints.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a human-reviewed interoperability profile and thin-adapter pattern for more portable, inspectable, and governable agent knowledge and behavior."
+      },
+      "capabilities": [
+        "Describes reusable agent knowledge and behavior in a provider-neutral package concept.",
+        "Uses human-reviewed NEURON.md as the interoperability profile.",
+        "Keeps host-specific behavior in optional thin adapters rather than the portable core.",
+        "Separates package review and rights clearance from installation or execution."
+      ],
+      "architecture": [
+        {
+          "label": "Reusable knowledge",
+          "detail": "A bounded set of agent knowledge and behavior is selected for portable packaging."
+        },
+        {
+          "label": "NEURON.md review",
+          "detail": "A person reviews the interoperability profile, boundaries, provenance, and intended behavior."
+        },
+        {
+          "label": "Portable core",
+          "detail": "Provider-neutral content remains separate from host-specific integration."
+        },
+        {
+          "label": "Thin host adapter",
+          "detail": "An optional adapter translates the reviewed profile into a specific host without redefining the portable core."
+        }
+      ],
+      "guardrails": [
+        "NEURON.md is human-reviewed before portability or installation decisions.",
+        "Host adapters remain thin, explicit, and separately reviewable.",
+        "Rights, licensing, provenance, and compatibility clearance precede any source or package publication."
+      ],
+      "limitations": [
+        "Information-only concept; source, binaries, archives, package contents, dependency metadata, repository links, and operational materials are not published pending rights and licensing clearance.",
+        "This private active build is not publicly licensed or production-ready. It is not a Microsoft product or an officially supported offering.",
+        "Provider-neutral design does not guarantee compatibility with every agent host or runtime.",
+        "No public evidence establishes adoption, portability success, production use, savings, or customer outcomes."
+      ],
+      "publicBoundary": "Information-only. Source, package, and operational materials are not published pending rights and licensing clearance.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Reusable agent knowledge moves through human review of a NEURON.md interoperability profile into a portable core and optional thin host adapter.",
+        "nodes": [
+          "Reusable knowledge",
+          "NEURON.md review",
+          "Portable core",
+          "Thin host adapter"
         ]
       }
     },
