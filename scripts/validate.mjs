@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import {
@@ -214,9 +214,11 @@ check(!/\bROI\b\s*(?:of|:|=)?\s*\d/i.test(publicText), "Unsupported numeric ROI 
 pass("PII, customer/internal markers, secret-like content, protected route, and unsupported result patterns checked.");
 
 for (const route of protectedConfig.routes) {
-  const bytes = await readFile(resolve(ROOT, route.path));
-  const actualHash = createHash("sha256").update(bytes).digest("hex");
-  check(actualHash === route.sha256, `${route.path}: protected route hash changed.`);
+  const actualHash = execFileSync("git", ["hash-object", route.path], {
+    cwd: ROOT,
+    encoding: "utf8"
+  }).trim();
+  check(actualHash === route.gitBlob, `${route.path}: protected route Git blob changed.`);
 }
 pass("Protected engagement hashes checked byte-for-byte.");
 
