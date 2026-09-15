@@ -1,0 +1,69 @@
+{
+  "slug": "stable-public-slug",
+  "title": "Public solution title",
+  "summary": "Customer-neutral summary grounded in an allowlisted public source.",
+  "category": "Agents and AI",
+  "tags": [
+    "Example tag"
+  ],
+  "status": "approved",
+  "maturity": "Public prototype",
+  "published": "YYYY-MM-DD",
+  "updated": "YYYY-MM-DD",
+  "sourceUrls": [
+    "https://github.com/billwhalenmsft/allowlisted-public-repository"
+  ],
+  "originalState": "Describe the workflow before the solution without identifying a customer.",
+  "delivered": "Describe what the public project packages or demonstrates.",
+  "outcome": "Describe the value the design enables without implying measured results.",
+  "valueEvidence": {
+    "level": "designed",
+    "statement": "Designed value: state the intended value explicitly."
+  },
+  "capabilities": [
+    "A publicly evidenced capability"
+  ],
+  "architecture": [
+    {
+      "label": "Input",
+      "detail": "Customer-neutral input or trigger"
+    },
+    {
+      "label": "Process",
+      "detail": "Publicly evidenced processing step"
+    },
+    {
+      "label": "Human gate",
+      "detail": "Where a person reviews, decides, or remains accountable"
+    }
+  ],
+  "guardrails": [
+    "A public, factual human-control or safety boundary"
+  ],
+  "limitations": [
+    "A material limitation, prerequisite, or non-production boundary"
+  ],
+  "provenance": [
+    {
+      "label": "Public repository",
+      "url": "https://github.com/billwhalenmsft/allowlisted-public-repository",
+      "note": "Identify the README, docs, source, or release evidence used."
+    }
+  ],
+  "visual": {
+    "type": "inline-svg",
+    "alt": "Concise description of the synthetic diagram",
+    "nodes": [
+      "Input",
+      "Process",
+      "Human gate",
+      "Outcome"
+    ]
+  },
+  "article": {
+    "slug": "stable-public-slug",
+    "title": "Companion article title",
+    "dek": "Customer-neutral article introduction.",
+    "feed": true
+  }
+}

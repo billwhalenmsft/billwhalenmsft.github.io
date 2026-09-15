@@ -8,8 +8,9 @@ Static source for `https://billwhalenmsft.github.io/`.
 - A searchable and filterable launcher for verified public projects.
 - The approved White and Blue Atomic visual system, with a compatible dark preference.
 - A keyboard quick launcher with `Ctrl+K` or `Cmd+K`.
-- An explicitly non-live release architecture for future project pages, field notes, RSS/Atom, and read-only MCP discovery.
-- GitHub Pages metadata, sitemap, robots file, and custom 404 page.
+- A public-safe solution journal with six release entries and companion illustrated field notes.
+- A generated public release manifest, RSS 2.0 feed, Atom feed, sitemap, metadata, JSON-LD, and custom 404 page.
+- A dependency-free Node.js generator and validation suite for future manually reviewed releases.
 
 ## Content boundary
 
@@ -17,28 +18,33 @@ The portfolio intentionally includes customer-neutral public work only. Customer
 
 Community projects are shared as-is and are not Microsoft products or supported offerings.
 
-## Release architecture status
+`engagements/field-service-scheduling/**` is a protected, excluded route. Its bytes are pinned in `config/protected-routes.json`; it is not included in navigation, the catalog, sitemap, feeds, search, or the planned MCP surface.
 
-The homepage documents the approved future direction without claiming those surfaces are live:
+## Operator flow
 
-- Project pages will use a reusable public-safe release-detail pattern.
-- Field notes, RSS, and Atom will derive from one reviewed public release record.
-- A read-only MCP service would require separate hosting because GitHub Pages is static.
-
-No release catalog, feed endpoint, subscriber list, or MCP server is currently deployed by this repository.
-
-## Local preview
+Requirements: Node.js 20 or later. The generator uses only the Node standard library.
 
 ```powershell
+npm run generate
+npm test
 python -m http.server 4173
 ```
 
-Then open `http://localhost:4173/`.
+Open `http://localhost:4173/`, then review `/journal/`, one solution entry, one companion article, `/subscribe/`, `/feeds/rss.xml`, `/feeds/atom.xml`, and `/releases.json`.
+
+Canonical release data lives in `content/releases.json`. Generated output is committed so GitHub Pages can publish directly from the repository root. `npm run generate:check` fails when committed output does not match the catalog.
+
+For each future release:
+
+1. Nominate one exact public project and add its canonical repository to `config/public-source-allowlist.json`.
+2. Complete the private sanitization and rights review outside the repository.
+3. Add a draft record using `docs/release-input.example.json`, generate, and preview.
+4. Run `npm test`.
+5. Have Bill review the exact pages, manifest, and commit; only then set the record to `approved`.
+6. Open a pull request and have Bill manually merge it to publish.
+
+The complete approval gate is in `docs/release-approval-checklist.md`. There is no scheduled publishing, recurring write automation, email subscriber collection, or live MCP endpoint.
 
 ## Publish with GitHub Pages
 
-1. Create a public repository named `billwhalenmsft.github.io`.
-2. Push this directory to the repository's `main` branch.
-3. In the repository settings, set Pages to deploy from the root of `main`.
-
-No build step is required.
+GitHub Pages deploys the repository root from `main`. Merge the exact reviewed commit; no server-side build or framework is required.

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="atomic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Public-safe solution entries and illustrated build notes from Bill Whalen&#39;s Atomic Collection.">
+  <meta name="author" content="Bill Whalen">
+  <meta name="theme-color" content="#0057B8">
+  <link rel="canonical" href="https://billwhalenmsft.github.io/journal/">
+  <link rel="alternate" type="application/rss+xml" title="Bill Whalen solution journal RSS" href="https://billwhalenmsft.github.io/feeds/rss.xml">
+  <link rel="alternate" type="application/atom+xml" title="Bill Whalen solution journal Atom" href="https://billwhalenmsft.github.io/feeds/atom.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Solution journal | Bill Whalen">
+  <meta property="og:description" content="Public-safe solution entries and illustrated build notes from Bill Whalen&#39;s Atomic Collection.">
+  <meta property="og:url" content="https://billwhalenmsft.github.io/journal/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Solution journal | Bill Whalen">
+  <meta name="twitter:description" content="Public-safe solution entries and illustrated build notes from Bill Whalen&#39;s Atomic Collection.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
+  <title>Solution journal | Bill Whalen</title>
+  <script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Bill Whalen solution journal",
+      "url": "https://billwhalenmsft.github.io/journal/",
+      "description": "Customer-neutral public solution entries grounded in public project evidence.",
+      "hasPart": [
+        {
+          "@type": "CreativeWork",
+          "name": "Agent Team Starter Kit",
+          "url": "https://billwhalenmsft.github.io/journal/agent-team-starter-kit/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Customer 360 for Entities",
+          "url": "https://billwhalenmsft.github.io/journal/customer-360-for-entities/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Freight Triage Control Tower",
+          "url": "https://billwhalenmsft.github.io/journal/freight-triage-control-tower/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Warranty + Claims Operations",
+          "url": "https://billwhalenmsft.github.io/journal/warranty-claims-operations/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Prompt Escape",
+          "url": "https://billwhalenmsft.github.io/journal/prompt-escape/"
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Copilot Studio + MCP Lab",
+          "url": "https://billwhalenmsft.github.io/journal/copilot-studio-mcp-lab/"
+        }
+      ]
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    html[data-brand="atomic"] {
+      color-scheme: light;
+      --cp-bg: #FFFFFF;
+      --cp-bg-elevated: #FFFFFF;
+      --cp-surface: #FFFFFF;
+      --cp-surface-soft: #EAF3FF;
+      --cp-border: #B9CAE0;
+      --cp-border-strong: #0057B8;
+      --cp-text: #142D4E;
+      --cp-text-muted: #003B7A;
+      --cp-text-soft: #142D4E;
+      --cp-accent: #0057B8;
+      --cp-accent-hover: #003B7A;
+      --cp-accent-soft: #EAF3FF;
+      --cp-accent-fg: #FFFFFF;
+      --cp-link: #003B7A;
+      --cp-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.14);
+      --cp-overlay: rgba(20, 45, 78, 0.48);
+      --cp-panel: #FFFFFF;
+      --cp-panel-strong: #FFFFFF;
+      --cp-sheen: #FFFFFF;
+      --cp-highlight: #EAF3FF;
+      --cp-grid: rgba(185, 202, 224, 0.42);
+    }
+    html[data-brand="atomic"][data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #07182C;
+      --cp-bg-elevated: #0A1E36;
+      --cp-surface: #0D2745;
+      --cp-surface-soft: #122F52;
+      --cp-border: #365D85;
+      --cp-border-strong: #78B4F8;
+      --cp-text: #F5F9FF;
+      --cp-text-muted: #B9D8FA;
+      --cp-text-soft: #DFEEFF;
+      --cp-accent: #78B4F8;
+      --cp-accent-hover: #A8D2FF;
+      --cp-accent-soft: #122F52;
+      --cp-accent-fg: #07182C;
+      --cp-link: #A8D2FF;
+      --cp-shadow: 0 0 2px rgba(120, 180, 248, 0.24), 0 1px 2px rgba(0, 0, 0, 0.3);
+      --cp-overlay: rgba(2, 12, 24, 0.78);
+      --cp-panel: #0D2745;
+      --cp-panel-strong: #0D2745;
+      --cp-sheen: #0D2745;
+      --cp-highlight: #173B64;
+      --cp-grid: rgba(54, 93, 133, 0.24);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    body {
+      min-width: 20rem;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      text-rendering: optimizeLegibility;
+    }
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(to right, var(--cp-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--cp-grid) 1px, transparent 1px);
+      background-size: 5rem 5rem;
+      content: "";
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    a { color: var(--cp-link); }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: var(--cp-accent-soft); }
+    button { color: inherit; }
+    svg { display: block; max-width: 100%; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.08; letter-spacing: -0.035em; }
+    h1 { max-width: 15ch; font-size: clamp(2.75rem, 8vw, 5.5rem); }
+    h2 { font-size: clamp(1.85rem, 4vw, 3rem); }
+    h3 { font-size: 1.15rem; }
+    .shell { width: min(100% - 2rem, 77.5rem); margin-inline: auto; }
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 50;
+      padding: 0.65rem 0.85rem;
+      border-radius: 0.625rem;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font-weight: 800;
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    :focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-panel-strong);
+    }
+    .nav {
+      display: flex;
+      min-height: 5.5rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--cp-text);
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 2.55rem;
+      height: 2.55rem;
+      place-items: center;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-accent);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+    .brand-copy { display: grid; color: var(--cp-text); line-height: 1.1; }
+    .brand-copy small {
+      margin-top: 0.28rem;
+      color: var(--cp-text-muted);
+      font-size: 0.61rem;
+      font-weight: 700;
+      letter-spacing: 0.17em;
+    }
+    .nav-links, .footer-links, .hero-actions, .card-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+    .nav-links a, .footer-links a {
+      color: var(--cp-text-muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .nav-links a:hover, .footer-links a:hover { color: var(--cp-accent); }
+    .icon-button {
+      display: grid;
+      width: 2.75rem;
+      height: 2.75rem;
+      place-items: center;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      cursor: pointer;
+    }
+    .icon-button:hover { border-color: var(--cp-border-strong); color: var(--cp-accent); }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+      align-items: center;
+      gap: clamp(2rem, 6vw, 5rem);
+      padding-block: clamp(4.5rem, 9vw, 7rem);
+    }
+    .hero-copy { max-width: 46rem; color: var(--cp-text-muted); font-size: clamp(1rem, 2.4vw, 1.22rem); }
+    .eyebrow, .section-kicker, .label {
+      color: var(--cp-accent);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .button {
+      display: inline-flex;
+      min-height: 2.75rem;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 0.95rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font-weight: 750;
+      text-decoration: none;
+    }
+    .button:hover { border-color: var(--cp-border-strong); }
+    .button-primary { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .button-primary:hover { background: var(--cp-accent-hover); }
+    .button-small { min-height: 2.75rem; padding: 0.48rem 0.72rem; font-size: 0.82rem; }
+    .evidence-card, .panel, .release-card {
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .evidence-card { padding: 1.5rem; }
+    .evidence-card strong { display: block; margin: 0.5rem 0; font-size: 1.25rem; }
+    .evidence-card p { margin-bottom: 0; color: var(--cp-text-muted); }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.7rem;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .status::before {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--cp-success);
+      content: "";
+    }
+    .section { padding-block: clamp(4rem, 8vw, 6.5rem); border-top: 1px solid var(--cp-border); }
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.65fr);
+      align-items: end;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .section-heading p { margin-bottom: 0; color: var(--cp-text-muted); }
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .filter-chip {
+      min-height: 2.75rem;
+      padding: 0.5rem 0.8rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface);
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .filter-chip[aria-pressed="true"] { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .search {
+      width: min(20rem, 100%);
+      min-height: 2.75rem;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+    }
+    .release-grid, .detail-grid, .flow-grid, .split-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .release-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .release-card {
+      display: flex;
+      min-height: 24rem;
+      flex-direction: column;
+      padding: 1.3rem;
+    }
+    .release-card p { color: var(--cp-text-muted); }
+    .release-card .card-actions { margin-top: auto; padding-top: 1rem; }
+    .tag-list, .plain-list, .source-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1rem; }
+    .tag-list li {
+      padding: 0.3rem 0.55rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .flow-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { padding: clamp(1.25rem, 3vw, 2rem); }
+    .panel p:last-child, .panel ul:last-child { margin-bottom: 0; }
+    .panel p, .plain-list, .source-list { color: var(--cp-text-muted); }
+    .plain-list li, .source-list li { position: relative; padding: 0.65rem 0 0.65rem 1.1rem; border-bottom: 1px solid var(--cp-border); }
+    .plain-list li:last-child, .source-list li:last-child { border-bottom: 0; }
+    .plain-list li::before, .source-list li::before {
+      position: absolute;
+      top: 1.28rem;
+      left: 0;
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 50%;
+      background: var(--cp-accent);
+      content: "";
+    }
+    .source-list small { display: block; margin-top: 0.25rem; color: var(--cp-text-muted); }
+    .detail-grid { grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.65fr); }
+    .split-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .architecture {
+      padding: clamp(1rem, 3vw, 2rem);
+      overflow: hidden;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface-soft);
+    }
+    .architecture svg { width: 100%; height: auto; color: var(--cp-text); }
+    .architecture .node { fill: var(--cp-surface); stroke: var(--cp-border-strong); }
+    .architecture .arrow { stroke: var(--cp-accent); }
+    .architecture text { fill: var(--cp-text); font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+    .architecture .node-index { fill: var(--cp-accent); font-family: Consolas, "Courier New", Courier, monospace; font-weight: 800; }
+    .architecture-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+    .architecture-note { padding: 1rem; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface); }
+    .architecture-note p { margin: 0.35rem 0 0; color: var(--cp-text-muted); font-size: 0.88rem; }
+    .callout {
+      margin: 1.5rem 0;
+      padding: 1rem 1.2rem;
+      border-left: 3px solid var(--cp-accent);
+      background: var(--cp-accent-soft);
+    }
+    .callout p:last-child { margin-bottom: 0; }
+    .article-body { width: min(100%, 52rem); }
+    .article-body > p { color: var(--cp-text-muted); font-size: 1.05rem; }
+    .article-body h2 { margin-top: 3rem; }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      margin: 1rem 0 1.5rem;
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.76rem;
+    }
+    .result-count { margin: -0.5rem 0 1rem; color: var(--cp-text-muted); font-size: 0.82rem; }
+    .no-results { padding: 2rem; border: 1px dashed var(--cp-border-strong); border-radius: 16px; text-align: center; }
+    .site-footer { padding-block: 2rem; border-top: 1px solid var(--cp-border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .footer-inner p { max-width: 48rem; margin: 0; color: var(--cp-text-muted); font-size: 0.8rem; }
+    @media (max-width: 62rem) {
+      .release-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero, .detail-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 46rem) {
+      html { scroll-padding-top: 5rem; }
+      .shell { width: min(100% - 1.25rem, 77.5rem); }
+      .nav { min-height: 4.5rem; flex-wrap: wrap; padding-block: 0.5rem; }
+      .nav-links { order: 3; width: 100%; justify-content: space-between; padding-bottom: 0.5rem; }
+      .section-heading, .flow-grid, .release-grid, .split-grid, .architecture-notes { grid-template-columns: 1fr; }
+      .filter-bar { align-items: stretch; flex-direction: column; }
+      .search { width: 100%; }
+      .release-card { min-height: auto; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 23rem) {
+      .brand-copy small { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+  <nav class="nav shell" aria-label="Primary navigation">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">BW</span>
+      <span class="brand-copy"><strong>Bill Whalen</strong><small>THE ATOMIC COLLECTION</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/journal/">Solution journal</a>
+      <a href="/subscribe/">Subscribe</a>
+      <a href="/feeds/rss.xml">RSS</a>
+    </div>
+    <button class="icon-button" id="themeButton" type="button" aria-label="Switch theme">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </nav>
+</header>
+  <main id="main">
+    <section class="hero shell" aria-labelledby="journal-title">
+      <div>
+        <p class="eyebrow">Public-safe solution journal</p>
+        <h1 id="journal-title">Build notes with the evidence attached.</h1>
+        <p class="hero-copy">Six customer-neutral release entries show the original workflow, what the public project delivers, the value it is designed to enable, and the boundaries that still matter.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#releases">Explore releases</a>
+          <a class="button" href="/subscribe/">Follow the journal</a>
+        </div>
+      </div>
+      <aside class="evidence-card" aria-label="Journal evidence policy">
+        <span class="label">Evidence policy</span>
+        <strong>Public proof only.</strong>
+        <p>No customer identities, private telemetry, internal evidence, or invented business results. Intended value is labeled as designed value rather than a measured claim.</p>
+      </aside>
+    </section>
+    <section class="section" id="releases" aria-labelledby="releases-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><span class="section-kicker">Release catalog</span><h2 id="releases-title">Current entries.</h2></div>
+          <p>Filter by solution family or search titles, technologies, maturity, and evidence language.</p>
+        </div>
+        <div class="filter-bar">
+          <div class="filters" role="group" aria-label="Filter journal entries"><button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>
+<button class="filter-chip" type="button" data-filter="Agents and AI" aria-pressed="false">Agents and AI</button>
+<button class="filter-chip" type="button" data-filter="Business applications" aria-pressed="false">Business applications</button>
+<button class="filter-chip" type="button" data-filter="Developer labs" aria-pressed="false">Developer labs</button></div>
+          <label><span class="label">Search</span><input class="search" id="releaseSearch" type="search" autocomplete="off" placeholder="Search releases"></label>
+        </div>
+        <p class="result-count" id="releaseCount" aria-live="polite">6 releases</p>
+        <div class="release-grid" id="releaseGrid"><article class="release-card" data-category="Agents and AI" data-search="agent team starter kit a configurable starter for coordinating specialized ai agents around a visible github issues work queue, outcome gates, and reviewable execution. agents and ai public starter kit designed multi-agent github actions azure functions azure openai">
+  <span class="status">Public starter kit</span>
+  <p class="eyebrow">Agents and AI</p>
+  <h2>Agent Team Starter Kit</h2>
+  <p>A configurable starter for coordinating specialized AI agents around a visible GitHub Issues work queue, outcome gates, and reviewable execution.</p>
+  <ul class="tag-list"><li>Multi-agent</li><li>GitHub Actions</li><li>Azure Functions</li><li>Azure OpenAI</li></ul>
+  <p><strong>Evidence:</strong> Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/agent-team-starter-kit/">Solution entry</a>
+    <a class="button button-small" href="/blog/agent-team-starter-kit/">Read the article</a>
+  </div>
+</article>
+<article class="release-card" data-category="Business applications" data-search="customer 360 for entities an adaptive dynamics 365 and dataverse web resource that brings related operational context into the forms where work already happens. business applications public community solution designed dynamics 365 dataverse javascript model-driven apps">
+  <span class="status">Public community solution</span>
+  <p class="eyebrow">Business applications</p>
+  <h2>Customer 360 for Entities</h2>
+  <p>An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work already happens.</p>
+  <ul class="tag-list"><li>Dynamics 365</li><li>Dataverse</li><li>JavaScript</li><li>Model-driven apps</li></ul>
+  <p><strong>Evidence:</strong> Designed value: less navigation between related records and a more coherent operational view at the point of work.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/customer-360-for-entities/">Solution entry</a>
+    <a class="button button-small" href="/blog/customer-360-for-entities/">Read the article</a>
+  </div>
+</article>
+<article class="release-card" data-category="Business applications" data-search="freight triage control tower a public power platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views. business applications live public prototype designed power apps dataverse copilot studio operations">
+  <span class="status">Live public prototype</span>
+  <p class="eyebrow">Business applications</p>
+  <h2>Freight Triage Control Tower</h2>
+  <p>A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.</p>
+  <ul class="tag-list"><li>Power Apps</li><li>Dataverse</li><li>Copilot Studio</li><li>Operations</li></ul>
+  <p><strong>Evidence:</strong> Designed value: a shared queue for freight exceptions with clearer ownership, aging, priority, and resolution state.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/freight-triage-control-tower/">Solution entry</a>
+    <a class="button button-small" href="/blog/freight-triage-control-tower/">Read the article</a>
+  </div>
+</article>
+<article class="release-card" data-category="Business applications" data-search="warranty + claims operations a power platform accelerator for structuring warranty and claims intake, review, supporting flows, and human-owned decisions. business applications public community accelerator designed power platform copilot studio dataverse claims operations">
+  <span class="status">Public community accelerator</span>
+  <p class="eyebrow">Business applications</p>
+  <h2>Warranty + Claims Operations</h2>
+  <p>A Power Platform accelerator for structuring warranty and claims intake, review, supporting flows, and human-owned decisions.</p>
+  <ul class="tag-list"><li>Power Platform</li><li>Copilot Studio</li><li>Dataverse</li><li>Claims operations</li></ul>
+  <p><strong>Evidence:</strong> Designed value: more consistent claims intake and review with visible status, supporting context, and human-owned decisions.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/warranty-claims-operations/">Solution entry</a>
+    <a class="button button-small" href="/blog/warranty-claims-operations/">Read the article</a>
+  </div>
+</article>
+<article class="release-card" data-category="Agents and AI" data-search="prompt escape a multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge. agents and ai live public game designed typescript prompt engineering github copilot team learning">
+  <span class="status">Live public game</span>
+  <p class="eyebrow">Agents and AI</p>
+  <h2>Prompt Escape</h2>
+  <p>A multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge.</p>
+  <ul class="tag-list"><li>TypeScript</li><li>Prompt engineering</li><li>GitHub Copilot</li><li>Team learning</li></ul>
+  <p><strong>Evidence:</strong> Designed value: an experiential way for teams to practice clearer prompts, constraints, iteration, and collaborative problem solving.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/prompt-escape/">Solution entry</a>
+    <a class="button button-small" href="/blog/prompt-escape/">Read the article</a>
+  </div>
+</article>
+<article class="release-card" data-category="Developer labs" data-search="copilot studio + mcp lab a hands-on public lab for deploying a small model context protocol tool and connecting it to github copilot and microsoft copilot studio. developer labs public hands-on lab designed model context protocol copilot studio github copilot azure">
+  <span class="status">Public hands-on lab</span>
+  <p class="eyebrow">Developer labs</p>
+  <h2>Copilot Studio + MCP Lab</h2>
+  <p>A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.</p>
+  <ul class="tag-list"><li>Model Context Protocol</li><li>Copilot Studio</li><li>GitHub Copilot</li><li>Azure</li></ul>
+  <p><strong>Evidence:</strong> Designed value: a compact end-to-end MCP reference that makes server, tool, client, and invocation responsibilities easier to see.</p>
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/copilot-studio-mcp-lab/">Solution entry</a>
+    <a class="button button-small" href="/blog/copilot-studio-mcp-lab/">Read the article</a>
+  </div>
+</article></div>
+        <div class="no-results" id="noResults" hidden>No releases match that filter. Try another category or clear the search.</div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+  <div class="footer-inner shell">
+    <p>&copy; 2026 Bill Whalen. Personal portfolio; views are my own. Community projects are provided as-is and are not Microsoft products or supported offerings.</p>
+    <div class="footer-links">
+      <a href="/journal/">Journal</a>
+      <a href="/subscribe/">Feeds</a>
+      <a href="https://github.com/billwhalenmsft" rel="noreferrer">GitHub</a>
+    </div>
+  </div>
+</footer>
+  <script>
+  const themeButton = document.getElementById("themeButton");
+  themeButton.addEventListener("click", () => {
+    const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = nextTheme;
+    const url = new URL(window.location.href);
+    url.searchParams.set("scoutTheme", nextTheme);
+    window.history.replaceState({}, "", url);
+    themeButton.setAttribute("aria-label", `Switch to ${nextTheme === "dark" ? "light" : "dark"} theme`);
+  });
+  themeButton.setAttribute(
+    "aria-label",
+    `Switch to ${document.documentElement.dataset.theme === "dark" ? "light" : "dark"} theme`
+  );
+  
+  const cards = [...document.querySelectorAll(".release-card")];
+  const filters = [...document.querySelectorAll(".filter-chip")];
+  const search = document.getElementById("releaseSearch");
+  const count = document.getElementById("releaseCount");
+  const noResults = document.getElementById("noResults");
+  let activeFilter = "all";
+  function applyFilters() {
+    const query = search.value.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach((card) => {
+      const show = (activeFilter === "all" || card.dataset.category === activeFilter)
+        && (!query || card.dataset.search.includes(query));
+      card.hidden = !show;
+      if (show) visible += 1;
+    });
+    count.textContent = `${visible} ${visible === 1 ? "release" : "releases"}`;
+    noResults.hidden = visible !== 0;
+  }
+  filters.forEach((filter) => filter.addEventListener("click", () => {
+    activeFilter = filter.dataset.filter;
+    filters.forEach((item) => item.setAttribute("aria-pressed", String(item === filter)));
+    applyFilters();
+  }));
+  search.addEventListener("input", applyFilters);
+</script>
+</body>
+</html>

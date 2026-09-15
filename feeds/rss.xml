@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bill Whalen solution journal</title>
+    <link>https://billwhalenmsft.github.io/journal/</link>
+    <description>Customer-neutral public solution entries and illustrated build notes.</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Sep 2026 12:00:00 GMT</lastBuildDate>
+    <atom:link href="https://billwhalenmsft.github.io/feeds/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Making multi-agent work visible</title>
+      <link>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>A configurable starter for coordinating specialized AI agents around a visible GitHub Issues work queue, outcome gates, and reviewable execution. Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work.</description>
+      <category>Agents and AI</category>
+    </item>
+    <item>
+      <title>Bring the surrounding record into the work</title>
+      <link>https://billwhalenmsft.github.io/blog/customer-360-for-entities/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/customer-360-for-entities/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work already happens. Designed value: less navigation between related records and a more coherent operational view at the point of work.</description>
+      <category>Business applications</category>
+    </item>
+    <item>
+      <title>Turn freight exceptions into owned work</title>
+      <link>https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views. Designed value: a shared queue for freight exceptions with clearer ownership, aging, priority, and resolution state.</description>
+      <category>Business applications</category>
+    </item>
+    <item>
+      <title>Keep claims assistance separate from claims authority</title>
+      <link>https://billwhalenmsft.github.io/blog/warranty-claims-operations/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/warranty-claims-operations/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>A Power Platform accelerator for structuring warranty and claims intake, review, supporting flows, and human-owned decisions. Designed value: more consistent claims intake and review with visible status, supporting context, and human-owned decisions.</description>
+      <category>Business applications</category>
+    </item>
+    <item>
+      <title>Teach prompting as a team sport</title>
+      <link>https://billwhalenmsft.github.io/blog/prompt-escape/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/prompt-escape/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>A multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge. Designed value: an experiential way for teams to practice clearer prompts, constraints, iteration, and collaborative problem solving.</description>
+      <category>Agents and AI</category>
+    </item>
+    <item>
+      <title>Use a tiny tool to see the whole MCP path</title>
+      <link>https://billwhalenmsft.github.io/blog/copilot-studio-mcp-lab/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/copilot-studio-mcp-lab/</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio. Designed value: a compact end-to-end MCP reference that makes server, tool, client, and invocation responsibilities easier to see.</description>
+      <category>Developer labs</category>
+    </item>
+  </channel>
+</rss>

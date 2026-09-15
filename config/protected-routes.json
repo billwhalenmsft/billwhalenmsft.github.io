@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "routes": [
+    {
+      "path": "engagements/field-service-scheduling/.gitattributes",
+      "sha256": "dc3bfcd58b23d76cf8d6a5bd781f1921c486ec84ebee88a43ced764192771c2a"
+    },
+    {
+      "path": "engagements/field-service-scheduling/index.html",
+      "sha256": "2c5257fa2c7aae531e84c9ef09567142635254e68d73735277eeca2295d66f17"
+    }
+  ]
+}

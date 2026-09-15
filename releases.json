@@ -1,0 +1,543 @@
+{
+  "version": 1,
+  "title": "Bill Whalen public solution releases",
+  "updated": "2026-09-14",
+  "policy": {
+    "evidence": "Public sources only",
+    "valueLabels": [
+      "measured",
+      "observed",
+      "designed"
+    ],
+    "excludedSurfaces": [
+      "private evidence",
+      "customer-identifying content",
+      "email subscriptions",
+      "live MCP endpoint"
+    ]
+  },
+  "releases": [
+    {
+      "slug": "agent-team-starter-kit",
+      "title": "Agent Team Starter Kit",
+      "summary": "A configurable starter for coordinating specialized AI agents around a visible GitHub Issues work queue, outcome gates, and reviewable execution.",
+      "category": "Agents and AI",
+      "tags": [
+        "Multi-agent",
+        "GitHub Actions",
+        "Azure Functions",
+        "Azure OpenAI"
+      ],
+      "status": "approved",
+      "maturity": "Public starter kit",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/agent-team-starter-kit"
+      ],
+      "originalState": "Complex work can arrive as an unstructured request with unclear ownership, hidden handoffs, and no durable record of what each specialist contributed.",
+      "delivered": "The public starter kit packages a GitHub Issues queue, configurable specialist personas, orchestration through Azure Functions and Azure OpenAI, and explicit gates around the work.",
+      "outcome": "The pattern is designed to make multi-agent work easier to assign, inspect, and govern while keeping the work item and its history visible to people.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work."
+      },
+      "capabilities": [
+        "Uses GitHub Issues as a durable, visible queue for agent work.",
+        "Separates work across configurable specialist agent roles.",
+        "Packages orchestration components for Azure Functions and Azure OpenAI.",
+        "Makes outcomes and handoffs reviewable before work is treated as complete."
+      ],
+      "architecture": [
+        {
+          "label": "Issue",
+          "detail": "A GitHub issue holds the request, context, and visible work state."
+        },
+        {
+          "label": "Orchestrator",
+          "detail": "An Azure Functions control layer routes work to configured specialists."
+        },
+        {
+          "label": "Agent team",
+          "detail": "Specialized agents contribute bounded parts of the outcome."
+        },
+        {
+          "label": "Human gate",
+          "detail": "A person can inspect the work record and decide whether the outcome is acceptable."
+        }
+      ],
+      "guardrails": [
+        "GitHub keeps the request, discussion, and resulting work visible rather than hiding them in a transient chat.",
+        "Specialist roles and outcome gates can be configured for the workflow instead of granting one agent an undefined remit.",
+        "People remain responsible for reviewing consequential outputs and deployment choices."
+      ],
+      "limitations": [
+        "This is a starter kit, not a production service or a guarantee of agent accuracy.",
+        "Deployers must supply and secure their own Azure resources, identities, model access, and repository permissions.",
+        "Evaluation, monitoring, cost controls, and domain-specific safety checks still need to be designed for each use."
+      ],
+      "provenance": [
+        {
+          "label": "Agent Team Starter Kit public repository",
+          "url": "https://github.com/billwhalenmsft/agent-team-starter-kit",
+          "note": "Public README, architecture guidance, workflow files, and source are the evidence base for this entry."
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A GitHub issue moves through an orchestrator and specialist agent team to a human outcome gate.",
+        "nodes": [
+          "GitHub issue",
+          "Orchestrator",
+          "Agent team",
+          "Human gate"
+        ]
+      },
+      "article": {
+        "slug": "agent-team-starter-kit",
+        "title": "Making multi-agent work visible",
+        "dek": "A public starter kit uses GitHub Issues as the control surface for specialist agents, explicit handoffs, and human-reviewed outcomes.",
+        "feed": true
+      },
+      "urls": {
+        "solution": "https://billwhalenmsft.github.io/journal/agent-team-starter-kit/",
+        "article": "https://billwhalenmsft.github.io/blog/agent-team-starter-kit/"
+      }
+    },
+    {
+      "slug": "customer-360-for-entities",
+      "title": "Customer 360 for Entities",
+      "summary": "An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work already happens.",
+      "category": "Business applications",
+      "tags": [
+        "Dynamics 365",
+        "Dataverse",
+        "JavaScript",
+        "Model-driven apps"
+      ],
+      "status": "approved",
+      "maturity": "Public community solution",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/customer-360-for-entities"
+      ],
+      "originalState": "A person working in a business record can have to open multiple forms or related lists to assemble the cases, orders, entitlements, contacts, and other context needed for the next action.",
+      "delivered": "The public solution provides an adaptive JavaScript web resource for Dynamics 365 and Dataverse forms that retrieves and presents related entity context in one place.",
+      "outcome": "The design is intended to reduce context switching and make the surrounding record history easier to scan before a person chooses the next action.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: less navigation between related records and a more coherent operational view at the point of work."
+      },
+      "capabilities": [
+        "Embeds a reusable web resource in Dynamics 365 or Dataverse model-driven forms.",
+        "Presents related entity information such as cases, orders, entitlements, and contacts.",
+        "Adapts the view to the current record and available related data.",
+        "Keeps the user in the host business application while they review context."
+      ],
+      "architecture": [
+        {
+          "label": "Current record",
+          "detail": "A model-driven form supplies the current entity and record context."
+        },
+        {
+          "label": "Web resource",
+          "detail": "Client-side JavaScript initializes the adaptive experience."
+        },
+        {
+          "label": "Dataverse",
+          "detail": "Approved queries retrieve related operational records."
+        },
+        {
+          "label": "User action",
+          "detail": "The person reviews the unified context and remains responsible for the next action."
+        }
+      ],
+      "guardrails": [
+        "The experience uses the host application's identity and Dataverse permissions rather than creating a separate authority boundary.",
+        "The component presents context; it does not replace the person's judgment or automatically commit consequential changes.",
+        "Deployers must limit queries and displayed fields to information users are already authorized to access."
+      ],
+      "limitations": [
+        "The solution requires configuration for each Dataverse schema, form, and relationship set.",
+        "Performance depends on query design, related-record volume, and the host environment.",
+        "The public repository is a community solution and not a Microsoft-supported product."
+      ],
+      "provenance": [
+        {
+          "label": "Customer 360 for Entities public repository",
+          "url": "https://github.com/billwhalenmsft/customer-360-for-entities",
+          "note": "Public README, deployment guidance, web-resource source, and solution files are the evidence base for this entry."
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A model-driven form passes record context to a web resource, which retrieves related Dataverse data for user review.",
+        "nodes": [
+          "Current record",
+          "Web resource",
+          "Dataverse context",
+          "User action"
+        ]
+      },
+      "article": {
+        "slug": "customer-360-for-entities",
+        "title": "Bring the surrounding record into the work",
+        "dek": "An adaptive form component assembles related Dataverse context without turning context gathering into another application.",
+        "feed": true
+      },
+      "urls": {
+        "solution": "https://billwhalenmsft.github.io/journal/customer-360-for-entities/",
+        "article": "https://billwhalenmsft.github.io/blog/customer-360-for-entities/"
+      }
+    },
+    {
+      "slug": "freight-triage-control-tower",
+      "title": "Freight Triage Control Tower",
+      "summary": "A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.",
+      "category": "Business applications",
+      "tags": [
+        "Power Apps",
+        "Dataverse",
+        "Copilot Studio",
+        "Operations"
+      ],
+      "status": "approved",
+      "maturity": "Live public prototype",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/freight-triage-control-tower"
+      ],
+      "originalState": "Exception signals can remain trapped in email and ad hoc follow-up, making ownership, age, priority, and resolution status difficult to see across an operations team.",
+      "delivered": "The public prototype packages an exception intake pattern, Dataverse-backed work queue, Power Apps control-tower views, and Copilot Studio-assisted triage around synthetic freight scenarios.",
+      "outcome": "The design is intended to turn scattered exception signals into explicit work items with visible ownership and service-level context.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a shared queue for freight exceptions with clearer ownership, aging, priority, and resolution state."
+      },
+      "capabilities": [
+        "Converts a flagged operational signal into a structured triage item.",
+        "Shows queue, item detail, aging, and resolution views.",
+        "Uses Dataverse as the visible system of record for the prototype workflow.",
+        "Demonstrates Copilot Studio assistance without removing the operations owner."
+      ],
+      "architecture": [
+        {
+          "label": "Exception signal",
+          "detail": "A flagged shipment message or synthetic event starts the triage pattern."
+        },
+        {
+          "label": "Structured intake",
+          "detail": "Flow logic captures the signal as a Dataverse work item."
+        },
+        {
+          "label": "Control tower",
+          "detail": "Power Apps views expose queue, age, priority, detail, and status."
+        },
+        {
+          "label": "Owned resolution",
+          "detail": "An operations user reviews assistance, takes action, and records the outcome."
+        }
+      ],
+      "guardrails": [
+        "The public walkthrough uses synthetic scenarios rather than customer operational data.",
+        "Copilot assistance supports triage; a named operations owner remains accountable for resolution.",
+        "Production deployments need environment-specific security roles, data-loss prevention, monitoring, and escalation policy."
+      ],
+      "limitations": [
+        "The published experience is a prototype and reference pattern, not a production freight system.",
+        "Connectors, schemas, service-level rules, and escalation logic require environment-specific configuration.",
+        "The repository does not establish measured operational improvement or production adoption."
+      ],
+      "provenance": [
+        {
+          "label": "Freight Triage Control Tower public repository",
+          "url": "https://github.com/billwhalenmsft/freight-triage-control-tower",
+          "note": "Public README, implementation files, synthetic scenario content, and hosted prototype are the evidence base for this entry."
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A freight exception signal becomes a structured Dataverse item, appears in a control tower, and is closed by an accountable owner.",
+        "nodes": [
+          "Exception signal",
+          "Structured intake",
+          "Control tower",
+          "Owned resolution"
+        ]
+      },
+      "article": {
+        "slug": "freight-triage-control-tower",
+        "title": "Turn freight exceptions into owned work",
+        "dek": "A control-tower prototype reframes shipment signals as visible, aging, assignable work instead of another thread in an inbox.",
+        "feed": true
+      },
+      "urls": {
+        "solution": "https://billwhalenmsft.github.io/journal/freight-triage-control-tower/",
+        "article": "https://billwhalenmsft.github.io/blog/freight-triage-control-tower/"
+      }
+    },
+    {
+      "slug": "warranty-claims-operations",
+      "title": "Warranty + Claims Operations",
+      "summary": "A Power Platform accelerator for structuring warranty and claims intake, review, supporting flows, and human-owned decisions.",
+      "category": "Business applications",
+      "tags": [
+        "Power Platform",
+        "Copilot Studio",
+        "Dataverse",
+        "Claims operations"
+      ],
+      "status": "approved",
+      "maturity": "Public community accelerator",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/warranty-claim-operations-powerplatform"
+      ],
+      "originalState": "Warranty and claims work can span inconsistent intake, supporting documents, policy checks, status questions, and handoffs that are difficult to trace as one case.",
+      "delivered": "The public accelerator packages Dataverse tables, Canvas Apps, Power Automate flows, and Copilot Studio agents as a starting point for warranty and claims operations.",
+      "outcome": "The design is intended to create a more consistent case record, guide information gathering, and keep approval or exception decisions with accountable people.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: more consistent claims intake and review with visible status, supporting context, and human-owned decisions."
+      },
+      "capabilities": [
+        "Defines Dataverse structures for warranty and claims workflow data.",
+        "Provides Canvas App experiences for intake and operations review.",
+        "Uses flows to coordinate repeatable process steps and notifications.",
+        "Demonstrates Copilot Studio agents for guided questions and assistance."
+      ],
+      "architecture": [
+        {
+          "label": "Claim intake",
+          "detail": "A Canvas App or guided conversation captures the claim and supporting context."
+        },
+        {
+          "label": "Dataverse case",
+          "detail": "Structured tables hold the case, evidence, status, and relationships."
+        },
+        {
+          "label": "Flows and agents",
+          "detail": "Automation and Copilot Studio assistance support routing and information gathering."
+        },
+        {
+          "label": "Human decision",
+          "detail": "An authorized reviewer remains responsible for approval, exception handling, and final disposition."
+        }
+      ],
+      "guardrails": [
+        "Copilot Studio assistance does not replace policy, legal, financial, or approval authority.",
+        "Consequential claim decisions remain with authorized reviewers.",
+        "Deployers must configure security roles, data retention, audit, connector policy, and jurisdiction-specific requirements."
+      ],
+      "limitations": [
+        "The accelerator is a starting point and requires tailoring to policy, product, region, and operating model.",
+        "The public repository does not establish measured savings, accuracy, or production performance.",
+        "Document verification, fraud controls, integrations, and exception policy require additional implementation."
+      ],
+      "provenance": [
+        {
+          "label": "Warranty + Claims Operations public repository",
+          "url": "https://github.com/billwhalenmsft/warranty-claim-operations-powerplatform",
+          "note": "Public README, solution inventory, agent definitions, app assets, and flow guidance are the evidence base for this entry."
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A claim moves from guided intake into a Dataverse case, through flows and agent assistance, to an authorized human decision.",
+        "nodes": [
+          "Claim intake",
+          "Dataverse case",
+          "Flows and agents",
+          "Human decision"
+        ]
+      },
+      "article": {
+        "slug": "warranty-claims-operations",
+        "title": "Keep claims assistance separate from claims authority",
+        "dek": "A Power Platform accelerator structures intake and review while preserving the human decision boundary that matters.",
+        "feed": true
+      },
+      "urls": {
+        "solution": "https://billwhalenmsft.github.io/journal/warranty-claims-operations/",
+        "article": "https://billwhalenmsft.github.io/blog/warranty-claims-operations/"
+      }
+    },
+    {
+      "slug": "prompt-escape",
+      "title": "Prompt Escape",
+      "summary": "A multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge.",
+      "category": "Agents and AI",
+      "tags": [
+        "TypeScript",
+        "Prompt engineering",
+        "GitHub Copilot",
+        "Team learning"
+      ],
+      "status": "approved",
+      "maturity": "Live public game",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/PromptEscape"
+      ],
+      "originalState": "Prompting concepts can stay abstract when learners only read examples instead of working through a shared problem with constraints, feedback, and room to iterate.",
+      "delivered": "The public project delivers a multiplayer escape-room game in which teams use prompts, clues, constraints, and iteration to progress through AI-assisted challenges.",
+      "outcome": "The experience is designed to make prompt quality discussable and memorable through practice, comparison, and team reflection.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: an experiential way for teams to practice clearer prompts, constraints, iteration, and collaborative problem solving."
+      },
+      "capabilities": [
+        "Packages prompt-engineering concepts as a multiplayer game.",
+        "Uses clues and constraints to reward clearer instructions and iteration.",
+        "Supports team play and discussion rather than an isolated tutorial.",
+        "Provides public source and a hosted game experience."
+      ],
+      "architecture": [
+        {
+          "label": "Team challenge",
+          "detail": "Players enter a shared scenario with a goal, clues, and constraints."
+        },
+        {
+          "label": "Prompt attempt",
+          "detail": "The team writes and refines instructions for the challenge."
+        },
+        {
+          "label": "Game response",
+          "detail": "The application returns challenge feedback and progression state."
+        },
+        {
+          "label": "Team reflection",
+          "detail": "Players compare approaches and decide how to improve the next attempt."
+        }
+      ],
+      "guardrails": [
+        "The game is a learning experience, not a benchmark of a person or model.",
+        "Facilitators should avoid entering sensitive, personal, or proprietary information into prompts.",
+        "AI responses are part of the challenge and should be treated as fallible output."
+      ],
+      "limitations": [
+        "Game behavior can vary with model configuration and service availability.",
+        "The experience does not measure durable skill improvement or workplace outcomes.",
+        "Facilitation, access, and deployment setup may be needed for a group session."
+      ],
+      "provenance": [
+        {
+          "label": "Prompt Escape public repository",
+          "url": "https://github.com/billwhalenmsft/PromptEscape",
+          "note": "Public README, game source, challenge content, and hosted experience are the evidence base for this entry."
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A team challenge leads to a prompt attempt, game feedback, and team reflection before another iteration.",
+        "nodes": [
+          "Team challenge",
+          "Prompt attempt",
+          "Game response",
+          "Team reflection"
+        ]
+      },
+      "article": {
+        "slug": "prompt-escape",
+        "title": "Teach prompting as a team sport",
+        "dek": "A multiplayer escape room makes instructions, constraints, iteration, and reflection part of the learning loop.",
+        "feed": true
+      },
+      "urls": {
+        "solution": "https://billwhalenmsft.github.io/journal/prompt-escape/",
+        "article": "https://billwhalenmsft.github.io/blog/prompt-escape/"
+      }
+    },
+    {
+      "slug": "copilot-studio-mcp-lab",
+      "title": "Copilot Studio + MCP Lab",
+      "summary": "A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.",
+      "category": "Developer labs",
+      "tags": [
+        "Model Context Protocol",
+        "Copilot Studio",
+        "GitHub Copilot",
+        "Azure"
+      ],
+      "status": "approved",
+      "maturity": "Public hands-on lab",
+      "published": "2026-09-14",
+      "updated": "2026-09-14",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/jokeservermcp"
+      ],
+      "originalState": "MCP concepts can be difficult to connect to practice when the protocol, server deployment, tool definition, client configuration, and invocation path are learned separately.",
+      "delivered": "The public lab uses a deliberately small joke-server example to walk through an MCP tool, deployment, and connection from both GitHub Copilot and Microsoft Copilot Studio.",
+      "outcome": "The lab is designed to give builders a bounded end-to-end reference they can inspect before adapting the pattern to a real tool.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a compact end-to-end MCP reference that makes server, tool, client, and invocation responsibilities easier to see."
+      },
+      "capabilities": [
+        "Implements a small public MCP server and callable tool.",
+        "Documents deployment and connection steps for the lab.",
+        "Shows the same tool pattern from GitHub Copilot and Copilot Studio clients.",
+        "Keeps the sample domain intentionally low-risk so the integration path stays visible."
+      ],
+      "architecture": [
+        {
+          "label": "Copilot client",
+          "detail": "A user invokes the configured tool from GitHub Copilot or Copilot Studio."
+        },
+        {
+          "label": "MCP request",
+          "detail": "The client sends a protocol request using the published tool contract."
+        },
+        {
+          "label": "Tool server",
+          "detail": "The deployed sample server executes the bounded joke operation."
+        },
+        {
+          "label": "User response",
+          "detail": "The client presents the tool result for the user to accept, ignore, or continue from."
+        }
+      ],
+      "guardrails": [
+        "The sample tool is deliberately non-consequential and does not perform business writes.",
+        "The user chooses whether to invoke the tool and how to use its response.",
+        "Real tools require authentication, authorization, input validation, logging, and least-privilege design beyond the sample."
+      ],
+      "limitations": [
+        "The lab demonstrates a narrow sample tool rather than a production MCP operating model.",
+        "Cloud deployment, client capabilities, and configuration steps can change over time.",
+        "The example does not establish enterprise security, scale, reliability, or support guarantees."
+      ],
+      "provenance": [
+        {
+          "label": "Copilot Studio + MCP Lab public repository",
+          "url": "https://github.com/billwhalenmsft/jokeservermcp",
+          "note": "Public README, MCP server source, deployment assets, and client setup guidance are the evidence base for this entry."
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A Copilot client sends an MCP request to a bounded tool server and presents the result back to the user.",
+        "nodes": [
+          "Copilot client",
+          "MCP request",
+          "Tool server",
+          "User response"
+        ]
+      },
+      "article": {
+        "slug": "copilot-studio-mcp-lab",
+        "title": "Use a tiny tool to see the whole MCP path",
+        "dek": "A deliberately small joke server makes the protocol boundary, deployment step, client connection, and user invocation easy to inspect.",
+        "feed": true
+      },
+      "urls": {
+        "solution": "https://billwhalenmsft.github.io/journal/copilot-studio-mcp-lab/",
+        "article": "https://billwhalenmsft.github.io/blog/copilot-studio-mcp-lab/"
+      }
+    }
+  ]
+}

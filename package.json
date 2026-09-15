@@ -1,0 +1,15 @@
+{
+  "name": "billwhalenmsft-public-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "generate:check": "node scripts/generate.mjs --check",
+    "validate": "node scripts/validate.mjs",
+    "test": "node scripts/generate.mjs --check && node scripts/validate.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

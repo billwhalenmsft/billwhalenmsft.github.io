@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Bill Whalen solution journal</title>
+  <id>https://billwhalenmsft.github.io/journal/</id>
+  <link href="https://billwhalenmsft.github.io/journal/"/>
+  <link href="https://billwhalenmsft.github.io/feeds/atom.xml" rel="self"/>
+  <updated>2026-09-14T12:00:00Z</updated>
+  <author><name>Bill Whalen</name></author>
+  <entry>
+    <title>Making multi-agent work visible</title>
+    <id>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</id>
+    <link href="https://billwhalenmsft.github.io/blog/agent-team-starter-kit/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>A configurable starter for coordinating specialized AI agents around a visible GitHub Issues work queue, outcome gates, and reviewable execution.</summary>
+    <category term="Agents and AI"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+  <entry>
+    <title>Bring the surrounding record into the work</title>
+    <id>https://billwhalenmsft.github.io/blog/customer-360-for-entities/</id>
+    <link href="https://billwhalenmsft.github.io/blog/customer-360-for-entities/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work already happens.</summary>
+    <category term="Business applications"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+  <entry>
+    <title>Turn freight exceptions into owned work</title>
+    <id>https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</id>
+    <link href="https://billwhalenmsft.github.io/blog/freight-triage-control-tower/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.</summary>
+    <category term="Business applications"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+  <entry>
+    <title>Keep claims assistance separate from claims authority</title>
+    <id>https://billwhalenmsft.github.io/blog/warranty-claims-operations/</id>
+    <link href="https://billwhalenmsft.github.io/blog/warranty-claims-operations/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>A Power Platform accelerator for structuring warranty and claims intake, review, supporting flows, and human-owned decisions.</summary>
+    <category term="Business applications"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+  <entry>
+    <title>Teach prompting as a team sport</title>
+    <id>https://billwhalenmsft.github.io/blog/prompt-escape/</id>
+    <link href="https://billwhalenmsft.github.io/blog/prompt-escape/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>A multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge.</summary>
+    <category term="Agents and AI"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+  <entry>
+    <title>Use a tiny tool to see the whole MCP path</title>
+    <id>https://billwhalenmsft.github.io/blog/copilot-studio-mcp-lab/</id>
+    <link href="https://billwhalenmsft.github.io/blog/copilot-studio-mcp-lab/"/>
+    <published>2026-09-14T12:00:00Z</published>
+    <updated>2026-09-14T12:00:00Z</updated>
+    <summary>A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.</summary>
+    <category term="Developer labs"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
+</feed>

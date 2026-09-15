@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "repositories": [
+    "https://github.com/billwhalenmsft/agent-team-starter-kit",
+    "https://github.com/billwhalenmsft/customer-360-for-entities",
+    "https://github.com/billwhalenmsft/freight-triage-control-tower",
+    "https://github.com/billwhalenmsft/warranty-claim-operations-powerplatform",
+    "https://github.com/billwhalenmsft/PromptEscape",
+    "https://github.com/billwhalenmsft/jokeservermcp"
+  ]
+}

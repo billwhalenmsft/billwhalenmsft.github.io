@@ -7,6 +7,8 @@
   <meta name="author" content="Bill Whalen">
   <meta name="theme-color" content="#0057B8">
   <link rel="canonical" href="https://billwhalenmsft.github.io/">
+  <link rel="alternate" type="application/rss+xml" title="Bill Whalen solution journal RSS" href="https://billwhalenmsft.github.io/feeds/rss.xml">
+  <link rel="alternate" type="application/atom+xml" title="Bill Whalen solution journal Atom" href="https://billwhalenmsft.github.io/feeds/atom.xml">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Bill Whalen | AI Systems Builder">
   <meta property="og:description" content="Applied AI, agent systems, business applications, and launch-ready public projects.">
@@ -45,6 +47,11 @@
         "https://github.com/billwhalenmsft",
         "https://www.linkedin.com/in/williamjaywhalen/"
       ],
+      "subjectOf": {
+        "@type": "CollectionPage",
+        "name": "Bill Whalen solution journal",
+        "url": "https://billwhalenmsft.github.io/journal/"
+      },
       "knowsAbout": [
         "Artificial intelligence",
         "AI agents",
@@ -591,6 +598,11 @@
 
     .profile-code dt {
       color: var(--cp-text-muted);
+    }
+
+    .release-card .button {
+      align-self: flex-start;
+      margin-top: auto;
     }
 
     .profile-code dd {
@@ -1679,7 +1691,7 @@
         <a href="#work">Work</a>
         <a href="#capabilities">Capabilities</a>
         <a href="#about">Resume</a>
-        <a href="#release-path">Release path</a>
+        <a href="/journal/">Solution journal</a>
         <a href="#contact">Connect</a>
       </div>
 
@@ -1705,7 +1717,7 @@
         <a href="#work">Work</a>
         <a href="#capabilities">Capabilities</a>
         <a href="#about">Resume</a>
-        <a href="#release-path">Release path</a>
+        <a href="/journal/">Solution journal</a>
         <a href="#contact">Connect</a>
       </div>
     </nav>
@@ -2097,35 +2109,37 @@
       <div class="shell">
         <div class="section-heading">
           <div>
-            <span class="section-kicker">Release architecture</span>
-            <h2 id="release-title">One public story. More ways to read it.</h2>
+            <span class="section-kicker">Solution journal</span>
+            <h2 id="release-title">Follow what I am building.</h2>
           </div>
           <p>
-            The approved direction keeps future project pages, field notes, feeds, and agent discovery aligned to the same reviewed public release record.
+            Six public-safe solution entries and companion field notes now explain the workflow, build, designed value, architecture, guardrails, limitations, and public proof.
           </p>
         </div>
 
         <div class="release-grid">
           <article class="release-card">
-            <span class="status">Architecture defined</span>
-            <h3>Project pages</h3>
-            <p>A reusable public detail-page pattern for the problem, build, synthetic walkthrough, architecture, prerequisites, limits, and approved links.</p>
-            <code>release record &rarr; project page</code>
+            <span class="status status-live">Live catalog</span>
+            <h3>Solution entries</h3>
+            <p>Compact release cards lead to illustrated detail pages grounded in allowlisted public repositories and explicit evidence labels.</p>
+            <code>release record &rarr; solution page</code>
+            <a class="button button-primary button-small" href="/journal/">Open the journal</a>
           </article>
           <article class="release-card">
-            <span class="status">Not published</span>
+            <span class="status status-live">RSS + Atom live</span>
             <h3>Field notes + feeds</h3>
-            <p>Release-centered articles, RSS, and Atom are planned surfaces. No feed endpoint or subscriber-address store is active on this site.</p>
+            <p>Companion articles, RSS 2.0, and Atom derive from the same approved records. No email signup or subscriber-address store is connected.</p>
             <code>release record &rarr; article / rss / atom</code>
+            <a class="button button-small" href="/subscribe/">Choose a feed</a>
           </article>
           <article class="release-card">
-            <span class="status">No endpoint</span>
+            <span class="status">Planned / no endpoint</span>
             <h3>Read-only MCP</h3>
             <p>A separately hosted MCP service may later expose only approved public releases. GitHub Pages cannot host that server, and none is connected here.</p>
             <code>release record &rarr; public read operations</code>
           </article>
         </div>
-        <p class="release-boundary"><strong>Architecture only.</strong> This portfolio does not currently publish a release catalog, feed endpoints, or an MCP server. Those surfaces require separate release and hosting approval.</p>
+        <p class="release-boundary"><strong>Live now:</strong> the reviewed solution journal, companion articles, public release manifest, RSS, and Atom. <strong>Not live:</strong> email subscriptions and MCP.</p>
       </div>
     </section>
 
@@ -2153,7 +2167,8 @@
       </p>
       <div class="footer-links">
         <a href="#top">Top</a>
-        <a href="#release-path">Release path</a>
+        <a href="/journal/">Solution journal</a>
+        <a href="/subscribe/">Feeds</a>
         <a href="https://github.com/billwhalenmsft" target="_blank" rel="noreferrer">GitHub</a>
       </div>
     </div>
@@ -2266,7 +2281,7 @@
       { title: "Selected work", subtitle: "Section", href: "#work", external: false, icon: "#" },
       { title: "Capabilities", subtitle: "Section", href: "#capabilities", external: false, icon: "#" },
       { title: "Digital resume", subtitle: "Section", href: "#about", external: false, icon: "#" },
-      { title: "Release architecture", subtitle: "Section", href: "#release-path", external: false, icon: "#" },
+      { title: "Solution journal", subtitle: "Public releases", href: "/journal/", external: false, icon: "#" },
       { title: "Connect", subtitle: "Section", href: "#contact", external: false, icon: "#" }
     ];
 

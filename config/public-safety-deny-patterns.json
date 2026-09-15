@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "patterns": [
+    {
+      "name": "email address",
+      "regex": "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b",
+      "flags": "i"
+    },
+    {
+      "name": "GUID or tenant identifier",
+      "regex": "\\b[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\\b",
+      "flags": "i"
+    },
+    {
+      "name": "IPv4 address",
+      "regex": "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b",
+      "flags": ""
+    },
+    {
+      "name": "tenant-specific service URL",
+      "regex": "https?://[^\\s\"']*(?:sharepoint\\.com|crm\\.dynamics\\.com|powerapps\\.com)",
+      "flags": "i"
+    },
+    {
+      "name": "confidential or internal marker",
+      "regex": "\\b(?:Microsoft Confidential|customer confidential|internal-only|internal only|under NDA)\\b",
+      "flags": "i"
+    },
+    {
+      "name": "secret-like assignment",
+      "regex": "\\b(?:api[_ -]?key|client[_ -]?secret|access[_ -]?token|password)\\s*[:=]",
+      "flags": "i"
+    },
+    {
+      "name": "explicit customer identifier field",
+      "regex": "\\b(?:customer|client|tenant)\\s*(?:name|id)\\s*[:=]",
+      "flags": "i"
+    },
+    {
+      "name": "protected engagement route",
+      "regex": "(?:engagements[\\\\/]+)?field-service-scheduling",
+      "flags": "i"
+    }
+  ]
+}
