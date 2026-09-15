@@ -139,6 +139,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://billwhalenmsft.github.io/journal/sales-agent-extensibility/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://billwhalenmsft.github.io/journal/service-agent-extensibility/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://billwhalenmsft.github.io/journal/program-iq/</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
@@ -146,12 +158,6 @@
   </url>
   <url>
     <loc>https://billwhalenmsft.github.io/journal/field-service-tech-home/</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

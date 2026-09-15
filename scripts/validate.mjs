@@ -130,10 +130,10 @@ const protectedConfig = await readJson("config/protected-routes.json");
 const allowlistedRepositories = new Set(allowlist.repositories);
 const allowedEvidence = new Set(["measured", "observed", "designed"]);
 
-check(catalog.version === 3, "Catalog version must be 3.");
+check(catalog.version === 4, "Catalog version must be 4.");
 check(dateIsValid(catalog.updated), "Catalog updated date must use YYYY-MM-DD.");
 check(catalog.expectedPublicReleaseCount === 9, "Catalog must expect exactly 9 public releases.");
-check(catalog.expectedInfoOnlyCount === 6, "Catalog must expect exactly 6 info-only showcases.");
+check(catalog.expectedInfoOnlyCount === 7, "Catalog must expect exactly 7 info-only showcases.");
 check(Array.isArray(catalog.releases), "Catalog records must be an array.");
 
 const releaseSlugs = new Set();
@@ -162,6 +162,15 @@ for (const release of catalog.releases) {
     ["public-release", "info-only"].includes(release.publicationMode),
     `${slug}: publicationMode must be public-release or info-only.`
   );
+  check(typeof release.featuredOnHome === "boolean", `${slug}: featuredOnHome must be explicit.`);
+  if (release.featuredOnHome) {
+    check(
+      Number.isInteger(release.homepageRank) && release.homepageRank >= 1 && release.homepageRank <= 9,
+      `${slug}: featured records require homepageRank from 1 through 9.`
+    );
+  } else {
+    check(!Object.hasOwn(release, "homepageRank"), `${slug}: non-featured records must not have homepageRank.`);
+  }
   requireStrings(release.tags, "tags", slug);
   requireStrings(release.capabilities, "capabilities", slug);
   requireStrings(release.guardrails, "guardrails", slug);
@@ -297,10 +306,10 @@ pass("Publication modes, approvals, evidence labels, and public-safe record sche
 const ordered = orderedReleases(catalog);
 const orderedInfo = orderedInfoOnly(catalog);
 check(ordered.length === catalog.expectedPublicReleaseCount, "Catalog must contain exactly 9 public releases.");
-check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 6 info-only showcases.");
+check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 7 info-only showcases.");
 check(
   catalog.releases.length === catalog.expectedPublicReleaseCount + catalog.expectedInfoOnlyCount,
-  "Catalog must contain exactly 15 total records."
+  "Catalog must contain exactly 16 total records."
 );
 check(
   allowlist.repositories.length === catalog.expectedPublicReleaseCount,
@@ -324,6 +333,16 @@ for (let index = 1; index < orderedInfo.length; index += 1) {
   );
 }
 pass("Exact repository creation and last-public-push facts and ordering checked.");
+
+const featured = catalog.releases
+  .filter((release) => release.featuredOnHome)
+  .sort((left, right) => left.homepageRank - right.homepageRank);
+check(featured.length === 9, "Homepage curation must contain exactly 9 featured records.");
+check(
+  JSON.stringify(featured.map((release) => release.homepageRank))
+    === JSON.stringify([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+  "Homepage ranks must be unique and contiguous from 1 through 9."
+);
 
 const publicText = [
   JSON.stringify(catalog),
@@ -368,7 +387,7 @@ for (const relativePath of ["index.html", "404.html"]) {
 }
 
 const home = diskHtml.get("index.html");
-check((home.match(/class="project-card"/g) || []).length === 8, "Homepage must contain the eight correctly attributed project cards.");
+check((home.match(/class="project-card"/g) || []).length === 9, "Homepage must contain exactly nine featured project cards.");
 check(home.includes('id="hero-title">I build AI <span>people use.</span></h1>'), "Homepage accepted hero changed.");
 check(home.includes('id="projectSearch"'), "Homepage project search is missing.");
 check(home.includes('id="commandDialog"'), "Homepage keyboard quick launcher is missing.");
@@ -376,17 +395,17 @@ check(home.includes("event.ctrlKey || event.metaKey"), "Homepage Ctrl/Cmd+K inte
 check(home.includes('href="/journal/"'), "Homepage must link to the live solution journal.");
 check(home.includes('application/rss+xml'), "Homepage must advertise the RSS feed.");
 check(home.includes('application/atom+xml'), "Homepage must advertise the Atom feed.");
-const expectedLatestSlugs = ordered.slice(0, 4).map((release) => release.slug);
-const homepageLatestSlugs = [...home.matchAll(/data-latest-release="([^"]+)"/g)].map((match) => match[1]);
+const homepageFeaturedSlugs = [...home.matchAll(/data-featured-slug="([^"]+)"/g)].map((match) => match[1]);
 check(
-  JSON.stringify(homepageLatestSlugs) === JSON.stringify(expectedLatestSlugs),
-  "Homepage latest-releases surface must contain the four newest last-public-push releases in order."
+  JSON.stringify(homepageFeaturedSlugs) === JSON.stringify(featured.map((release) => release.slug)),
+  "Homepage featured cards must match catalog homepageRank order."
 );
+const homepageFeaturedModes = [...home.matchAll(/data-featured-mode="([^"]+)"/g)].map((match) => match[1]);
 check(
-  (home.match(/data-info-showcase="[^"]+"/g) || []).length === catalog.expectedInfoOnlyCount,
-  "Homepage must contain exactly six info-only showcase cards."
+  JSON.stringify(homepageFeaturedModes) === JSON.stringify(featured.map((release) => release.publicationMode)),
+  "Homepage featured card mode badges must match catalog publication modes."
 );
-pass("Homepage hero, attributed projects, active-work cards, search/filter, theme, and keyboard surfaces checked.");
+pass("Homepage hero, ranked curation, publication modes, search/filter, theme, and keyboard surfaces checked.");
 
 const journalHtml = outputs.get("journal/index.html");
 const journalReleaseSlugs = [...journalHtml.matchAll(/data-release="([^"]+)"/g)].map((match) => match[1]);
@@ -466,10 +485,10 @@ check(
 check(!sitemapXml.includes("engagements/"), "Protected engagements must not appear in the sitemap.");
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));
-check(publicManifest.version === 3, "Public release manifest version must be 3.");
-check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 15.");
+check(publicManifest.version === 4, "Public release manifest version must be 4.");
+check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 16.");
 check(publicManifest.releaseCount === catalog.expectedPublicReleaseCount, "Manifest public release count must be exactly 9.");
-check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 6.");
+check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 7.");
 check(
   JSON.stringify(publicManifest.releases.map((release) => release.slug))
     === JSON.stringify(ordered.map((release) => release.slug)),

@@ -1,6 +1,7 @@
 {
   "slug": "stable-info-only-slug",
   "publicationMode": "info-only",
+  "featuredOnHome": false,
   "title": "Information-only showcase title",
   "summary": "Customer-neutral description with no source, download, repository, operational-data, or private architecture details.",
   "category": "Operating systems",

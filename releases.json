@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "title": "Bill Whalen solution journal manifest",
   "updated": "2026-09-14",
   "policy": {
@@ -23,13 +23,14 @@
       "live MCP endpoint"
     ]
   },
-  "recordCount": 15,
+  "recordCount": 16,
   "releaseCount": 9,
-  "infoOnlyCount": 6,
+  "infoOnlyCount": 7,
   "releases": [
     {
       "slug": "home-assistant-estate-panel",
       "publicationMode": "public-release",
+      "featuredOnHome": false,
       "title": "Home Assistant Estate Panel",
       "summary": "A self-hosted React and TypeScript reference build that combines native Home Assistant cards with custom estate controls on a shared connection and layout.",
       "category": "Personal systems",
@@ -144,6 +145,8 @@
     {
       "slug": "freight-triage-control-tower",
       "publicationMode": "public-release",
+      "featuredOnHome": true,
+      "homepageRank": 8,
       "title": "Freight Triage Control Tower",
       "summary": "A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.",
       "category": "Business applications",
@@ -237,6 +240,7 @@
     {
       "slug": "customer-news-hub",
       "publicationMode": "public-release",
+      "featuredOnHome": false,
       "title": "Customer News Hub",
       "summary": "An explicitly unpublished static reference interface for exploring how sample product updates could be filtered, scanned, and opened as a digest.",
       "category": "Information design",
@@ -331,6 +335,8 @@
     {
       "slug": "customer-360-for-entities",
       "publicationMode": "public-release",
+      "featuredOnHome": true,
+      "homepageRank": 7,
       "title": "Customer 360 for Entities",
       "summary": "An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work already happens.",
       "category": "Business applications",
@@ -424,6 +430,8 @@
     {
       "slug": "agent-team-starter-kit",
       "publicationMode": "public-release",
+      "featuredOnHome": true,
+      "homepageRank": 9,
       "title": "Agent Team Starter Kit",
       "summary": "A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.",
       "category": "Agents and AI",
@@ -517,6 +525,7 @@
     {
       "slug": "warranty-claims-operations",
       "publicationMode": "public-release",
+      "featuredOnHome": false,
       "title": "Warranty + Claims Operations",
       "summary": "A Power Platform accelerator for structuring warranty and claims intake, review, supporting flows, and human-owned decisions.",
       "category": "Business applications",
@@ -610,6 +619,7 @@
     {
       "slug": "prompt-escape",
       "publicationMode": "public-release",
+      "featuredOnHome": false,
       "title": "Prompt Escape",
       "summary": "A multiplayer prompt-engineering escape room that turns clearer instructions, constraints, iteration, and creativity into a playable team challenge.",
       "category": "Agents and AI",
@@ -703,6 +713,7 @@
     {
       "slug": "deal-to-glory",
       "publicationMode": "public-release",
+      "featuredOnHome": false,
       "title": "Deal to Glory",
       "summary": "A single-commit hackathon MVP that visualizes a deterministic, agent-styled seller workflow from voice or text input through CRM, illustrative attainment, recognition, and simulated notification stages.",
       "category": "Agents and AI",
@@ -817,6 +828,7 @@
     {
       "slug": "copilot-studio-mcp-lab",
       "publicationMode": "public-release",
+      "featuredOnHome": false,
       "title": "Copilot Studio + MCP Lab",
       "summary": "A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.",
       "category": "Developer labs",
@@ -913,6 +925,8 @@
     {
       "slug": "se-os",
       "publicationMode": "info-only",
+      "featuredOnHome": true,
+      "homepageRank": 1,
       "title": "SE OS",
       "summary": "A private, customer-neutral solution-engineering operating system for turning ambiguous work into governed discovery, proofs, reusable accelerators, evidence, and handoffs.",
       "category": "Operating systems",
@@ -984,6 +998,8 @@
     {
       "slug": "mcaps-os-app-store",
       "publicationMode": "info-only",
+      "featuredOnHome": true,
+      "homepageRank": 2,
       "title": "MCAPS OS + App Store",
       "summary": "A modular private operating surface and curated pattern catalog described only through generic catalog, installation, review, and owner-control concepts.",
       "category": "Operating systems",
@@ -1053,8 +1069,156 @@
       }
     },
     {
+      "slug": "sales-agent-extensibility",
+      "publicationMode": "info-only",
+      "featuredOnHome": true,
+      "homepageRank": 3,
+      "title": "Sales Agent Extensibility Pattern",
+      "summary": "A private, customer-neutral pattern connecting seller and CRM context, agent assistance, approved tools, next actions, human approvals, and durable receipts.",
+      "category": "Agent patterns",
+      "tags": [
+        "Sales",
+        "CRM context",
+        "Agent assistance",
+        "Approvals"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-14",
+      "originalState": "Seller context, CRM records, tool assistance, follow-up actions, approvals, and evidence can be connected without a reusable boundary between recommendation and consequential execution.",
+      "delivered": "The private pattern separates seller intent, approved CRM context and tools, a proposed next action, explicit human approval, and a durable receipt of what was accepted or changed.",
+      "outcome": "The design is intended to make sales-agent extensibility easier to review and govern while keeping consequential CRM writes with an authorized person.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a reusable sales pattern that connects context, assistance, tools, approvals, next actions, and durable receipts without autonomous CRM writes."
+      },
+      "capabilities": [
+        "Connects seller intent to approved CRM context and tools.",
+        "Frames agent output as a proposed next action rather than an automatic change.",
+        "Requires explicit approval before consequential CRM writes.",
+        "Records a durable receipt of the approved, rejected, or edited action."
+      ],
+      "architecture": [
+        {
+          "label": "Seller intent",
+          "detail": "A seller states the goal and remains accountable for the request."
+        },
+        {
+          "label": "CRM context and tools",
+          "detail": "The pattern limits retrieval and tool use to approved business context."
+        },
+        {
+          "label": "Proposed next action",
+          "detail": "Agent assistance prepares a reviewable recommendation or draft action."
+        },
+        {
+          "label": "Approval and receipt",
+          "detail": "An authorized person approves, rejects, or edits the action and preserves a durable receipt."
+        }
+      ],
+      "guardrails": [
+        "Tools and seller context remain allowlisted and permission-bound.",
+        "Consequential CRM writes require explicit human approval.",
+        "Durable receipts preserve what was proposed, approved, edited, or rejected."
+      ],
+      "limitations": [
+        "Information-only pattern; source, implementation details, operational materials, and configured systems are not published.",
+        "This private active work is not a Microsoft product, reference architecture, or officially supported offering.",
+        "No public evidence establishes production readiness, adoption, accuracy, savings, or sales outcomes."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Seller intent moves through approved CRM context and tools to a proposed next action, explicit approval, and a durable receipt.",
+        "nodes": [
+          "Seller intent",
+          "CRM context and tools",
+          "Proposed next action",
+          "Approval and receipt"
+        ]
+      },
+      "urls": {
+        "showcase": "https://billwhalenmsft.github.io/journal/sales-agent-extensibility/"
+      }
+    },
+    {
+      "slug": "service-agent-extensibility",
+      "publicationMode": "info-only",
+      "featuredOnHome": true,
+      "homepageRank": 4,
+      "title": "Service Agent Extensibility Pattern",
+      "summary": "A private, customer-neutral pattern connecting case context, knowledge and tool assistance, action proposals, approvals, evidence, and customer-owned execution.",
+      "category": "Agent patterns",
+      "tags": [
+        "Service",
+        "Case context",
+        "Knowledge",
+        "Human approval"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Private active build",
+      "ownerReviewedAsOf": "2026-09-14",
+      "originalState": "Case context, knowledge, tools, evidence, proposed resolutions, record changes, and customer communications can be connected without a clear boundary around approval and accountable execution.",
+      "delivered": "The private pattern separates case and customer context, approved knowledge and tools, a reviewable action proposal, supporting evidence, explicit approval, and customer-owned execution.",
+      "outcome": "The design is intended to make service-agent extensibility easier to inspect and reuse without autonomous case changes or customer communications.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a reusable service pattern that connects context, knowledge, tools, evidence, approvals, and customer-owned execution without autonomous case changes or communications."
+      },
+      "capabilities": [
+        "Connects case and customer context to approved knowledge and tools.",
+        "Produces reviewable action proposals with supporting evidence.",
+        "Requires explicit approval before case changes or customer communications.",
+        "Keeps final execution with customer-owned systems and authorized people."
+      ],
+      "architecture": [
+        {
+          "label": "Case context",
+          "detail": "A service request and bounded customer context establish the review scope."
+        },
+        {
+          "label": "Knowledge and tools",
+          "detail": "Approved assistance retrieves evidence and prepares a proposed action."
+        },
+        {
+          "label": "Proposal and evidence",
+          "detail": "A person reviews the recommendation, supporting evidence, and uncertainty."
+        },
+        {
+          "label": "Customer-owned execution",
+          "detail": "Authorized people approve and execute any case change or communication."
+        }
+      ],
+      "guardrails": [
+        "Knowledge, case context, and tools remain allowlisted and permission-bound.",
+        "No autonomous case changes or customer communications are permitted.",
+        "Evidence, uncertainty, approval, and final execution remain visible and customer-owned."
+      ],
+      "limitations": [
+        "Information-only pattern; source, implementation details, operational materials, and configured systems are not published.",
+        "This private active work is not a Microsoft product, reference architecture, or officially supported offering.",
+        "No public evidence establishes production readiness, adoption, accuracy, service improvement, or customer outcomes."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Case context moves through approved knowledge and tools to an evidence-backed proposal, explicit approval, and customer-owned execution.",
+        "nodes": [
+          "Case context",
+          "Knowledge and tools",
+          "Proposal and evidence",
+          "Customer-owned execution"
+        ]
+      },
+      "urls": {
+        "showcase": "https://billwhalenmsft.github.io/journal/service-agent-extensibility/"
+      }
+    },
+    {
       "slug": "program-iq",
       "publicationMode": "info-only",
+      "featuredOnHome": true,
+      "homepageRank": 5,
       "title": "Program IQ",
       "summary": "A private program-execution view for bringing milestones, ownership, evidence, risks, decisions, and next actions into one reviewable operating picture.",
       "category": "Program execution",
@@ -1126,6 +1290,8 @@
     {
       "slug": "field-service-tech-home",
       "publicationMode": "info-only",
+      "featuredOnHome": true,
+      "homepageRank": 6,
       "title": "Field Service Tech Home",
       "summary": "A supportive private mobile technician-home concept for work execution, productivity, quality, parts, and AI-guided recommendations without punitive monitoring.",
       "category": "Field operations",
@@ -1195,79 +1361,9 @@
       }
     },
     {
-      "slug": "sales-service-agent-extensibility",
-      "publicationMode": "info-only",
-      "title": "Sales & Service Agent Extensibility Patterns",
-      "summary": "A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.",
-      "category": "Agent patterns",
-      "tags": [
-        "Agent assistance",
-        "CRM context",
-        "Tool governance",
-        "Approvals"
-      ],
-      "status": "approved",
-      "maturity": "Information-only / Private active build",
-      "ownerReviewedAsOf": "2026-09-14",
-      "originalState": "Agent experiences can connect prompts, business context, tools, and CRM actions without a reusable pattern for permissions, proposed changes, approval, and accountability.",
-      "delivered": "The private work packages high-level sales and service patterns that separate user intent, approved context and tools, proposed actions, explicit approval, and governed CRM execution.",
-      "outcome": "The design is intended to make agent extensibility easier to reason about and reuse while preserving human control over consequential business actions.",
-      "valueEvidence": {
-        "level": "designed",
-        "statement": "Designed value: reusable sales and service patterns that keep context, tools, approvals, and CRM actions visibly separated."
-      },
-      "capabilities": [
-        "Frames reusable patterns for sales and service agent assistance.",
-        "Separates approved context retrieval from tool execution.",
-        "Treats CRM changes and outbound actions as proposals before approval.",
-        "Makes permissions, ownership, and audit expectations explicit."
-      ],
-      "architecture": [
-        {
-          "label": "User intent",
-          "detail": "A person states the goal and remains the accountable requester."
-        },
-        {
-          "label": "Approved context",
-          "detail": "The pattern limits retrieval and tools to authorized business context."
-        },
-        {
-          "label": "Proposed action",
-          "detail": "The agent prepares a reviewable change, draft, or next action."
-        },
-        {
-          "label": "Explicit approval",
-          "detail": "An authorized person approves, rejects, or edits consequential CRM execution."
-        }
-      ],
-      "guardrails": [
-        "Tools and context remain allowlisted and permission-bound.",
-        "Consequential CRM writes and outbound actions require explicit human approval.",
-        "Ambiguity, missing identifiers, and weak evidence trigger clarification rather than silent action."
-      ],
-      "limitations": [
-        "Information-only pattern set; source, implementation details, operational materials, and configured systems are not published.",
-        "This private active work is not a Microsoft product, reference architecture, or officially supported offering.",
-        "No public evidence establishes production readiness, adoption, accuracy, savings, or business outcomes."
-      ],
-      "publicBoundary": "Information-only. Source and operational materials are not published.",
-      "visual": {
-        "type": "inline-svg",
-        "alt": "User intent moves through approved context and a proposed action to explicit human approval.",
-        "nodes": [
-          "User intent",
-          "Approved context",
-          "Proposed action",
-          "Explicit approval"
-        ]
-      },
-      "urls": {
-        "showcase": "https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/"
-      }
-    },
-    {
       "slug": "pipeline-consumption-unified-view",
       "publicationMode": "info-only",
+      "featuredOnHome": false,
       "title": "Pipeline-to-Consumption Unified View",
       "summary": "A private decision-support pattern connecting opportunity context, milestones, adoption signals, evidence, risks, and next actions without exposing account data or forecast claims.",
       "category": "Decision support",

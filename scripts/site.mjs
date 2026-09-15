@@ -120,7 +120,7 @@ html[data-brand="atomic"][data-theme="dark"] {
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
 body {
-  min-width: 20rem;
+  min-width: 0;
   margin: 0;
   overflow-x: hidden;
   background: var(--cp-bg);
@@ -502,6 +502,8 @@ export function orderedInfoOnly(catalog) {
     .filter((release) => release.publicationMode === "info-only")
     .sort((left, right) =>
       right.ownerReviewedAsOf.localeCompare(left.ownerReviewedAsOf)
+        || (left.homepageRank ?? Number.MAX_SAFE_INTEGER) - (right.homepageRank ?? Number.MAX_SAFE_INTEGER)
+        || left.title.localeCompare(right.title)
     );
 }
 
@@ -1128,7 +1130,7 @@ function manifest(catalog) {
   const releases = orderedReleases(catalog);
   const infoOnly = orderedInfoOnly(catalog);
   return {
-    version: 3,
+    version: 4,
     title: "Bill Whalen solution journal manifest",
     updated: catalog.updated,
     policy: {

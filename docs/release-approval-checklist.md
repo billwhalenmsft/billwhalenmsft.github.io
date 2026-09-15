@@ -16,6 +16,7 @@ Use this checklist for either an exact public release or an owner-reviewed infor
 
 - [ ] Public release only: one exact public repository is nominated and allowlisted.
 - [ ] The record declares `public-release` or `info-only`; only public releases have sources and companion feed articles.
+- [ ] `featuredOnHome` is explicit; featured entries have one unique `homepageRank`, while non-featured entries omit it.
 - [ ] All statements are supported by the listed public provenance URLs.
 - [ ] Public release only: repository-created and last-public-push dates match the exact public GitHub API record and are not described as adoption, activity, or customer use.
 - [ ] Public release only: any fork, derivative, or upstream framework has explicit ownership, relationship, and license attribution.

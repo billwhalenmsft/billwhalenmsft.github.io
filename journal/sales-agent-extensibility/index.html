@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.">
+  <meta name="description" content="A private, customer-neutral pattern connecting seller and CRM context, agent assistance, approved tools, next actions, human approvals, and durable receipts.">
   <meta name="author" content="Bill Whalen">
   <meta name="theme-color" content="#0057B8">
-  <link rel="canonical" href="https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/">
+  <link rel="canonical" href="https://billwhalenmsft.github.io/journal/sales-agent-extensibility/">
   <link rel="alternate" type="application/rss+xml" title="Bill Whalen solution journal RSS" href="https://billwhalenmsft.github.io/feeds/rss.xml">
   <link rel="alternate" type="application/atom+xml" title="Bill Whalen solution journal Atom" href="https://billwhalenmsft.github.io/feeds/atom.xml">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Sales &amp; Service Agent Extensibility Patterns | Info-only active work">
-  <meta property="og:description" content="A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.">
-  <meta property="og:url" content="https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/">
+  <meta property="og:title" content="Sales Agent Extensibility Pattern | Info-only active work">
+  <meta property="og:description" content="A private, customer-neutral pattern connecting seller and CRM context, agent assistance, approved tools, next actions, human approvals, and durable receipts.">
+  <meta property="og:url" content="https://billwhalenmsft.github.io/journal/sales-agent-extensibility/">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Sales &amp; Service Agent Extensibility Patterns | Info-only active work">
-  <meta name="twitter:description" content="A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.">
+  <meta name="twitter:title" content="Sales Agent Extensibility Pattern | Info-only active work">
+  <meta name="twitter:description" content="A private, customer-neutral pattern connecting seller and CRM context, agent assistance, approved tools, next actions, human approvals, and durable receipts.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
-  <title>Sales &amp; Service Agent Extensibility Patterns | Info-only active work</title>
+  <title>Sales Agent Extensibility Pattern | Info-only active work</title>
   <script>
   (() => {
     const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -30,15 +30,15 @@
     {
       "@context": "https://schema.org",
       "@type": "CreativeWork",
-      "headline": "Sales & Service Agent Extensibility Patterns",
-      "description": "A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.",
+      "headline": "Sales Agent Extensibility Pattern",
+      "description": "A private, customer-neutral pattern connecting seller and CRM context, agent assistance, approved tools, next actions, human approvals, and durable receipts.",
       "dateModified": "2026-09-14",
       "author": {
         "@type": "Person",
         "name": "Bill Whalen",
         "url": "https://billwhalenmsft.github.io"
       },
-      "url": "https://billwhalenmsft.github.io/journal/sales-service-agent-extensibility/",
+      "url": "https://billwhalenmsft.github.io/journal/sales-agent-extensibility/",
       "usageInfo": "Information-only. Source and operational materials are not published."
     }
   </script>
@@ -146,7 +146,7 @@
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
     body {
-      min-width: 20rem;
+      min-width: 0;
       margin: 0;
       overflow-x: hidden;
       background: var(--cp-bg);
@@ -520,8 +520,8 @@
       <header class="hero shell">
         <div>
           <p class="eyebrow">Info-only active work &middot; Agent patterns</p>
-          <h1>Sales &amp; Service Agent Extensibility Patterns</h1>
-          <p class="hero-copy">A private set of customer-neutral patterns for connecting agent assistance, approved tools, business context, explicit approvals, and CRM actions.</p>
+          <h1>Sales Agent Extensibility Pattern</h1>
+          <p class="hero-copy">A private, customer-neutral pattern connecting seller and CRM context, agent assistance, approved tools, next actions, human approvals, and durable receipts.</p>
           <div class="meta-row">
             <span>Information-only</span>
             <span>Private active build</span>
@@ -538,94 +538,94 @@
           <p>No source, download, repository, operational-data, or private architecture links are provided for this showcase.</p>
         </aside>
       </header>
-      <section class="section" aria-labelledby="sales-service-agent-extensibility-flow">
+      <section class="section" aria-labelledby="sales-agent-extensibility-flow">
         <div class="shell">
           <div class="section-heading">
-            <div><span class="section-kicker">Original state to designed value</span><h2 id="sales-service-agent-extensibility-flow">What the private build is exploring.</h2></div>
+            <div><span class="section-kicker">Original state to designed value</span><h2 id="sales-agent-extensibility-flow">What the private build is exploring.</h2></div>
             <p>Customer-neutral framing only. This description does not establish deployment, adoption, or results.</p>
           </div>
           <div class="flow-grid">
-            <article class="panel"><span class="label">01 / Original state</span><h3>Before the pattern</h3><p>Agent experiences can connect prompts, business context, tools, and CRM actions without a reusable pattern for permissions, proposed changes, approval, and accountability.</p></article>
-            <article class="panel"><span class="label">02 / Being built</span><h3>What is being delivered</h3><p>The private work packages high-level sales and service patterns that separate user intent, approved context and tools, proposed actions, explicit approval, and governed CRM execution.</p></article>
-            <article class="panel"><span class="label">03 / Designed value</span><h3>Value hypothesis</h3><p>The design is intended to make agent extensibility easier to reason about and reuse while preserving human control over consequential business actions.</p></article>
+            <article class="panel"><span class="label">01 / Original state</span><h3>Before the pattern</h3><p>Seller context, CRM records, tool assistance, follow-up actions, approvals, and evidence can be connected without a reusable boundary between recommendation and consequential execution.</p></article>
+            <article class="panel"><span class="label">02 / Being built</span><h3>What is being delivered</h3><p>The private pattern separates seller intent, approved CRM context and tools, a proposed next action, explicit human approval, and a durable receipt of what was accepted or changed.</p></article>
+            <article class="panel"><span class="label">03 / Designed value</span><h3>Value hypothesis</h3><p>The design is intended to make sales-agent extensibility easier to review and govern while keeping consequential CRM writes with an authorized person.</p></article>
           </div>
-          <div class="callout"><p><strong>Evidence label:</strong> Designed value: reusable sales and service patterns that keep context, tools, approvals, and CRM actions visibly separated.</p></div>
+          <div class="callout"><p><strong>Evidence label:</strong> Designed value: a reusable sales pattern that connects context, assistance, tools, approvals, next actions, and durable receipts without autonomous CRM writes.</p></div>
         </div>
       </section>
-      <section class="section" aria-labelledby="sales-service-agent-extensibility-architecture">
+      <section class="section" aria-labelledby="sales-agent-extensibility-architecture">
         <div class="shell">
           <div class="section-heading">
-            <div><span class="section-kicker">Synthetic overview</span><h2 id="sales-service-agent-extensibility-architecture">A high-level public-safe pattern.</h2></div>
-            <p>User intent moves through approved context and a proposed action to explicit human approval.</p>
+            <div><span class="section-kicker">Synthetic overview</span><h2 id="sales-agent-extensibility-architecture">A high-level public-safe pattern.</h2></div>
+            <p>Seller intent moves through approved CRM context and tools to a proposed next action, explicit approval, and a durable receipt.</p>
           </div>
           <div class="architecture">
-  <svg viewBox="0 0 960 290" role="img" aria-labelledby="info-sales-service-agent-extensibility-title info-sales-service-agent-extensibility-desc">
-    <title id="info-sales-service-agent-extensibility-title">Sales &amp; Service Agent Extensibility Patterns architecture</title>
-    <desc id="info-sales-service-agent-extensibility-desc">User intent moves through approved context and a proposed action to explicit human approval.</desc>
+  <svg viewBox="0 0 960 290" role="img" aria-labelledby="info-sales-agent-extensibility-title info-sales-agent-extensibility-desc">
+    <title id="info-sales-agent-extensibility-title">Sales Agent Extensibility Pattern architecture</title>
+    <desc id="info-sales-agent-extensibility-desc">Seller intent moves through approved CRM context and tools to a proposed next action, explicit approval, and a durable receipt.</desc>
     <defs>
-      <marker id="info-sales-service-agent-extensibility-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <marker id="info-sales-agent-extensibility-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--cp-accent)"/>
       </marker>
     </defs>
     <g>
       <rect class="node" x="20" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="38" y="102" font-size="16">01</text>
-      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">User intent</text>
-      <path class="arrow" d="M230 145H252" fill="none" stroke-width="4" marker-end="url(#info-sales-service-agent-extensibility-arrow)"/>
+      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">Seller intent</text>
+      <path class="arrow" d="M230 145H252" fill="none" stroke-width="4" marker-end="url(#info-sales-agent-extensibility-arrow)"/>
     </g>
 <g>
       <rect class="node" x="260" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="278" y="102" font-size="16">02</text>
-      <text x="365" y="148" font-size="18" font-weight="700" text-anchor="middle">Approved context</text>
-      <path class="arrow" d="M470 145H492" fill="none" stroke-width="4" marker-end="url(#info-sales-service-agent-extensibility-arrow)"/>
+      <text x="365" y="148" font-size="18" font-weight="700" text-anchor="middle">CRM context and tools</text>
+      <path class="arrow" d="M470 145H492" fill="none" stroke-width="4" marker-end="url(#info-sales-agent-extensibility-arrow)"/>
     </g>
 <g>
       <rect class="node" x="500" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="518" y="102" font-size="16">03</text>
-      <text x="605" y="148" font-size="18" font-weight="700" text-anchor="middle">Proposed action</text>
-      <path class="arrow" d="M710 145H732" fill="none" stroke-width="4" marker-end="url(#info-sales-service-agent-extensibility-arrow)"/>
+      <text x="605" y="148" font-size="18" font-weight="700" text-anchor="middle">Proposed next action</text>
+      <path class="arrow" d="M710 145H732" fill="none" stroke-width="4" marker-end="url(#info-sales-agent-extensibility-arrow)"/>
     </g>
 <g>
       <rect class="node" x="740" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="758" y="102" font-size="16">04</text>
-      <text x="845" y="148" font-size="18" font-weight="700" text-anchor="middle">Explicit approval</text>
+      <text x="845" y="148" font-size="18" font-weight="700" text-anchor="middle">Approval and receipt</text>
       
     </g>
   </svg>
 </div>
           <div class="architecture-notes"><article class="architecture-note">
-  <span class="label">01 / User intent</span>
-  <p>A person states the goal and remains the accountable requester.</p>
+  <span class="label">01 / Seller intent</span>
+  <p>A seller states the goal and remains accountable for the request.</p>
 </article>
 <article class="architecture-note">
-  <span class="label">02 / Approved context</span>
-  <p>The pattern limits retrieval and tools to authorized business context.</p>
+  <span class="label">02 / CRM context and tools</span>
+  <p>The pattern limits retrieval and tool use to approved business context.</p>
 </article>
 <article class="architecture-note">
-  <span class="label">03 / Proposed action</span>
-  <p>The agent prepares a reviewable change, draft, or next action.</p>
+  <span class="label">03 / Proposed next action</span>
+  <p>Agent assistance prepares a reviewable recommendation or draft action.</p>
 </article>
 <article class="architecture-note">
-  <span class="label">04 / Explicit approval</span>
-  <p>An authorized person approves, rejects, or edits consequential CRM execution.</p>
+  <span class="label">04 / Approval and receipt</span>
+  <p>An authorized person approves, rejects, or edits the action and preserves a durable receipt.</p>
 </article></div>
         </div>
       </section>
-      <section class="section" aria-labelledby="sales-service-agent-extensibility-controls">
+      <section class="section" aria-labelledby="sales-agent-extensibility-controls">
         <div class="shell detail-grid">
           <div>
             <span class="section-kicker">Capabilities</span>
-            <h2 id="sales-service-agent-extensibility-controls">What the concept is designed to support.</h2>
-            <ul class="plain-list"><li>Frames reusable patterns for sales and service agent assistance.</li><li>Separates approved context retrieval from tool execution.</li><li>Treats CRM changes and outbound actions as proposals before approval.</li><li>Makes permissions, ownership, and audit expectations explicit.</li></ul>
+            <h2 id="sales-agent-extensibility-controls">What the concept is designed to support.</h2>
+            <ul class="plain-list"><li>Connects seller intent to approved CRM context and tools.</li><li>Frames agent output as a proposed next action rather than an automatic change.</li><li>Requires explicit approval before consequential CRM writes.</li><li>Records a durable receipt of the approved, rejected, or edited action.</li></ul>
           </div>
           <div>
             <article class="panel">
               <span class="label">Human control and guardrails</span>
-              <ul class="plain-list"><li>Tools and context remain allowlisted and permission-bound.</li><li>Consequential CRM writes and outbound actions require explicit human approval.</li><li>Ambiguity, missing identifiers, and weak evidence trigger clarification rather than silent action.</li></ul>
+              <ul class="plain-list"><li>Tools and seller context remain allowlisted and permission-bound.</li><li>Consequential CRM writes require explicit human approval.</li><li>Durable receipts preserve what was proposed, approved, edited, or rejected.</li></ul>
             </article>
             <article class="panel" style="margin-top: 1rem;">
               <span class="label">Limitations and disclosure</span>
-              <ul class="plain-list"><li>Information-only pattern set; source, implementation details, operational materials, and configured systems are not published.</li><li>This private active work is not a Microsoft product, reference architecture, or officially supported offering.</li><li>No public evidence establishes production readiness, adoption, accuracy, savings, or business outcomes.</li></ul>
+              <ul class="plain-list"><li>Information-only pattern; source, implementation details, operational materials, and configured systems are not published.</li><li>This private active work is not a Microsoft product, reference architecture, or officially supported offering.</li><li>No public evidence establishes production readiness, adoption, accuracy, savings, or sales outcomes.</li></ul>
             </article>
           </div>
         </div>
