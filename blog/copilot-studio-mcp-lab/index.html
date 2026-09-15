@@ -514,12 +514,12 @@
       </header>
       <section class="section">
         <div class="shell article-body">
-          <p>A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.</p>
+          <p>A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.</p>
           <h2>The workflow before the build</h2>
           <p>MCP concepts can be difficult to connect to practice when the protocol, server deployment, tool definition, client configuration, and invocation path are learned separately.</p>
           <h2>What the public project delivers</h2>
-          <p>The public lab uses a deliberately small joke-server example to walk through an MCP tool, deployment, and connection from both GitHub Copilot and Microsoft Copilot Studio.</p>
-          <ul class="plain-list"><li>Implements a small public MCP server and callable tool.</li><li>Documents deployment and connection steps for the lab.</li><li>Shows the same tool pattern from GitHub Copilot and Copilot Studio clients.</li><li>Keeps the sample domain intentionally low-risk so the integration path stays visible.</li></ul>
+          <p>The public lab uses a deliberately small TypeScript joke server to walk through MCP tools, Azure Container Apps deployment, a custom connector, and connection from Microsoft Copilot Studio.</p>
+          <ul class="plain-list"><li>Implements a small public MCP server and callable tool.</li><li>Documents deployment and connection steps for the lab.</li><li>Exposes four bounded tools backed by two public joke APIs.</li><li>Includes Azure Container Apps deployment infrastructure and Copilot Studio setup guidance.</li></ul>
           <h2>The value case, stated honestly</h2>
           <p>The lab is designed to give builders a bounded end-to-end reference they can inspect before adapting the pattern to a real tool.</p>
           <div class="callout"><p><strong>Evidence label:</strong> Designed value: a compact end-to-end MCP reference that makes server, tool, client, and invocation responsibilities easier to see.</p></div>
@@ -537,7 +537,7 @@
     <g>
       <rect class="node" x="20" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="38" y="102" font-size="16">01</text>
-      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">Copilot client</text>
+      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">Copilot Studio</text>
       <path class="arrow" d="M230 145H252" fill="none" stroke-width="4" marker-end="url(#article-copilot-studio-mcp-lab-arrow)"/>
     </g>
 <g>
@@ -562,7 +562,7 @@
 </div>
           <div class="architecture-notes"><article class="architecture-note">
   <span class="label">01 / Copilot client</span>
-  <p>A user invokes the configured tool from GitHub Copilot or Copilot Studio.</p>
+  <p>A user invokes the configured tool from Microsoft Copilot Studio.</p>
 </article>
 <article class="architecture-note">
   <span class="label">02 / MCP request</span>
@@ -577,13 +577,13 @@
   <p>The client presents the tool result for the user to accept, ignore, or continue from.</p>
 </article></div>
           <h2>Human control and guardrails</h2>
-          <ul class="plain-list"><li>The sample tool is deliberately non-consequential and does not perform business writes.</li><li>The user chooses whether to invoke the tool and how to use its response.</li><li>Real tools require authentication, authorization, input validation, logging, and least-privilege design beyond the sample.</li></ul>
+          <ul class="plain-list"><li>The sample tool is deliberately non-consequential and does not perform business writes.</li><li>The user chooses whether to invoke the tool and how to use its response.</li><li>The deployment guide warns that the lab creates a public MCP endpoint and recommends removing it after use.</li><li>Real tools require authentication, authorization, input validation, logging, and least-privilege design beyond the sample.</li></ul>
           <h2>Where the pattern stops</h2>
-          <ul class="plain-list"><li>The lab demonstrates a narrow sample tool rather than a production MCP operating model.</li><li>Cloud deployment, client capabilities, and configuration steps can change over time.</li><li>The example does not establish enterprise security, scale, reliability, or support guarantees.</li></ul>
+          <ul class="plain-list"><li>The lab demonstrates a narrow sample tool rather than a production MCP operating model, and no automated tests are configured.</li><li>Repository license metadata is inconsistent: GitHub detects MIT while the package manifest declares ISC.</li><li>The support file remains an unedited template, and the example does not establish security, reliability, or support guarantees.</li></ul>
           <h2>Explore the public proof</h2>
           <ul class="source-list"><li>
   <a href="https://github.com/billwhalenmsft/jokeservermcp" rel="noreferrer">Copilot Studio + MCP Lab public repository</a>
-  <small>Public README, MCP server source, deployment assets, and client setup guidance are the evidence base for this entry.</small>
+  <small>Public README, MCP server source, Bicep deployment assets, package manifest, and support file are the evidence base for this entry.</small>
 </li></ul>
         </div>
       </section>

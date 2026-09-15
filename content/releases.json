@@ -5,7 +5,7 @@
     {
       "slug": "agent-team-starter-kit",
       "title": "Agent Team Starter Kit",
-      "summary": "A configurable starter for coordinating specialized AI agents around a visible GitHub Issues work queue, outcome gates, and reviewable execution.",
+      "summary": "A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.",
       "category": "Agents and AI",
       "tags": [
         "Multi-agent",
@@ -14,24 +14,24 @@
         "Azure OpenAI"
       ],
       "status": "approved",
-      "maturity": "Public starter kit",
+      "maturity": "Public scaffolding kit",
       "published": "2026-09-14",
       "updated": "2026-09-14",
       "sourceUrls": [
         "https://github.com/billwhalenmsft/agent-team-starter-kit"
       ],
       "originalState": "Complex work can arrive as an unstructured request with unclear ownership, hidden handoffs, and no durable record of what each specialist contributed.",
-      "delivered": "The public starter kit packages a GitHub Issues queue, configurable specialist personas, orchestration through Azure Functions and Azure OpenAI, and explicit gates around the work.",
+      "delivered": "The public starter kit packages a Python generator, configurable persona and workflow templates, GitHub Issues and Actions patterns, and Azure Functions and Azure OpenAI integration scaffolding.",
       "outcome": "The pattern is designed to make multi-agent work easier to assign, inspect, and govern while keeping the work item and its history visible to people.",
       "valueEvidence": {
         "level": "designed",
         "statement": "Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work."
       },
       "capabilities": [
-        "Uses GitHub Issues as a durable, visible queue for agent work.",
-        "Separates work across configurable specialist agent roles.",
-        "Packages orchestration components for Azure Functions and Azure OpenAI.",
-        "Makes outcomes and handoffs reviewable before work is treated as complete."
+        "Generates configurable specialist persona and workflow files.",
+        "Uses GitHub Issues and Actions templates for a durable, visible work queue.",
+        "Provides scaffolding for Azure Functions and Azure OpenAI integration.",
+        "Includes outcome framing, validation, and human intervention patterns."
       ],
       "architecture": [
         {
@@ -39,12 +39,12 @@
           "detail": "A GitHub issue holds the request, context, and visible work state."
         },
         {
-          "label": "Orchestrator",
-          "detail": "An Azure Functions control layer routes work to configured specialists."
+          "label": "Workflow templates",
+          "detail": "GitHub Actions and issue-handling templates describe routing and intervention points."
         },
         {
-          "label": "Agent team",
-          "detail": "Specialized agents contribute bounded parts of the outcome."
+          "label": "Generated personas",
+          "detail": "Configurable specialist files scaffold bounded roles that deployers must complete and wire."
         },
         {
           "label": "Human gate",
@@ -57,24 +57,24 @@
         "People remain responsible for reviewing consequential outputs and deployment choices."
       ],
       "limitations": [
-        "This is a starter kit, not a production service or a guarantee of agent accuracy.",
-        "Deployers must supply and secure their own Azure resources, identities, model access, and repository permissions.",
+        "This is scaffolding rather than turnkey autonomy: generated personas include TODOs, the runner is a stub, and deployers must complete the domain logic and wiring.",
+        "Setup requires Python, authenticated GitHub CLI access, Azure Storage, Azure OpenAI, and secured repository permissions.",
         "Evaluation, monitoring, cost controls, and domain-specific safety checks still need to be designed for each use."
       ],
       "provenance": [
         {
           "label": "Agent Team Starter Kit public repository",
           "url": "https://github.com/billwhalenmsft/agent-team-starter-kit",
-          "note": "Public README, architecture guidance, workflow files, and source are the evidence base for this entry."
+          "note": "Public README, quick start, generator, workflow templates, and orchestrator source are the evidence base for this entry."
         }
       ],
       "visual": {
         "type": "inline-svg",
-        "alt": "A GitHub issue moves through an orchestrator and specialist agent team to a human outcome gate.",
+        "alt": "A GitHub issue moves through workflow templates and generated persona scaffolding to a human outcome gate.",
         "nodes": [
           "GitHub issue",
-          "Orchestrator",
-          "Agent team",
+          "Workflow templates",
+          "Generated personas",
           "Human gate"
         ]
       },
@@ -171,42 +171,42 @@
     {
       "slug": "freight-triage-control-tower",
       "title": "Freight Triage Control Tower",
-      "summary": "A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.",
+      "summary": "A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.",
       "category": "Business applications",
       "tags": [
-        "Power Apps",
-        "Dataverse",
-        "Copilot Studio",
+        "Power Apps Code Apps",
+        "React",
+        "TypeScript",
         "Operations"
       ],
       "status": "approved",
-      "maturity": "Live public prototype",
+      "maturity": "Public sample-data prototype",
       "published": "2026-09-14",
       "updated": "2026-09-14",
       "sourceUrls": [
         "https://github.com/billwhalenmsft/freight-triage-control-tower"
       ],
       "originalState": "Exception signals can remain trapped in email and ad hoc follow-up, making ownership, age, priority, and resolution status difficult to see across an operations team.",
-      "delivered": "The public prototype packages an exception intake pattern, Dataverse-backed work queue, Power Apps control-tower views, and Copilot Studio-assisted triage around synthetic freight scenarios.",
+      "delivered": "The public React and TypeScript Power Apps Code App packages control-tower lanes, owner assignment, email-thread context, SLA views, and resolution actions over fictional sample data persisted in browser localStorage.",
       "outcome": "The design is intended to turn scattered exception signals into explicit work items with visible ownership and service-level context.",
       "valueEvidence": {
         "level": "designed",
         "statement": "Designed value: a shared queue for freight exceptions with clearer ownership, aging, priority, and resolution state."
       },
       "capabilities": [
-        "Converts a flagged operational signal into a structured triage item.",
+        "Models freight email work as structured queue items over fictional sample data.",
         "Shows queue, item detail, aging, and resolution views.",
-        "Uses Dataverse as the visible system of record for the prototype workflow.",
-        "Demonstrates Copilot Studio assistance without removing the operations owner."
+        "Supports explicit owner assignment, resolution, and reopening actions.",
+        "Calculates prototype SLA and aging metrics over the local sample records."
       ],
       "architecture": [
         {
-          "label": "Exception signal",
-          "detail": "A flagged shipment message or synthetic event starts the triage pattern."
+          "label": "Sample email work",
+          "detail": "Fictional shipment messages and threads supply the prototype queue."
         },
         {
-          "label": "Structured intake",
-          "detail": "Flow logic captures the signal as a Dataverse work item."
+          "label": "Mock provider",
+          "detail": "A shared data-provider interface persists mutable sample items and emails in browser localStorage."
         },
         {
           "label": "Control tower",
@@ -218,28 +218,28 @@
         }
       ],
       "guardrails": [
-        "The public walkthrough uses synthetic scenarios rather than customer operational data.",
-        "Copilot assistance supports triage; a named operations owner remains accountable for resolution.",
-        "Production deployments need environment-specific security roles, data-loss prevention, monitoring, and escalation policy."
+        "The prototype uses fictional carriers, shipment numbers, messages, and metrics rather than operational data.",
+        "Assignment, resolution, and reopening are explicit user actions.",
+        "A named operations owner remains accountable for the recorded resolution."
       ],
       "limitations": [
-        "The published experience is a prototype and reference pattern, not a production freight system.",
-        "Connectors, schemas, service-level rules, and escalation logic require environment-specific configuration.",
+        "The current implementation uses a mock localStorage provider; Dataverse is described as a future provider swap, not a delivered integration.",
+        "Authentication, authorization, concurrency, audit, connectors, and production escalation policy are not implemented.",
         "The repository does not establish measured operational improvement or production adoption."
       ],
       "provenance": [
         {
           "label": "Freight Triage Control Tower public repository",
           "url": "https://github.com/billwhalenmsft/freight-triage-control-tower",
-          "note": "Public README, implementation files, synthetic scenario content, and hosted prototype are the evidence base for this entry."
+          "note": "Public project README, data-provider interface, mock provider, state actions, and synthetic scenario content are the evidence base for this entry."
         }
       ],
       "visual": {
         "type": "inline-svg",
-        "alt": "A freight exception signal becomes a structured Dataverse item, appears in a control tower, and is closed by an accountable owner.",
+        "alt": "Fictional freight email work moves through a browser mock provider into a control tower and explicit owner resolution.",
         "nodes": [
-          "Exception signal",
-          "Structured intake",
+          "Sample email work",
+          "Mock provider",
           "Control tower",
           "Owned resolution"
         ]
@@ -346,14 +346,14 @@
         "Team learning"
       ],
       "status": "approved",
-      "maturity": "Live public game",
+      "maturity": "Public hackathon prototype",
       "published": "2026-09-14",
       "updated": "2026-09-14",
       "sourceUrls": [
         "https://github.com/billwhalenmsft/PromptEscape"
       ],
       "originalState": "Prompting concepts can stay abstract when learners only read examples instead of working through a shared problem with constraints, feedback, and room to iterate.",
-      "delivered": "The public project delivers a multiplayer escape-room game in which teams use prompts, clues, constraints, and iteration to progress through AI-assisted challenges.",
+      "delivered": "The public project delivers a TypeScript and Express escape-room game with solo, cooperative, and versus modes, deterministic prompt scoring, hints, and themed challenges.",
       "outcome": "The experience is designed to make prompt quality discussable and memorable through practice, comparison, and team reflection.",
       "valueEvidence": {
         "level": "designed",
@@ -363,7 +363,7 @@
         "Packages prompt-engineering concepts as a multiplayer game.",
         "Uses clues and constraints to reward clearer instructions and iteration.",
         "Supports team play and discussion rather than an isolated tutorial.",
-        "Provides public source and a hosted game experience."
+        "Uses keyword, synonym, and heuristic scoring rather than an external AI evaluation API."
       ],
       "architecture": [
         {
@@ -389,15 +389,15 @@
         "AI responses are part of the challenge and should be treated as fallible output."
       ],
       "limitations": [
-        "Game behavior can vary with model configuration and service availability.",
+        "The WorkIQ hint service currently returns mock responses rather than making live MCP calls.",
         "The experience does not measure durable skill improvement or workplace outcomes.",
-        "Facilitation, access, and deployment setup may be needed for a group session."
+        "The repository-listed hosted site returned HTTP 403 during verification, so current public hosting is not established."
       ],
       "provenance": [
         {
           "label": "Prompt Escape public repository",
           "url": "https://github.com/billwhalenmsft/PromptEscape",
-          "note": "Public README, game source, challenge content, and hosted experience are the evidence base for this entry."
+          "note": "Public README, lobby manager, prompt evaluator, game engine, and WorkIQ service source are the evidence base for this entry."
         }
       ],
       "visual": {
@@ -420,13 +420,13 @@
     {
       "slug": "copilot-studio-mcp-lab",
       "title": "Copilot Studio + MCP Lab",
-      "summary": "A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.",
+      "summary": "A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.",
       "category": "Developer labs",
       "tags": [
         "Model Context Protocol",
         "Copilot Studio",
-        "GitHub Copilot",
-        "Azure"
+        "Azure Container Apps",
+        "TypeScript"
       ],
       "status": "approved",
       "maturity": "Public hands-on lab",
@@ -436,7 +436,7 @@
         "https://github.com/billwhalenmsft/jokeservermcp"
       ],
       "originalState": "MCP concepts can be difficult to connect to practice when the protocol, server deployment, tool definition, client configuration, and invocation path are learned separately.",
-      "delivered": "The public lab uses a deliberately small joke-server example to walk through an MCP tool, deployment, and connection from both GitHub Copilot and Microsoft Copilot Studio.",
+      "delivered": "The public lab uses a deliberately small TypeScript joke server to walk through MCP tools, Azure Container Apps deployment, a custom connector, and connection from Microsoft Copilot Studio.",
       "outcome": "The lab is designed to give builders a bounded end-to-end reference they can inspect before adapting the pattern to a real tool.",
       "valueEvidence": {
         "level": "designed",
@@ -445,13 +445,13 @@
       "capabilities": [
         "Implements a small public MCP server and callable tool.",
         "Documents deployment and connection steps for the lab.",
-        "Shows the same tool pattern from GitHub Copilot and Copilot Studio clients.",
-        "Keeps the sample domain intentionally low-risk so the integration path stays visible."
+        "Exposes four bounded tools backed by two public joke APIs.",
+        "Includes Azure Container Apps deployment infrastructure and Copilot Studio setup guidance."
       ],
       "architecture": [
         {
           "label": "Copilot client",
-          "detail": "A user invokes the configured tool from GitHub Copilot or Copilot Studio."
+          "detail": "A user invokes the configured tool from Microsoft Copilot Studio."
         },
         {
           "label": "MCP request",
@@ -469,25 +469,26 @@
       "guardrails": [
         "The sample tool is deliberately non-consequential and does not perform business writes.",
         "The user chooses whether to invoke the tool and how to use its response.",
+        "The deployment guide warns that the lab creates a public MCP endpoint and recommends removing it after use.",
         "Real tools require authentication, authorization, input validation, logging, and least-privilege design beyond the sample."
       ],
       "limitations": [
-        "The lab demonstrates a narrow sample tool rather than a production MCP operating model.",
-        "Cloud deployment, client capabilities, and configuration steps can change over time.",
-        "The example does not establish enterprise security, scale, reliability, or support guarantees."
+        "The lab demonstrates a narrow sample tool rather than a production MCP operating model, and no automated tests are configured.",
+        "Repository license metadata is inconsistent: GitHub detects MIT while the package manifest declares ISC.",
+        "The support file remains an unedited template, and the example does not establish security, reliability, or support guarantees."
       ],
       "provenance": [
         {
           "label": "Copilot Studio + MCP Lab public repository",
           "url": "https://github.com/billwhalenmsft/jokeservermcp",
-          "note": "Public README, MCP server source, deployment assets, and client setup guidance are the evidence base for this entry."
+          "note": "Public README, MCP server source, Bicep deployment assets, package manifest, and support file are the evidence base for this entry."
         }
       ],
       "visual": {
         "type": "inline-svg",
         "alt": "A Copilot client sends an MCP request to a bounded tool server and presents the result back to the user.",
         "nodes": [
-          "Copilot client",
+          "Copilot Studio",
           "MCP request",
           "Tool server",
           "User response"

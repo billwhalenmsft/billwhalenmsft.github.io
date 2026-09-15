@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.">
+  <meta name="description" content="A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.">
   <meta name="author" content="Bill Whalen">
   <meta name="theme-color" content="#0057B8">
   <link rel="canonical" href="https://billwhalenmsft.github.io/journal/freight-triage-control-tower/">
@@ -11,11 +11,11 @@
   <link rel="alternate" type="application/atom+xml" title="Bill Whalen solution journal Atom" href="https://billwhalenmsft.github.io/feeds/atom.xml">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Freight Triage Control Tower | Solution journal">
-  <meta property="og:description" content="A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.">
+  <meta property="og:description" content="A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.">
   <meta property="og:url" content="https://billwhalenmsft.github.io/journal/freight-triage-control-tower/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Freight Triage Control Tower | Solution journal">
-  <meta name="twitter:description" content="A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.">
+  <meta name="twitter:description" content="A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
   <title>Freight Triage Control Tower | Solution journal</title>
   <script>
@@ -31,7 +31,7 @@
       "@context": "https://schema.org",
       "@type": "CreativeWork",
       "headline": "Freight Triage Control Tower",
-      "description": "A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.",
+      "description": "A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.",
       "datePublished": "2026-09-14",
       "dateModified": "2026-09-14",
       "author": {
@@ -499,11 +499,11 @@
         <div>
           <p class="eyebrow">Solution entry &middot; Business applications</p>
           <h1>Freight Triage Control Tower</h1>
-          <p class="hero-copy">A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.</p>
+          <p class="hero-copy">A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.</p>
           <div class="meta-row">
             <span>Published 2026-09-14</span>
             <span>Updated 2026-09-14</span>
-            <span>Live public prototype</span>
+            <span>Public sample-data prototype</span>
           </div>
           <div class="hero-actions">
             <a class="button button-primary" href="https://github.com/billwhalenmsft/freight-triage-control-tower" rel="noreferrer">Explore public proof</a>
@@ -524,7 +524,7 @@
           </div>
           <div class="flow-grid">
             <article class="panel"><span class="label">01 / Original state</span><h3>Before the solution</h3><p>Exception signals can remain trapped in email and ad hoc follow-up, making ownership, age, priority, and resolution status difficult to see across an operations team.</p></article>
-            <article class="panel"><span class="label">02 / Delivered</span><h3>What was built</h3><p>The public prototype packages an exception intake pattern, Dataverse-backed work queue, Power Apps control-tower views, and Copilot Studio-assisted triage around synthetic freight scenarios.</p></article>
+            <article class="panel"><span class="label">02 / Delivered</span><h3>What was built</h3><p>The public React and TypeScript Power Apps Code App packages control-tower lanes, owner assignment, email-thread context, SLA views, and resolution actions over fictional sample data persisted in browser localStorage.</p></article>
             <article class="panel"><span class="label">03 / Outcome</span><h3>Value enabled</h3><p>The design is intended to turn scattered exception signals into explicit work items with visible ownership and service-level context.</p></article>
           </div>
         </div>
@@ -533,12 +533,12 @@
         <div class="shell">
           <div class="section-heading">
             <div><span class="section-kicker">Architecture</span><h2 id="freight-triage-control-tower-architecture">How the public pattern fits together.</h2></div>
-            <p>A freight exception signal becomes a structured Dataverse item, appears in a control tower, and is closed by an accountable owner.</p>
+            <p>Fictional freight email work moves through a browser mock provider into a control tower and explicit owner resolution.</p>
           </div>
           <div class="architecture">
   <svg viewBox="0 0 960 290" role="img" aria-labelledby="solution-freight-triage-control-tower-title solution-freight-triage-control-tower-desc">
     <title id="solution-freight-triage-control-tower-title">Freight Triage Control Tower architecture</title>
-    <desc id="solution-freight-triage-control-tower-desc">A freight exception signal becomes a structured Dataverse item, appears in a control tower, and is closed by an accountable owner.</desc>
+    <desc id="solution-freight-triage-control-tower-desc">Fictional freight email work moves through a browser mock provider into a control tower and explicit owner resolution.</desc>
     <defs>
       <marker id="solution-freight-triage-control-tower-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--cp-accent)"/>
@@ -547,13 +547,13 @@
     <g>
       <rect class="node" x="20" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="38" y="102" font-size="16">01</text>
-      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">Exception signal</text>
+      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">Sample email work</text>
       <path class="arrow" d="M230 145H252" fill="none" stroke-width="4" marker-end="url(#solution-freight-triage-control-tower-arrow)"/>
     </g>
 <g>
       <rect class="node" x="260" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="278" y="102" font-size="16">02</text>
-      <text x="365" y="148" font-size="18" font-weight="700" text-anchor="middle">Structured intake</text>
+      <text x="365" y="148" font-size="18" font-weight="700" text-anchor="middle">Mock provider</text>
       <path class="arrow" d="M470 145H492" fill="none" stroke-width="4" marker-end="url(#solution-freight-triage-control-tower-arrow)"/>
     </g>
 <g>
@@ -571,12 +571,12 @@
   </svg>
 </div>
           <div class="architecture-notes"><article class="architecture-note">
-  <span class="label">01 / Exception signal</span>
-  <p>A flagged shipment message or synthetic event starts the triage pattern.</p>
+  <span class="label">01 / Sample email work</span>
+  <p>Fictional shipment messages and threads supply the prototype queue.</p>
 </article>
 <article class="architecture-note">
-  <span class="label">02 / Structured intake</span>
-  <p>Flow logic captures the signal as a Dataverse work item.</p>
+  <span class="label">02 / Mock provider</span>
+  <p>A shared data-provider interface persists mutable sample items and emails in browser localStorage.</p>
 </article>
 <article class="architecture-note">
   <span class="label">03 / Control tower</span>
@@ -593,16 +593,16 @@
           <div>
             <span class="section-kicker">Capabilities</span>
             <h2>What the project demonstrates.</h2>
-            <ul class="plain-list"><li>Converts a flagged operational signal into a structured triage item.</li><li>Shows queue, item detail, aging, and resolution views.</li><li>Uses Dataverse as the visible system of record for the prototype workflow.</li><li>Demonstrates Copilot Studio assistance without removing the operations owner.</li></ul>
+            <ul class="plain-list"><li>Models freight email work as structured queue items over fictional sample data.</li><li>Shows queue, item detail, aging, and resolution views.</li><li>Supports explicit owner assignment, resolution, and reopening actions.</li><li>Calculates prototype SLA and aging metrics over the local sample records.</li></ul>
           </div>
           <div>
             <article class="panel">
               <span class="label">Human control and guardrails</span>
-              <ul class="plain-list"><li>The public walkthrough uses synthetic scenarios rather than customer operational data.</li><li>Copilot assistance supports triage; a named operations owner remains accountable for resolution.</li><li>Production deployments need environment-specific security roles, data-loss prevention, monitoring, and escalation policy.</li></ul>
+              <ul class="plain-list"><li>The prototype uses fictional carriers, shipment numbers, messages, and metrics rather than operational data.</li><li>Assignment, resolution, and reopening are explicit user actions.</li><li>A named operations owner remains accountable for the recorded resolution.</li></ul>
             </article>
             <article class="panel" style="margin-top: 1rem;">
               <span class="label">Limitations</span>
-              <ul class="plain-list"><li>The published experience is a prototype and reference pattern, not a production freight system.</li><li>Connectors, schemas, service-level rules, and escalation logic require environment-specific configuration.</li><li>The repository does not establish measured operational improvement or production adoption.</li></ul>
+              <ul class="plain-list"><li>The current implementation uses a mock localStorage provider; Dataverse is described as a future provider swap, not a delivered integration.</li><li>Authentication, authorization, concurrency, audit, connectors, and production escalation policy are not implemented.</li><li>The repository does not establish measured operational improvement or production adoption.</li></ul>
             </article>
           </div>
         </div>
@@ -612,7 +612,7 @@
           <div><span class="section-kicker">Public provenance</span><h2 id="freight-triage-control-tower-sources">Follow the evidence.</h2><p>These public sources support the entry. No private customer material or internal evidence was used.</p></div>
           <div><ul class="source-list"><li>
   <a href="https://github.com/billwhalenmsft/freight-triage-control-tower" rel="noreferrer">Freight Triage Control Tower public repository</a>
-  <small>Public README, implementation files, synthetic scenario content, and hosted prototype are the evidence base for this entry.</small>
+  <small>Public project README, data-provider interface, mock provider, state actions, and synthetic scenario content are the evidence base for this entry.</small>
 </li></ul></div>
         </div>
       </section>

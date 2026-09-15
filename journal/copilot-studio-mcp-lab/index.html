@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.">
+  <meta name="description" content="A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.">
   <meta name="author" content="Bill Whalen">
   <meta name="theme-color" content="#0057B8">
   <link rel="canonical" href="https://billwhalenmsft.github.io/journal/copilot-studio-mcp-lab/">
@@ -11,11 +11,11 @@
   <link rel="alternate" type="application/atom+xml" title="Bill Whalen solution journal Atom" href="https://billwhalenmsft.github.io/feeds/atom.xml">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Copilot Studio + MCP Lab | Solution journal">
-  <meta property="og:description" content="A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.">
+  <meta property="og:description" content="A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.">
   <meta property="og:url" content="https://billwhalenmsft.github.io/journal/copilot-studio-mcp-lab/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Copilot Studio + MCP Lab | Solution journal">
-  <meta name="twitter:description" content="A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.">
+  <meta name="twitter:description" content="A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
   <title>Copilot Studio + MCP Lab | Solution journal</title>
   <script>
@@ -31,7 +31,7 @@
       "@context": "https://schema.org",
       "@type": "CreativeWork",
       "headline": "Copilot Studio + MCP Lab",
-      "description": "A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.",
+      "description": "A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.",
       "datePublished": "2026-09-14",
       "dateModified": "2026-09-14",
       "author": {
@@ -499,7 +499,7 @@
         <div>
           <p class="eyebrow">Solution entry &middot; Developer labs</p>
           <h1>Copilot Studio + MCP Lab</h1>
-          <p class="hero-copy">A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.</p>
+          <p class="hero-copy">A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.</p>
           <div class="meta-row">
             <span>Published 2026-09-14</span>
             <span>Updated 2026-09-14</span>
@@ -524,7 +524,7 @@
           </div>
           <div class="flow-grid">
             <article class="panel"><span class="label">01 / Original state</span><h3>Before the solution</h3><p>MCP concepts can be difficult to connect to practice when the protocol, server deployment, tool definition, client configuration, and invocation path are learned separately.</p></article>
-            <article class="panel"><span class="label">02 / Delivered</span><h3>What was built</h3><p>The public lab uses a deliberately small joke-server example to walk through an MCP tool, deployment, and connection from both GitHub Copilot and Microsoft Copilot Studio.</p></article>
+            <article class="panel"><span class="label">02 / Delivered</span><h3>What was built</h3><p>The public lab uses a deliberately small TypeScript joke server to walk through MCP tools, Azure Container Apps deployment, a custom connector, and connection from Microsoft Copilot Studio.</p></article>
             <article class="panel"><span class="label">03 / Outcome</span><h3>Value enabled</h3><p>The lab is designed to give builders a bounded end-to-end reference they can inspect before adapting the pattern to a real tool.</p></article>
           </div>
         </div>
@@ -547,7 +547,7 @@
     <g>
       <rect class="node" x="20" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="38" y="102" font-size="16">01</text>
-      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">Copilot client</text>
+      <text x="125" y="148" font-size="18" font-weight="700" text-anchor="middle">Copilot Studio</text>
       <path class="arrow" d="M230 145H252" fill="none" stroke-width="4" marker-end="url(#solution-copilot-studio-mcp-lab-arrow)"/>
     </g>
 <g>
@@ -572,7 +572,7 @@
 </div>
           <div class="architecture-notes"><article class="architecture-note">
   <span class="label">01 / Copilot client</span>
-  <p>A user invokes the configured tool from GitHub Copilot or Copilot Studio.</p>
+  <p>A user invokes the configured tool from Microsoft Copilot Studio.</p>
 </article>
 <article class="architecture-note">
   <span class="label">02 / MCP request</span>
@@ -593,16 +593,16 @@
           <div>
             <span class="section-kicker">Capabilities</span>
             <h2>What the project demonstrates.</h2>
-            <ul class="plain-list"><li>Implements a small public MCP server and callable tool.</li><li>Documents deployment and connection steps for the lab.</li><li>Shows the same tool pattern from GitHub Copilot and Copilot Studio clients.</li><li>Keeps the sample domain intentionally low-risk so the integration path stays visible.</li></ul>
+            <ul class="plain-list"><li>Implements a small public MCP server and callable tool.</li><li>Documents deployment and connection steps for the lab.</li><li>Exposes four bounded tools backed by two public joke APIs.</li><li>Includes Azure Container Apps deployment infrastructure and Copilot Studio setup guidance.</li></ul>
           </div>
           <div>
             <article class="panel">
               <span class="label">Human control and guardrails</span>
-              <ul class="plain-list"><li>The sample tool is deliberately non-consequential and does not perform business writes.</li><li>The user chooses whether to invoke the tool and how to use its response.</li><li>Real tools require authentication, authorization, input validation, logging, and least-privilege design beyond the sample.</li></ul>
+              <ul class="plain-list"><li>The sample tool is deliberately non-consequential and does not perform business writes.</li><li>The user chooses whether to invoke the tool and how to use its response.</li><li>The deployment guide warns that the lab creates a public MCP endpoint and recommends removing it after use.</li><li>Real tools require authentication, authorization, input validation, logging, and least-privilege design beyond the sample.</li></ul>
             </article>
             <article class="panel" style="margin-top: 1rem;">
               <span class="label">Limitations</span>
-              <ul class="plain-list"><li>The lab demonstrates a narrow sample tool rather than a production MCP operating model.</li><li>Cloud deployment, client capabilities, and configuration steps can change over time.</li><li>The example does not establish enterprise security, scale, reliability, or support guarantees.</li></ul>
+              <ul class="plain-list"><li>The lab demonstrates a narrow sample tool rather than a production MCP operating model, and no automated tests are configured.</li><li>Repository license metadata is inconsistent: GitHub detects MIT while the package manifest declares ISC.</li><li>The support file remains an unedited template, and the example does not establish security, reliability, or support guarantees.</li></ul>
             </article>
           </div>
         </div>
@@ -612,7 +612,7 @@
           <div><span class="section-kicker">Public provenance</span><h2 id="copilot-studio-mcp-lab-sources">Follow the evidence.</h2><p>These public sources support the entry. No private customer material or internal evidence was used.</p></div>
           <div><ul class="source-list"><li>
   <a href="https://github.com/billwhalenmsft/jokeservermcp" rel="noreferrer">Copilot Studio + MCP Lab public repository</a>
-  <small>Public README, MCP server source, deployment assets, and client setup guidance are the evidence base for this entry.</small>
+  <small>Public README, MCP server source, Bicep deployment assets, package manifest, and support file are the evidence base for this entry.</small>
 </li></ul></div>
         </div>
       </section>

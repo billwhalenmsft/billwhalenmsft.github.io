@@ -12,7 +12,7 @@
       <link>https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</link>
       <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/agent-team-starter-kit/</guid>
       <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
-      <description>A configurable starter for coordinating specialized AI agents around a visible GitHub Issues work queue, outcome gates, and reviewable execution. Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work.</description>
+      <description>A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates. Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work.</description>
       <category>Agents and AI</category>
     </item>
     <item>
@@ -28,7 +28,7 @@
       <link>https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</link>
       <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/freight-triage-control-tower/</guid>
       <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
-      <description>A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views. Designed value: a shared queue for freight exceptions with clearer ownership, aging, priority, and resolution state.</description>
+      <description>A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views. Designed value: a shared queue for freight exceptions with clearer ownership, aging, priority, and resolution state.</description>
       <category>Business applications</category>
     </item>
     <item>
@@ -52,7 +52,7 @@
       <link>https://billwhalenmsft.github.io/blog/copilot-studio-mcp-lab/</link>
       <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/copilot-studio-mcp-lab/</guid>
       <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
-      <description>A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio. Designed value: a compact end-to-end MCP reference that makes server, tool, client, and invocation responsibilities easier to see.</description>
+      <description>A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio. Designed value: a compact end-to-end MCP reference that makes server, tool, client, and invocation responsibilities easier to see.</description>
       <category>Developer labs</category>
     </item>
   </channel>

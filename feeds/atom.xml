@@ -12,7 +12,7 @@
     <link href="https://billwhalenmsft.github.io/blog/agent-team-starter-kit/"/>
     <published>2026-09-14T12:00:00Z</published>
     <updated>2026-09-14T12:00:00Z</updated>
-    <summary>A configurable starter for coordinating specialized AI agents around a visible GitHub Issues work queue, outcome gates, and reviewable execution.</summary>
+    <summary>A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.</summary>
     <category term="Agents and AI"/>
     <author><name>Bill Whalen</name></author>
   </entry>
@@ -32,7 +32,7 @@
     <link href="https://billwhalenmsft.github.io/blog/freight-triage-control-tower/"/>
     <published>2026-09-14T12:00:00Z</published>
     <updated>2026-09-14T12:00:00Z</updated>
-    <summary>A public Power Platform prototype that turns flagged shipment signals into owned, visible triage work with queue, aging, detail, and resolution views.</summary>
+    <summary>A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.</summary>
     <category term="Business applications"/>
     <author><name>Bill Whalen</name></author>
   </entry>
@@ -62,7 +62,7 @@
     <link href="https://billwhalenmsft.github.io/blog/copilot-studio-mcp-lab/"/>
     <published>2026-09-14T12:00:00Z</published>
     <updated>2026-09-14T12:00:00Z</updated>
-    <summary>A hands-on public lab for deploying a small Model Context Protocol tool and connecting it to GitHub Copilot and Microsoft Copilot Studio.</summary>
+    <summary>A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.</summary>
     <category term="Developer labs"/>
     <author><name>Bill Whalen</name></author>
   </entry>

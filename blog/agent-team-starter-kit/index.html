@@ -514,21 +514,21 @@
       </header>
       <section class="section">
         <div class="shell article-body">
-          <p>A configurable starter for coordinating specialized AI agents around a visible GitHub Issues work queue, outcome gates, and reviewable execution.</p>
+          <p>A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.</p>
           <h2>The workflow before the build</h2>
           <p>Complex work can arrive as an unstructured request with unclear ownership, hidden handoffs, and no durable record of what each specialist contributed.</p>
           <h2>What the public project delivers</h2>
-          <p>The public starter kit packages a GitHub Issues queue, configurable specialist personas, orchestration through Azure Functions and Azure OpenAI, and explicit gates around the work.</p>
-          <ul class="plain-list"><li>Uses GitHub Issues as a durable, visible queue for agent work.</li><li>Separates work across configurable specialist agent roles.</li><li>Packages orchestration components for Azure Functions and Azure OpenAI.</li><li>Makes outcomes and handoffs reviewable before work is treated as complete.</li></ul>
+          <p>The public starter kit packages a Python generator, configurable persona and workflow templates, GitHub Issues and Actions patterns, and Azure Functions and Azure OpenAI integration scaffolding.</p>
+          <ul class="plain-list"><li>Generates configurable specialist persona and workflow files.</li><li>Uses GitHub Issues and Actions templates for a durable, visible work queue.</li><li>Provides scaffolding for Azure Functions and Azure OpenAI integration.</li><li>Includes outcome framing, validation, and human intervention patterns.</li></ul>
           <h2>The value case, stated honestly</h2>
           <p>The pattern is designed to make multi-agent work easier to assign, inspect, and govern while keeping the work item and its history visible to people.</p>
           <div class="callout"><p><strong>Evidence label:</strong> Designed value: clearer ownership, inspectable handoffs, and human-visible outcome gates for multi-agent work.</p></div>
           <h2>Architecture in one view</h2>
-          <p>A GitHub issue moves through an orchestrator and specialist agent team to a human outcome gate.</p>
+          <p>A GitHub issue moves through workflow templates and generated persona scaffolding to a human outcome gate.</p>
           <div class="architecture">
   <svg viewBox="0 0 960 290" role="img" aria-labelledby="article-agent-team-starter-kit-title article-agent-team-starter-kit-desc">
     <title id="article-agent-team-starter-kit-title">Agent Team Starter Kit architecture</title>
-    <desc id="article-agent-team-starter-kit-desc">A GitHub issue moves through an orchestrator and specialist agent team to a human outcome gate.</desc>
+    <desc id="article-agent-team-starter-kit-desc">A GitHub issue moves through workflow templates and generated persona scaffolding to a human outcome gate.</desc>
     <defs>
       <marker id="article-agent-team-starter-kit-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--cp-accent)"/>
@@ -543,13 +543,13 @@
 <g>
       <rect class="node" x="260" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="278" y="102" font-size="16">02</text>
-      <text x="365" y="148" font-size="18" font-weight="700" text-anchor="middle">Orchestrator</text>
+      <text x="365" y="148" font-size="18" font-weight="700" text-anchor="middle">Workflow templates</text>
       <path class="arrow" d="M470 145H492" fill="none" stroke-width="4" marker-end="url(#article-agent-team-starter-kit-arrow)"/>
     </g>
 <g>
       <rect class="node" x="500" y="70" width="210" height="150" rx="16"/>
       <text class="node-index" x="518" y="102" font-size="16">03</text>
-      <text x="605" y="148" font-size="18" font-weight="700" text-anchor="middle">Agent team</text>
+      <text x="605" y="148" font-size="18" font-weight="700" text-anchor="middle">Generated personas</text>
       <path class="arrow" d="M710 145H732" fill="none" stroke-width="4" marker-end="url(#article-agent-team-starter-kit-arrow)"/>
     </g>
 <g>
@@ -565,12 +565,12 @@
   <p>A GitHub issue holds the request, context, and visible work state.</p>
 </article>
 <article class="architecture-note">
-  <span class="label">02 / Orchestrator</span>
-  <p>An Azure Functions control layer routes work to configured specialists.</p>
+  <span class="label">02 / Workflow templates</span>
+  <p>GitHub Actions and issue-handling templates describe routing and intervention points.</p>
 </article>
 <article class="architecture-note">
-  <span class="label">03 / Agent team</span>
-  <p>Specialized agents contribute bounded parts of the outcome.</p>
+  <span class="label">03 / Generated personas</span>
+  <p>Configurable specialist files scaffold bounded roles that deployers must complete and wire.</p>
 </article>
 <article class="architecture-note">
   <span class="label">04 / Human gate</span>
@@ -579,11 +579,11 @@
           <h2>Human control and guardrails</h2>
           <ul class="plain-list"><li>GitHub keeps the request, discussion, and resulting work visible rather than hiding them in a transient chat.</li><li>Specialist roles and outcome gates can be configured for the workflow instead of granting one agent an undefined remit.</li><li>People remain responsible for reviewing consequential outputs and deployment choices.</li></ul>
           <h2>Where the pattern stops</h2>
-          <ul class="plain-list"><li>This is a starter kit, not a production service or a guarantee of agent accuracy.</li><li>Deployers must supply and secure their own Azure resources, identities, model access, and repository permissions.</li><li>Evaluation, monitoring, cost controls, and domain-specific safety checks still need to be designed for each use.</li></ul>
+          <ul class="plain-list"><li>This is scaffolding rather than turnkey autonomy: generated personas include TODOs, the runner is a stub, and deployers must complete the domain logic and wiring.</li><li>Setup requires Python, authenticated GitHub CLI access, Azure Storage, Azure OpenAI, and secured repository permissions.</li><li>Evaluation, monitoring, cost controls, and domain-specific safety checks still need to be designed for each use.</li></ul>
           <h2>Explore the public proof</h2>
           <ul class="source-list"><li>
   <a href="https://github.com/billwhalenmsft/agent-team-starter-kit" rel="noreferrer">Agent Team Starter Kit public repository</a>
-  <small>Public README, architecture guidance, workflow files, and source are the evidence base for this entry.</small>
+  <small>Public README, quick start, generator, workflow templates, and orchestrator source are the evidence base for this entry.</small>
 </li></ul>
         </div>
       </section>

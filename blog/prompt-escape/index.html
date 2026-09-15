@@ -518,8 +518,8 @@
           <h2>The workflow before the build</h2>
           <p>Prompting concepts can stay abstract when learners only read examples instead of working through a shared problem with constraints, feedback, and room to iterate.</p>
           <h2>What the public project delivers</h2>
-          <p>The public project delivers a multiplayer escape-room game in which teams use prompts, clues, constraints, and iteration to progress through AI-assisted challenges.</p>
-          <ul class="plain-list"><li>Packages prompt-engineering concepts as a multiplayer game.</li><li>Uses clues and constraints to reward clearer instructions and iteration.</li><li>Supports team play and discussion rather than an isolated tutorial.</li><li>Provides public source and a hosted game experience.</li></ul>
+          <p>The public project delivers a TypeScript and Express escape-room game with solo, cooperative, and versus modes, deterministic prompt scoring, hints, and themed challenges.</p>
+          <ul class="plain-list"><li>Packages prompt-engineering concepts as a multiplayer game.</li><li>Uses clues and constraints to reward clearer instructions and iteration.</li><li>Supports team play and discussion rather than an isolated tutorial.</li><li>Uses keyword, synonym, and heuristic scoring rather than an external AI evaluation API.</li></ul>
           <h2>The value case, stated honestly</h2>
           <p>The experience is designed to make prompt quality discussable and memorable through practice, comparison, and team reflection.</p>
           <div class="callout"><p><strong>Evidence label:</strong> Designed value: an experiential way for teams to practice clearer prompts, constraints, iteration, and collaborative problem solving.</p></div>
@@ -579,11 +579,11 @@
           <h2>Human control and guardrails</h2>
           <ul class="plain-list"><li>The game is a learning experience, not a benchmark of a person or model.</li><li>Facilitators should avoid entering sensitive, personal, or proprietary information into prompts.</li><li>AI responses are part of the challenge and should be treated as fallible output.</li></ul>
           <h2>Where the pattern stops</h2>
-          <ul class="plain-list"><li>Game behavior can vary with model configuration and service availability.</li><li>The experience does not measure durable skill improvement or workplace outcomes.</li><li>Facilitation, access, and deployment setup may be needed for a group session.</li></ul>
+          <ul class="plain-list"><li>The WorkIQ hint service currently returns mock responses rather than making live MCP calls.</li><li>The experience does not measure durable skill improvement or workplace outcomes.</li><li>The repository-listed hosted site returned HTTP 403 during verification, so current public hosting is not established.</li></ul>
           <h2>Explore the public proof</h2>
           <ul class="source-list"><li>
   <a href="https://github.com/billwhalenmsft/PromptEscape" rel="noreferrer">Prompt Escape public repository</a>
-  <small>Public README, game source, challenge content, and hosted experience are the evidence base for this entry.</small>
+  <small>Public README, lobby manager, prompt evaluator, game engine, and WorkIQ service source are the evidence base for this entry.</small>
 </li></ul>
         </div>
       </section>
