@@ -1,9 +1,105 @@
 {
   "version": 6,
   "expectedPublicReleaseCount": 9,
-  "expectedInfoOnlyCount": 9,
-  "updated": "2026-09-15",
+  "expectedInfoOnlyCount": 11,
+  "updated": "2026-10-19",
   "releases": [
+    {
+      "slug": "atomic-blueprint",
+      "publicationMode": "info-only",
+      "featuredOnHome": false,
+      "title": "Atomic Blueprint",
+      "summary": "Discover where AI could help by exploring the people, everyday tasks and handoffs that make a business work.",
+      "category": "Business discovery",
+      "tags": ["Manufacturing", "Business work", "Human decisions"],
+      "status": "approved",
+      "maturity": "Information-only / Local discovery prototype",
+      "ownerReviewedAsOf": "2026-10-19",
+      "originalState": "AI conversations can begin with a product list before people have agreed which everyday task needs help or who should review the result.",
+      "delivered": "A locally tested discovery prototype connects the whole business to departments, people and small pieces of work. Fictional examples let a viewer explore Sales, Customer Service and Accounting without a long technical introduction.",
+      "outcome": "The aim is to help a team choose one useful task to investigate, understand the information it needs and keep the next decision with a person.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a shared picture of where assistance may help, with human review and a small first proof rather than an assumed automation commitment."
+      },
+      "capabilities": [
+        "Starts with the business and the people doing the work.",
+        "Explores a manufacturing reference through departments and candidate tasks.",
+        "Shows a person's need, possible AI assistance and a human decision.",
+        "Offers a shorter customer presentation with optional deeper explanation."
+      ],
+      "architecture": [
+        {"label": "See the business", "detail": "Understand the work and the people who depend on it."},
+        {"label": "Choose a task", "detail": "Find one bounded piece of work worth investigating."},
+        {"label": "Explore assistance", "detail": "Consider what information and reviewed output would help."},
+        {"label": "Prove and decide", "detail": "A person judges the result before any expansion."}
+      ],
+      "guardrails": [
+        "Fictional examples are not live agent runs or approved customer processes.",
+        "Readiness limits stay visible in both presentation views.",
+        "A presentation switch does not authorize sharing or remove hidden content."
+      ],
+      "limitations": [
+        "Information-only description; source and operational materials are not published.",
+        "The local prototype is not a production application or a complete industry process library.",
+        "No customer adoption, measured savings, ROI or business outcome is claimed.",
+        "This is independent work, not a Microsoft product or officially supported offering."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A business view narrows to one task, possible assistance and a human decision.",
+        "nodes": ["See the business", "Choose a task", "Explore assistance", "Prove and decide"]
+      }
+    },
+    {
+      "slug": "sales-suite",
+      "publicationMode": "info-only",
+      "featuredOnHome": false,
+      "title": "Sales Suite: From Conversation to a Useful Next Step",
+      "summary": "Explore reusable sales routines through fictional account briefs, meeting follow-up, deal coaching and team handoffs, with review kept central.",
+      "category": "Sales assistance",
+      "tags": ["Sales", "Meeting follow-up", "Team handoffs"],
+      "status": "approved",
+      "maturity": "Information-only / Controlled evaluation",
+      "ownerReviewedAsOf": "2026-10-19",
+      "originalState": "Meeting notes, account questions and team handoffs can become separate summaries with unclear evidence, open decisions and next steps.",
+      "delivered": "A controlled-evaluation suite packages repeatable sales routines. A locally refreshed website uses fictional, interactive examples and the same visual presentation foundation as Atomic Blueprint to show what a reviewed result could look like.",
+      "outcome": "The aim is to make preparation and follow-through more consistent while separating agreed actions from proposals and leaving consequential decisions with people.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: clearer account preparation, follow-up and handoffs through repeatable instructions and visible review boundaries, not measured sales improvement."
+      },
+      "capabilities": [
+        "Frames an account brief with known facts, gaps and questions.",
+        "Separates confirmed meeting actions from suggestions.",
+        "Offers evidence-based coaching questions without inventing commitments.",
+        "Defines what a receiving teammate needs for a useful handoff."
+      ],
+      "architecture": [
+        {"label": "Seller's task", "detail": "Choose the outcome and permitted information."},
+        {"label": "Prepare a draft", "detail": "Use a repeatable routine to organize evidence and questions."},
+        {"label": "Review together", "detail": "Check what is known, missing or only proposed."},
+        {"label": "Choose the next step", "detail": "A person approves follow-through and the receiving team accepts the handoff."}
+      ],
+      "guardrails": [
+        "Website examples are deterministic illustrations, not live AI execution.",
+        "The suite does not grant source access, replace permissions or authorize a send or CRM change.",
+        "Package compatibility and each recipient's host access require separate verification."
+      ],
+      "limitations": [
+        "Information-only description; source and operational materials are not published.",
+        "The visual refresh is locally tested, not evidence that a new website release is live.",
+        "No production qualification, measured savings, adoption or sales outcome is claimed.",
+        "This is independent work, not a Microsoft product or officially supported offering."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "A seller's task becomes a draft, a human review and an agreed next step.",
+        "nodes": ["Seller's task", "Prepare a draft", "Review together", "Choose the next step"]
+      }
+    },
     {
       "slug": "agent-team-starter-kit",
       "publicationMode": "public-release",

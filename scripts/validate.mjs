@@ -133,7 +133,7 @@ const allowedEvidence = new Set(["measured", "observed", "designed"]);
 check(catalog.version === 6, "Catalog version must be 6.");
 check(dateIsValid(catalog.updated), "Catalog updated date must use YYYY-MM-DD.");
 check(catalog.expectedPublicReleaseCount === 9, "Catalog must expect exactly 9 public releases.");
-check(catalog.expectedInfoOnlyCount === 9, "Catalog must expect exactly 9 info-only showcases.");
+check(catalog.expectedInfoOnlyCount === 11, "Catalog must expect exactly 11 info-only showcases.");
 check(Array.isArray(catalog.releases), "Catalog records must be an array.");
 
 const releaseSlugs = new Set();
@@ -285,7 +285,14 @@ for (const release of catalog.releases) {
       `${slug}: exact info-only public boundary disclosure is required.`
     );
     check(/Information-only/i.test(release.maturity), `${slug}: maturity must visibly say Information-only.`);
-    check(/Private active build/i.test(release.maturity), `${slug}: maturity must visibly say Private active build.`);
+    const approvedMaturity = {
+      "atomic-blueprint": "Information-only / Local discovery prototype",
+      "sales-suite": "Information-only / Controlled evaluation"
+    }[slug];
+    check(
+      approvedMaturity ? release.maturity === approvedMaturity : /Private active build/i.test(release.maturity),
+      `${slug}: maturity must retain the exact approved prototype/evaluation label or Private active build.`
+    );
     for (const forbiddenField of [
       "sourceUrls",
       "publicActivity",
@@ -328,10 +335,10 @@ pass("Publication modes, approvals, evidence labels, and public-safe record sche
 const ordered = orderedReleases(catalog);
 const orderedInfo = orderedInfoOnly(catalog);
 check(ordered.length === catalog.expectedPublicReleaseCount, "Catalog must contain exactly 9 public releases.");
-check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 9 info-only showcases.");
+check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 11 info-only showcases.");
 check(
   catalog.releases.length === catalog.expectedPublicReleaseCount + catalog.expectedInfoOnlyCount,
-  "Catalog must contain exactly 18 total records."
+  "Catalog must contain exactly 20 total records."
 );
 check(
   allowlist.repositories.length === catalog.expectedPublicReleaseCount,
@@ -419,8 +426,8 @@ check(
   "Homepage initial featured-work count must agree with the eleven-card gallery."
 );
 check(
-  home.includes("Explore all 18 journal entries"),
-  "Homepage full-journal CTA must agree with the eighteen-record catalog."
+  home.includes("Explore all 20 journal entries"),
+  "Homepage full-journal CTA must agree with the twenty-record catalog."
 );
 check(
   home.includes('<a href="https://github.com/kody-w/rapp-1"'),
@@ -528,9 +535,9 @@ check(!sitemapXml.includes("engagements/"), "Protected engagements must not appe
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));
 check(publicManifest.version === 6, "Public release manifest version must be 6.");
-check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 18.");
+check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 20.");
 check(publicManifest.releaseCount === catalog.expectedPublicReleaseCount, "Manifest public release count must be exactly 9.");
-check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 9.");
+check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 11.");
 check(
   JSON.stringify(publicManifest.releases.map((release) => release.slug))
     === JSON.stringify(ordered.map((release) => release.slug)),
