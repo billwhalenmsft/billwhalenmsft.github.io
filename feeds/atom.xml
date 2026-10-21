@@ -4,8 +4,18 @@
   <id>https://billwhalenmsft.github.io/journal/</id>
   <link href="https://billwhalenmsft.github.io/journal/"/>
   <link href="https://billwhalenmsft.github.io/feeds/atom.xml" rel="self"/>
-  <updated>2026-10-19T12:00:00Z</updated>
+  <updated>2026-10-21T12:00:00Z</updated>
   <author><name>Bill Whalen</name></author>
+  <entry>
+    <title>Start with the slowdown, not the fix</title>
+    <id>https://billwhalenmsft.github.io/blog/d365-administrator-suite/</id>
+    <link href="https://billwhalenmsft.github.io/blog/d365-administrator-suite/"/>
+    <published>2026-10-21T12:00:00Z</published>
+    <updated>2026-10-21T12:00:00Z</updated>
+    <summary>Make sense of a slow Dynamics 365 experience, review the evidence and plan an improvement a person can verify and reverse.</summary>
+    <category term="IT administration"/>
+    <author><name>Bill Whalen</name></author>
+  </entry>
   <entry>
     <title>One local control surface, explicit sensitive-action gates</title>
     <id>https://billwhalenmsft.github.io/blog/home-assistant-estate-panel/</id>

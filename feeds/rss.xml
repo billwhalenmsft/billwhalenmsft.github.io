@@ -5,8 +5,16 @@
     <link>https://billwhalenmsft.github.io/journal/</link>
     <description>Customer-neutral public solution entries and illustrated build notes.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Oct 2026 12:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 12:00:00 GMT</lastBuildDate>
     <atom:link href="https://billwhalenmsft.github.io/feeds/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Start with the slowdown, not the fix</title>
+      <link>https://billwhalenmsft.github.io/blog/d365-administrator-suite/</link>
+      <guid isPermaLink="true">https://billwhalenmsft.github.io/blog/d365-administrator-suite/</guid>
+      <pubDate>Wed, 21 Oct 2026 12:00:00 GMT</pubDate>
+      <description>Make sense of a slow Dynamics 365 experience, review the evidence and plan an improvement a person can verify and reverse. Designed value: more consistent investigation and human-reviewed change planning, not a measured performance improvement or a verified customer fix.</description>
+      <category>IT administration</category>
+    </item>
     <item>
       <title>One local control surface, explicit sensitive-action gates</title>
       <link>https://billwhalenmsft.github.io/blog/home-assistant-estate-panel/</link>

@@ -1,0 +1,32 @@
+{
+  "schema": "d365-admin-portfolio-launch/1",
+  "state": "proposed-post-approval-transaction-not-published",
+  "publication_authorized": false,
+  "live_url": null,
+  "files": {
+    "README.md": "034c1e4a99703d7fae9030f5ce13b5771270b4f1ef84309521d57f43c3b8b87e",
+    "blog/d365-administrator-suite/index.html": "57d8e29477e10e4324921c9119327574018483669eb6fec0937416b75e2c6bf1",
+    "config/public-source-allowlist.json": "c5b4a10f3aac1d7a9ecf29b52abac55baaae01fbf27dcf7045b8a018d9c00cbc",
+    "content/releases.json": "5979664c37406e477636546005d175a31915e31c2ed0648ff7c6ff1180487f7e",
+    "d365-administrator-suite/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "d365-administrator-suite/downloads/checksums.txt": "b820c2e84594513db07137378c835623208e79b505f818c087912b4a0895a787",
+    "d365-administrator-suite/downloads/d365-administrator-suite-1.0.0.zip": "de409a1f00b8a6e3993d834fc12a58ad7806194e01a0a4500f2441a3f01eb1ea",
+    "d365-administrator-suite/guide.html": "373e71d9129e9d8b3d9ede39ca704b3a0e89966d77a959388d321f2fe1b038fc",
+    "d365-administrator-suite/index.html": "8ab3b01fdbaf80ea205962d740784b04e3c854cf78a4b7bd9a83e5cce417449c",
+    "d365-administrator-suite/install.html": "e0a244c38d10a64642534fd7161e8416929dc21bf5f8d573b4d3ebb84f3cfa7d",
+    "d365-administrator-suite/privacy.html": "00d19c8a1cfde672f255904ae5e2600a6fd3a6f7dbb6041fd5f21a6ef314e6f1",
+    "d365-administrator-suite/robots.txt": "331ea9090db0c9f6f597bd9840fd5b171830f6e0b3ba1cb24dfa91f0c95aedc1",
+    "d365-administrator-suite/site-manifest.json": "3c77af353d165b36de22446f538f3e93bebc019e697656e1fc2c453ee57466c6",
+    "d365-administrator-suite/technical.html": "0ec526f73f48789655c0d48dc5d5a712df323932d8437ca955a20f6ea7dedbe2",
+    "d365-administrator-suite/terms.html": "2110f32d0409b95629583b034f76c0117db93b4d80b09c40bc91f24f003704d7",
+    "feeds/atom.xml": "0fe9c42038d42cfce07667a8f1db02db18cc812a47efb3b3b06d04147847b764",
+    "feeds/rss.xml": "3c81da946b12f92249cf412b7cdd9236eac00de77a5e7bc669db4e941411b1ef",
+    "index.html": "1639fe8cd2058296c8a97ca164f5d2dde518a0749c97d347e6a2a19da0c4c568",
+    "journal/d365-administrator-suite/index.html": "0ded54e1984eba548078419e8611f2ea3575aae249a7aefa37d56072563dea53",
+    "journal/index.html": "a957ce17c5a908ab107056ac13f029162ef73811f1ee8614e148d61e89e81023",
+    "releases.json": "4f4a65aaeef482c46dee75eadf82cd938c979a2b6d1948365616492333d9d345",
+    "scripts/validate.mjs": "11ea034c9cb6c054bb55cff6da47b226809e5336fef7c119773c11941188ad5a",
+    "sitemap.xml": "70b87a5d97f0f0483bcdaeff4bd4685fc088abea2de165eeef867d502ae4c02f",
+    "subscribe/index.html": "27d67475c38ee004112cdb8ea6685d269ab9a2e5916643c671133c6d7498cdf4"
+  }
+}

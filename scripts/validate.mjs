@@ -132,7 +132,7 @@ const allowedEvidence = new Set(["measured", "observed", "designed"]);
 
 check(catalog.version === 6, "Catalog version must be 6.");
 check(dateIsValid(catalog.updated), "Catalog updated date must use YYYY-MM-DD.");
-check(catalog.expectedPublicReleaseCount === 9, "Catalog must expect exactly 9 public releases.");
+check(catalog.expectedPublicReleaseCount === 10, "Catalog must expect exactly 10 public releases.");
 check(catalog.expectedInfoOnlyCount === 11, "Catalog must expect exactly 11 info-only showcases.");
 check(Array.isArray(catalog.releases), "Catalog records must be an array.");
 
@@ -334,15 +334,15 @@ pass("Publication modes, approvals, evidence labels, and public-safe record sche
 
 const ordered = orderedReleases(catalog);
 const orderedInfo = orderedInfoOnly(catalog);
-check(ordered.length === catalog.expectedPublicReleaseCount, "Catalog must contain exactly 9 public releases.");
+check(ordered.length === catalog.expectedPublicReleaseCount, "Catalog must contain exactly 10 public releases.");
 check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 11 info-only showcases.");
 check(
   catalog.releases.length === catalog.expectedPublicReleaseCount + catalog.expectedInfoOnlyCount,
-  "Catalog must contain exactly 20 total records."
+  "Catalog must contain exactly 21 total records."
 );
 check(
   allowlist.repositories.length === catalog.expectedPublicReleaseCount,
-  "Source allowlist must contain exactly 9 public repositories."
+  "Source allowlist must contain exactly 10 public repositories."
 );
 check(
   JSON.stringify([...releaseRepositories].sort()) === JSON.stringify([...allowlistedRepositories].sort()),
@@ -426,8 +426,8 @@ check(
   "Homepage initial featured-work count must agree with the eleven-card gallery."
 );
 check(
-  home.includes("Explore all 20 journal entries"),
-  "Homepage full-journal CTA must agree with the twenty-record catalog."
+  home.includes("Explore all 21 journal entries"),
+  "Homepage full-journal CTA must agree with the twenty-one-record catalog."
 );
 check(
   home.includes('<a href="https://github.com/kody-w/rapp-1"'),
@@ -535,8 +535,8 @@ check(!sitemapXml.includes("engagements/"), "Protected engagements must not appe
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));
 check(publicManifest.version === 6, "Public release manifest version must be 6.");
-check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 20.");
-check(publicManifest.releaseCount === catalog.expectedPublicReleaseCount, "Manifest public release count must be exactly 9.");
+check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 21.");
+check(publicManifest.releaseCount === catalog.expectedPublicReleaseCount, "Manifest public release count must be exactly 10.");
 check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 11.");
 check(
   JSON.stringify(publicManifest.releases.map((release) => release.slug))

@@ -33,8 +33,13 @@
       "name": "Bill Whalen solution journal",
       "url": "https://billwhalenmsft.github.io/journal/",
       "description": "Customer-neutral public releases and clearly separated information-only active-work showcases.",
-      "numberOfItems": 20,
+      "numberOfItems": 21,
       "hasPart": [
+        {
+          "@type": "CreativeWork",
+          "name": "D365 Administrator Suite",
+          "url": "https://billwhalenmsft.github.io/journal/d365-administrator-suite/"
+        },
         {
           "@type": "CreativeWork",
           "name": "Home Assistant Estate Panel",
@@ -616,7 +621,7 @@
       <div>
         <p class="eyebrow">Public-safe solution journal</p>
         <h1 id="journal-title">Build notes with the evidence attached.</h1>
-        <p class="hero-copy">9 sourced public releases and 11 information-only showcases explain the original state, what is being built, designed value, human controls, and the boundary around what is not published.</p>
+        <p class="hero-copy">10 sourced public releases and 11 information-only showcases explain the original state, what is being built, designed value, human controls, and the boundary around what is not published.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#releases">Explore the journal</a>
           <a class="button" href="/subscribe/">Follow the journal</a>
@@ -645,6 +650,7 @@
 <button class="filter-chip" type="button" data-filter="Decision support" aria-pressed="false">Decision support</button>
 <button class="filter-chip" type="button" data-filter="Developer labs" aria-pressed="false">Developer labs</button>
 <button class="filter-chip" type="button" data-filter="Field operations" aria-pressed="false">Field operations</button>
+<button class="filter-chip" type="button" data-filter="IT administration" aria-pressed="false">IT administration</button>
 <button class="filter-chip" type="button" data-filter="Information design" aria-pressed="false">Information design</button>
 <button class="filter-chip" type="button" data-filter="Operating systems" aria-pressed="false">Operating systems</button>
 <button class="filter-chip" type="button" data-filter="Personal systems" aria-pressed="false">Personal systems</button>
@@ -652,13 +658,27 @@
 <button class="filter-chip" type="button" data-filter="Sales assistance" aria-pressed="false">Sales assistance</button></div>
           <label><span class="label">Search</span><input class="search" id="releaseSearch" type="search" autocomplete="off" placeholder="Search journal"></label>
         </div>
-        <p class="result-count" id="releaseCount" aria-live="polite">20 entries &middot; 9 public releases &middot; 11 info-only showcases</p>
+        <p class="result-count" id="releaseCount" aria-live="polite">21 entries &middot; 10 public releases &middot; 11 info-only showcases</p>
         <section class="journal-lane" id="publicLane" aria-labelledby="public-lane-title">
           <div class="lane-heading">
             <h3 id="public-lane-title">Public releases</h3>
             <p>Source-backed entries ordered by exact last public repository push.</p>
           </div>
-          <div class="release-grid"><article class="release-card" data-release="home-assistant-estate-panel" data-mode="public-release" data-category="Personal systems" data-search="home assistant estate panel a self-hosted react and typescript reference build that combines native home assistant cards with custom estate controls on a shared connection and layout. personal systems self-hosted reference build public-release designed home assistant react typescript local-first">
+          <div class="release-grid"><article class="release-card" data-release="d365-administrator-suite" data-mode="public-release" data-category="IT administration" data-search="d365 administrator suite make sense of a slow dynamics 365 experience, review the evidence and plan an improvement a person can verify and reverse. it administration public preview / package validated, host acceptance pending public-release designed dynamics 365 administration performance review copilot cowork">
+  <span class="status">Public preview / Package validated, host acceptance pending</span>
+  <p class="eyebrow">IT administration</p>
+  <h2>D365 Administrator Suite</h2>
+  <p>Make sense of a slow Dynamics 365 experience, review the evidence and plan an improvement a person can verify and reverse.</p>
+  <p class="activity-line">Last public push <time datetime="2026-10-19">2026-10-19</time></p>
+  <ul class="tag-list"><li>Dynamics 365</li><li>Administration</li><li>Performance review</li><li>Copilot Cowork</li></ul>
+  <p><strong>Evidence:</strong> Designed value: more consistent investigation and human-reviewed change planning, not a measured performance improvement or a verified customer fix.</p>
+
+  <div class="card-actions">
+    <a class="button button-primary button-small" href="/journal/d365-administrator-suite/">Solution entry</a>
+    <a class="button button-small" href="/blog/d365-administrator-suite/">Read the article</a>
+  </div>
+</article>
+<article class="release-card" data-release="home-assistant-estate-panel" data-mode="public-release" data-category="Personal systems" data-search="home assistant estate panel a self-hosted react and typescript reference build that combines native home assistant cards with custom estate controls on a shared connection and layout. personal systems self-hosted reference build public-release designed home assistant react typescript local-first">
   <span class="status">Self-hosted reference build</span>
   <p class="eyebrow">Personal systems</p>
   <h2>Home Assistant Estate Panel</h2>
