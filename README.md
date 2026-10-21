@@ -8,7 +8,7 @@ Static source for `https://billwhalenmsft.github.io/`.
 - A searchable and filterable launcher for verified public projects.
 - The approved White and Blue Atomic visual system, with a compatible dark preference.
 - A keyboard quick launcher with `Ctrl+K` or `Cmd+K`.
-- A public-safe solution journal with nine public releases and nine clearly separated information-only showcases.
+- A public-safe solution journal with ten public releases and eleven clearly separated information-only showcases.
 - A metadata-ranked homepage gallery with exactly eleven featured current-work entries.
 - A generated public release manifest, RSS 2.0 feed, Atom feed, sitemap, metadata, JSON-LD, and custom 404 page.
 - A dependency-free Node.js generator and validation suite for future manually reviewed releases.
@@ -49,3 +49,7 @@ The complete approval gate is in `docs/release-approval-checklist.md`. There is 
 ## Publish with GitHub Pages
 
 GitHub Pages deploys the repository root from `main`. Merge the exact reviewed commit; no server-side build or framework is required.
+
+## D365 Administrator Suite preview
+
+The generic administrator preview is at `/d365-administrator-suite/`, with overview, guide, installation/download, technical details and policy pages. It packages eight instruction workflows, not an automatic optimizer. The journal entry preserves package-validation versus actual-host limits. No customer incident, transcript or private diagnostic material is published.

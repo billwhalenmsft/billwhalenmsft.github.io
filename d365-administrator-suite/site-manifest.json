@@ -1,0 +1,27 @@
+{
+  "schema": "d365-admin-public-site/1",
+  "version": "0.1.0",
+  "package_version": "1.0.0",
+  "state": "prepared-for-publication-not-yet-deployed",
+  "publication_authorized": false,
+  "live_url": null,
+  "audience": "Administrators, technical reviewers and prospective pilot participants; generic public-facing copy only.",
+  "scope": "Public product/download documentation, not an exact-account engagement hub or a second internal product UI.",
+  "customer_content": false,
+  "backend": false,
+  "telemetry": false,
+  "presentation": "Internal/External modes contain the same generic material; not access control.",
+  "download_sha256": "de409a1f00b8a6e3993d834fc12a58ad7806194e01a0a4500f2441a3f01eb1ea",
+  "files": {
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "downloads/checksums.txt": "b820c2e84594513db07137378c835623208e79b505f818c087912b4a0895a787",
+    "downloads/d365-administrator-suite-1.0.0.zip": "de409a1f00b8a6e3993d834fc12a58ad7806194e01a0a4500f2441a3f01eb1ea",
+    "guide.html": "373e71d9129e9d8b3d9ede39ca704b3a0e89966d77a959388d321f2fe1b038fc",
+    "index.html": "8ab3b01fdbaf80ea205962d740784b04e3c854cf78a4b7bd9a83e5cce417449c",
+    "install.html": "e0a244c38d10a64642534fd7161e8416929dc21bf5f8d573b4d3ebb84f3cfa7d",
+    "privacy.html": "00d19c8a1cfde672f255904ae5e2600a6fd3a6f7dbb6041fd5f21a6ef314e6f1",
+    "robots.txt": "331ea9090db0c9f6f597bd9840fd5b171830f6e0b3ba1cb24dfa91f0c95aedc1",
+    "technical.html": "0ec526f73f48789655c0d48dc5d5a712df323932d8437ca955a20f6ea7dedbe2",
+    "terms.html": "2110f32d0409b95629583b034f76c0117db93b4d80b09c40bc91f24f003704d7"
+  }
+}

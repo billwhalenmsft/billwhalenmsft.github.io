@@ -1,7 +1,7 @@
 {
   "version": 6,
   "title": "Bill Whalen solution journal manifest",
-  "updated": "2026-10-19",
+  "updated": "2026-10-21",
   "policy": {
     "publicationModes": [
       "public-release",
@@ -23,10 +23,119 @@
       "live MCP endpoint"
     ]
   },
-  "recordCount": 20,
-  "releaseCount": 9,
+  "recordCount": 21,
+  "releaseCount": 10,
   "infoOnlyCount": 11,
   "releases": [
+    {
+      "slug": "d365-administrator-suite",
+      "publicationMode": "public-release",
+      "featuredOnHome": false,
+      "title": "D365 Administrator Suite",
+      "summary": "Make sense of a slow Dynamics 365 experience, review the evidence and plan an improvement a person can verify and reverse.",
+      "category": "IT administration",
+      "tags": [
+        "Dynamics 365",
+        "Administration",
+        "Performance review",
+        "Copilot Cowork"
+      ],
+      "status": "approved",
+      "maturity": "Public preview / Package validated, host acceptance pending",
+      "published": "2026-10-21",
+      "updated": "2026-10-21",
+      "sourceUrls": [
+        "https://github.com/billwhalenmsft/billwhalenmsft.github.io"
+      ],
+      "publicActivity": {
+        "repositoryCreated": "2026-08-27",
+        "lastPublicPush": "2026-10-19",
+        "source": "https://api.github.com/repos/billwhalenmsft/billwhalenmsft.github.io"
+      },
+      "originalState": "A slow form, save or integration can trigger broad fixes before the team agrees which employee scenario is affected or which evidence supports a diagnosis.",
+      "delivered": "An eight-workflow instruction package and a practical guide help administrators scope the issue, review client and server evidence, examine solution risks and prepare a controlled change proposal.",
+      "outcome": "The aim is a clearer next diagnostic step and a reviewable improvement plan, with assumptions, missing evidence, ownership and rollback visible.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: more consistent investigation and human-reviewed change planning, not a measured performance improvement or a verified customer fix."
+      },
+      "capabilities": [
+        "Scopes one reproducible scenario in the correct environment.",
+        "Guides review of client timings, plug-ins, integrations and environment health.",
+        "Separates observed facts, hypotheses, unknowns and solution-checker findings.",
+        "Prepares a change and rollback review with readable evidence tables."
+      ],
+      "architecture": [
+        {
+          "label": "Scope",
+          "detail": "An administrator defines the product, environment and employee scenario."
+        },
+        {
+          "label": "Review evidence",
+          "detail": "Cowork uses the selected workflow and permitted supplied evidence."
+        },
+        {
+          "label": "Plan",
+          "detail": "A person reviews the next test or controlled change proposal."
+        },
+        {
+          "label": "Verify",
+          "detail": "Comparable observations are required before claiming a result."
+        }
+      ],
+      "guardrails": [
+        "No connector, credentials, custom backend or automatic remediation is bundled.",
+        "No customer logs, transcripts or customer-specific diagnoses are included.",
+        "Missing values and unsupported metrics remain unknown; charts are conditional on actual host support.",
+        "Installation, permissions and real environment changes require their own supported review path."
+      ],
+      "limitations": [
+        "Initial scope is Dataverse and model-driven apps, not every Dynamics 365 product.",
+        "Nine original package tests and 59 Toolkit checks passed; these are not Cowork runtime acceptance.",
+        "Sixteen fictional instruction responses were reviewed outside Cowork; actual host cases remain not run.",
+        "No production qualification, customer adoption or measured improvement is claimed.",
+        "This is independent work, not a Microsoft product or officially supported offering."
+      ],
+      "publicLinks": [
+        {
+          "label": "Overview and guide",
+          "url": "https://billwhalenmsft.github.io/d365-administrator-suite/",
+          "type": "documentation"
+        },
+        {
+          "label": "Download and installation",
+          "url": "https://billwhalenmsft.github.io/d365-administrator-suite/install.html",
+          "type": "release"
+        }
+      ],
+      "provenance": [
+        {
+          "label": "Public documentation and reviewed package",
+          "url": "https://github.com/billwhalenmsft/billwhalenmsft.github.io/tree/main/d365-administrator-suite",
+          "note": "Publication candidate includes generic documentation and the exact skills-only package. Repository dates describe the portfolio repository, not this package's maturity or adoption."
+        }
+      ],
+      "visual": {
+        "type": "inline-svg",
+        "alt": "Scope, evidence review, a human-owned improvement plan and comparable verification.",
+        "nodes": [
+          "Scope",
+          "Review evidence",
+          "Plan",
+          "Verify"
+        ]
+      },
+      "article": {
+        "slug": "d365-administrator-suite",
+        "title": "Start with the slowdown, not the fix",
+        "dek": "A practical administrator preview turns performance questions into sourced evidence, visible gaps and controlled change planning.",
+        "feed": true
+      },
+      "urls": {
+        "solution": "https://billwhalenmsft.github.io/journal/d365-administrator-suite/",
+        "article": "https://billwhalenmsft.github.io/blog/d365-administrator-suite/"
+      }
+    },
     {
       "slug": "home-assistant-estate-panel",
       "publicationMode": "public-release",
