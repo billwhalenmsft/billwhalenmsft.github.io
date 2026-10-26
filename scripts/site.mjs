@@ -524,6 +524,7 @@ function nav() {
     <div class="nav-links">
       <a href="/">Home</a>
       <a href="/journal/">Solution journal</a>
+      <a href="/blog/">Blog</a>
       <a href="/subscribe/">Subscribe</a>
       <a href="/feeds/rss.xml">RSS</a>
     </div>
@@ -542,6 +543,7 @@ function footer() {
     <p>&copy; 2026 Bill Whalen. Personal portfolio; views are my own. Community projects are provided as-is and are not Microsoft products or supported offerings.</p>
     <div class="footer-links">
       <a href="/journal/">Journal</a>
+      <a href="/blog/">Blog</a>
       <a href="/subscribe/">Feeds</a>
       <a href="https://github.com/billwhalenmsft" rel="noreferrer">GitHub</a>
     </div>
@@ -1071,6 +1073,186 @@ ${(release.publicLinks || []).map((link) => `<a class="button" href="${escapeHtm
   });
 }
 
+const softwareFactoryPost = {
+  slug: "software-factory-pattern",
+  title: "The one-person software factory",
+  summary: "A private, issue-first pattern where every build request becomes a spec'd GitHub issue, a coding agent opens a small pull request, and I review every one before merging.",
+  category: "Agent patterns",
+  date: "2026-10-24"
+};
+
+function blogCard({ title, summary, category, date, href, lane }) {
+  return `<article class="release-card blog-card" data-lane="${lane}" data-date="${date}">
+  <span class="status${lane === "builders-log" ? " status-info" : ""}">${lane === "builders-log" ? "Builder's Log" : "Accelerators &amp; Prototypes"}</span>
+  <p class="eyebrow">${escapeHtml(category)}</p>
+  <h2>${escapeHtml(title)}</h2>
+  <p>${escapeHtml(summary)}</p>
+  <p class="activity-line"><time datetime="${date}">${date}</time></p>
+  <div class="card-actions"><a class="button button-primary button-small" href="${href}">Read post</a></div>
+</article>`;
+}
+
+function blogIndex(catalog) {
+  const posts = [
+    ...orderedReleases(catalog).map((release) => ({
+      title: release.article.title,
+      summary: release.article.dek,
+      category: release.category,
+      date: release.published,
+      href: `/blog/${release.article.slug}/`,
+      lane: "accelerators"
+    })),
+    {
+      ...softwareFactoryPost,
+      href: `/blog/${softwareFactoryPost.slug}/`,
+      lane: "builders-log"
+    }
+  ].sort((left, right) => right.date.localeCompare(left.date));
+  const filters = [
+    `<button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>`,
+    `<button class="filter-chip" type="button" data-filter="accelerators" aria-pressed="false">Accelerators &amp; Prototypes</button>`,
+    `<button class="filter-chip" type="button" data-filter="builders-log" aria-pressed="false">Builder's Log</button>`
+  ].join("\n");
+  const body = `    <section class="hero shell" aria-labelledby="blog-title">
+      <div>
+        <p class="eyebrow">Blog</p>
+        <h1 id="blog-title">Build notes and ideas.</h1>
+        <p class="hero-copy">Accelerators, prototypes, and build notes. Personal projects; views are my own.</p>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="blog-posts-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><span class="section-kicker">Recent writing</span><h2 id="blog-posts-title">Latest posts.</h2></div>
+          <p>Personal project notes, separated by lane.</p>
+        </div>
+        <div class="filters" role="group" aria-label="Filter blog posts">${filters}</div>
+        <p class="result-count" id="blogCount" aria-live="polite">${posts.length} posts</p>
+        <div class="release-grid" id="blogPosts">${posts.map(blogCard).join("\n")}</div>
+        <p class="no-results" id="blogNoResults" hidden>No blog posts match this filter.</p>
+      </div>
+    </section>`;
+  const script = `
+  const cards = [...document.querySelectorAll(".blog-card")];
+  const filters = [...document.querySelectorAll(".filter-chip")];
+  const count = document.getElementById("blogCount");
+  const noResults = document.getElementById("blogNoResults");
+  let activeFilter = "all";
+  function applyFilter() {
+    let visible = 0;
+    cards.forEach((card) => {
+      const show = activeFilter === "all" || card.dataset.lane === activeFilter;
+      card.hidden = !show;
+      if (show) visible += 1;
+    });
+    count.textContent = \`\${visible} \${visible === 1 ? "post" : "posts"}\`;
+    noResults.hidden = visible !== 0;
+  }
+  filters.forEach((filter) => filter.addEventListener("click", () => {
+    activeFilter = filter.dataset.filter;
+    filters.forEach((item) => item.setAttribute("aria-pressed", String(item === filter)));
+    applyFilter();
+  }));`;
+
+  return page({
+    title: "Blog | Bill Whalen",
+    description: "Accelerators, prototypes, and build notes from Bill Whalen's personal projects.",
+    canonical: `${SITE_URL}/blog/`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      name: "Bill Whalen's Blog",
+      url: `${SITE_URL}/blog/`,
+      blogPost: posts.map((post) => ({
+        "@type": "BlogPosting",
+        headline: post.title,
+        url: `${SITE_URL}${post.href}`,
+        datePublished: post.date
+      }))
+    },
+    body,
+    script
+  });
+}
+
+function softwareFactoryPage() {
+  const canonical = `${SITE_URL}/blog/${softwareFactoryPost.slug}/`;
+  const body = `    <article>
+      <header class="hero shell">
+        <div>
+          <p class="status status-info">Information-only / Private active build</p>
+          <h1>${softwareFactoryPost.title}</h1>
+          <p class="meta-row">Owner-reviewed as of <time datetime="2026-10-24">2026-10-24</time> &middot; not a code, adoption, or activity signal</p>
+          <div class="hero-actions"><a class="button button-primary" href="/blog/">Browse the blog</a></div>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell article-body">
+          <h2>Original state</h2>
+          <p>Good build ideas came from everywhere (email threads, chats, meetings, newsletters), and each one started from a blank editor. Requirements lived in my head, guardrails were applied inconsistently, and there was no single place to see what was asked for, what was built, or who approved it.</p>
+          <h2>What I built</h2>
+          <p>A private repository that turns every build request into the same governed path:</p>
+          <p><strong>Issue (intake) &rarr; spec &rarr; coding agent &rarr; pull request &rarr; human review &rarr; merge</strong></p>
+          <ol>
+            <li><strong>Intake.</strong> I capture the request, from any channel, in one structured issue form: problem, users, data sources, acceptance tests, and guardrails. The form itself warns: no secrets, no customer names, sample data only.</li>
+            <li><strong>Spec.</strong> I write a short Markdown spec for each build and link it from the issue.</li>
+            <li><strong>Coding agent.</strong> I assign the issue to GitHub Copilot's cloud agent. It works in its own branch and follows one repo-wide instruction file: TypeScript + React (Vite), a visible Light/Dark/Auto toggle, Segoe UI and a blue accent, tests and a README for every build, and config in environment variables.</li>
+            <li><strong>Pull request.</strong> The agent opens a small PR that references its issue.</li>
+            <li><strong>Human gate.</strong> A CODEOWNERS file requests my review on every PR, and I review each one before merging. (Turn on branch protection if you want that enforced.)</li>
+          </ol>
+          <p>The first real build through the factory was a sample-data Copilot Credits sizing planner. Its pull request went from opened to merged, with tests, in under 90 minutes.</p>
+          <h2>Designed value</h2>
+          <ul>
+            <li><strong>Every build has a paper trail:</strong> request &rarr; spec &rarr; PR &rarr; review.</li>
+            <li><strong>Guardrails are written once</strong> (in the issue form and agent instructions), not remembered per project.</li>
+            <li><strong>The agent does the typing; a person keeps the judgment.</strong></li>
+            <li><strong>One look and feel</strong> across builds, so prototypes are demo-ready on day one.</li>
+            <li><strong>Builds land as static apps</strong> that can run on Microsoft Copilot Managed Runtime (preview) or any static host.</li>
+          </ul>
+          <h2>Human controls</h2>
+          <ul>
+            <li>Every pull request is routed to me for code-owner review; I do the merging.</li>
+            <li>Issue-first by practice: every build starts from a build-request issue.</li>
+            <li>Sample data only; no tenant connections in builds.</li>
+            <li>Labels make state visible: <code>build-request</code>, <code>spec-ready</code>, <code>in-progress</code>, <code>needs-review</code>, <code>blocked</code>.</li>
+          </ul>
+          <h2>Try the pattern (about 15 minutes)</h2>
+          <p>You'll need a Copilot plan with the cloud agent enabled. You don't need my repo, only three files in any GitHub repo you own:</p>
+          <ol>
+            <li><code>.github/ISSUE_TEMPLATE/build-request.yml</code>: an issue form with problem, users, data, acceptance tests and guardrails.</li>
+            <li><code>.github/copilot-instructions.md</code>: your stack, design rules and "never commit secrets or customer data".</li>
+            <li><code>.github/CODEOWNERS</code>: <code>* @your-handle</code>, plus a branch rule requiring code-owner approval.</li>
+          </ol>
+          <p>Then open an issue with the form and assign it to Copilot.</p>
+          <h2>Public products referenced</h2>
+          <ul>
+            <li><strong>GitHub Copilot cloud agent</strong> (see GitHub Docs for plan availability): <a href="https://docs.github.com/en/copilot/concepts/agent-capabilities/about-agents/about-github-copilot-agents" rel="noreferrer">https://docs.github.com/en/copilot/concepts/agent-capabilities/about-agents/about-github-copilot-agents</a></li>
+            <li><strong>Microsoft Copilot Managed Runtime</strong> (preview): <a href="https://learn.microsoft.com/en-us/microsoft-365/managed-apps/?view=o365-worldwide" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-365/managed-apps/?view=o365-worldwide</a></li>
+          </ul>
+          <div class="callout"><p><strong>Public boundary: Information-only.</strong> Source and operational materials are not published. Personal project showcase. Built and demonstrated with fictional data. Not a Microsoft product or supported offering; views are my own.</p></div>
+        </div>
+      </section>
+    </article>`;
+
+  return page({
+    title: `${softwareFactoryPost.title} | Builder's Log`,
+    description: softwareFactoryPost.summary,
+    canonical,
+    type: "article",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: softwareFactoryPost.title,
+      description: softwareFactoryPost.summary,
+      datePublished: softwareFactoryPost.date,
+      dateModified: softwareFactoryPost.date,
+      author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
+      mainEntityOfPage: canonical
+    },
+    body
+  });
+}
+
 function subscribePage(catalog) {
   const releaseCount = orderedReleases(catalog).length;
   const body = `    <section class="hero shell" aria-labelledby="subscribe-title">
@@ -1224,6 +1406,7 @@ export function sitemapEntries(catalog) {
   return [
     { url: `${SITE_URL}/`, updated: catalog.updated, priority: "1.0" },
     { url: `${SITE_URL}/journal/`, updated: catalog.updated, priority: "0.9" },
+    { url: `${SITE_URL}/blog/`, updated: softwareFactoryPost.date, priority: "0.8" },
     { url: `${SITE_URL}/subscribe/`, updated: catalog.updated, priority: "0.5" },
     ...releases.flatMap((release) => [
       { url: `${SITE_URL}/journal/${release.slug}/`, updated: release.updated, priority: "0.8" },
@@ -1233,7 +1416,12 @@ export function sitemapEntries(catalog) {
       url: `${SITE_URL}/journal/${release.slug}/`,
       updated: release.ownerReviewedAsOf,
       priority: "0.6"
-    }))
+    })),
+    {
+      url: `${SITE_URL}/blog/${softwareFactoryPost.slug}/`,
+      updated: softwareFactoryPost.date,
+      priority: "0.7"
+    }
   ];
 }
 
@@ -1259,6 +1447,8 @@ export async function buildOutputs() {
   const catalog = await loadCatalog();
   const outputs = new Map([
     ["journal/index.html", journalIndex(catalog)],
+    ["blog/index.html", blogIndex(catalog)],
+    [`blog/${softwareFactoryPost.slug}/index.html`, softwareFactoryPage()],
     ["subscribe/index.html", subscribePage(catalog)],
     ["feeds/rss.xml", rss(catalog)],
     ["feeds/atom.xml", atom(catalog)],
