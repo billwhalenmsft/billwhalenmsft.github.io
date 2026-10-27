@@ -35,6 +35,12 @@
       "blogPost": [
         {
           "@type": "BlogPosting",
+          "headline": "Tokenomics planner",
+          "url": "https://billwhalenmsft.github.io/blog/tokenomics-planner/",
+          "datePublished": "2026-10-27"
+        },
+        {
+          "@type": "BlogPosting",
           "headline": "The one-person software factory",
           "url": "https://billwhalenmsft.github.io/blog/software-factory-pattern/",
           "datePublished": "2026-10-24"
@@ -318,6 +324,26 @@
       cursor: pointer;
     }
     .icon-button:hover { border-color: var(--cp-border-strong); color: var(--cp-accent); }
+    .theme-select {
+      min-height: 2.75rem;
+      padding: 0.4rem 0.65rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font: inherit;
+    }
+    .theme-select:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
@@ -485,6 +511,16 @@
       background: var(--cp-accent-soft);
     }
     .callout p:last-child { margin-bottom: 0; }
+    .table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }
+    .article-table { width: 100%; min-width: 38rem; border-collapse: collapse; }
+    .article-table th, .article-table td {
+      padding: 0.65rem 0.75rem;
+      border: 1px solid var(--cp-border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
+    .article-table td { color: var(--cp-text-muted); }
     .article-body { width: min(100%, 52rem); }
     .article-body > p { color: var(--cp-text-muted); font-size: 1.05rem; }
     .article-body h2 { margin-top: 3rem; }
@@ -593,8 +629,16 @@
         <div class="filters" role="group" aria-label="Filter blog posts"><button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>
 <button class="filter-chip" type="button" data-filter="accelerators" aria-pressed="false">Accelerators &amp; Prototypes</button>
 <button class="filter-chip" type="button" data-filter="builders-log" aria-pressed="false">Builder's Log</button></div>
-        <p class="result-count" id="blogCount" aria-live="polite">11 posts</p>
-        <div class="release-grid" id="blogPosts"><article class="release-card blog-card" data-lane="builders-log" data-date="2026-10-24">
+        <p class="result-count" id="blogCount" aria-live="polite">12 posts</p>
+        <div class="release-grid" id="blogPosts"><article class="release-card blog-card" data-lane="builders-log" data-date="2026-10-27">
+  <span class="status status-info">Builder's Log</span>
+  <p class="eyebrow">Decision support</p>
+  <h2>Tokenomics planner</h2>
+  <p>Size an AI agent&#39;s monthly running cost as an honest low / likely / high range, pick the right harness, and weigh cost against business value. Unconfirmed rates are flagged on purpose, with the reason why.</p>
+  <p class="activity-line"><time datetime="2026-10-27">2026-10-27</time></p>
+  <div class="card-actions"><a class="button button-primary button-small" href="/blog/tokenomics-planner/">Read post</a></div>
+</article>
+<article class="release-card blog-card" data-lane="builders-log" data-date="2026-10-24">
   <span class="status status-info">Builder's Log</span>
   <p class="eyebrow">Agent patterns</p>
   <h2>The one-person software factory</h2>
