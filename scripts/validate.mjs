@@ -442,6 +442,8 @@ check(home.includes('id="projectSearch"'), "Homepage project search is missing."
 check(home.includes('id="commandDialog"'), "Homepage keyboard quick launcher is missing.");
 check(home.includes("event.ctrlKey || event.metaKey"), "Homepage Ctrl/Cmd+K interaction is missing.");
 check(home.includes('href="/journal/"'), "Homepage must link to the live solution journal.");
+check(home.includes('href="/blog/"'), "Homepage navigation must link to the blog.");
+check(home.includes(">Latest from the blog</a>"), "Homepage must link to the latest blog posts near the journal.");
 check(home.includes('application/rss+xml'), "Homepage must advertise the RSS feed.");
 check(home.includes('application/atom+xml'), "Homepage must advertise the Atom feed.");
 const homepageFeaturedSlugs = [...home.matchAll(/data-featured-slug="([^"]+)"/g)].map((match) => match[1]);
@@ -477,10 +479,39 @@ check(
   "Journal directory set must exactly match approved public and info-only records."
 );
 const blogDirectories = await generatedPageDirectories("blog");
-const expectedBlogDirectories = ordered.map((release) => release.article.slug).sort();
+const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern"].sort();
 check(
   JSON.stringify(blogDirectories) === JSON.stringify(expectedBlogDirectories),
-  "Blog directory set must exactly match public-release companion articles."
+  "Blog directory set must exactly match public-release companion articles and Builder's Log."
+);
+const blogHtml = outputs.get("blog/index.html");
+const blogLanes = [...blogHtml.matchAll(/class="release-card blog-card" data-lane="([^"]+)" data-date="([^"]+)"/g)];
+check(blogLanes.length === ordered.length + 1, "Blog cards must include every public article and the Builder's Log post.");
+check(
+  blogLanes.every((item, index) => index === 0 || blogLanes[index - 1][2] >= item[2]),
+  "Blog cards must be ordered newest first."
+);
+check(blogHtml.includes("Accelerators &amp; Prototypes"), "Blog must provide the Accelerators &amp; Prototypes filter.");
+check(blogHtml.includes("Builder's Log"), "Blog must provide the Builder's Log filter.");
+check(blogHtml.includes("Accelerators, prototypes, and build notes. Personal projects; views are my own."), "Blog intro must match the requested line.");
+const softwareFactoryHtml = outputs.get("blog/software-factory-pattern/index.html");
+check(softwareFactoryHtml.includes("Information-only / Private active build"), "Builder's Log post must show the information-only label.");
+check(softwareFactoryHtml.includes("Owner-reviewed as of <time datetime=\"2026-10-24\">2026-10-24</time>"), "Builder's Log post must show its as-of date.");
+check(blogHtml.includes("A private, issue-first pattern where every build request becomes a spec&#39;d GitHub issue, a coding agent opens a small pull request, and I review every one before merging."), "Builder's Log card summary is missing.");
+const softwareFactoryArticleBody = softwareFactoryHtml.match(/<div class="shell article-body">([\s\S]*?)<\/section>/)?.[1] || "";
+const softwareFactoryLinks = [...softwareFactoryArticleBody.matchAll(/<a href="([^"]+)"/g)]
+  .map((match) => match[1])
+  .filter((href) => href.startsWith("http"));
+check(
+  JSON.stringify(softwareFactoryLinks) === JSON.stringify([
+    "https://docs.github.com/en/copilot/concepts/agent-capabilities/about-agents/about-github-copilot-agents",
+    "https://learn.microsoft.com/en-us/microsoft-365/managed-apps/?view=o365-worldwide"
+  ]),
+  "Builder's Log post may link only the two referenced public products."
+);
+check(
+  softwareFactoryArticleBody.includes("<strong>Public boundary: Information-only.</strong> Source and operational materials are not published. Personal project showcase. Built and demonstrated with fictional data. Not a Microsoft product or supported offering; views are my own."),
+  "Builder's Log post must include the complete public boundary."
 );
 
 for (const [relativePath, html] of diskHtml) {
@@ -520,9 +551,11 @@ const atomXml = outputs.get("feeds/atom.xml");
 check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(rssXml), "RSS must declare UTF-8 XML.");
 check(/<rss version="2.0"/.test(rssXml), "RSS 2.0 root is missing.");
 check((rssXml.match(/<item>/g) || []).length === ordered.length, "RSS item count must match public releases.");
+check(!rssXml.includes("software-factory-pattern"), "Builder's Log post must not appear in RSS.");
 check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(atomXml), "Atom must declare UTF-8 XML.");
 check(/<feed xmlns="http:\/\/www.w3.org\/2005\/Atom">/.test(atomXml), "Atom root is missing.");
 check((atomXml.match(/<entry>/g) || []).length === ordered.length, "Atom entry count must match public releases.");
+check(!atomXml.includes("software-factory-pattern"), "Builder's Log post must not appear in Atom.");
 
 const sitemapXml = outputs.get("sitemap.xml");
 const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
@@ -531,6 +564,9 @@ check(
   JSON.stringify(sitemapUrls) === JSON.stringify(expectedSitemapUrls),
   "Sitemap URLs must exactly match generated public routes."
 );
+const softwareFactorySitemapEntry = sitemapXml.split("<url>")
+  .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/software-factory-pattern/</loc>`));
+check(softwareFactorySitemapEntry?.includes("<lastmod>2026-10-24</lastmod>"), "Sitemap must include the Builder's Log post with the requested lastmod.");
 check(!sitemapXml.includes("engagements/"), "Protected engagements must not appear in the sitemap.");
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));
