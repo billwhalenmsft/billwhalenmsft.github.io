@@ -244,26 +244,6 @@ h3 { font-size: 1.15rem; }
   cursor: pointer;
 }
 .icon-button:hover { border-color: var(--cp-border-strong); color: var(--cp-accent); }
-.theme-select {
-  min-height: 2.75rem;
-  padding: 0.4rem 0.65rem;
-  border: 1px solid var(--cp-border);
-  border-radius: 0.625rem;
-  background: var(--cp-surface);
-  color: var(--cp-text);
-  font: inherit;
-}
-.theme-select:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
@@ -431,16 +411,6 @@ h3 { font-size: 1.15rem; }
   background: var(--cp-accent-soft);
 }
 .callout p:last-child { margin-bottom: 0; }
-.table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }
-.article-table { width: 100%; min-width: 38rem; border-collapse: collapse; }
-.article-table th, .article-table td {
-  padding: 0.65rem 0.75rem;
-  border: 1px solid var(--cp-border);
-  text-align: left;
-  vertical-align: top;
-}
-.article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
-.article-table td { color: var(--cp-text-muted); }
 .article-body { width: min(100%, 52rem); }
 .article-body > p { color: var(--cp-text-muted); font-size: 1.05rem; }
 .article-body h2 { margin-top: 3rem; }
@@ -570,7 +540,7 @@ function nav(themeModes = false) {
       <a href="/subscribe/">Subscribe</a>
       <a href="/feeds/rss.xml">RSS</a>
     </div>
-    ${themeModes ? `<label><span class="visually-hidden">Theme</span><select class="theme-select" id="themeSelect" aria-label="Theme">
+    ${themeModes ? `<label class="theme-control">Theme <select class="theme-select" id="themeSelect" aria-label="Theme">
       <option value="light">Light</option>
       <option value="dark">Dark</option>
       <option value="auto" selected>Auto</option>
@@ -638,7 +608,7 @@ function behaviorScript(extra = "", themeModes = false) {
 </script>`;
 }
 
-function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = false }) {
+function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = false, styles = "" }) {
   return `<!DOCTYPE html>
 <html lang="en" data-brand="atomic">
 <head>
@@ -664,7 +634,7 @@ function page({ title, description, canonical, type = "website", jsonLd, body, s
 ${safeJson(jsonLd).split("\n").map((line) => `    ${line}`).join("\n")}
   </script>
   <style>
-${siteCss.split("\n").map((line) => `    ${line}`).join("\n")}
+${siteCss.split("\n").map((line) => `    ${line}`).join("\n")}${styles ? `\n${styles.split("\n").map((line) => `    ${line}`).join("\n")}` : ""}
   </style>
 </head>
 <body>
@@ -1337,6 +1307,29 @@ function softwareFactoryPage() {
 
 function tokenomicsPlannerPage() {
   const canonical = `${SITE_URL}/blog/${tokenomicsPlannerPost.slug}/`;
+  const styles = `.theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
+.theme-select {
+  min-height: 2.75rem;
+  margin-left: 0.35rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  font: inherit;
+}
+.theme-select:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+.table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }
+.article-table { width: 100%; min-width: 38rem; border-collapse: collapse; }
+.article-table th, .article-table td {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--cp-border);
+  text-align: left;
+  vertical-align: top;
+}
+.article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
+.article-table td { color: var(--cp-text-muted); }
+.article-body a { overflow-wrap: anywhere; }`;
   const body = `    <article>
       <header class="hero shell">
         <div>
@@ -1434,7 +1427,8 @@ function tokenomicsPlannerPage() {
       mainEntityOfPage: canonical
     },
     body,
-    themeModes: true
+    themeModes: true,
+    styles
   });
 }
 
