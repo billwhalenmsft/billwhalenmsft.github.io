@@ -479,14 +479,14 @@ check(
   "Journal directory set must exactly match approved public and info-only records."
 );
 const blogDirectories = await generatedPageDirectories("blog");
-const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern"].sort();
+const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner"].sort();
 check(
   JSON.stringify(blogDirectories) === JSON.stringify(expectedBlogDirectories),
-  "Blog directory set must exactly match public-release companion articles and Builder's Log."
+  "Blog directory set must exactly match public-release companion articles and Builder's Log posts."
 );
 const blogHtml = outputs.get("blog/index.html");
 const blogLanes = [...blogHtml.matchAll(/class="release-card blog-card" data-lane="([^"]+)" data-date="([^"]+)"/g)];
-check(blogLanes.length === ordered.length + 1, "Blog cards must include every public article and the Builder's Log post.");
+check(blogLanes.length === ordered.length + 2, "Blog cards must include every public article and both Builder's Log posts.");
 check(
   blogLanes.every((item, index) => index === 0 || blogLanes[index - 1][2] >= item[2]),
   "Blog cards must be ordered newest first."
@@ -512,6 +512,35 @@ check(
 check(
   softwareFactoryArticleBody.includes("<strong>Public boundary: Information-only.</strong> Source and operational materials are not published. Personal project showcase. Built and demonstrated with fictional data. Not a Microsoft product or supported offering; views are my own."),
   "Builder's Log post must include the complete public boundary."
+);
+const tokenomicsPlannerHtml = outputs.get("blog/tokenomics-planner/index.html");
+check(tokenomicsPlannerHtml.includes("Tokenomics planner: what will this AI agent actually cost, and is it worth it?"), "Tokenomics planner article headline is missing.");
+check(tokenomicsPlannerHtml.includes("Builder's Log &middot; Information-only / Private active build"), "Tokenomics planner must show the information-only label.");
+check(tokenomicsPlannerHtml.includes("Owner-reviewed as of <time datetime=\"2026-10-27\">2026-10-27</time>"), "Tokenomics planner must show its as-of date.");
+check(blogHtml.includes("Size an AI agent&#39;s monthly running cost as an honest low / likely / high range, pick the right harness, and weigh cost against business value. Unconfirmed rates are flagged on purpose, with the reason why."), "Tokenomics planner card summary is missing.");
+check(blogHtml.includes('<p class="eyebrow">Decision support</p>'), "Tokenomics planner card category is missing.");
+check(tokenomicsPlannerHtml.includes("<h2>⚠️ Read this first: why some numbers are ranges, not answers</h2>"), "Tokenomics planner must highlight its uncertainty callout.");
+check(tokenomicsPlannerHtml.includes('<table class="article-table">'), "Tokenomics planner facts must be rendered as a table.");
+check(tokenomicsPlannerHtml.includes('id="themeSelect"') && ["Light", "Dark", "Auto"].every((theme) => tokenomicsPlannerHtml.includes(`>${theme}</option>`)), "Tokenomics planner must provide working Light, Dark, and Auto theme choices.");
+const tokenomicsPlannerBody = tokenomicsPlannerHtml.match(/<div class="shell article-body">([\s\S]*?)<\/section>/)?.[1] || "";
+const tokenomicsPlannerLinks = [...tokenomicsPlannerBody.matchAll(/<a href="([^"]+)"/g)]
+  .map((match) => match[1])
+  .filter((href) => href.startsWith("http"));
+check(
+  JSON.stringify(tokenomicsPlannerLinks) === JSON.stringify([
+    "https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview",
+    "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
+    "https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview",
+    "https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/govern-credit-consumption",
+    "https://learn.microsoft.com/en-us/ai-builder/endofaibcredits",
+    "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf",
+    "https://www.microsoft.com/en-us/research/publication/the-price-reversal-phenomenon-when-cheaper-reasoning-models-end-up-costing-more/"
+  ]),
+  "Tokenomics planner may link only the referenced public sources."
+);
+check(
+  tokenomicsPlannerBody.includes("<strong>Public boundary: Information-only.</strong> Source and operational materials are not published yet. Personal project showcase. Built and demonstrated with fictional data. Estimates, not quotes or licensing guidance; for actual pricing, talk to your Microsoft account team or partner. Not a Microsoft product or supported offering; views are my own."),
+  "Tokenomics planner must include the complete public boundary."
 );
 
 for (const [relativePath, html] of diskHtml) {
@@ -552,10 +581,12 @@ check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(rssXml), "RSS must declar
 check(/<rss version="2.0"/.test(rssXml), "RSS 2.0 root is missing.");
 check((rssXml.match(/<item>/g) || []).length === ordered.length, "RSS item count must match public releases.");
 check(!rssXml.includes("software-factory-pattern"), "Builder's Log post must not appear in RSS.");
+check(!rssXml.includes("tokenomics-planner"), "Tokenomics planner must not appear in RSS.");
 check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(atomXml), "Atom must declare UTF-8 XML.");
 check(/<feed xmlns="http:\/\/www.w3.org\/2005\/Atom">/.test(atomXml), "Atom root is missing.");
 check((atomXml.match(/<entry>/g) || []).length === ordered.length, "Atom entry count must match public releases.");
 check(!atomXml.includes("software-factory-pattern"), "Builder's Log post must not appear in Atom.");
+check(!atomXml.includes("tokenomics-planner"), "Tokenomics planner must not appear in Atom.");
 
 const sitemapXml = outputs.get("sitemap.xml");
 const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
@@ -567,6 +598,9 @@ check(
 const softwareFactorySitemapEntry = sitemapXml.split("<url>")
   .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/software-factory-pattern/</loc>`));
 check(softwareFactorySitemapEntry?.includes("<lastmod>2026-10-24</lastmod>"), "Sitemap must include the Builder's Log post with the requested lastmod.");
+const tokenomicsPlannerSitemapEntry = sitemapXml.split("<url>")
+  .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/tokenomics-planner/</loc>`));
+check(tokenomicsPlannerSitemapEntry?.includes("<lastmod>2026-10-27</lastmod>"), "Sitemap must include the tokenomics planner post with the requested lastmod.");
 check(!sitemapXml.includes("engagements/"), "Protected engagements must not appear in the sitemap.");
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));

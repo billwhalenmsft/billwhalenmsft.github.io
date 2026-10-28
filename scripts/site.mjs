@@ -15,6 +15,18 @@ const themeScript = `<script>
   })();
 </script>`;
 
+const themeModesScript = `<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const preference = ["light", "dark", "auto"].includes(param) ? param : "auto";
+    const theme = preference === "auto"
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : preference;
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.dataset.themePreference = preference;
+  })();
+</script>`;
+
 const themeVariables = `:root {
   color-scheme: light;
   --cp-bg: #f7f4ef;
@@ -514,7 +526,7 @@ function evidenceUrls(release) {
   ];
 }
 
-function nav() {
+function nav(themeModes = false) {
   return `<header class="site-header">
   <nav class="nav shell" aria-label="Primary navigation">
     <a class="brand" href="/">
@@ -528,11 +540,15 @@ function nav() {
       <a href="/subscribe/">Subscribe</a>
       <a href="/feeds/rss.xml">RSS</a>
     </div>
-    <button class="icon-button" id="themeButton" type="button" aria-label="Switch theme">
+    ${themeModes ? `<label class="theme-control">Theme <select class="theme-select" id="themeSelect" aria-label="Theme">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="auto" selected>Auto</option>
+    </select></label>` : `<button class="icon-button" id="themeButton" type="button" aria-label="Switch theme">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
       </svg>
-    </button>
+    </button>`}
   </nav>
 </header>`;
 }
@@ -551,7 +567,29 @@ function footer() {
 </footer>`;
 }
 
-function behaviorScript(extra = "") {
+function behaviorScript(extra = "", themeModes = false) {
+  if (themeModes) {
+    return `<script>
+  const themeSelect = document.getElementById("themeSelect");
+  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+  themeSelect.value = document.documentElement.dataset.themePreference;
+  function applyThemePreference() {
+    const preference = themeSelect.value;
+    document.documentElement.dataset.themePreference = preference;
+    document.documentElement.dataset.theme = preference === "auto"
+      ? (systemTheme.matches ? "dark" : "light")
+      : preference;
+    const url = new URL(window.location.href);
+    url.searchParams.set("scoutTheme", preference);
+    window.history.replaceState({}, "", url);
+  }
+  themeSelect.addEventListener("change", applyThemePreference);
+  systemTheme.addEventListener("change", () => {
+    if (themeSelect.value === "auto") applyThemePreference();
+  });
+  ${extra}
+</script>`;
+  }
   return `<script>
   const themeButton = document.getElementById("themeButton");
   themeButton.addEventListener("click", () => {
@@ -570,7 +608,7 @@ function behaviorScript(extra = "") {
 </script>`;
 }
 
-function page({ title, description, canonical, type = "website", jsonLd, body, script = "" }) {
+function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = false, styles = "" }) {
   return `<!DOCTYPE html>
 <html lang="en" data-brand="atomic">
 <head>
@@ -591,22 +629,22 @@ function page({ title, description, canonical, type = "website", jsonLd, body, s
   <meta name="twitter:description" content="${escapeHtml(description)}">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
   <title>${escapeHtml(title)}</title>
-  ${themeScript}
+  ${themeModes ? themeModesScript : themeScript}
   <script type="application/ld+json">
 ${safeJson(jsonLd).split("\n").map((line) => `    ${line}`).join("\n")}
   </script>
   <style>
-${siteCss.split("\n").map((line) => `    ${line}`).join("\n")}
+${siteCss.split("\n").map((line) => `    ${line}`).join("\n")}${styles ? `\n${styles.split("\n").map((line) => `    ${line}`).join("\n")}` : ""}
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  ${nav()}
+  ${nav(themeModes)}
   <main id="main">
 ${body}
   </main>
   ${footer()}
-  ${behaviorScript(script)}
+  ${behaviorScript(script, themeModes)}
 </body>
 </html>
 `;
@@ -1081,6 +1119,15 @@ const softwareFactoryPost = {
   date: "2026-10-24"
 };
 
+const tokenomicsPlannerPost = {
+  slug: "tokenomics-planner",
+  title: "Tokenomics planner",
+  headline: "Tokenomics planner: what will this AI agent actually cost, and is it worth it?",
+  summary: "Size an AI agent's monthly running cost as an honest low / likely / high range, pick the right harness, and weigh cost against business value. Unconfirmed rates are flagged on purpose, with the reason why.",
+  category: "Decision support",
+  date: "2026-10-27"
+};
+
 function blogCard({ title, summary, category, date, href, lane }) {
   return `<article class="release-card blog-card" data-lane="${lane}" data-date="${date}">
   <span class="status${lane === "builders-log" ? " status-info" : ""}">${lane === "builders-log" ? "Builder's Log" : "Accelerators &amp; Prototypes"}</span>
@@ -1105,6 +1152,11 @@ function blogIndex(catalog) {
     {
       ...softwareFactoryPost,
       href: `/blog/${softwareFactoryPost.slug}/`,
+      lane: "builders-log"
+    },
+    {
+      ...tokenomicsPlannerPost,
+      href: `/blog/${tokenomicsPlannerPost.slug}/`,
       lane: "builders-log"
     }
   ].sort((left, right) => right.date.localeCompare(left.date));
@@ -1250,6 +1302,133 @@ function softwareFactoryPage() {
       mainEntityOfPage: canonical
     },
     body
+  });
+}
+
+function tokenomicsPlannerPage() {
+  const canonical = `${SITE_URL}/blog/${tokenomicsPlannerPost.slug}/`;
+  const styles = `.theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
+.theme-select {
+  min-height: 2.75rem;
+  margin-left: 0.35rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  font: inherit;
+}
+.theme-select:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+.table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }
+.article-table { width: 100%; min-width: 38rem; border-collapse: collapse; }
+.article-table th, .article-table td {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--cp-border);
+  text-align: left;
+  vertical-align: top;
+}
+.article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
+.article-table td { color: var(--cp-text-muted); }
+.article-body a { overflow-wrap: anywhere; }`;
+  const body = `    <article>
+      <header class="hero shell">
+        <div>
+          <p class="status status-info">Builder's Log &middot; Information-only / Private active build</p>
+          <h1>${tokenomicsPlannerPost.headline}</h1>
+          <p class="meta-row">Owner-reviewed as of <time datetime="${tokenomicsPlannerPost.date}">${tokenomicsPlannerPost.date}</time> &middot; not a code, adoption, or activity signal</p>
+          <div class="hero-actions"><a class="button button-primary" href="/blog/">Browse the blog</a></div>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell article-body">
+          <h2>Original state</h2>
+          <p>"What will this agent cost to run?" kept coming up, and the honest answer was always "it depends." The math was scattered across rate cards, licensing guides and research papers. Nobody wanted to work out tokens per task in a meeting, and cost alone never answered the question that matters: <strong>is it worth it?</strong></p>
+          <h2>What I built</h2>
+          <p>A sample-data planner, built through my software factory, that turns a use case into a decision on one page.</p>
+          <ul>
+            <li><strong>Estimate.</strong> Pick a use case (sales assist, daily briefing, customer care, voice, document flows, a small business app) and set how many people use it and how often. You get a <strong>T-shirt size (S/M/L/XL)</strong>, a <strong>low / likely / high</strong> monthly Copilot Credits range, list-price options (pay-as-you-go, capacity packs, pre-purchase), and governance controls that fit the size.<br>
+              <code>credits per month = users × runs per user per month × credits per run × harness factor</code></li>
+            <li><strong>Pick the right harness.</strong> The planner has a picker for Copilot Studio's three harnesses, with Microsoft's own guidance on when to use each:
+              <ul>
+                <li><strong>Standard</strong> for rule-based work;</li>
+                <li><strong>GitHub Copilot harness</strong> for complex, multi-step reasoning, usage-billed in Copilot Credits;</li>
+                <li><strong>Customer Conversation</strong> for customer-facing voice and chat, with human escalation.</li>
+              </ul>
+              It also warns that <strong>bigger isn't better</strong>: a simple task on the most capable harness can cost more without a better result.</li>
+            <li><strong>Value, not token maxing.</strong> A Value tab puts cost next to return. You can measure return as hours saved × loaded rate, outcomes × value per outcome, or a custom metric. You get cost per outcome, a value-to-cost ratio, and a simple <strong>Expand / Hold / Scale back</strong> call (defaults: Expand at 3× or more, Scale back below 1×), plus a portfolio view across use cases.</li>
+          </ul>
+          <div class="callout">
+            <h2>⚠️ Read this first: why some numbers are ranges, not answers</h2>
+            <p>Some rates in this planner are <strong>unconfirmed</strong>, and it says so on screen. That isn't a gap I'm hiding. It is the honest state of the market.</p>
+            <p><strong>Why it's a question</strong></p>
+            <ul>
+              <li>The newest capabilities, such as agents that plan their own multi-step work and natural-sounding voice, are shipping faster than their costs settle.</li>
+              <li>For the GitHub Copilot harness, Microsoft publishes <strong>light / medium / heavy planning bands</strong> instead of a fixed per-event rate, because cost depends on how much work each task turns out to need. Billing on that harness also <strong>starts while you build and test</strong>, not only after you publish.</li>
+              <li>Reasoning models make listed prices unreliable. A Microsoft Research study found that in <strong>21.8% of model comparisons the cheaper-listed model cost more</strong>, by up to <strong>28×</strong>, and the thinking tokens used on the same query varied up to <strong>9.7×</strong> from run to run. The planner widens its ranges for reasoning-heavy work for exactly this reason.</li>
+            </ul>
+            <p><strong>The facts (US list prices published Oct 2026; check the sources)</strong></p>
+            <div class="table-wrap" role="region" aria-label="Copilot Credits list prices and confidence" tabindex="0">
+              <table class="article-table">
+                <thead><tr><th>Item</th><th>Public figure</th><th>Confidence</th></tr></thead>
+                <tbody>
+                  <tr><td>Pay-as-you-go</td><td>$0.01 per Copilot Credit</td><td>✅ Published</td></tr>
+                  <tr><td>Capacity pack</td><td>25,000 credits per month, per tenant</td><td>✅ Published</td></tr>
+                  <tr><td>Pre-purchase plan</td><td>One-year pool, tiered discounts of about 5–20%</td><td>✅ Published</td></tr>
+                  <tr><td>Standard harness rate card</td><td>1 / 2 / 5 / 10 credits (scripted answer / generative answer / action / tenant grounding)</td><td>✅ Published</td></tr>
+                  <tr><td>Voice (standard harness)</td><td>Per minute, by tier (classic / generative / premium)</td><td>✅ Published</td></tr>
+                  <tr><td>GitHub Copilot harness, per task</td><td><strong>Noticeably higher</strong> than a comparable standard run; Microsoft publishes planning bands</td><td>⚠️ Range, varies by task</td></tr>
+                  <tr><td>Voice on newer harnesses</td><td><strong>Early signals point lower</strong> than today's premium voice</td><td>⚠️ Early, unconfirmed</td></tr>
+                  <tr><td>AI Builder</td><td>After <strong>Nov 1, 2026</strong>, new premium licenses no longer include seeded AI Builder credits. Existing credits are honored to the end of term, and add-ons reach end of life. Usage draws AI Builder credits first, then Copilot Credits, and is otherwise blocked. Usage tracking can be delayed 5 or more days.</td><td>✅ Published</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>How I expect this to change (my view, not Microsoft's)</strong></p>
+            <ul>
+              <li><strong>The frontier costs the most.</strong> If you want the most experimental capability today, budget for it on purpose and treat it as an investment in learning.</li>
+              <li><strong>Today's premium is tomorrow's default.</strong> Each model generation has pushed yesterday's capability toward cheap or free. Plan to review costs quarterly, not annually.</li>
+              <li><strong>The scales move both ways.</strong> Cheaper capability brings more usage, so your total can rise even as unit prices fall. Put limits, alerts and owners in place with the same care as the budget.</li>
+              <li><strong>Measure, then re-size.</strong> Start with the ranges, run a short pilot, enter your <strong>measured</strong> credits per run, and let the planner re-size you.</li>
+            </ul>
+          </div>
+          <h2>Human controls</h2>
+          <ul>
+            <li>Sample data only; no tenant connection, no sign-in, nothing transmitted. Value inputs stay in your browser.</li>
+            <li>An Internal/Customer toggle. Customer mode, a share-safe view for customer conversations, hides internal notes and <strong>withholds</strong> any cost or ratio that depends on an unconfirmed rate rather than showing a misleading number.</li>
+            <li>Every dollar figure is labeled a list-price estimate, not a quote.</li>
+          </ul>
+          <h2>Public sources</h2>
+          <ul>
+            <li>Harnesses in Copilot Studio: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview</a></li>
+            <li>Copilot Studio billing rates: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management</a></li>
+            <li>Usage-based billing (GitHub Copilot harness): <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview</a></li>
+            <li>Governing harness consumption: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/govern-credit-consumption" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/govern-credit-consumption</a></li>
+            <li>End of AI Builder credits: <a href="https://learn.microsoft.com/en-us/ai-builder/endofaibcredits" rel="noreferrer">https://learn.microsoft.com/en-us/ai-builder/endofaibcredits</a></li>
+            <li>Copilot Credits Guide (Oct 2026, PDF): <a href="https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf" rel="noreferrer">https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf</a></li>
+            <li>The Price Reversal Phenomenon (Microsoft Research, Mar 2026): <a href="https://www.microsoft.com/en-us/research/publication/the-price-reversal-phenomenon-when-cheaper-reasoning-models-end-up-costing-more/" rel="noreferrer">https://www.microsoft.com/en-us/research/publication/the-price-reversal-phenomenon-when-cheaper-reasoning-models-end-up-costing-more/</a></li>
+          </ul>
+          <div class="callout"><p><strong>Public boundary: Information-only.</strong> Source and operational materials are not published yet. Personal project showcase. Built and demonstrated with fictional data. Estimates, not quotes or licensing guidance; for actual pricing, talk to your Microsoft account team or partner. Not a Microsoft product or supported offering; views are my own.</p></div>
+        </div>
+      </section>
+    </article>`;
+
+  return page({
+    title: `${tokenomicsPlannerPost.title} | Builder's Log`,
+    description: tokenomicsPlannerPost.summary,
+    canonical,
+    type: "article",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: tokenomicsPlannerPost.headline,
+      description: tokenomicsPlannerPost.summary,
+      datePublished: tokenomicsPlannerPost.date,
+      dateModified: tokenomicsPlannerPost.date,
+      author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
+      mainEntityOfPage: canonical
+    },
+    body,
+    themeModes: true,
+    styles
   });
 }
 
@@ -1421,6 +1600,11 @@ export function sitemapEntries(catalog) {
       url: `${SITE_URL}/blog/${softwareFactoryPost.slug}/`,
       updated: softwareFactoryPost.date,
       priority: "0.7"
+    },
+    {
+      url: `${SITE_URL}/blog/${tokenomicsPlannerPost.slug}/`,
+      updated: tokenomicsPlannerPost.date,
+      priority: "0.7"
     }
   ];
 }
@@ -1449,6 +1633,7 @@ export async function buildOutputs() {
     ["journal/index.html", journalIndex(catalog)],
     ["blog/index.html", blogIndex(catalog)],
     [`blog/${softwareFactoryPost.slug}/index.html`, softwareFactoryPage()],
+    [`blog/${tokenomicsPlannerPost.slug}/index.html`, tokenomicsPlannerPage()],
     ["subscribe/index.html", subscribePage(catalog)],
     ["feeds/rss.xml", rss(catalog)],
     ["feeds/atom.xml", atom(catalog)],
