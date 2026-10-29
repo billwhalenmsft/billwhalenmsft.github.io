@@ -1,0 +1,77 @@
+{
+  "lastRefresh": "2026-10-29",
+  "rates": {
+    "payg": {
+      "value": 0.01, "unit": "USD per Copilot Credit", "confidence": "published", "asOf": "2026-10-01",
+      "source": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf",
+      "why": "List-price pay-as-you-go baseline. Actual commercial pricing can differ."
+    },
+    "pack": {
+      "value": 25000, "unit": "credits per tenant per month", "confidence": "published", "asOf": "2026-10-01",
+      "source": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf",
+      "why": "Capacity comes in monthly tenant packs. A pack price was not supplied in this dataset, so the planner shows capacity and a PAYG-equivalent value, not a pack quote."
+    },
+    "p3": {
+      "value": [{"credits":300000,"discount":0.05},{"credits":1500000,"discount":0.06},{"credits":3000000,"discount":0.07},{"credits":15000000,"discount":0.08},{"credits":30000000,"discount":0.1},{"credits":75000000,"discount":0.12},{"credits":150000000,"discount":0.14},{"credits":225000000,"discount":0.17},{"credits":300000000,"discount":0.2}],
+      "unit": "pre-purchased credits and discount fraction", "confidence": "published", "asOf": "2026-10-01",
+      "source": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf",
+      "why": "Discount applies to the whole selected commitment, not marginal slices. Unused committed capacity is still paid for; excess usage is modeled at PAYG."
+    },
+    "standard": {
+      "value": {"classicAnswer":1,"generativeAnswer":2,"agentAction":5,"tenantGraphGrounding":10,"flowActionsPer100":13},
+      "unit": "credits per event (flow actions per 100)", "confidence": "published", "asOf": "2026-10-29",
+      "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
+      "why": "Standard harness events have different published rates. Preset totals below are illustrative workload assumptions, not a published price per run."
+    },
+    "reasoning": {
+      "value": 10, "unit": "additional credits per 1,000 reasoning tokens", "confidence": "published", "asOf": "2026-10-29",
+      "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
+      "why": "Reasoning tokens add a premium. Presets include an illustrative total; without a token measurement this is not an extra fixed charge per run."
+    },
+    "voiceStandard": {
+      "low":10,"likely":35,"high":75, "unit": "credits per minute: classic / generative / premium", "confidence": "published", "asOf": "2026-10-29",
+      "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management",
+      "why": "These are today's published voice tiers. The likely scenario uses generative voice; low and high use classic and premium."
+    },
+    "github": {
+      "low":1,"likely":3,"high":6, "unit": "times a comparable standard run", "confidence": "range", "asOf": "2026-10-29",
+      "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview",
+      "why": "Billed on tokens, tools and the harness itself, and charges start while you build and test. Microsoft publishes light / medium / heavy planning bands instead of a fixed rate because effort varies by task. This range is an illustrative planning band, not a Microsoft rate. Replace it with your pilot measurement."
+    },
+    "voiceNew": {
+      "low":10,"likely":35,"high":75, "unit": "credits per minute", "confidence": "early", "asOf": "2026-10-29",
+      "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview",
+      "why": "Early signals point lower than today's premium voice, but rates aren't settled. The range spans today's published tiers until they are."
+    },
+    "reasoningWidening": {
+      "value":3, "unit": "divide low / multiply high; likely unchanged", "confidence": "range", "asOf": "2026-03-01",
+      "source": "https://www.microsoft.com/en-us/research/publication/the-price-reversal-phenomenon-when-cheaper-reasoning-models-end-up-costing-more/",
+      "why": "A Microsoft Research study found the cheaper-listed reasoning model cost more in 21.8% of comparisons (up to 28×), and thinking tokens on the same query varied up to 9.7× run to run. That's why reasoning-heavy work gets wider bands. The widening factor is an illustrative planning choice, not a study-derived rate."
+    },
+    "aiBuilder": {
+      "value":"2026-11-01", "unit":"transition date", "confidence":"published", "asOf":"2026-10-29",
+      "source":"https://learn.microsoft.com/en-us/ai-builder/endofaibcredits",
+      "why":"After Nov 1, 2026, new premium licenses no longer include seeded AI Builder credits. Existing credits are honored to end of term, and add-ons reach end of life. Usage draws AI Builder credits first, then Copilot Credits, and is otherwise blocked. Usage tracking can lag 5 or more days."
+    }
+  },
+  "planning": {
+    "value":{"users":10,"runs":20,"months":12,"expandRatio":3,"holdRatio":1,"sizes":[{"name":"S","below":25000,"controls":"Pilot with a named owner, a budget alert, and a monthly usage review."},{"name":"M","below":250000,"controls":"Add environment budgets, connector policies, and weekly usage reviews."},{"name":"L","below":2500000,"controls":"Add approval gates, workload quotas, and daily anomaly reviews."},{"name":"XL","below":null,"controls":"Use staged rollout, tenant-level capacity ownership, and an incident stop switch."}]},
+    "unit":"illustrative planner defaults and decision thresholds", "confidence":"range", "asOf":"2026-10-29",
+    "source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/govern-credit-consumption",
+    "why":"These size cutoffs, governance suggestions, and value thresholds are this planner's heuristics, not Microsoft licensing rules. P3 is modeled over an illustrative annual commitment horizon with level monthly use; confirm actual term and eligibility before buying. User-entered workload and value assumptions are not independently verified."
+  },
+  "harnesses": [
+    {"id":"standard","value":1,"unit":"baseline factor","name":"Standard","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview","why":"Use for rule-based, predictable tasks. This is the baseline against which illustrative factors are compared."},
+    {"id":"github","value":"github","unit":"rate reference","name":"GitHub Copilot","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview","why":"Use for complex multi-step reasoning. The factor is a planning band, not a fixed published rate."},
+    {"id":"conversation","value":1,"unit":"illustrative non-voice baseline factor","name":"Customer Conversation","confidence":"early","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview","why":"Use for voice/chat with human escalation. Non-voice estimates provisionally use the standard baseline; voice uses the newer-harness range. Measure your actual workload."}
+  ],
+  "presets": [
+    {"id":"sales","name":"Sales assist agent","low":100,"likely":180,"high":300,"harness":"standard","unit":"credits per run","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management","why":"Illustrative mix of answers, grounding, and actions. Replace with your own measured total."},
+    {"id":"briefing","name":"Daily briefing","low":75,"likely":125,"high":200,"harness":"standard","unit":"credits per run","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management","why":"Illustrative briefing workload, not a published per-briefing rate."},
+    {"id":"care","name":"Customer care","low":100,"likely":180,"high":300,"harness":"conversation","unit":"credits per run","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management","why":"Illustrative chat workload including answers and actions; escalation time is not priced here."},
+    {"id":"voice","name":"Voice agent (per minute)","low":10,"likely":35,"high":75,"harness":"conversation","voice":true,"unit":"credits per minute","confidence":"early","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview","why":"Each run represents one voice minute. The initial band follows published voice tiers; newer harness rates remain unsettled."},
+    {"id":"analyst","name":"Reasoning analyst","low":100,"likely":180,"high":300,"harness":"github","reasoningHeavy":true,"unit":"credits per run before harness and widening","confidence":"range","asOf":"2026-10-29","source":"https://www.microsoft.com/en-us/research/publication/the-price-reversal-phenomenon-when-cheaper-reasoning-models-end-up-costing-more/","why":"Illustrative total including reasoning effort, not a published analyst price. Both harness effort and reasoning variability widen the band."},
+    {"id":"documents","name":"Document flows / AI Builder","low":20,"likely":40,"high":75,"harness":"standard","aiBuilder":true,"unit":"credits per run","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/ai-builder/endofaibcredits","why":"Illustrative Copilot Credit equivalent, not a conversion from seeded AI Builder credits. Validate model-specific charges and remaining entitlement."},
+    {"id":"app","name":"Small business app","low":20,"likely":40,"high":75,"harness":"standard","unit":"credits per run","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management","why":"Illustrative lightweight answer/action workload; actual event mix determines consumption."}
+  ]
+}
