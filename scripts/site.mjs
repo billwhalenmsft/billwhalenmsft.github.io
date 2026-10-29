@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { tokenomicsBody, tokenomicsStyles } from "./tokenomics-page.mjs";
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const SITE_URL = "https://billwhalenmsft.github.io";
@@ -526,7 +527,7 @@ function evidenceUrls(release) {
   ];
 }
 
-function nav(themeModes = false) {
+function nav(themeModes = false, toolsLink = false) {
   return `<header class="site-header">
   <nav class="nav shell" aria-label="Primary navigation">
     <a class="brand" href="/">
@@ -536,7 +537,7 @@ function nav(themeModes = false) {
     <div class="nav-links">
       <a href="/">Home</a>
       <a href="/journal/">Solution journal</a>
-      <a href="/blog/">Blog</a>
+      <a href="/blog/">Blog</a>${toolsLink ? '\n      <a href="/tools/tokenomics/">Tools</a>' : ""}
       <a href="/subscribe/">Subscribe</a>
       <a href="/feeds/rss.xml">RSS</a>
     </div>
@@ -608,7 +609,7 @@ function behaviorScript(extra = "", themeModes = false) {
 </script>`;
 }
 
-function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = false, styles = "" }) {
+function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = false, styles = "", toolsLink = false }) {
   return `<!DOCTYPE html>
 <html lang="en" data-brand="atomic">
 <head>
@@ -639,7 +640,7 @@ ${siteCss.split("\n").map((line) => `    ${line}`).join("\n")}${styles ? `\n${st
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  ${nav(themeModes)}
+  ${nav(themeModes, toolsLink)}
   <main id="main">
 ${body}
   </main>
@@ -1336,7 +1337,7 @@ function tokenomicsPlannerPage() {
           <p class="status status-info">Builder's Log &middot; Information-only / Private active build</p>
           <h1>${tokenomicsPlannerPost.headline}</h1>
           <p class="meta-row">Owner-reviewed as of <time datetime="${tokenomicsPlannerPost.date}">${tokenomicsPlannerPost.date}</time> &middot; not a code, adoption, or activity signal</p>
-          <div class="hero-actions"><a class="button button-primary" href="/blog/">Browse the blog</a></div>
+          <div class="hero-actions"><a class="button button-primary" href="/blog/">Browse the blog</a><a class="button button-primary" href="/tools/tokenomics/">Try the live planner →</a></div>
         </div>
       </header>
       <section class="section">
@@ -1428,6 +1429,7 @@ function tokenomicsPlannerPage() {
     },
     body,
     themeModes: true,
+    toolsLink: true,
     styles
   });
 }
@@ -1587,6 +1589,7 @@ export function sitemapEntries(catalog) {
     { url: `${SITE_URL}/journal/`, updated: catalog.updated, priority: "0.9" },
     { url: `${SITE_URL}/blog/`, updated: softwareFactoryPost.date, priority: "0.8" },
     { url: `${SITE_URL}/subscribe/`, updated: catalog.updated, priority: "0.5" },
+    { url: `${SITE_URL}/tools/tokenomics/`, updated: "2026-10-29", priority: "0.7" },
     ...releases.flatMap((release) => [
       { url: `${SITE_URL}/journal/${release.slug}/`, updated: release.updated, priority: "0.8" },
       { url: `${SITE_URL}/blog/${release.article.slug}/`, updated: release.updated, priority: "0.7" }
@@ -1630,6 +1633,23 @@ export async function loadCatalog() {
 export async function buildOutputs() {
   const catalog = await loadCatalog();
   const outputs = new Map([
+    ["tools/tokenomics/index.html", page({
+      title: "Tokenomics planner | Bill Whalen",
+      description: "Estimate Copilot Credit costs with transparent ranges, sources, harness choices, and business value.",
+      canonical: `${SITE_URL}/tools/tokenomics/`,
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "Tokenomics planner",
+        url: `${SITE_URL}/tools/tokenomics/`,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web browser"
+      },
+      body: tokenomicsBody,
+      styles: tokenomicsStyles,
+      themeModes: true,
+      toolsLink: true
+    })],
     ["journal/index.html", journalIndex(catalog)],
     ["blog/index.html", blogIndex(catalog)],
     [`blog/${softwareFactoryPost.slug}/index.html`, softwareFactoryPage()],

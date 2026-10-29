@@ -514,6 +514,12 @@ check(
   "Builder's Log post must include the complete public boundary."
 );
 const tokenomicsPlannerHtml = outputs.get("blog/tokenomics-planner/index.html");
+check(tokenomicsPlannerHtml.includes('href="/tools/tokenomics/">Try the live planner →</a>'), "Tokenomics post must link prominently to the live planner.");
+const livePlannerHtml = outputs.get("tools/tokenomics/index.html");
+check(livePlannerHtml.includes('href="/tools/tokenomics/">Tools</a>'), "Live planner must have a Tools navigation link.");
+check(livePlannerHtml.includes('src="./app.js"'), "Live planner must load the local ES module.");
+check(livePlannerHtml.includes("Estimates, not quotes or licensing guidance."), "Live planner must retain its public boundary.");
+check(["estimate", "why", "harness", "value", "sources"].every((id) => livePlannerHtml.includes(`id="${id}" role="tabpanel"`)), "Live planner must expose all five screens.");
 check(tokenomicsPlannerHtml.includes("Tokenomics planner: what will this AI agent actually cost, and is it worth it?"), "Tokenomics planner article headline is missing.");
 check(tokenomicsPlannerHtml.includes("Builder's Log &middot; Information-only / Private active build"), "Tokenomics planner must show the information-only label.");
 check(tokenomicsPlannerHtml.includes("Owner-reviewed as of <time datetime=\"2026-10-27\">2026-10-27</time>"), "Tokenomics planner must show its as-of date.");

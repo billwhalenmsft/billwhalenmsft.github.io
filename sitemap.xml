@@ -25,6 +25,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://billwhalenmsft.github.io/tools/tokenomics/</loc>
+    <lastmod>2026-10-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://billwhalenmsft.github.io/journal/d365-administrator-suite/</loc>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
