@@ -1,5 +1,5 @@
-const CACHE = "tokenomics-v1";
-const FILES = ["./", "./app.js", "./calculate.js", "./data/rates.json"];
+const CACHE = "tokenomics-v2";
+const FILES = ["./", "./index.html", "./app.js", "./calculate.js", "./data/rates.json"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(FILES)));

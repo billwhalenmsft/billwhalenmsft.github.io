@@ -8,12 +8,22 @@ const number = (value) => new Intl.NumberFormat("en-US", { maximumFractionDigits
 const money = (value) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 const badges = { published: "✅ published", range: "↔ range", early: "⚠ early" };
 
+function evidenceValue(value) {
+  if (Array.isArray(value)) {
+    return `<ul>${value.map((item) => `<li>${evidenceValue(item)}</li>`).join("")}</ul>`;
+  }
+  if (value !== null && typeof value === "object") {
+    return `<ul>${Object.entries(value).map(([key, item]) => `<li><strong>${escape(key.replace(/([a-z])([A-Z])/g, "$1 $2"))}:</strong>
+      ${key === "discount" ? `${number(item * 100)}%` : evidenceValue(item)}</li>`).join("")}</ul>`;
+  }
+  return value === null ? "No upper limit" : escape(typeof value === "number" ? number(value) : value);
+}
+
 function evidence(label, entry) {
-  const value = "value" in entry ? (typeof entry.value === "object"
-    ? JSON.stringify(entry.value) : entry.value)
-    : `${number(entry.low)} / ${number(entry.likely)} / ${number(entry.high)}`;
+  const value = "value" in entry ? evidenceValue(entry.value)
+    : escape(`${number(entry.low)} / ${number(entry.likely)} / ${number(entry.high)}`);
   return `<div class="planner-card"><h3>${escape(label)}</h3>
-    <p>${escape(value)} ${escape(entry.unit)} · <span class="badge">${badges[entry.confidence]}</span></p>
+    <div>${value}</div><p>${escape(entry.unit)} · <span class="badge">${badges[entry.confidence]}</span></p>
     <p>${escape(entry.why)}</p><p><a href="${escape(entry.source)}" rel="noreferrer">Source</a>
     · as of <time>${escape(entry.asOf)}</time></p></div>`;
 }
@@ -263,6 +273,9 @@ tabs.forEach((tab, index) => {
     selectTab(tabs[next]);
     tabs[next].focus();
   });
+});
+document.addEventListener("click", (event) => {
+  if (event.target.closest('a[href="#workload"]')) selectTab($("tab-estimate"));
 });
 
 start().catch((error) => { $("load-status").textContent = error.message; });
