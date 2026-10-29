@@ -527,7 +527,7 @@ function evidenceUrls(release) {
   ];
 }
 
-function nav(themeModes = false, toolsLink = false) {
+function nav(themeModes = false) {
   return `<header class="site-header">
   <nav class="nav shell" aria-label="Primary navigation">
     <a class="brand" href="/">
@@ -537,7 +537,8 @@ function nav(themeModes = false, toolsLink = false) {
     <div class="nav-links">
       <a href="/">Home</a>
       <a href="/journal/">Solution journal</a>
-      <a href="/blog/">Blog</a>${toolsLink ? '\n      <a href="/tools/tokenomics/">Tools</a>' : ""}
+      <a href="/blog/">Blog</a>
+      <a href="/tools/">Tools</a>
       <a href="/subscribe/">Subscribe</a>
       <a href="/feeds/rss.xml">RSS</a>
     </div>
@@ -615,7 +616,15 @@ const blogPostCss = `.hero.shell { grid-template-columns: minmax(0, 1fr); }
   font-size: clamp(2.25rem, 4.5vw, 4rem);
   line-height: 1.08;
   text-wrap: balance;
-}`;
+}
+.article-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(100%, 72ch) minmax(0, 1fr);
+  width: min(100% - 2rem, 77.5rem);
+}
+.article-body > * { grid-column: 2; min-width: 0; }
+.article-body > .table-wrap, .article-body > .cards { grid-column: 1 / -1; }
+@media (max-width: 46rem) { .article-body { width: min(100% - 1.25rem, 77.5rem); } }`;
 
 const blogComponentsCss = `.theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
 .theme-select {
@@ -646,9 +655,9 @@ const blogComponentsCss = `.theme-control { color: var(--cp-text-muted); font-si
 .article-body .naming-update { border-left: 4px solid var(--cp-warning); }
 .article-body .src, .article-body footer { color: var(--cp-text-muted); font-size: 0.9rem; }`;
 
-function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = false, styles = "", toolsLink = false }) {
+function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = type === "article" && canonical.startsWith(`${SITE_URL}/blog/`), styles = "" }) {
   if (type === "article" && canonical.startsWith(`${SITE_URL}/blog/`)) {
-    styles = styles ? `${blogPostCss}\n${styles}` : blogPostCss;
+    styles = `${blogPostCss}\n${blogComponentsCss}${styles ? `\n${styles}` : ""}`;
   }
   return `<!DOCTYPE html>
 <html lang="en" data-brand="atomic">
@@ -680,7 +689,7 @@ ${siteCss.split("\n").map((line) => `    ${line}`).join("\n")}${styles ? `\n${st
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  ${nav(themeModes, toolsLink)}
+  ${nav(themeModes)}
   <main id="main">
 ${body}
   </main>
@@ -1185,8 +1194,6 @@ function harnessPage(article) {
     canonical,
     type: "article",
     themeModes: true,
-    toolsLink: true,
-    styles: blogComponentsCss,
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -1396,7 +1403,6 @@ function softwareFactoryPage() {
 
 function tokenomicsPlannerPage() {
   const canonical = `${SITE_URL}/blog/${tokenomicsPlannerPost.slug}/`;
-  const styles = blogComponentsCss;
   const body = `    <article>
       <header class="hero shell">
         <div>
@@ -1418,7 +1424,7 @@ function tokenomicsPlannerPage() {
             <li><strong>Pick the right harness.</strong> The planner has a picker for Copilot Studio's three harnesses, with Microsoft's own guidance on when to use each:
               <ul>
                 <li><strong>Standard</strong> for rule-based work;</li>
-                <li><strong>GitHub Copilot harness</strong> for complex, multi-step reasoning, usage-billed in Copilot Credits;</li>
+                <li><strong>Microsoft Copilot harness</strong> for complex, multi-step reasoning, usage-billed in Copilot Credits;</li>
                 <li><strong>Customer Conversation</strong> for customer-facing voice and chat, with human escalation.</li>
               </ul>
               It also warns that <strong>bigger isn't better</strong>: a simple task on the most capable harness can cost more without a better result.</li>
@@ -1430,7 +1436,7 @@ function tokenomicsPlannerPage() {
             <p><strong>Why it's a question</strong></p>
             <ul>
               <li>The newest capabilities, such as agents that plan their own multi-step work and natural-sounding voice, are shipping faster than their costs settle.</li>
-              <li>For the GitHub Copilot harness, Microsoft publishes <strong>light / medium / heavy planning bands</strong> instead of a fixed per-event rate, because cost depends on how much work each task turns out to need. Billing on that harness also <strong>starts while you build and test</strong>, not only after you publish.</li>
+              <li>For the Microsoft Copilot harness, Microsoft publishes <strong>light / medium / heavy planning bands</strong> instead of a fixed per-event rate, because cost depends on how much work each task turns out to need. Billing on that harness also <strong>starts while you build and test</strong>, not only after you publish.</li>
               <li>Reasoning models make listed prices unreliable. A Microsoft Research study found that in <strong>21.8% of model comparisons the cheaper-listed model cost more</strong>, by up to <strong>28×</strong>, and the thinking tokens used on the same query varied up to <strong>9.7×</strong> from run to run. The planner widens its ranges for reasoning-heavy work for exactly this reason.</li>
             </ul>
             <p><strong>The facts (US list prices published Oct 2026; check the sources)</strong></p>
@@ -1443,7 +1449,7 @@ function tokenomicsPlannerPage() {
                   <tr><td>Pre-purchase plan</td><td>One-year pool, tiered discounts of about 5–20%</td><td>✅ Published</td></tr>
                   <tr><td>Standard harness rate card</td><td>1 / 2 / 5 / 10 credits (scripted answer / generative answer / action / tenant grounding)</td><td>✅ Published</td></tr>
                   <tr><td>Voice (standard harness)</td><td>Per minute, by tier (classic / generative / premium)</td><td>✅ Published</td></tr>
-                  <tr><td>GitHub Copilot harness, per task</td><td><strong>Noticeably higher</strong> than a comparable standard run; Microsoft publishes planning bands</td><td>⚠️ Range, varies by task</td></tr>
+                  <tr><td>Microsoft Copilot harness, per task</td><td><strong>Noticeably higher</strong> than a comparable standard run; Microsoft publishes planning bands</td><td>⚠️ Range, varies by task</td></tr>
                   <tr><td>Voice on newer harnesses</td><td><strong>Early signals point lower</strong> than today's premium voice</td><td>⚠️ Early, unconfirmed</td></tr>
                   <tr><td>AI Builder</td><td>After <strong>Nov 1, 2026</strong>, new premium licenses no longer include seeded AI Builder credits. Existing credits are honored to the end of term, and add-ons reach end of life. Usage draws AI Builder credits first, then Copilot Credits, and is otherwise blocked. Usage tracking can be delayed 5 or more days.</td><td>✅ Published</td></tr>
                 </tbody>
@@ -1467,7 +1473,7 @@ function tokenomicsPlannerPage() {
           <ul>
             <li>Harnesses in Copilot Studio: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview</a></li>
             <li>Copilot Studio billing rates: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management</a></li>
-            <li>Usage-based billing (GitHub Copilot harness): <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview</a></li>
+            <li>Usage-based billing (Microsoft Copilot harness): <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview</a></li>
             <li>Governing harness consumption: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/govern-credit-consumption" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/govern-credit-consumption</a></li>
             <li>End of AI Builder credits: <a href="https://learn.microsoft.com/en-us/ai-builder/endofaibcredits" rel="noreferrer">https://learn.microsoft.com/en-us/ai-builder/endofaibcredits</a></li>
             <li>Copilot Credits Guide (Oct 2026, PDF): <a href="https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf" rel="noreferrer">https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf</a></li>
@@ -1494,9 +1500,7 @@ function tokenomicsPlannerPage() {
       mainEntityOfPage: canonical
     },
     body,
-    themeModes: true,
-    toolsLink: true,
-    styles
+    themeModes: true
   });
 }
 
@@ -1656,6 +1660,7 @@ export function sitemapEntries(catalog) {
     { url: `${SITE_URL}/blog/`, updated: softwareFactoryPost.date, priority: "0.8" },
     { url: `${SITE_URL}/subscribe/`, updated: catalog.updated, priority: "0.5" },
     { url: `${SITE_URL}/tools/tokenomics/`, updated: "2026-10-29", priority: "0.7" },
+    { url: `${SITE_URL}/tools/`, updated: "2026-10-29", priority: "0.7" },
     ...releases.flatMap((release) => [
       { url: `${SITE_URL}/journal/${release.slug}/`, updated: release.updated, priority: "0.8" },
       { url: `${SITE_URL}/blog/${release.article.slug}/`, updated: release.updated, priority: "0.7" }
@@ -1697,6 +1702,51 @@ ${urls}
 `;
 }
 
+function toolsPage(tools) {
+  const cards = tools.map((tool) => `<article class="release-card tool-card">
+          <span class="status">${escapeHtml(tool.status)}</span>
+          <h2>${escapeHtml(tool.name)}</h2>
+          <p>${escapeHtml(tool.description)}</p>
+          <ul class="tag-list">${tool.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}</ul>
+          <div class="card-actions">${tool.links.map((link, index) => `<a class="button${index === 0 ? " button-primary" : ""} button-small" href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("")}</div>
+        </article>`).join("\n");
+  return page({
+    title: "Tools | Bill Whalen",
+    description: "Live tools and public releases you can use, with write-ups, guides and public source.",
+    canonical: `${SITE_URL}/tools/`,
+    themeModes: true,
+    styles: `${blogComponentsCss}
+.tools-hero { padding-block: 3rem 2rem; }
+.tools-hero h1 { max-width: none; font-size: clamp(2rem, 4vw, 3.25rem); }
+.tool-card { min-width: 0; }
+.tool-card h2 { font-size: 1.65rem; }
+.tool-card .card-actions { margin-top: auto; }`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "Tools",
+      url: `${SITE_URL}/tools/`,
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: tools.map((tool, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: tool.name,
+          url: new URL(tool.links[0].url, SITE_URL).href
+        }))
+      }
+    },
+    body: `    <header class="shell tools-hero">
+      <p class="eyebrow">Tools</p>
+      <h1>Tools you can use.</h1>
+      <p>Live tools and public releases, with write-ups and public resources.</p>
+    </header>
+    <section class="section" aria-label="Available tools">
+      <div class="shell release-grid">${cards}</div>
+    </section>`
+  });
+}
+
 export async function loadCatalog() {
   return JSON.parse(await readFile(resolve(ROOT, "content", "releases.json"), "utf8"));
 }
@@ -1704,7 +1754,9 @@ export async function loadCatalog() {
 export async function buildOutputs() {
   const catalog = await loadCatalog();
   const harnessArticle = await readFile(resolve(ROOT, "content", "copilot-studio-harnesses.html"), "utf8");
+  const tools = JSON.parse(await readFile(resolve(ROOT, "tools", "tools.json"), "utf8"));
   const outputs = new Map([
+    ["tools/index.html", toolsPage(tools)],
     ["tools/tokenomics/index.html", page({
       title: "Tokenomics planner | Bill Whalen",
       description: "Estimate Copilot Credit costs with transparent ranges, sources, harness choices, and business value.",
@@ -1719,8 +1771,7 @@ export async function buildOutputs() {
       },
       body: tokenomicsBody,
       styles: tokenomicsStyles,
-      themeModes: true,
-      toolsLink: true
+      themeModes: true
     })],
     ["journal/index.html", journalIndex(catalog)],
     ["blog/index.html", blogIndex(catalog)],

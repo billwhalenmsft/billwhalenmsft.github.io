@@ -21,9 +21,12 @@
   <script>
   (() => {
     const param = new URLSearchParams(window.location.search).get("scoutTheme");
-    const theme =
-      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const preference = ["light", "dark", "auto"].includes(param) ? param : "auto";
+    const theme = preference === "auto"
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : preference;
     document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.dataset.themePreference = preference;
   })();
 </script>
   <script type="application/ld+json">
@@ -499,6 +502,42 @@
       line-height: 1.08;
       text-wrap: balance;
     }
+    .article-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) min(100%, 72ch) minmax(0, 1fr);
+      width: min(100% - 2rem, 77.5rem);
+    }
+    .article-body > * { grid-column: 2; min-width: 0; }
+    .article-body > .table-wrap, .article-body > .cards { grid-column: 1 / -1; }
+    @media (max-width: 46rem) { .article-body { width: min(100% - 1.25rem, 77.5rem); } }
+    .theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
+    .theme-select {
+      min-height: 2.75rem;
+      margin-left: 0.35rem;
+      padding: 0.4rem 0.65rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font: inherit;
+    }
+    .theme-select:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+    .table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }
+    .article-table { width: 100%; min-width: 38rem; border-collapse: collapse; }
+    .article-table th, .article-table td {
+      padding: 0.65rem 0.75rem;
+      border: 1px solid var(--cp-border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
+    .article-table td { color: var(--cp-text-muted); }
+    .article-body a { overflow-wrap: anywhere; }
+    .article-body .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin-block: 1rem; }
+    .article-body .card, .article-body .tldr { padding: 1rem; border: 1px solid var(--cp-border); border-radius: 0.75rem; background: var(--cp-surface); }
+    .article-body .card p { margin: 0.75rem 0 0; }
+    .article-body .naming-update { border-left: 4px solid var(--cp-warning); }
+    .article-body .src, .article-body footer { color: var(--cp-text-muted); font-size: 0.9rem; }
   </style>
 </head>
 <body>
@@ -513,14 +552,15 @@
       <a href="/">Home</a>
       <a href="/journal/">Solution journal</a>
       <a href="/blog/">Blog</a>
+      <a href="/tools/">Tools</a>
       <a href="/subscribe/">Subscribe</a>
       <a href="/feeds/rss.xml">RSS</a>
     </div>
-    <button class="icon-button" id="themeButton" type="button" aria-label="Switch theme">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-      </svg>
-    </button>
+    <label class="theme-control">Theme <select class="theme-select" id="themeSelect" aria-label="Theme">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="auto" selected>Auto</option>
+    </select></label>
   </nav>
 </header>
   <main id="main">
@@ -593,19 +633,23 @@
   </div>
 </footer>
   <script>
-  const themeButton = document.getElementById("themeButton");
-  themeButton.addEventListener("click", () => {
-    const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = nextTheme;
+  const themeSelect = document.getElementById("themeSelect");
+  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+  themeSelect.value = document.documentElement.dataset.themePreference;
+  function applyThemePreference() {
+    const preference = themeSelect.value;
+    document.documentElement.dataset.themePreference = preference;
+    document.documentElement.dataset.theme = preference === "auto"
+      ? (systemTheme.matches ? "dark" : "light")
+      : preference;
     const url = new URL(window.location.href);
-    url.searchParams.set("scoutTheme", nextTheme);
+    url.searchParams.set("scoutTheme", preference);
     window.history.replaceState({}, "", url);
-    themeButton.setAttribute("aria-label", `Switch to ${nextTheme === "dark" ? "light" : "dark"} theme`);
+  }
+  themeSelect.addEventListener("change", applyThemePreference);
+  systemTheme.addEventListener("change", () => {
+    if (themeSelect.value === "auto") applyThemePreference();
   });
-  themeButton.setAttribute(
-    "aria-label",
-    `Switch to ${document.documentElement.dataset.theme === "dark" ? "light" : "dark"} theme`
-  );
   
 </script>
 </body>

@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Tokenomics planner",
+    "status": "Live",
+    "description": "Size an AI agent's monthly cost as a low / likely / high range, see why every number is what it is, and weigh cost against value.",
+    "links": [
+      { "label": "Open tool", "url": "/tools/tokenomics/" },
+      { "label": "Read the write-up", "url": "/blog/tokenomics-planner/" }
+    ],
+    "tags": ["Copilot Studio", "Cost planning", "Decision support"]
+  },
+  {
+    "name": "Freight Triage Control Tower",
+    "status": "Public release",
+    "description": "A public sample-data browser prototype that models freight email triage as owned, visible work with queue, aging, detail, and resolution views.",
+    "links": [
+      { "label": "Read the journal", "url": "/journal/freight-triage-control-tower/" },
+      { "label": "Public repository", "url": "https://github.com/billwhalenmsft/freight-triage-control-tower" }
+    ],
+    "tags": ["Power Apps Code Apps", "React", "TypeScript", "Operations"]
+  },
+  {
+    "name": "Customer 360 for Entities",
+    "status": "Public release",
+    "description": "An adaptive Dynamics 365 and Dataverse web resource that brings related operational context into the forms where work already happens.",
+    "links": [
+      { "label": "Read the journal", "url": "/journal/customer-360-for-entities/" },
+      { "label": "Public repository", "url": "https://github.com/billwhalenmsft/customer-360-for-entities" }
+    ],
+    "tags": ["Dynamics 365", "Dataverse", "JavaScript", "Model-driven apps"]
+  },
+  {
+    "name": "Agent Team Starter Kit",
+    "status": "Public release",
+    "description": "A configurable generator and template set for scaffolding specialized AI agent roles around a visible GitHub Issues work queue and outcome gates.",
+    "links": [
+      { "label": "Read the journal", "url": "/journal/agent-team-starter-kit/" },
+      { "label": "Public repository", "url": "https://github.com/billwhalenmsft/agent-team-starter-kit" }
+    ],
+    "tags": ["Multi-agent", "GitHub Actions", "Azure Functions", "Azure OpenAI"]
+  },
+  {
+    "name": "D365 Administrator Suite",
+    "status": "Public release",
+    "description": "Make sense of a slow Dynamics 365 experience, review the evidence and plan an improvement a person can verify and reverse.",
+    "links": [
+      { "label": "Read the journal", "url": "/journal/d365-administrator-suite/" },
+      { "label": "Overview and guide", "url": "/d365-administrator-suite/" },
+      { "label": "Download and installation", "url": "/d365-administrator-suite/install.html" }
+    ],
+    "tags": ["Dynamics 365", "Administration", "Performance review", "Copilot Cowork"]
+  },
+  {
+    "name": "Copilot Studio + MCP Lab",
+    "status": "Public release",
+    "description": "A hands-on public lab for deploying a small Model Context Protocol tool server and adding it as a tool in Microsoft Copilot Studio.",
+    "links": [
+      { "label": "Read the journal", "url": "/journal/copilot-studio-mcp-lab/" },
+      { "label": "Public repository", "url": "https://github.com/billwhalenmsft/jokeservermcp" }
+    ],
+    "tags": ["Model Context Protocol", "Copilot Studio", "Azure Container Apps", "TypeScript"]
+  }
+]

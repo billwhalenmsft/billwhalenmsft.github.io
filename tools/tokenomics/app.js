@@ -57,7 +57,7 @@ async function start() {
   $("last-refresh").dateTime = data.lastRefresh;
   $("harness-results").innerHTML = harnesses.map((harness) => evidence(harness.name, harness)).join("");
   $("source-results").innerHTML = [
-    ...Object.entries(rates).map(([key, entry]) => evidence(key, entry)),
+    ...Object.entries(rates).map(([key, entry]) => evidence(entry.name || key, entry)),
     evidence("Planner policy (illustrative)", planning),
     ...harnesses.map((entry) => evidence(entry.name, entry)),
     ...presets.map((entry) => evidence(entry.name, entry))
@@ -134,16 +134,18 @@ async function start() {
       const bandGraphic = `<div class="band-track" role="img" aria-label="Logarithmic credit scale; low ${number(result.low)}, likely ${number(result.likely)}, high ${number(result.high)}">
         <span class="band-fill" style="left:${position(result.low)}%;width:${position(result.high) - position(result.low)}%"></span>
         ${ticks.map((tick) => `<span class="band-mark" style="left:${position(tick.below)}%"><span>${number(tick.below)}</span></span>`).join("")}
-        <span class="band-mark" style="left:${position(result.likely)}%" title="Likely"></span></div>`;
+        <span class="band-mark band-end" style="left:${position(result.low)}%" title="Low"></span>
+        <span class="band-mark band-end" style="left:${position(result.high)}%;transform:translateX(-2px)" title="High"></span>
+        <span class="band-mark band-likely" style="left:${position(result.likely)}%" title="Likely"></span></div>`;
       $("estimate-results").innerHTML = `
-        <div class="planner-card"><h3>Size ${escape(size.name)} · ${result.measured ? "measured" : "estimated"}</h3>
+        <div class="planner-card result-summary"><h3>Size ${escape(size.name)} · ${result.measured ? "measured" : "estimated"}</h3>
           <p class="number">${number(result.likely)} likely credits/month</p>
-          <p>Low ${number(result.low)} / likely ${number(result.likely)} / high ${number(result.high)}</p>
-          ${bandGraphic}<p>Logarithmic scale; ticks mark size boundaries. The dark marker is likely.</p>
-          <p>${policy.sizes.map((entry, index) => `${entry.name}: ${index ? `≥${number(policy.sizes[index - 1].below)}` : "≥0"}${entry.below === null ? "" : ` and <${number(entry.below)}`}`).map(escape).join(" · ")}</p>
+          <p>PAYG: <strong>${money(costs.payg)}/month</strong> (low ${money(result.low * rates.payg.value)} / high ${money(result.high * rates.payg.value)}).</p>
+          <p class="band-labels"><span>Low ${number(result.low)}</span><span> / likely ${number(result.likely)}</span><span> / high ${number(result.high)}</span></p>
+          ${bandGraphic}<p class="chart-note">Logarithmic scale; ticks mark size boundaries. The dark marker is likely.</p>
+          <p class="size-key">${policy.sizes.map((entry, index) => `${entry.name}: ${index ? `≥${number(policy.sizes[index - 1].below)}` : "≥0"}${entry.below === null ? "" : ` and <${number(entry.below)}`}`).map(escape).join(" · ")}</p>
           ${explanation(assumptions + evidence("Size thresholds", planning))}</div>
         <div class="planner-card"><h3>List-price comparison · likely scenario</h3>
-          <p>PAYG: <strong>${money(costs.payg)}/month</strong> (low ${money(result.low * rates.payg.value)} / high ${money(result.high * rates.payg.value)}).</p>
           <p>Packs: <strong>${number(costs.packs)}</strong> for ${number(costs.packs * rates.pack.value)} credits/month.
           Pack price unavailable; PAYG-equivalent capacity value ${money(costs.packEquivalent)}/month — not a pack quote.</p>
           <p>P3: <strong>${money(costs.p3.cost)}/month equivalent</strong>, ${number(costs.p3.credits)}-credit commitment at ${number(costs.p3.discount * 100)}% off, including modeled PAYG overflow.</p>

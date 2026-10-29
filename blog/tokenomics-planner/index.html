@@ -502,6 +502,14 @@
       line-height: 1.08;
       text-wrap: balance;
     }
+    .article-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) min(100%, 72ch) minmax(0, 1fr);
+      width: min(100% - 2rem, 77.5rem);
+    }
+    .article-body > * { grid-column: 2; min-width: 0; }
+    .article-body > .table-wrap, .article-body > .cards { grid-column: 1 / -1; }
+    @media (max-width: 46rem) { .article-body { width: min(100% - 1.25rem, 77.5rem); } }
     .theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
     .theme-select {
       min-height: 2.75rem;
@@ -544,7 +552,7 @@
       <a href="/">Home</a>
       <a href="/journal/">Solution journal</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/tokenomics/">Tools</a>
+      <a href="/tools/">Tools</a>
       <a href="/subscribe/">Subscribe</a>
       <a href="/feeds/rss.xml">RSS</a>
     </div>
@@ -577,7 +585,7 @@
             <li><strong>Pick the right harness.</strong> The planner has a picker for Copilot Studio's three harnesses, with Microsoft's own guidance on when to use each:
               <ul>
                 <li><strong>Standard</strong> for rule-based work;</li>
-                <li><strong>GitHub Copilot harness</strong> for complex, multi-step reasoning, usage-billed in Copilot Credits;</li>
+                <li><strong>Microsoft Copilot harness</strong> for complex, multi-step reasoning, usage-billed in Copilot Credits;</li>
                 <li><strong>Customer Conversation</strong> for customer-facing voice and chat, with human escalation.</li>
               </ul>
               It also warns that <strong>bigger isn't better</strong>: a simple task on the most capable harness can cost more without a better result.</li>
@@ -589,7 +597,7 @@
             <p><strong>Why it's a question</strong></p>
             <ul>
               <li>The newest capabilities, such as agents that plan their own multi-step work and natural-sounding voice, are shipping faster than their costs settle.</li>
-              <li>For the GitHub Copilot harness, Microsoft publishes <strong>light / medium / heavy planning bands</strong> instead of a fixed per-event rate, because cost depends on how much work each task turns out to need. Billing on that harness also <strong>starts while you build and test</strong>, not only after you publish.</li>
+              <li>For the Microsoft Copilot harness, Microsoft publishes <strong>light / medium / heavy planning bands</strong> instead of a fixed per-event rate, because cost depends on how much work each task turns out to need. Billing on that harness also <strong>starts while you build and test</strong>, not only after you publish.</li>
               <li>Reasoning models make listed prices unreliable. A Microsoft Research study found that in <strong>21.8% of model comparisons the cheaper-listed model cost more</strong>, by up to <strong>28×</strong>, and the thinking tokens used on the same query varied up to <strong>9.7×</strong> from run to run. The planner widens its ranges for reasoning-heavy work for exactly this reason.</li>
             </ul>
             <p><strong>The facts (US list prices published Oct 2026; check the sources)</strong></p>
@@ -602,7 +610,7 @@
                   <tr><td>Pre-purchase plan</td><td>One-year pool, tiered discounts of about 5–20%</td><td>✅ Published</td></tr>
                   <tr><td>Standard harness rate card</td><td>1 / 2 / 5 / 10 credits (scripted answer / generative answer / action / tenant grounding)</td><td>✅ Published</td></tr>
                   <tr><td>Voice (standard harness)</td><td>Per minute, by tier (classic / generative / premium)</td><td>✅ Published</td></tr>
-                  <tr><td>GitHub Copilot harness, per task</td><td><strong>Noticeably higher</strong> than a comparable standard run; Microsoft publishes planning bands</td><td>⚠️ Range, varies by task</td></tr>
+                  <tr><td>Microsoft Copilot harness, per task</td><td><strong>Noticeably higher</strong> than a comparable standard run; Microsoft publishes planning bands</td><td>⚠️ Range, varies by task</td></tr>
                   <tr><td>Voice on newer harnesses</td><td><strong>Early signals point lower</strong> than today's premium voice</td><td>⚠️ Early, unconfirmed</td></tr>
                   <tr><td>AI Builder</td><td>After <strong>Nov 1, 2026</strong>, new premium licenses no longer include seeded AI Builder credits. Existing credits are honored to the end of term, and add-ons reach end of life. Usage draws AI Builder credits first, then Copilot Credits, and is otherwise blocked. Usage tracking can be delayed 5 or more days.</td><td>✅ Published</td></tr>
                 </tbody>
@@ -626,7 +634,7 @@
           <ul>
             <li>Harnesses in Copilot Studio: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview</a></li>
             <li>Copilot Studio billing rates: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management</a></li>
-            <li>Usage-based billing (GitHub Copilot harness): <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview</a></li>
+            <li>Usage-based billing (Microsoft Copilot harness): <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview</a></li>
             <li>Governing harness consumption: <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/govern-credit-consumption" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/govern-credit-consumption</a></li>
             <li>End of AI Builder credits: <a href="https://learn.microsoft.com/en-us/ai-builder/endofaibcredits" rel="noreferrer">https://learn.microsoft.com/en-us/ai-builder/endofaibcredits</a></li>
             <li>Copilot Credits Guide (Oct 2026, PDF): <a href="https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf" rel="noreferrer">https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf</a></li>

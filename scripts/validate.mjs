@@ -496,6 +496,8 @@ for (const [relativePath, html] of diskHtml) {
     check(/font-size: clamp\(2\.25rem, 4\.5vw, 4rem\);/.test(titleStyles), `${relativePath}: blog title must use responsive sizing.`);
     check(/line-height: 1\.08;/.test(titleStyles), `${relativePath}: blog title must use compact line spacing.`);
     check(/text-wrap: balance;/.test(titleStyles), `${relativePath}: blog title must balance wrapped lines.`);
+    check(html.includes("grid-template-columns: minmax(0, 1fr) min(100%, 72ch) minmax(0, 1fr);"), `${relativePath}: blog body must use the shared 72ch reading column.`);
+    check(html.includes('id="themeSelect"'), `${relativePath}: blog posts must offer Light, Dark and Auto.`);
   }
 }
 pass("Full-width responsive hero titles scoped to all blog posts checked.");
@@ -538,7 +540,19 @@ check(
 const tokenomicsPlannerHtml = outputs.get("blog/tokenomics-planner/index.html");
 check(tokenomicsPlannerHtml.includes('href="/tools/tokenomics/">Try the live planner →</a>'), "Tokenomics post must link prominently to the live planner.");
 const livePlannerHtml = outputs.get("tools/tokenomics/index.html");
-check(livePlannerHtml.includes('href="/tools/tokenomics/">Tools</a>'), "Live planner must have a Tools navigation link.");
+check(livePlannerHtml.includes('href="/tools/">Tools</a>'), "Live planner must link to the tools directory.");
+check(livePlannerHtml.includes("font-size: clamp(2rem, 4vw, 3.25rem);"), "Planner title must use the requested sizing.");
+check(livePlannerHtml.includes('class="estimate-layout"'), "Planner must share an input/result layout.");
+check(livePlannerHtml.includes("@media (min-width: 1024px)"), "Planner must start the desktop layout at 1024px.");
+check(/#estimate-results \{ position: sticky;/.test(livePlannerHtml), "Desktop planner results must be sticky.");
+const boundaryStyles = livePlannerHtml.match(/\.boundary \{([^}]+)\}/)?.[1] || "";
+check(!/position:\s*(fixed|sticky|absolute)/.test(boundaryStyles), "Planner disclaimer must remain in normal flow.");
+check(livePlannerHtml.includes(".band-likely { border-left: 6px solid"), "Likely marker must be thicker than the boundary ticks.");
+check(livePlannerHtml.includes(".planner select option, .theme-select option { background: var(--cp-surface); color: var(--cp-text); }"), "Native options must use explicit theme colors.");
+check(livePlannerHtml.includes("Formerly the GitHub Copilot harness (renamed Oct 28, 2026). Same harness; no change to capabilities or billing."), "Planner must explain the harness rename.");
+const plannerData = await readJson("tools/tokenomics/data/rates.json");
+check(plannerData.harnesses.find((entry) => entry.id === "github")?.name === "Microsoft Copilot harness", "Planner must rename the harness without changing its ID.");
+check(plannerData.rates.github.name === "Microsoft Copilot harness", "Source rate card must use the new harness label.");
 check(livePlannerHtml.includes('src="./app.js"'), "Live planner must load the local ES module.");
 check(livePlannerHtml.includes("Estimates, not quotes or licensing guidance."), "Live planner must retain its public boundary.");
 check(["estimate", "why", "harness", "value", "sources"].every((id) => livePlannerHtml.includes(`id="${id}" role="tabpanel"`)), "Live planner must expose all five screens.");
@@ -571,7 +585,32 @@ check(
   "Tokenomics planner must include the complete public boundary."
 );
 
+const tools = await readJson("tools/tools.json");
+const toolsHtml = outputs.get("tools/index.html");
+check(tools[0]?.name === "Tokenomics planner" && tools[0]?.status === "Live", "The live planner must be the first tool.");
+check((toolsHtml.match(/class="release-card tool-card"/g) || []).length === tools.length, "Every tool data entry must render a card.");
+const approvedToolLinks = new Set([
+  "/tools/tokenomics/", "/blog/tokenomics-planner/",
+  ...ordered.flatMap((release) => [
+    `/journal/${release.slug}/`, `/blog/${release.article.slug}/`,
+    ...release.sourceUrls,
+    ...(release.publicLinks || []).flatMap((link) => [
+      link.url, link.url.startsWith(SITE_URL) ? link.url.slice(SITE_URL.length) : link.url
+    ])
+  ])
+]);
+for (const tool of tools) {
+  for (const field of ["name", "status", "description"]) check(isNonEmptyString(tool[field]), `Tool ${tool.name}: missing ${field}.`);
+  requireStrings(tool.tags, "tags", tool.name);
+  check(["Live", "Public release"].includes(tool.status), `Tool ${tool.name}: invalid status.`);
+  check(Array.isArray(tool.links) && tool.links.length >= 2, `Tool ${tool.name}: provide the tool and write-up links.`);
+  for (const link of tool.links) {
+    check(isNonEmptyString(link.label), `Tool ${tool.name}: missing link label.`);
+    check(approvedToolLinks.has(link.url), `Tool ${tool.name}: link must already be public and approved: ${link.url}`);
+  }
+}
 for (const [relativePath, html] of diskHtml) {
+  check(html.includes('href="/tools/">Tools</a>'), `${relativePath}: missing Tools directory link.`);
   const pageIds = new Set(idsIn(html));
   for (const match of html.matchAll(/href="([^"]+)"/g)) {
     const href = match[1];

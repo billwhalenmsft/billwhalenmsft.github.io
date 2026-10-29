@@ -501,6 +501,14 @@
       line-height: 1.08;
       text-wrap: balance;
     }
+    .article-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) min(100%, 72ch) minmax(0, 1fr);
+      width: min(100% - 2rem, 77.5rem);
+    }
+    .article-body > * { grid-column: 2; min-width: 0; }
+    .article-body > .table-wrap, .article-body > .cards { grid-column: 1 / -1; }
+    @media (max-width: 46rem) { .article-body { width: min(100% - 1.25rem, 77.5rem); } }
     .theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
     .theme-select {
       min-height: 2.75rem;
@@ -543,7 +551,7 @@
       <a href="/">Home</a>
       <a href="/journal/">Solution journal</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/tokenomics/">Tools</a>
+      <a href="/tools/">Tools</a>
       <a href="/subscribe/">Subscribe</a>
       <a href="/feeds/rss.xml">RSS</a>
     </div>

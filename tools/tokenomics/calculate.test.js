@@ -53,6 +53,15 @@ test("reasoning widens extremes without changing likely", () => {
   });
 });
 
+test("Microsoft Copilot harness rename preserves IDs and planning arithmetic", () => {
+  const harness = data.harnesses.find((entry) => entry.id === "github");
+  assert.equal(harness.name, "Microsoft Copilot harness");
+  assert.equal(harness.value, "github");
+  assert.equal(data.rates.github.name, harness.name);
+  const result = estimate({ users: 10, runs: 20, band, factor: data.rates[harness.value] });
+  assert.deepEqual(result, { low: 20000, likely: 108000, high: 360000, measured: false });
+});
+
 test("every rate, preset, harness, and policy has public provenance", () => {
   for (const entry of [...Object.values(data.rates), data.planning, ...data.presets, ...data.harnesses]) {
     assert.ok("value" in entry || ["low", "likely", "high"].every((key) => Number.isFinite(entry[key])));

@@ -37,6 +37,16 @@ not licensing guidance. Keep size thresholds ordered with a final `below: null`.
 
 ## Calculation conventions
 
+The Microsoft Copilot harness retains the internal `github` ID and rate
+reference for compatibility. Its current name is data-driven across the picker,
+explanations and source cards; the form notes the October 28, 2026 rename.
+
+At widths of 1024px and up, inputs and results use two columns. Results stay
+sticky below navigation, with their own scroll region for expanded evidence.
+On smaller screens results follow the inputs. Low/high dashed markers and a
+thicker contrasting likely marker supplement the numeric range labels.
+The disclaimer remains in normal document flow.
+
 - Credits/month = users × runs/user/month × credits/run × harness factor.
 - Reasoning-heavy estimates divide low and multiply high by the widening
   factor; likely is unchanged. The factor is illustrative, not a research rate.

@@ -34,6 +34,7 @@
       "why": "These are today's published voice tiers. The likely scenario uses generative voice; low and high use classic and premium."
     },
     "github": {
+      "name":"Microsoft Copilot harness",
       "low":1,"likely":3,"high":6, "unit": "times a comparable standard run", "confidence": "range", "asOf": "2026-10-29",
       "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview",
       "why": "Billed on tokens, tools and the harness itself, and charges start while you build and test. Microsoft publishes light / medium / heavy planning bands instead of a fixed rate because effort varies by task. This range is an illustrative planning band, not a Microsoft rate. Replace it with your pilot measurement."
@@ -62,7 +63,7 @@
   },
   "harnesses": [
     {"id":"standard","value":1,"unit":"baseline factor","name":"Standard","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview","why":"Use for rule-based, predictable tasks. This is the baseline against which illustrative factors are compared."},
-    {"id":"github","value":"github","unit":"rate reference","name":"GitHub Copilot","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview","why":"Use for complex multi-step reasoning. The factor is a planning band, not a fixed published rate."},
+    {"id":"github","value":"github","unit":"rate reference","name":"Microsoft Copilot harness","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview","why":"Use for complex multi-step reasoning. The factor is a planning band, not a fixed published rate."},
     {"id":"conversation","value":1,"unit":"illustrative non-voice baseline factor","name":"Customer Conversation","confidence":"early","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview","why":"Use for voice/chat with human escalation. Non-voice estimates provisionally use the standard baseline; voice uses the newer-harness range. Measure your actual workload."}
   ],
   "presets": [

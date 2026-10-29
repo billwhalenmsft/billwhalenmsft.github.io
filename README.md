@@ -48,6 +48,16 @@ The complete approval gate is in `docs/release-approval-checklist.md`. There is 
 
 ## Publish with GitHub Pages
 
+The `/tools/` directory is generated from `tools/tools.json`. Each card has a
+name, status, description, links and tags. Add only usable live tools or
+already-public releases, using the public links already approved in the journal
+catalog. Run `npm run generate` and `npm test` after data edits; cards are
+rendered into static HTML and do not require JavaScript.
+
+All blog posts use one shared full-width title rule and a centered 72ch reading
+column in `scripts/site.mjs`. Tables and harness cards may span the full shell;
+wide tables scroll inside their own region on phones.
+
 The harness guide at `/blog/copilot-studio-harnesses/` is a Builder's Log post,
 dated October 29, 2026. Its article body lives in
 `content/copilot-studio-harnesses.html`; the shared generator supplies the site

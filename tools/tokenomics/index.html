@@ -494,27 +494,46 @@
     html[data-theme="dark"] { --cp-accent: #75baff; --cp-accent-hover: #a4d2ff; --cp-accent-soft: #20364d; }
     html[data-brand="atomic"] { --cp-accent: var(--cp-link); font-family: "Segoe UI", sans-serif; }
     .planner { padding-top: 2rem; padding-bottom: 2rem; }
-    .planner h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
-    .planner h2 { margin-top: 1.5rem; }
-    .planner label, .theme-control { display: grid; gap: .35rem; font-weight: 600; }
+    .planner h1 { max-width: none; font-size: clamp(2rem, 4vw, 3.25rem); }
+    .planner h2 { margin: 1.5rem 0 1rem; font-size: clamp(1.5rem, 3vw, 2rem); }
+    .planner label, .theme-control { display: grid; align-content: start; gap: .35rem; font-weight: 600; }
     .planner input, .planner select, .theme-select { width: 100%; min-width: 0; padding: .65rem; border: 1px solid var(--cp-border-strong); border-radius: .5rem; background: var(--cp-surface); color: var(--cp-text); font: inherit; }
+    .planner select option, .theme-select option { background: var(--cp-surface); color: var(--cp-text); }
+    .planner fieldset { min-width: 0; margin-inline: 0; }
+    .field-help { font-size: .85rem; font-weight: 400; color: var(--cp-text-muted); }
+    .estimate-layout > * { min-width: 0; }
+    @media (min-width: 1024px) {
+      .estimate-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 1.5rem; }
+      #estimate-results { position: sticky; top: 6.5rem; max-height: calc(100dvh - 7.5rem); overflow-y: auto; padding: 0 .25rem; }
+      #estimate-results > .planner-card:first-child { margin-top: 0; }
+    }
     .planner input:focus-visible, .planner select:focus-visible, .theme-select:focus-visible, .tabs button:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 2px; }
-    .planner-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1rem; margin: 1rem 0; }
+    .planner-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); align-items: start; gap: 1rem; margin: 1rem 0; }
     .planner-card, .planner details { padding: 1rem; margin: 1rem 0; border: 1px solid var(--cp-border); border-radius: .75rem; background: var(--cp-surface); }
     .planner summary { cursor: pointer; font-weight: 700; }
+    #estimate-results .planner-card p { margin-bottom: .65rem; }
+    #estimate-results .planner-card h3 { margin-bottom: .65rem; }
+    .result-summary .chart-note, .result-summary .size-key { font-size: .85rem; line-height: 1.4; }
+    .result-summary details { margin: .65rem 0 0; padding: .65rem; }
     .planner a { color: var(--cp-link); overflow-wrap: anywhere; }
     .tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0; }
     .tabs button { padding: .7rem; border: 1px solid var(--cp-border-strong); border-radius: .5rem; color: var(--cp-text); background: var(--cp-surface); font: inherit; cursor: pointer; }
-    .tabs button[aria-selected="true"] { border-color: var(--cp-accent); background: var(--cp-accent-soft); }
+    .tabs button[aria-selected="true"] { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); font-weight: 700; box-shadow: inset 0 -3px 0 var(--cp-text); }
     [hidden] { display: none !important; }
     .band-track { height: 2rem; position: relative; margin: 1rem 0 3rem; background: var(--cp-surface-soft); border: 1px solid var(--cp-border-strong); }
     .band-fill { position: absolute; top: .4rem; height: 1rem; min-width: 3px; background: var(--cp-accent); }
     .band-mark { position: absolute; top: 0; height: 2rem; border-left: 2px solid var(--cp-text); }
     .band-mark span { display: block; position: absolute; top: 2.2rem; transform: translateX(-50%); white-space: nowrap; font-size: .75rem; }
+    .band-likely { border-left: 6px solid var(--cp-text); outline: 2px solid var(--cp-surface); z-index: 2; transform: translateX(-3px); }
+    .band-end { border-left-style: dashed; }
+    .band-labels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; font-size: .85rem; }
+    .band-labels span:nth-child(2) { text-align: center; font-weight: 700; }
+    .band-labels span:last-child { text-align: right; }
+    .band-labels span { overflow-wrap: anywhere; }
     .planner table { width: 100%; border-collapse: collapse; }
     .planner th, .planner td { text-align: left; padding: .65rem; border-bottom: 1px solid var(--cp-border); }
     .table-scroll { overflow-x: auto; }
-    .boundary { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; border-top: 2px solid var(--cp-accent); padding: .75rem 1rem; margin: 0; background: var(--cp-surface); color: var(--cp-text); font-size: .85rem; line-height: 1.4; }
+    .boundary { border-top: 2px solid var(--cp-accent); padding: .75rem 1rem; margin: 0; background: var(--cp-surface); color: var(--cp-text); font-size: .85rem; line-height: 1.4; }
     .formula { overflow-wrap: anywhere; }
     .number { font-size: 1.35rem; font-weight: 700; }
     .badge { font-weight: 700; }
@@ -534,7 +553,7 @@
       <a href="/">Home</a>
       <a href="/journal/">Solution journal</a>
       <a href="/blog/">Blog</a>
-      <a href="/tools/tokenomics/">Tools</a>
+      <a href="/tools/">Tools</a>
       <a href="/subscribe/">Subscribe</a>
       <a href="/feeds/rss.xml">RSS</a>
     </div>
@@ -561,12 +580,14 @@
       </div>
       <section id="estimate" role="tabpanel" aria-labelledby="tab-estimate">
         <h2>Estimate</h2>
+        <div class="estimate-layout">
+        <div class="estimate-inputs">
         <form id="workload" novalidate>
           <div class="planner-grid">
             <label>Use-case preset<select id="preset"></select></label>
             <label>Users<input id="users" type="number" min="0" max="1000000000" step="1"></label>
             <label><span id="runs-label">Runs per user per month</span><input id="runs" type="number" min="0" max="1000000000" step="any"></label>
-            <label>Harness<select id="harness-choice"></select></label>
+            <label>Harness<select id="harness-choice" aria-describedby="harness-help"></select><span class="field-help" id="harness-help">Formerly the GitHub Copilot harness (renamed Oct 28, 2026). Same harness; no change to capabilities or billing.</span></label>
           </div>
           <fieldset><legend>Editable illustrative credits per run (per minute for voice)</legend>
             <div class="planner-grid">
@@ -582,7 +603,9 @@
         </form>
         <p class="formula">credits/month = users × runs/user/month × credits/run × harness factor</p>
         <p id="input-error" role="alert"></p>
+        </div>
         <div id="estimate-results" aria-live="polite"></div>
+        </div>
       </section>
       <section id="why" role="tabpanel" aria-labelledby="tab-why" hidden>
         <h2>Why these numbers</h2>
