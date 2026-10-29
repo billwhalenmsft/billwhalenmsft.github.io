@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="atomic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Microsoft renamed the GitHub Copilot harness to the Microsoft Copilot harness. Here&#39;s what each Copilot Studio harness is for, which to pick, and how to think about agents you&#39;ve already built.">
+  <meta name="author" content="Bill Whalen">
+  <meta name="theme-color" content="#0057B8">
+  <link rel="canonical" href="https://billwhalenmsft.github.io/blog/copilot-studio-harnesses/">
+  <link rel="alternate" type="application/rss+xml" title="Bill Whalen solution journal RSS" href="https://billwhalenmsft.github.io/feeds/rss.xml">
+  <link rel="alternate" type="application/atom+xml" title="Bill Whalen solution journal Atom" href="https://billwhalenmsft.github.io/feeds/atom.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses">
+  <meta property="og:description" content="Microsoft renamed the GitHub Copilot harness to the Microsoft Copilot harness. Here&#39;s what each Copilot Studio harness is for, which to pick, and how to think about agents you&#39;ve already built.">
+  <meta property="og:url" content="https://billwhalenmsft.github.io/blog/copilot-studio-harnesses/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses">
+  <meta name="twitter:description" content="Microsoft renamed the GitHub Copilot harness to the Microsoft Copilot harness. Here&#39;s what each Copilot Studio harness is for, which to pick, and how to think about agents you&#39;ve already built.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
+  <title>The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses</title>
+  <script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const preference = ["light", "dark", "auto"].includes(param) ? param : "auto";
+    const theme = preference === "auto"
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : preference;
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.dataset.themePreference = preference;
+  })();
+</script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses",
+      "datePublished": "2026-10-29",
+      "dateModified": "2026-10-29",
+      "author": {
+        "@type": "Person",
+        "name": "Bill Whalen",
+        "url": "https://billwhalenmsft.github.io"
+      },
+      "mainEntityOfPage": "https://billwhalenmsft.github.io/blog/copilot-studio-harnesses/"
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    html[data-brand="atomic"] {
+      color-scheme: light;
+      --cp-bg: #FFFFFF;
+      --cp-bg-elevated: #FFFFFF;
+      --cp-surface: #FFFFFF;
+      --cp-surface-soft: #EAF3FF;
+      --cp-border: #B9CAE0;
+      --cp-border-strong: #0057B8;
+      --cp-text: #142D4E;
+      --cp-text-muted: #003B7A;
+      --cp-text-soft: #142D4E;
+      --cp-accent: #0057B8;
+      --cp-accent-hover: #003B7A;
+      --cp-accent-soft: #EAF3FF;
+      --cp-accent-fg: #FFFFFF;
+      --cp-link: #003B7A;
+      --cp-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.14);
+      --cp-overlay: rgba(20, 45, 78, 0.48);
+      --cp-panel: #FFFFFF;
+      --cp-panel-strong: #FFFFFF;
+      --cp-sheen: #FFFFFF;
+      --cp-highlight: #EAF3FF;
+      --cp-grid: rgba(185, 202, 224, 0.42);
+    }
+    html[data-brand="atomic"][data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #07182C;
+      --cp-bg-elevated: #0A1E36;
+      --cp-surface: #0D2745;
+      --cp-surface-soft: #122F52;
+      --cp-border: #365D85;
+      --cp-border-strong: #78B4F8;
+      --cp-text: #F5F9FF;
+      --cp-text-muted: #B9D8FA;
+      --cp-text-soft: #DFEEFF;
+      --cp-accent: #78B4F8;
+      --cp-accent-hover: #A8D2FF;
+      --cp-accent-soft: #122F52;
+      --cp-accent-fg: #07182C;
+      --cp-link: #A8D2FF;
+      --cp-shadow: 0 0 2px rgba(120, 180, 248, 0.24), 0 1px 2px rgba(0, 0, 0, 0.3);
+      --cp-overlay: rgba(2, 12, 24, 0.78);
+      --cp-panel: #0D2745;
+      --cp-panel-strong: #0D2745;
+      --cp-sheen: #0D2745;
+      --cp-highlight: #173B64;
+      --cp-grid: rgba(54, 93, 133, 0.24);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    body {
+      min-width: 0;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      text-rendering: optimizeLegibility;
+    }
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(to right, var(--cp-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--cp-grid) 1px, transparent 1px);
+      background-size: 5rem 5rem;
+      content: "";
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    a { color: var(--cp-link); }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: var(--cp-accent-soft); }
+    button { color: inherit; }
+    svg { display: block; max-width: 100%; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.08; letter-spacing: -0.035em; }
+    h1 { max-width: 15ch; font-size: clamp(2.75rem, 8vw, 5.5rem); }
+    h2 { font-size: clamp(1.85rem, 4vw, 3rem); }
+    h3 { font-size: 1.15rem; }
+    .shell { width: min(100% - 2rem, 77.5rem); margin-inline: auto; }
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 50;
+      padding: 0.65rem 0.85rem;
+      border-radius: 0.625rem;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font-weight: 800;
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    :focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-panel-strong);
+    }
+    .nav {
+      display: flex;
+      min-height: 5.5rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--cp-text);
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 2.55rem;
+      height: 2.55rem;
+      place-items: center;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-accent);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+    .brand-copy { display: grid; color: var(--cp-text); line-height: 1.1; }
+    .brand-copy small {
+      margin-top: 0.28rem;
+      color: var(--cp-text-muted);
+      font-size: 0.61rem;
+      font-weight: 700;
+      letter-spacing: 0.17em;
+    }
+    .nav-links, .footer-links, .hero-actions, .card-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+    .nav-links a, .footer-links a {
+      color: var(--cp-text-muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .nav-links a:hover, .footer-links a:hover { color: var(--cp-accent); }
+    .icon-button {
+      display: grid;
+      width: 2.75rem;
+      height: 2.75rem;
+      place-items: center;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      cursor: pointer;
+    }
+    .icon-button:hover { border-color: var(--cp-border-strong); color: var(--cp-accent); }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+      align-items: center;
+      gap: clamp(2rem, 6vw, 5rem);
+      padding-block: clamp(4.5rem, 9vw, 7rem);
+    }
+    .hero-copy { max-width: 46rem; color: var(--cp-text-muted); font-size: clamp(1rem, 2.4vw, 1.22rem); }
+    .eyebrow, .section-kicker, .label {
+      color: var(--cp-accent);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .button {
+      display: inline-flex;
+      min-height: 2.75rem;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 0.95rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font-weight: 750;
+      text-decoration: none;
+    }
+    .button:hover { border-color: var(--cp-border-strong); }
+    .button-primary { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .button-primary:hover { background: var(--cp-accent-hover); }
+    .button-small { min-height: 2.75rem; padding: 0.48rem 0.72rem; font-size: 0.82rem; }
+    .evidence-card, .panel, .release-card {
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .evidence-card { padding: 1.5rem; }
+    .evidence-card strong { display: block; margin: 0.5rem 0; font-size: 1.25rem; }
+    .evidence-card p { margin-bottom: 0; color: var(--cp-text-muted); }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.7rem;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .status::before {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--cp-success);
+      content: "";
+    }
+    .status-info::before { background: var(--cp-warning); }
+    .section { padding-block: clamp(4rem, 8vw, 6.5rem); border-top: 1px solid var(--cp-border); }
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.65fr);
+      align-items: end;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .section-heading p { margin-bottom: 0; color: var(--cp-text-muted); }
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .filter-chip {
+      min-height: 2.75rem;
+      padding: 0.5rem 0.8rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface);
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .filter-chip[aria-pressed="true"] { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .search {
+      width: min(20rem, 100%);
+      min-height: 2.75rem;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+    }
+    .release-grid, .detail-grid, .flow-grid, .split-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .release-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .release-card {
+      display: flex;
+      min-height: 24rem;
+      flex-direction: column;
+      padding: 1.3rem;
+    }
+    .release-card p { color: var(--cp-text-muted); }
+    .release-card .card-actions { margin-top: auto; padding-top: 1rem; }
+    .tag-list, .plain-list, .source-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1rem; }
+    .tag-list li {
+      padding: 0.3rem 0.55rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .flow-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { padding: clamp(1.25rem, 3vw, 2rem); }
+    .panel p:last-child, .panel ul:last-child { margin-bottom: 0; }
+    .panel p, .plain-list, .source-list { color: var(--cp-text-muted); }
+    .plain-list li, .source-list li { position: relative; padding: 0.65rem 0 0.65rem 1.1rem; border-bottom: 1px solid var(--cp-border); }
+    .plain-list li:last-child, .source-list li:last-child { border-bottom: 0; }
+    .plain-list li::before, .source-list li::before {
+      position: absolute;
+      top: 1.28rem;
+      left: 0;
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 50%;
+      background: var(--cp-accent);
+      content: "";
+    }
+    .source-list small { display: block; margin-top: 0.25rem; color: var(--cp-text-muted); }
+    .detail-grid { grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.65fr); }
+    .split-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .architecture {
+      padding: clamp(1rem, 3vw, 2rem);
+      overflow: hidden;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface-soft);
+    }
+    .architecture svg { width: 100%; height: auto; color: var(--cp-text); }
+    .architecture .node { fill: var(--cp-surface); stroke: var(--cp-border-strong); }
+    .architecture .arrow { stroke: var(--cp-accent); }
+    .architecture text { fill: var(--cp-text); font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+    .architecture .node-index { fill: var(--cp-accent); font-family: Consolas, "Courier New", Courier, monospace; font-weight: 800; }
+    .architecture-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+    .architecture-note { padding: 1rem; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface); }
+    .architecture-note p { margin: 0.35rem 0 0; color: var(--cp-text-muted); font-size: 0.88rem; }
+    .callout {
+      margin: 1.5rem 0;
+      padding: 1rem 1.2rem;
+      border-left: 3px solid var(--cp-accent);
+      background: var(--cp-accent-soft);
+    }
+    .callout p:last-child { margin-bottom: 0; }
+    .article-body { width: min(100%, 52rem); }
+    .article-body > p { color: var(--cp-text-muted); font-size: 1.05rem; }
+    .article-body h2 { margin-top: 3rem; }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      margin: 1rem 0 1.5rem;
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.76rem;
+    }
+    .activity-line {
+      margin: 0 0 1rem;
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.76rem;
+    }
+    .result-count { margin: -0.5rem 0 1rem; color: var(--cp-text-muted); font-size: 0.82rem; }
+    .journal-lane + .journal-lane { margin-top: 3rem; }
+    .lane-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .lane-heading h3 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+    .lane-heading p { max-width: 40rem; margin: 0; color: var(--cp-text-muted); font-size: 0.88rem; }
+    .info-boundary {
+      margin: 0 0 1rem;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--cp-warning);
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+    }
+    .no-results { padding: 2rem; border: 1px dashed var(--cp-border-strong); border-radius: 16px; text-align: center; }
+    .site-footer { padding-block: 2rem; border-top: 1px solid var(--cp-border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .footer-inner p { max-width: 48rem; margin: 0; color: var(--cp-text-muted); font-size: 0.8rem; }
+    @media (max-width: 62rem) {
+      .release-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero, .detail-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 46rem) {
+      html { scroll-padding-top: 5rem; }
+      .shell { width: min(100% - 1.25rem, 77.5rem); }
+      .nav { min-height: 4.5rem; flex-wrap: wrap; padding-block: 0.5rem; }
+      .nav-links { order: 3; width: 100%; justify-content: space-between; padding-bottom: 0.5rem; }
+      .section-heading, .flow-grid, .release-grid, .split-grid, .architecture-notes { grid-template-columns: 1fr; }
+      .filter-bar { align-items: stretch; flex-direction: column; }
+      .lane-heading { align-items: flex-start; flex-direction: column; }
+      .search { width: 100%; }
+      .release-card { min-height: auto; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 23rem) {
+      .brand-copy small { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+    .hero.shell { grid-template-columns: minmax(0, 1fr); }
+    .hero.shell h1 {
+      max-width: none;
+      font-size: clamp(2.25rem, 4.5vw, 4rem);
+      line-height: 1.08;
+      text-wrap: balance;
+    }
+    .theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
+    .theme-select {
+      min-height: 2.75rem;
+      margin-left: 0.35rem;
+      padding: 0.4rem 0.65rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font: inherit;
+    }
+    .theme-select:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+    .table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }
+    .article-table { width: 100%; min-width: 38rem; border-collapse: collapse; }
+    .article-table th, .article-table td {
+      padding: 0.65rem 0.75rem;
+      border: 1px solid var(--cp-border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
+    .article-table td { color: var(--cp-text-muted); }
+    .article-body a { overflow-wrap: anywhere; }
+    .article-body .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin-block: 1rem; }
+    .article-body .card, .article-body .tldr { padding: 1rem; border: 1px solid var(--cp-border); border-radius: 0.75rem; background: var(--cp-surface); }
+    .article-body .card p { margin: 0.75rem 0 0; }
+    .article-body .naming-update { border-left: 4px solid var(--cp-warning); }
+    .article-body .src, .article-body footer { color: var(--cp-text-muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+  <nav class="nav shell" aria-label="Primary navigation">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">BW</span>
+      <span class="brand-copy"><strong>Bill Whalen</strong><small>THE ATOMIC COLLECTION</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/journal/">Solution journal</a>
+      <a href="/blog/">Blog</a>
+      <a href="/tools/tokenomics/">Tools</a>
+      <a href="/subscribe/">Subscribe</a>
+      <a href="/feeds/rss.xml">RSS</a>
+    </div>
+    <label class="theme-control">Theme <select class="theme-select" id="themeSelect" aria-label="Theme">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="auto" selected>Auto</option>
+    </select></label>
+  </nav>
+</header>
+  <main id="main">
+    <article>
+      <header class="hero shell">
+        <div>
+          <p class="eyebrow">Builder's Log · Copilot Studio · October 2026</p>
+          <h1>The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses</h1>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell article-body">
+<p class="lede">I get the same question in almost every customer meeting right now: "Why would we use GitHub to build our agents?" The short answer is that you don't. Here's what the harness names mean, which one to pick, and how to think about agents you've already built.</p>
+
+<div class="callout naming-update"><strong>Naming update (Oct 28):</strong> Microsoft renamed the GitHub Copilot harness to the <b>Microsoft Copilot harness</b>. It's the same harness, with no change to capabilities or billing, and existing agents keep working as they do today. It powers Copilot Studio, Copilot Code and GitHub Copilot, and is now also available in Microsoft Foundry (public preview). The new name will appear in the product over the coming weeks.</div>
+<div class="tldr"><b>The short version</b>
+<ul>
+<li>A <b>harness</b> is the engine room of a Copilot Studio agent: the runtime between your agent's design and the AI model. It decides when to call the model, what to send it, and which tools to use.</li>
+<li>The <b>Microsoft Copilot harness</b> is a Copilot Studio runtime, <b>not the GitHub Copilot developer service</b>. It shares technology with GitHub Copilot, but your data isn't sent to or processed by the GitHub Copilot developer service, and Copilot Studio's privacy, security, compliance and data-residency commitments still apply.</li>
+<li>There are three harnesses: <b>Microsoft Copilot</b> (formerly GitHub Copilot) for complex, multi-step work; <b>Customer Conversation</b> (new, in preview) for customer-facing voice and chat; and <b>standard</b> for predictable, rule-based agents.</li>
+<li>Don't move a working agent just because a new harness exists. Move it when there's a clear business benefit, and treat it as a rebuild, not a conversion.</li>
+</ul></div>
+
+<h2>What is a harness?</h2>
+<p>Every agent or workflow in Copilot Studio runs on a harness. You design the agent, the model supplies the reasoning, and the harness sits in between: it determines when to call the model, what to send it, how to read what comes back, and which tools to call. The harness you choose affects how the work gets done, how much you can automate end to end, which features you get out of the box, and <b>how you're billed</b>.</p>
+
+<h2>Why it used to be called "GitHub Copilot"</h2>
+<p>The old name came from the technology underneath: the harness shares underlying technology and SDK components with GitHub Copilot (the developer product). In practice, that's what lets a business agent take a goal, break it into steps, use tools and adapt as it goes, instead of only following a fixed script.</p>
+<div class="callout"><b>What it is not:</b> it's not a GitHub product you have to buy, a GitHub account you need, or a path for your business data to GitHub. Microsoft's documentation is explicit that customer data isn't sent to or processed by the GitHub Copilot developer service when agents run in Copilot Studio, and that existing Copilot Studio privacy, security, compliance and data-residency commitments continue to apply.</div>
+
+<h2>The three harnesses at a glance</h2>
+<div class="cards">
+<div class="card"><b>Microsoft Copilot harness</b><p>For reasoning-heavy, multi-step business processes. Takes a goal, plans the steps, calls tools across connectors, knowledge, MCP and connected agents, and adjusts when something fails. Creates and edits Word, Excel, PowerPoint and PDF files, supports skills and memory, and runs each task in a secure sandbox.</p></div>
+<div class="card"><b>Customer Conversation harness</b> <span class="src">(preview)</span><p>For customer-facing agents over voice and chat: a website chat or a phone number. A primary agent routes to specialist sub-agents, each with its own path to escalate to a human representative. Supports skills, memory and tools.</p></div>
+<div class="card"><b>Standard harness</b><p>For rule-based agents and structured conversations where predictable behavior matters. You define the topics, prompts and paths; it draws on your prompt library and enterprise knowledge. The dependable choice for well-understood requests.</p></div>
+</div>
+
+<div class="table-wrap" role="region" aria-label="Harness comparison" tabindex="0">
+<table class="article-table">
+<tr><th></th><th>Microsoft Copilot (formerly GitHub Copilot)</th><th>Customer Conversation</th><th>Standard</th></tr>
+<tr><td>Best for</td><td>Complex, multi-step business processes</td><td>Customer-facing, contact-center-style voice and chat</td><td>Rule-based agents and structured conversations</td></tr>
+<tr><td>How it works</td><td>Reasons through a goal step by step</td><td>Multi-agent, can escalate to a person</td><td>Follows the topics and rules you define</td></tr>
+<tr><td>When something goes wrong</td><td>Retries and finds another path</td><td>Escalates through a defined path</td><td>Follows the paths you built</td></tr>
+<tr><td>Files (Word, Excel, PowerPoint, PDF)</td><td>Creates, edits and reasons over them</td><td>Not a focus</td><td>Not a focus</td></tr>
+<tr><td>Skills and memory</td><td>Yes</td><td>Yes</td><td>Not a focus</td></tr>
+<tr><td>Where it's published</td><td>Internal teams or external customers</td><td>Website chat or a phone number</td><td>Internal teams or external customers</td></tr>
+<tr><td>Billing</td><td>Copilot Credits, usage-based</td><td>Copilot Credits, usage-based</td><td>The existing Copilot Studio licensing model</td></tr>
+</table>
+</div>
+<p class="src">Source: Microsoft Learn, "Harnesses in Copilot Studio" (updated Oct 22, 2026).</p>
+
+<h2>Which one should I use?</h2>
+<p>Start with the business process, not the technology. Ask these in order:</p>
+<ol class="decide">
+<li><b>Is the agent talking to <i>your customers</i> over chat or the phone, and does it need a clean handoff to a person?</b> Use the <b>Customer Conversation harness</b>. Examples: order status, warranty and returns, a support line.</li>
+<li><b>Does the work run long, span several systems, handle big files, or need to recover from surprises on its own?</b> Use the <b>Microsoft Copilot harness</b>. Examples: matching invoices to purchase orders and routing exceptions, preparing a customer meeting brief and deck from email, CRM and support data, or a compliance audit across years of records.</li>
+<li><b>Is it a well-defined, repeatable conversation where consistency matters most?</b> Use the <b>standard harness</b>. Examples: HR intake and routing, an internal help desk, answers from known policy documents.</li>
+</ol>
+<p>Two more things worth knowing:</p>
+<ul>
+<li><b>Bigger isn't automatically better.</b> Put a simple task on the Microsoft Copilot harness and it can over-think: more reasoning, more waiting and more Copilot Credits without a better result.</li>
+<li><b>You can use both together.</b> One pattern Microsoft describes: a scheduled Microsoft Copilot harness agent cleans up messy spreadsheets and SharePoint content into structured data, and the fast, high-volume standard harness agents your users talk to get better answers from it.</li>
+</ul>
+
+<h2>"Can we convert our existing agents?"</h2>
+<p>Short answer: you can rebuild them, but only do it when there's a reason.</p>
+<ul>
+<li><b>A working agent doesn't need to move.</b> Microsoft's guidance is to migrate only for a scenario-level benefit: better quality, more efficient orchestration, long-running execution, or a model or capability you need.</li>
+<li><b>It's a rebuild, not a toggle.</b> Agents can't be transferred between the Microsoft Copilot harness and the standard harness. Start from the outcomes the agent must deliver, inventory what your topics, flows, variables and prompts are <i>for</i>, then map those to instructions, skills, tools, workflows and memory. You're done when the new agent handles its core journeys, not when every old component has been copied.</li>
+<li><b>Some building blocks change names.</b> In the Microsoft Copilot harness, prompts are replaced by skills, and topics and system triggers are replaced by hooks. A few features differ too. For example, Azure AI Search as a knowledge source isn't supported there, and computer use is planned. Check the features you depend on before you start.</li>
+<li><b>There's tooling to help.</b> Microsoft's open-source <a href="https://github.com/microsoft/copilot-studio-plugin">copilot-studio-plugin</a> helps create, validate and migrate classic agents to the Microsoft Copilot harness. It's a work in progress, supported through GitHub Issues, and needs Power Platform CLI 2.9.3 or later. Always review the YAML it generates before you push it.</li>
+</ul>
+
+<h2>A word on cost</h2>
+<p>The Microsoft Copilot and Customer Conversation harnesses use Copilot Credits on a usage basis, and building, testing and evaluating an agent can consume credits too, not just running it. Plan for that. Set up the right environments and capacity controls before agents go to production, and size the harness to the job.</p>
+
+<h2>Read more</h2>
+<ul>
+<li><a href="https://www.microsoft.com/en-us/copilot/blog/copilot-studio/the-github-copilot-harness-in-copilot-studio-is-now-the-microsoft-copilot-harness/">The GitHub Copilot harness in Copilot Studio is now the Microsoft Copilot harness</a> (Microsoft Copilot Blog, Oct 28, 2026)</li>
+<li><a href="https://blogs.microsoft.com/blog/2026/10/28/introducing-the-microsoft-copilot-harness-unlocking-the-potential-of-truly-multi-model-agentic-work/">Introducing the Microsoft Copilot harness</a> (Official Microsoft Blog, Oct 28, 2026)</li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview">Harnesses in Copilot Studio</a></li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/choose-harness">Compare Copilot Studio agent harnesses</a> (includes migration guidance)</li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/overview">Agents powered by the Microsoft Copilot harness</a></li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/overview-customer-conversation">Agents powered by the Customer Conversation harness (preview)</a></li>
+</ul>
+
+<footer>Information-only personal project log. Views are my own and summarize Microsoft's public documentation as of October 29, 2026; features in preview may change. Not an official Microsoft publication. Check Microsoft Learn for the latest.</footer>
+
+        </div>
+      </section>
+    </article>
+  </main>
+  <footer class="site-footer">
+  <div class="footer-inner shell">
+    <p>&copy; 2026 Bill Whalen. Personal portfolio; views are my own. Community projects are provided as-is and are not Microsoft products or supported offerings.</p>
+    <div class="footer-links">
+      <a href="/journal/">Journal</a>
+      <a href="/blog/">Blog</a>
+      <a href="/subscribe/">Feeds</a>
+      <a href="https://github.com/billwhalenmsft" rel="noreferrer">GitHub</a>
+    </div>
+  </div>
+</footer>
+  <script>
+  const themeSelect = document.getElementById("themeSelect");
+  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+  themeSelect.value = document.documentElement.dataset.themePreference;
+  function applyThemePreference() {
+    const preference = themeSelect.value;
+    document.documentElement.dataset.themePreference = preference;
+    document.documentElement.dataset.theme = preference === "auto"
+      ? (systemTheme.matches ? "dark" : "light")
+      : preference;
+    const url = new URL(window.location.href);
+    url.searchParams.set("scoutTheme", preference);
+    window.history.replaceState({}, "", url);
+  }
+  themeSelect.addEventListener("change", applyThemePreference);
+  systemTheme.addEventListener("change", () => {
+    if (themeSelect.value === "auto") applyThemePreference();
+  });
+  
+</script>
+</body>
+</html>

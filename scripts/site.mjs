@@ -617,6 +617,35 @@ const blogPostCss = `.hero.shell { grid-template-columns: minmax(0, 1fr); }
   text-wrap: balance;
 }`;
 
+const blogComponentsCss = `.theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
+.theme-select {
+  min-height: 2.75rem;
+  margin-left: 0.35rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  background: var(--cp-surface);
+  color: var(--cp-text);
+  font: inherit;
+}
+.theme-select:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+.table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }
+.article-table { width: 100%; min-width: 38rem; border-collapse: collapse; }
+.article-table th, .article-table td {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--cp-border);
+  text-align: left;
+  vertical-align: top;
+}
+.article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
+.article-table td { color: var(--cp-text-muted); }
+.article-body a { overflow-wrap: anywhere; }
+.article-body .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin-block: 1rem; }
+.article-body .card, .article-body .tldr { padding: 1rem; border: 1px solid var(--cp-border); border-radius: 0.75rem; background: var(--cp-surface); }
+.article-body .card p { margin: 0.75rem 0 0; }
+.article-body .naming-update { border-left: 4px solid var(--cp-warning); }
+.article-body .src, .article-body footer { color: var(--cp-text-muted); font-size: 0.9rem; }`;
+
 function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = false, styles = "", toolsLink = false }) {
   if (type === "article" && canonical.startsWith(`${SITE_URL}/blog/`)) {
     styles = styles ? `${blogPostCss}\n${styles}` : blogPostCss;
@@ -1140,6 +1169,49 @@ const tokenomicsPlannerPost = {
   date: "2026-10-27"
 };
 
+const harnessPost = {
+  slug: "copilot-studio-harnesses",
+  title: "The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses",
+  summary: "Microsoft renamed the GitHub Copilot harness to the Microsoft Copilot harness. Here's what each Copilot Studio harness is for, which to pick, and how to think about agents you've already built.",
+  category: "Agent patterns",
+  date: "2026-10-29"
+};
+
+function harnessPage(article) {
+  const canonical = `${SITE_URL}/blog/${harnessPost.slug}/`;
+  return page({
+    title: harnessPost.title,
+    description: harnessPost.summary,
+    canonical,
+    type: "article",
+    themeModes: true,
+    toolsLink: true,
+    styles: blogComponentsCss,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: harnessPost.title,
+      datePublished: harnessPost.date,
+      dateModified: harnessPost.date,
+      author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
+      mainEntityOfPage: canonical
+    },
+    body: `    <article>
+      <header class="hero shell">
+        <div>
+          <p class="eyebrow">Builder's Log · Copilot Studio · October 2026</p>
+          <h1>${harnessPost.title}</h1>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell article-body">
+${article}
+        </div>
+      </section>
+    </article>`
+  });
+}
+
 function blogCard({ title, summary, category, date, href, lane }) {
   return `<article class="release-card blog-card" data-lane="${lane}" data-date="${date}">
   <span class="status${lane === "builders-log" ? " status-info" : ""}">${lane === "builders-log" ? "Builder's Log" : "Accelerators &amp; Prototypes"}</span>
@@ -1169,6 +1241,11 @@ function blogIndex(catalog) {
     {
       ...tokenomicsPlannerPost,
       href: `/blog/${tokenomicsPlannerPost.slug}/`,
+      lane: "builders-log"
+    },
+    {
+      ...harnessPost,
+      href: `/blog/${harnessPost.slug}/`,
       lane: "builders-log"
     }
   ].sort((left, right) => right.date.localeCompare(left.date));
@@ -1319,29 +1396,7 @@ function softwareFactoryPage() {
 
 function tokenomicsPlannerPage() {
   const canonical = `${SITE_URL}/blog/${tokenomicsPlannerPost.slug}/`;
-  const styles = `.theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
-.theme-select {
-  min-height: 2.75rem;
-  margin-left: 0.35rem;
-  padding: 0.4rem 0.65rem;
-  border: 1px solid var(--cp-border);
-  border-radius: 0.625rem;
-  background: var(--cp-surface);
-  color: var(--cp-text);
-  font: inherit;
-}
-.theme-select:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
-.table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }
-.article-table { width: 100%; min-width: 38rem; border-collapse: collapse; }
-.article-table th, .article-table td {
-  padding: 0.65rem 0.75rem;
-  border: 1px solid var(--cp-border);
-  text-align: left;
-  vertical-align: top;
-}
-.article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
-.article-table td { color: var(--cp-text-muted); }
-.article-body a { overflow-wrap: anywhere; }`;
+  const styles = blogComponentsCss;
   const body = `    <article>
       <header class="hero shell">
         <div>
@@ -1619,6 +1674,11 @@ export function sitemapEntries(catalog) {
       url: `${SITE_URL}/blog/${tokenomicsPlannerPost.slug}/`,
       updated: tokenomicsPlannerPost.date,
       priority: "0.7"
+    },
+    {
+      url: `${SITE_URL}/blog/${harnessPost.slug}/`,
+      updated: harnessPost.date,
+      priority: "0.7"
     }
   ];
 }
@@ -1643,6 +1703,7 @@ export async function loadCatalog() {
 
 export async function buildOutputs() {
   const catalog = await loadCatalog();
+  const harnessArticle = await readFile(resolve(ROOT, "content", "copilot-studio-harnesses.html"), "utf8");
   const outputs = new Map([
     ["tools/tokenomics/index.html", page({
       title: "Tokenomics planner | Bill Whalen",
@@ -1665,6 +1726,7 @@ export async function buildOutputs() {
     ["blog/index.html", blogIndex(catalog)],
     [`blog/${softwareFactoryPost.slug}/index.html`, softwareFactoryPage()],
     [`blog/${tokenomicsPlannerPost.slug}/index.html`, tokenomicsPlannerPage()],
+    [`blog/${harnessPost.slug}/index.html`, harnessPage(harnessArticle)],
     ["subscribe/index.html", subscribePage(catalog)],
     ["feeds/rss.xml", rss(catalog)],
     ["feeds/atom.xml", atom(catalog)],

@@ -48,6 +48,12 @@ The complete approval gate is in `docs/release-approval-checklist.md`. There is 
 
 ## Publish with GitHub Pages
 
+The harness guide at `/blog/copilot-studio-harnesses/` is a Builder's Log post,
+dated October 29, 2026. Its article body lives in
+`content/copilot-studio-harnesses.html`; the shared generator supplies the site
+shell, theme controls, cards and scrollable table styling. Builder's Log posts
+appear in the blog and sitemap, but not in RSS or Atom.
+
 GitHub Pages deploys the repository root from `main`. Merge the exact reviewed commit; no server-side build or framework is required.
 
 ## D365 Administrator Suite preview

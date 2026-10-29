@@ -479,7 +479,7 @@ check(
   "Journal directory set must exactly match approved public and info-only records."
 );
 const blogDirectories = await generatedPageDirectories("blog");
-const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner"].sort();
+const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner", "copilot-studio-harnesses"].sort();
 check(
   JSON.stringify(blogDirectories) === JSON.stringify(expectedBlogDirectories),
   "Blog directory set must exactly match public-release companion articles and Builder's Log posts."
@@ -500,7 +500,7 @@ for (const [relativePath, html] of diskHtml) {
 }
 pass("Full-width responsive hero titles scoped to all blog posts checked.");
 const blogLanes = [...blogHtml.matchAll(/class="release-card blog-card" data-lane="([^"]+)" data-date="([^"]+)"/g)];
-check(blogLanes.length === ordered.length + 2, "Blog cards must include every public article and both Builder's Log posts.");
+check(blogLanes.length === ordered.length + 3, "Blog cards must include every public article and all three Builder's Log posts.");
 check(
   blogLanes.every((item, index) => index === 0 || blogLanes[index - 1][2] >= item[2]),
   "Blog cards must be ordered newest first."
@@ -509,6 +509,14 @@ check(blogHtml.includes("Accelerators &amp; Prototypes"), "Blog must provide the
 check(blogHtml.includes("Builder's Log"), "Blog must provide the Builder's Log filter.");
 check(blogHtml.includes("Accelerators, prototypes, and build notes. Personal projects; views are my own."), "Blog intro must match the requested line.");
 const softwareFactoryHtml = outputs.get("blog/software-factory-pattern/index.html");
+const harnessHtml = outputs.get("blog/copilot-studio-harnesses/index.html");
+check(harnessHtml.includes("<h1>The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses</h1>"), "Harness article must use the exact headline.");
+check(harnessHtml.indexOf("Naming update (Oct 28)") < harnessHtml.indexOf("The short version"), "Naming update must precede the short version.");
+check((harnessHtml.match(/<div class="card">/g) || []).length === 3, "Harness article must retain all three harness cards.");
+check(harnessHtml.includes('<div class="table-wrap" role="region" aria-label="Harness comparison" tabindex="0">'), "Harness comparison must be a keyboard-scrollable table.");
+check(harnessHtml.includes('id="themeSelect"'), "Harness post must reuse the Light, Dark and Auto theme control.");
+const readMoreLinks = [...harnessHtml.split("<h2>Read more</h2>")[1].matchAll(/<a href="([^"]+)"/g)];
+check(readMoreLinks[0]?.[1] === "https://www.microsoft.com/en-us/copilot/blog/copilot-studio/the-github-copilot-harness-in-copilot-studio-is-now-the-microsoft-copilot-harness/", "Microsoft announcement must be first under Read more.");
 check(softwareFactoryHtml.includes("Information-only / Private active build"), "Builder's Log post must show the information-only label.");
 check(softwareFactoryHtml.includes("Owner-reviewed as of <time datetime=\"2026-10-24\">2026-10-24</time>"), "Builder's Log post must show its as-of date.");
 check(blogHtml.includes("A private, issue-first pattern where every build request becomes a spec&#39;d GitHub issue, a coding agent opens a small pull request, and I review every one before merging."), "Builder's Log card summary is missing.");
@@ -602,11 +610,13 @@ check(/<rss version="2.0"/.test(rssXml), "RSS 2.0 root is missing.");
 check((rssXml.match(/<item>/g) || []).length === ordered.length, "RSS item count must match public releases.");
 check(!rssXml.includes("software-factory-pattern"), "Builder's Log post must not appear in RSS.");
 check(!rssXml.includes("tokenomics-planner"), "Tokenomics planner must not appear in RSS.");
+check(!rssXml.includes("copilot-studio-harnesses"), "Harness Builder's Log must not appear in RSS.");
 check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(atomXml), "Atom must declare UTF-8 XML.");
 check(/<feed xmlns="http:\/\/www.w3.org\/2005\/Atom">/.test(atomXml), "Atom root is missing.");
 check((atomXml.match(/<entry>/g) || []).length === ordered.length, "Atom entry count must match public releases.");
 check(!atomXml.includes("software-factory-pattern"), "Builder's Log post must not appear in Atom.");
 check(!atomXml.includes("tokenomics-planner"), "Tokenomics planner must not appear in Atom.");
+check(!atomXml.includes("copilot-studio-harnesses"), "Harness Builder's Log must not appear in Atom.");
 
 const sitemapXml = outputs.get("sitemap.xml");
 const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
@@ -621,6 +631,9 @@ check(softwareFactorySitemapEntry?.includes("<lastmod>2026-10-24</lastmod>"), "S
 const tokenomicsPlannerSitemapEntry = sitemapXml.split("<url>")
   .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/tokenomics-planner/</loc>`));
 check(tokenomicsPlannerSitemapEntry?.includes("<lastmod>2026-10-27</lastmod>"), "Sitemap must include the tokenomics planner post with the requested lastmod.");
+const harnessSitemapEntry = sitemapXml.split("<url>")
+  .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/copilot-studio-harnesses/</loc>`));
+check(harnessSitemapEntry?.includes("<lastmod>2026-10-29</lastmod>"), "Harness post must have the requested sitemap lastmod.");
 check(!sitemapXml.includes("engagements/"), "Protected engagements must not appear in the sitemap.");
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));

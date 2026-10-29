@@ -1,0 +1,75 @@
+<p class="lede">I get the same question in almost every customer meeting right now: "Why would we use GitHub to build our agents?" The short answer is that you don't. Here's what the harness names mean, which one to pick, and how to think about agents you've already built.</p>
+
+<div class="callout naming-update"><strong>Naming update (Oct 28):</strong> Microsoft renamed the GitHub Copilot harness to the <b>Microsoft Copilot harness</b>. It's the same harness, with no change to capabilities or billing, and existing agents keep working as they do today. It powers Copilot Studio, Copilot Code and GitHub Copilot, and is now also available in Microsoft Foundry (public preview). The new name will appear in the product over the coming weeks.</div>
+<div class="tldr"><b>The short version</b>
+<ul>
+<li>A <b>harness</b> is the engine room of a Copilot Studio agent: the runtime between your agent's design and the AI model. It decides when to call the model, what to send it, and which tools to use.</li>
+<li>The <b>Microsoft Copilot harness</b> is a Copilot Studio runtime, <b>not the GitHub Copilot developer service</b>. It shares technology with GitHub Copilot, but your data isn't sent to or processed by the GitHub Copilot developer service, and Copilot Studio's privacy, security, compliance and data-residency commitments still apply.</li>
+<li>There are three harnesses: <b>Microsoft Copilot</b> (formerly GitHub Copilot) for complex, multi-step work; <b>Customer Conversation</b> (new, in preview) for customer-facing voice and chat; and <b>standard</b> for predictable, rule-based agents.</li>
+<li>Don't move a working agent just because a new harness exists. Move it when there's a clear business benefit, and treat it as a rebuild, not a conversion.</li>
+</ul></div>
+
+<h2>What is a harness?</h2>
+<p>Every agent or workflow in Copilot Studio runs on a harness. You design the agent, the model supplies the reasoning, and the harness sits in between: it determines when to call the model, what to send it, how to read what comes back, and which tools to call. The harness you choose affects how the work gets done, how much you can automate end to end, which features you get out of the box, and <b>how you're billed</b>.</p>
+
+<h2>Why it used to be called "GitHub Copilot"</h2>
+<p>The old name came from the technology underneath: the harness shares underlying technology and SDK components with GitHub Copilot (the developer product). In practice, that's what lets a business agent take a goal, break it into steps, use tools and adapt as it goes, instead of only following a fixed script.</p>
+<div class="callout"><b>What it is not:</b> it's not a GitHub product you have to buy, a GitHub account you need, or a path for your business data to GitHub. Microsoft's documentation is explicit that customer data isn't sent to or processed by the GitHub Copilot developer service when agents run in Copilot Studio, and that existing Copilot Studio privacy, security, compliance and data-residency commitments continue to apply.</div>
+
+<h2>The three harnesses at a glance</h2>
+<div class="cards">
+<div class="card"><b>Microsoft Copilot harness</b><p>For reasoning-heavy, multi-step business processes. Takes a goal, plans the steps, calls tools across connectors, knowledge, MCP and connected agents, and adjusts when something fails. Creates and edits Word, Excel, PowerPoint and PDF files, supports skills and memory, and runs each task in a secure sandbox.</p></div>
+<div class="card"><b>Customer Conversation harness</b> <span class="src">(preview)</span><p>For customer-facing agents over voice and chat: a website chat or a phone number. A primary agent routes to specialist sub-agents, each with its own path to escalate to a human representative. Supports skills, memory and tools.</p></div>
+<div class="card"><b>Standard harness</b><p>For rule-based agents and structured conversations where predictable behavior matters. You define the topics, prompts and paths; it draws on your prompt library and enterprise knowledge. The dependable choice for well-understood requests.</p></div>
+</div>
+
+<div class="table-wrap" role="region" aria-label="Harness comparison" tabindex="0">
+<table class="article-table">
+<tr><th></th><th>Microsoft Copilot (formerly GitHub Copilot)</th><th>Customer Conversation</th><th>Standard</th></tr>
+<tr><td>Best for</td><td>Complex, multi-step business processes</td><td>Customer-facing, contact-center-style voice and chat</td><td>Rule-based agents and structured conversations</td></tr>
+<tr><td>How it works</td><td>Reasons through a goal step by step</td><td>Multi-agent, can escalate to a person</td><td>Follows the topics and rules you define</td></tr>
+<tr><td>When something goes wrong</td><td>Retries and finds another path</td><td>Escalates through a defined path</td><td>Follows the paths you built</td></tr>
+<tr><td>Files (Word, Excel, PowerPoint, PDF)</td><td>Creates, edits and reasons over them</td><td>Not a focus</td><td>Not a focus</td></tr>
+<tr><td>Skills and memory</td><td>Yes</td><td>Yes</td><td>Not a focus</td></tr>
+<tr><td>Where it's published</td><td>Internal teams or external customers</td><td>Website chat or a phone number</td><td>Internal teams or external customers</td></tr>
+<tr><td>Billing</td><td>Copilot Credits, usage-based</td><td>Copilot Credits, usage-based</td><td>The existing Copilot Studio licensing model</td></tr>
+</table>
+</div>
+<p class="src">Source: Microsoft Learn, "Harnesses in Copilot Studio" (updated Oct 22, 2026).</p>
+
+<h2>Which one should I use?</h2>
+<p>Start with the business process, not the technology. Ask these in order:</p>
+<ol class="decide">
+<li><b>Is the agent talking to <i>your customers</i> over chat or the phone, and does it need a clean handoff to a person?</b> Use the <b>Customer Conversation harness</b>. Examples: order status, warranty and returns, a support line.</li>
+<li><b>Does the work run long, span several systems, handle big files, or need to recover from surprises on its own?</b> Use the <b>Microsoft Copilot harness</b>. Examples: matching invoices to purchase orders and routing exceptions, preparing a customer meeting brief and deck from email, CRM and support data, or a compliance audit across years of records.</li>
+<li><b>Is it a well-defined, repeatable conversation where consistency matters most?</b> Use the <b>standard harness</b>. Examples: HR intake and routing, an internal help desk, answers from known policy documents.</li>
+</ol>
+<p>Two more things worth knowing:</p>
+<ul>
+<li><b>Bigger isn't automatically better.</b> Put a simple task on the Microsoft Copilot harness and it can over-think: more reasoning, more waiting and more Copilot Credits without a better result.</li>
+<li><b>You can use both together.</b> One pattern Microsoft describes: a scheduled Microsoft Copilot harness agent cleans up messy spreadsheets and SharePoint content into structured data, and the fast, high-volume standard harness agents your users talk to get better answers from it.</li>
+</ul>
+
+<h2>"Can we convert our existing agents?"</h2>
+<p>Short answer: you can rebuild them, but only do it when there's a reason.</p>
+<ul>
+<li><b>A working agent doesn't need to move.</b> Microsoft's guidance is to migrate only for a scenario-level benefit: better quality, more efficient orchestration, long-running execution, or a model or capability you need.</li>
+<li><b>It's a rebuild, not a toggle.</b> Agents can't be transferred between the Microsoft Copilot harness and the standard harness. Start from the outcomes the agent must deliver, inventory what your topics, flows, variables and prompts are <i>for</i>, then map those to instructions, skills, tools, workflows and memory. You're done when the new agent handles its core journeys, not when every old component has been copied.</li>
+<li><b>Some building blocks change names.</b> In the Microsoft Copilot harness, prompts are replaced by skills, and topics and system triggers are replaced by hooks. A few features differ too. For example, Azure AI Search as a knowledge source isn't supported there, and computer use is planned. Check the features you depend on before you start.</li>
+<li><b>There's tooling to help.</b> Microsoft's open-source <a href="https://github.com/microsoft/copilot-studio-plugin">copilot-studio-plugin</a> helps create, validate and migrate classic agents to the Microsoft Copilot harness. It's a work in progress, supported through GitHub Issues, and needs Power Platform CLI 2.9.3 or later. Always review the YAML it generates before you push it.</li>
+</ul>
+
+<h2>A word on cost</h2>
+<p>The Microsoft Copilot and Customer Conversation harnesses use Copilot Credits on a usage basis, and building, testing and evaluating an agent can consume credits too, not just running it. Plan for that. Set up the right environments and capacity controls before agents go to production, and size the harness to the job.</p>
+
+<h2>Read more</h2>
+<ul>
+<li><a href="https://www.microsoft.com/en-us/copilot/blog/copilot-studio/the-github-copilot-harness-in-copilot-studio-is-now-the-microsoft-copilot-harness/">The GitHub Copilot harness in Copilot Studio is now the Microsoft Copilot harness</a> (Microsoft Copilot Blog, Oct 28, 2026)</li>
+<li><a href="https://blogs.microsoft.com/blog/2026/10/28/introducing-the-microsoft-copilot-harness-unlocking-the-potential-of-truly-multi-model-agentic-work/">Introducing the Microsoft Copilot harness</a> (Official Microsoft Blog, Oct 28, 2026)</li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview">Harnesses in Copilot Studio</a></li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/choose-harness">Compare Copilot Studio agent harnesses</a> (includes migration guidance)</li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/overview">Agents powered by the Microsoft Copilot harness</a></li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/overview-customer-conversation">Agents powered by the Customer Conversation harness (preview)</a></li>
+</ul>
+
+<footer>Information-only personal project log. Views are my own and summarize Microsoft's public documentation as of October 29, 2026; features in preview may change. Not an official Microsoft publication. Check Microsoft Learn for the latest.</footer>

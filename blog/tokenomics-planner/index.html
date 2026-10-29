@@ -525,6 +525,11 @@
     .article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
     .article-table td { color: var(--cp-text-muted); }
     .article-body a { overflow-wrap: anywhere; }
+    .article-body .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin-block: 1rem; }
+    .article-body .card, .article-body .tldr { padding: 1rem; border: 1px solid var(--cp-border); border-radius: 0.75rem; background: var(--cp-surface); }
+    .article-body .card p { margin: 0.75rem 0 0; }
+    .article-body .naming-update { border-left: 4px solid var(--cp-warning); }
+    .article-body .src, .article-body footer { color: var(--cp-text-muted); font-size: 0.9rem; }
   </style>
 </head>
 <body>
