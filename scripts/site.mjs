@@ -618,7 +618,7 @@ const blogPostCss = `.hero.shell { grid-template-columns: minmax(0, 1fr); }
 
 function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = false, styles = "" }) {
   if (type === "article" && canonical.startsWith(`${SITE_URL}/blog/`)) {
-    styles = `${blogPostCss}\n${styles}`;
+    styles = styles ? `${blogPostCss}\n${styles}` : blogPostCss;
   }
   return `<!DOCTYPE html>
 <html lang="en" data-brand="atomic">
