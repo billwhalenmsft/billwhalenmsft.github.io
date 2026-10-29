@@ -485,6 +485,20 @@ check(
   "Blog directory set must exactly match public-release companion articles and Builder's Log posts."
 );
 const blogHtml = outputs.get("blog/index.html");
+for (const [relativePath, html] of diskHtml) {
+  const isBlogPost = /^blog\/[^/]+\/index\.html$/.test(relativePath);
+  const fullWidthHero = /\.hero\.shell \{ grid-template-columns: minmax\(0, 1fr\); \}/.test(html);
+  const titleStyles = html.match(/\.hero\.shell h1 \{([^}]+)\}/)?.[1];
+  check(fullWidthHero === isBlogPost, `${relativePath}: full-width hero layout must apply only to blog posts.`);
+  check(Boolean(titleStyles) === isBlogPost, `${relativePath}: blog title styles must apply only to blog posts.`);
+  if (isBlogPost) {
+    check(/max-width: none;/.test(titleStyles), `${relativePath}: blog title must use the full hero width.`);
+    check(/font-size: clamp\(2\.25rem, 4\.5vw, 4rem\);/.test(titleStyles), `${relativePath}: blog title must use responsive sizing.`);
+    check(/line-height: 1\.08;/.test(titleStyles), `${relativePath}: blog title must use compact line spacing.`);
+    check(/text-wrap: balance;/.test(titleStyles), `${relativePath}: blog title must balance wrapped lines.`);
+  }
+}
+pass("Full-width responsive hero titles scoped to all blog posts checked.");
 const blogLanes = [...blogHtml.matchAll(/class="release-card blog-card" data-lane="([^"]+)" data-date="([^"]+)"/g)];
 check(blogLanes.length === ordered.length + 2, "Blog cards must include every public article and both Builder's Log posts.");
 check(
