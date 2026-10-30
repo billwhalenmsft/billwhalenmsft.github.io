@@ -1186,6 +1186,14 @@ const harnessPost = {
   date: "2026-10-29"
 };
 
+const salesSuitePost = {
+  slug: "sales-agent-cowork-sales-suite",
+  title: "Sales agent, Dynamics 365 in Cowork, and the Sales Extension Suite: how the pieces fit",
+  summary: "What to turn on for sellers: the Sales agent in Microsoft 365 Copilot, Dynamics 365 Sales skills in Copilot Cowork, and an optional accelerator that makes briefs, follow-ups and handoffs consistent.",
+  category: "Sales assistance",
+  date: "2026-10-30"
+};
+
 function harnessPage(article) {
   const canonical = `${SITE_URL}/blog/${harnessPost.slug}/`;
   return page({
@@ -1208,6 +1216,39 @@ function harnessPage(article) {
         <div>
           <p class="eyebrow">Builder's Log · Copilot Studio · October 2026</p>
           <h1>${harnessPost.title}</h1>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell article-body">
+${article}
+        </div>
+      </section>
+    </article>`
+  });
+}
+
+function salesSuitePage(article) {
+  const canonical = `${SITE_URL}/blog/${salesSuitePost.slug}/`;
+  return page({
+    title: salesSuitePost.title,
+    description: salesSuitePost.summary,
+    canonical,
+    type: "article",
+    themeModes: true,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: salesSuitePost.title,
+      datePublished: salesSuitePost.date,
+      dateModified: salesSuitePost.date,
+      author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
+      mainEntityOfPage: canonical
+    },
+    body: `    <article>
+      <header class="hero shell">
+        <div>
+          <p class="eyebrow"><strong>Accelerators &amp; Prototypes</strong> · October 30, 2026</p>
+          <h1>${salesSuitePost.title}</h1>
         </div>
       </header>
       <section class="section">
@@ -1254,6 +1295,11 @@ function blogIndex(catalog) {
       ...harnessPost,
       href: `/blog/${harnessPost.slug}/`,
       lane: "builders-log"
+    },
+    {
+      ...salesSuitePost,
+      href: `/blog/${salesSuitePost.slug}/`,
+      lane: "accelerators"
     }
   ].sort((left, right) => right.date.localeCompare(left.date));
   const filters = [
@@ -1684,6 +1730,11 @@ export function sitemapEntries(catalog) {
       url: `${SITE_URL}/blog/${harnessPost.slug}/`,
       updated: harnessPost.date,
       priority: "0.7"
+    },
+    {
+      url: `${SITE_URL}/blog/${salesSuitePost.slug}/`,
+      updated: salesSuitePost.date,
+      priority: "0.7"
     }
   ];
 }
@@ -1754,6 +1805,7 @@ export async function loadCatalog() {
 export async function buildOutputs() {
   const catalog = await loadCatalog();
   const harnessArticle = await readFile(resolve(ROOT, "content", "copilot-studio-harnesses.html"), "utf8");
+  const salesSuiteArticle = await readFile(resolve(ROOT, "content", "sales-agent-cowork-sales-suite.html"), "utf8");
   const tools = JSON.parse(await readFile(resolve(ROOT, "tools", "tools.json"), "utf8"));
   const outputs = new Map([
     ["tools/index.html", toolsPage(tools)],
@@ -1778,6 +1830,7 @@ export async function buildOutputs() {
     [`blog/${softwareFactoryPost.slug}/index.html`, softwareFactoryPage()],
     [`blog/${tokenomicsPlannerPost.slug}/index.html`, tokenomicsPlannerPage()],
     [`blog/${harnessPost.slug}/index.html`, harnessPage(harnessArticle)],
+    [`blog/${salesSuitePost.slug}/index.html`, salesSuitePage(salesSuiteArticle)],
     ["subscribe/index.html", subscribePage(catalog)],
     ["feeds/rss.xml", rss(catalog)],
     ["feeds/atom.xml", atom(catalog)],

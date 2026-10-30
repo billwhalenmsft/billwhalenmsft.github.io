@@ -1,0 +1,110 @@
+<h2>The question I keep getting</h2>
+<p>"We have Dynamics 365 Sales and Microsoft 365 Copilot. What do we actually turn on, and where does each piece help a seller?"</p>
+<p>There are three layers. Two are Microsoft products you can turn on today. The third is an optional accelerator I built on top of them.</p>
+<p><a class="button button-primary" href="https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/" rel="noreferrer">Try the Sales Extension Suite examples →</a></p>
+
+<div class="table-wrap" role="region" aria-label="Sales assistance layers" tabindex="0">
+  <table class="article-table">
+    <thead><tr><th>Layer</th><th>What it is</th><th>Where sellers use it</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Sales agent</strong> (Microsoft)</td><td>A conversational agent in Microsoft 365 Copilot, connected to your CRM</td><td>Copilot chat, Outlook, Teams, and inside Dynamics 365 Sales</td><td>Quick answers, account and opportunity summaries, meeting prep, saving email and meetings to CRM</td></tr>
+      <tr><td><strong>2. Dynamics 365 Sales in Copilot Cowork</strong> (Microsoft)</td><td>Prebuilt CRM skills plus Dynamics 365 tools that Cowork can use for multi-step work</td><td>Copilot Cowork</td><td>Longer tasks that pull together CRM, email, meetings and documents into a finished result for your review</td></tr>
+      <tr><td><strong>3. Sales Extension Suite</strong> (my accelerator)</td><td>Two optional Cowork plugins that package repeatable sales routines</td><td>Copilot Cowork, alongside Microsoft's Sales plugin</td><td>A consistent account brief, follow-through with dependencies, and handoffs a teammate can accept</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Layer 1: the Sales agent</h2>
+<p>The Sales agent is a conversational agent in Microsoft 365 Copilot. It lets sellers search, summarize and act on sales data from the apps they already use. It works with <strong>Dynamics 365 Sales and Salesforce</strong>, and it needs a <strong>Microsoft 365 Copilot license</strong>.</p>
+
+<p><strong>What sellers do with it</strong></p>
+<ul>
+  <li>"Summarize this account before my call": current business, open opportunities and recent engagement.</li>
+  <li>Ramp up on a newly assigned account, including who at your company has worked with the customer recently.</li>
+  <li>Find what's blocking a stalled deal by checking past meetings.</li>
+  <li>Save Outlook email and meetings to CRM, view and edit CRM records, and add notes, all from Outlook and Teams.</li>
+  <li>Use the same Sales agent inside Dynamics 365 Sales, where it is becoming the preferred Copilot experience.</li>
+</ul>
+
+<p><strong>How to turn it on (admin)</strong></p>
+<ol>
+  <li>Make sure each seller has a Microsoft 365 Copilot license. Microsoft automatically installs the Sales agent for eligible Dynamics 365 users; otherwise, install it from the Microsoft 365 admin center.</li>
+  <li>Pin it in Teams with a setup policy, and turn on Teams meeting transcripts so it can use past meetings.</li>
+  <li>Set up server-side sync for email and appointments, and confirm sellers have the right Dynamics 365 security roles.</li>
+  <li>In the Sales agent settings, choose which CRM tables it can use and tune the account, opportunity and lead summaries. For Dynamics 365 it uses <strong>Dataverse search</strong>, so only indexed tables can be queried. Indexing adds some storage, so include the tables you actually need.</li>
+  <li>Optional: extend it with your own tools and knowledge from Copilot Studio.</li>
+</ol>
+
+<h2>Layer 2: Dynamics 365 Sales in Copilot Cowork</h2>
+<p>On October 8, 2026, Microsoft made <strong>30 prebuilt CRM skills</strong> generally available in Copilot Cowork, covering Dynamics 365 Sales, Customer Service and Customer Insights. Microsoft says they work with more than 180 generally available Dynamics 365 tools. The <strong>Dynamics 365 Sales plugin is installed by default in Cowork</strong> for anyone who has Cowork access.</p>
+
+<p><strong>The idea that makes it click: tools vs. skills</strong></p>
+<ul>
+  <li>A <strong>tool</strong> does one thing, such as retrieving an opportunity record. Dynamics 365 exposes these through MCP.</li>
+  <li>A <strong>skill</strong> is the method: which evidence to weigh, how to handle uncertainty, and what a good result looks like. Assessing why a deal has stalled is a skill.</li>
+</ul>
+
+<p><strong>What it's good at</strong></p>
+<ul>
+  <li>Multi-step requests such as "Prepare me for Thursday's renewal meeting." Cowork combines CRM, email, meetings and documents and hands you a finished brief.</li>
+  <li>Combining skills for a bigger job. Microsoft's own example: in a competitive deal, a seller asks for competitive strategy, a business case and deal-desk pricing in one request.</li>
+  <li>Staying in control. Cowork separates <strong>analysis, recommendations, proposed changes and completed actions</strong>, and it asks before it updates a record, sends an email or creates a task.</li>
+</ul>
+
+<p><strong>How to turn it on (admin)</strong></p>
+<ol>
+  <li>Give the right people access to Copilot Cowork.</li>
+  <li>The Sales plugin uses the <strong>Dataverse MCP server</strong>, which must be enabled for your Dynamics 365 environment.</li>
+  <li>Pilot with a small group first. Check that sellers can tell a proposed update from a saved one, and that drafts never look like sent email.</li>
+</ol>
+
+<h2>Layer 3: the Sales Extension Suite (optional accelerator)</h2>
+<p>I built the <strong>Sales Extension Suite for Copilot</strong> after spending a lot of time with sellers and sales leaders. Microsoft's Sales plugin already handles deal analysis, proposals, engagement strategy and meeting prep, so <strong>keep it on</strong>. The suite adds two optional Cowork plugins that package <strong>repeatable routines</strong>, so everyone on a team gets the same reviewable output.</p>
+
+<p><strong>What it adds</strong></p>
+<ul>
+  <li><strong>A consistent account brief:</strong> the bottom line, dated evidence, unknowns and one next action, in the same format every time.</li>
+  <li><strong>Follow-through with dependencies:</strong> agreed actions are kept separate from proposals, and items like security review, data-use approval and parallel work stay distinct.</li>
+  <li><strong>A handoff someone can accept:</strong> the receiving role gets a specific question, prerequisite and finish line, not just another summary.</li>
+  <li><strong>Coaching:</strong> evidence-based questions about a deal, without invented commitments.</li>
+</ul>
+
+<p><strong>What it isn't.</strong> These are packaged instructions and rehearsals. They add no new CRM access, exclusive AI capability or stronger security controls. Everything still runs on your Cowork access and permissions, and anything consequential still needs a person.</p>
+
+<p><strong>Try it in 60 seconds.</strong> The suite's site has a <strong>Try it now</strong> panel with fictional examples (understand an account, follow up on a meeting, coach a deal, bring in the right teammate). It involves no sign-in, no AI run and no customer data.</p>
+<p>→ <a href="https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/" rel="noreferrer">https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/</a><br>
+→ All included agents: <a href="https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/catalog.html" rel="noreferrer">https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/catalog.html</a></p>
+
+<h2>Which one should a seller use?</h2>
+<div class="table-wrap" role="region" aria-label="Sales assistance recommendations" tabindex="0">
+  <table class="article-table">
+    <thead><tr><th>If you need…</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td>A quick answer or summary while in Outlook, Teams or CRM</td><td><strong>Sales agent</strong></td></tr>
+      <tr><td>To save an email or meeting to CRM, or edit a record</td><td><strong>Sales agent</strong></td></tr>
+      <tr><td>A finished brief, plan or analysis that pulls from CRM, email, meetings and files</td><td><strong>Cowork + Dynamics 365 Sales skills</strong></td></tr>
+      <tr><td>The same reviewable brief, follow-up or handoff format across a whole team</td><td><strong>Cowork + Sales Extension Suite</strong>, alongside Microsoft's Sales plugin</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>A suggested rollout</h2>
+<ol>
+  <li><strong>Turn on the Sales agent</strong> for Microsoft 365 Copilot users who have Dynamics 365 Sales. This is quick to enable and sellers get value on day one.</li>
+  <li><strong>Pilot Cowork</strong> with a small group, with the Dataverse MCP server enabled and the default Sales plugin on.</li>
+  <li><strong>If teams want consistency, add the suite</strong> in a controlled pilot, using its pilot test plan.</li>
+</ol>
+
+<p>Throughout, keep people in charge of sends, CRM changes and commitments.</p>
+
+<h2>Public sources</h2>
+<ul>
+  <li>Set up Sales agent in Microsoft 365 Copilot (Microsoft Learn): <a href="https://learn.microsoft.com/en-us/microsoft-sales-copilot/set-up-sales-chat" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-sales-copilot/set-up-sales-chat</a></li>
+  <li>Sales agent deployment guide for Dynamics 365 customers (Microsoft Learn): <a href="https://learn.microsoft.com/en-us/microsoft-sales-copilot/deploy-sales-app-d365" rel="noreferrer">https://learn.microsoft.com/en-us/microsoft-sales-copilot/deploy-sales-app-d365</a></li>
+  <li>Copilot in Dynamics 365 Sales overview (Microsoft Learn): <a href="https://learn.microsoft.com/en-us/dynamics365/sales/copilot-overview" rel="noreferrer">https://learn.microsoft.com/en-us/dynamics365/sales/copilot-overview</a></li>
+  <li>Use Dynamics 365 Sales skills in Microsoft 365 Copilot Cowork (Microsoft Learn): <a href="https://learn.microsoft.com/en-us/dynamics365/release-plan/2026wave1/sales/dynamics365-sales/use-dynamics-365-sales-skills-365-copilot-cowork" rel="noreferrer">https://learn.microsoft.com/en-us/dynamics365/release-plan/2026wave1/sales/dynamics365-sales/use-dynamics-365-sales-skills-365-copilot-cowork</a></li>
+  <li>Bring Microsoft Dynamics 365 into the flow of work with 30 new CRM skills (Dynamics 365 Blog, Oct 8, 2026): <a href="https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/10/08/bring-microsoft-dynamics-365-into-the-flow-of-work-with-30-new-crm-skills/" rel="noreferrer">https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/10/08/bring-microsoft-dynamics-365-into-the-flow-of-work-with-30-new-crm-skills/</a></li>
+  <li>Bringing CRM into the flow of work and agents into business process (Microsoft Copilot Blog, Oct 8, 2026): <a href="https://www.microsoft.com/en-us/copilot/blog/2026/10/08/bringing-crm-into-the-flow-of-work-and-agents-into-business-process-for-sales-and-service-teams/" rel="noreferrer">https://www.microsoft.com/en-us/copilot/blog/2026/10/08/bringing-crm-into-the-flow-of-work-and-agents-into-business-process-for-sales-and-service-teams/</a></li>
+</ul>
+
+<div class="callout"><p><strong>Boundary:</strong> Personal project showcase. The Sales Extension Suite is an independent preview accelerator I built. It is not a Microsoft product or supported offering, and it makes no production, adoption or results claims. Examples are fictional. Licensing and availability vary; confirm with your Microsoft account team or partner. Views are my own.</p></div>
