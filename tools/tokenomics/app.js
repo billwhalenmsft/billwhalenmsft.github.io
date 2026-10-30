@@ -1,4 +1,5 @@
 import { estimate, price, sizeFor } from "./calculate.js";
+import { harnessRatePresentation, syncHarnessHelp } from "./harness-ui.js";
 
 const $ = (id) => document.getElementById(id);
 const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({
@@ -19,11 +20,14 @@ function evidenceValue(value) {
   return value === null ? "No upper limit" : escape(typeof value === "number" ? number(value) : value);
 }
 
-function evidence(label, entry) {
-  const value = "value" in entry ? evidenceValue(entry.value)
+function evidence(label, entry, rates = {}) {
+  const presentation = harnessRatePresentation(entry, rates, number);
+  const value = presentation
+    ? presentation.value
+    : "value" in entry ? evidenceValue(entry.value)
     : escape(`${number(entry.low)} / ${number(entry.likely)} / ${number(entry.high)}`);
   return `<div class="planner-card"><h3>${escape(label)}</h3>
-    <div>${value}</div><p>${escape(entry.unit)} · <span class="badge">${badges[entry.confidence]}</span></p>
+    <div>${value}</div><p>${escape(presentation?.unit || entry.unit)} · <span class="badge">${badges[entry.confidence]}</span></p>
     <p>${escape(entry.why)}</p><p><a href="${escape(entry.source)}" rel="noreferrer">Source</a>
     · as of <time>${escape(entry.asOf)}</time></p></div>`;
 }
@@ -55,7 +59,7 @@ async function start() {
   $("runs").value = policy.runs;
   $("last-refresh").textContent = data.lastRefresh;
   $("last-refresh").dateTime = data.lastRefresh;
-  $("harness-results").innerHTML = harnesses.map((harness) => evidence(harness.name, harness)).join("");
+  $("harness-results").innerHTML = harnesses.map((harness) => evidence(harness.name, harness, rates)).join("");
   $("source-results").innerHTML = [
     ...Object.entries(rates).map(([key, entry]) => evidence(entry.name || key, entry)),
     evidence("Planner policy (illustrative)", planning),
@@ -83,6 +87,7 @@ async function start() {
     $("runs-label").textContent = preset.voice ? "Minutes per user per month" : "Runs per user per month";
     editedBand = false;
     setBand();
+    syncHarnessHelp($("harness-choice"), $("harness-help"));
     render();
   }
 
@@ -115,7 +120,7 @@ async function start() {
         Harness factor: ${number(factor.low)} / ${number(factor.likely)} / ${number(factor.high)}.
         Low ÷ ${number(widening)} and high × ${number(widening)}; likely unchanged.`}</p>`;
       const assumptions = inputs + evidence(preset.name, preset)
-        + evidence(harness.name, harness)
+        + evidence(harness.name, harness, rates)
         + (preset.voice ? evidence("Voice rate band (already includes harness; no extra multiplier)", base) : "")
         + (!preset.voice && typeof harness.value === "string" ? evidence("Harness planning factor", rates[harness.value]) : "")
         + (preset.reasoningHeavy ? evidence("Reasoning variability", rates.reasoningWidening) + evidence("Reasoning premium reference (not added again)", rates.reasoning) : "")
@@ -199,7 +204,7 @@ async function start() {
         return `<tr><th scope="row">${escape(entry.name)}${entry.id === preset.id ? " (current)" : ""}</th><td>${number(total.likely)}</td>
           <td>${money(cost)}</td><td>${ratio(cost)} · ${escape(decision(cost))}
           ${explanation((entry.id === preset.id ? assumptions : `<p>${number(users)} users × ${number(runs)} runs or minutes per user/month; default ${escape(harness.name)} harness. ${entry.reasoningHeavy ? `Low/high widening ${number(rates.reasoningWidening.value)}×.` : ""}</p>`
-            + evidence(entry.name, entry) + evidence(harness.name, harness)
+            + evidence(entry.name, entry) + evidence(harness.name, harness, rates)
             + evidence("Effective base band", defaultBand(entry, harness))
             + (typeof harness.value === "string" && !entry.voice ? evidence("Harness factor", rates[harness.value]) : ""))
             + evidence("PAYG", rates.payg) + valueWhy)}</td></tr>`;
@@ -220,6 +225,7 @@ async function start() {
     render();
   });
   $("preset").addEventListener("change", loadPreset);
+  $("harness-choice").addEventListener("change", () => syncHarnessHelp($("harness-choice"), $("harness-help")));
   $("value").addEventListener("input", (event) => {
     if (event.target.id === "value-method") {
       const method = $("value-method").value;
