@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { estimate, sizeFor, price } from "./calculate.js";
-import { syncHarnessHelp } from "./harness-ui.js";
+import { harnessRatePresentation, syncHarnessHelp } from "./harness-ui.js";
 
 const data = JSON.parse(await readFile(new URL("./data/rates.json", import.meta.url), "utf8"));
 const band = { low: 100, likely: 180, high: 300 };
@@ -61,6 +61,14 @@ test("Microsoft Copilot harness rename preserves IDs and planning arithmetic", (
   assert.equal(data.rates.github.name, harness.name);
   const result = estimate({ users: 10, runs: 20, band, factor: data.rates[harness.value] });
   assert.deepEqual(result, { low: 20000, likely: 108000, high: 360000, measured: false });
+});
+
+test("the Microsoft Copilot harness picker uses its planning range, not its internal key", () => {
+  const harness = data.harnesses.find((entry) => entry.id === "github");
+  assert.deepEqual(harnessRatePresentation(harness, data.rates, String), {
+    value: "1–6× (likely 3×)",
+    unit: "times a comparable standard run"
+  });
 });
 
 test("the rename helper is visible only for the Microsoft Copilot harness", () => {

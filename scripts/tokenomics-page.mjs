@@ -5,7 +5,7 @@ html[data-brand="atomic"] { --cp-accent: var(--cp-link); font-family: "Segoe UI"
 .planner { padding-top: 2rem; padding-bottom: 2rem; }
 .planner h1 { max-width: none; font-size: clamp(2rem, 4vw, 3.25rem); }
 .planner h2 { margin: 1.5rem 0 1rem; font-size: clamp(1.5rem, 3vw, 2rem); }
-.planner label, .theme-control { display: grid; align-content: start; gap: .35rem; font-weight: 600; }
+.planner label, .theme-control, .harness-field { display: grid; align-content: start; gap: .35rem; font-weight: 600; }
 .planner input, .planner select, .theme-select { width: 100%; min-width: 0; padding: .65rem; border: 1px solid var(--cp-border-strong); border-radius: .5rem; background: var(--cp-surface); color: var(--cp-text); font: inherit; }
 .planner select option, .theme-select option { background: var(--cp-surface); color: var(--cp-text); }
 .planner fieldset { min-width: 0; margin-inline: 0; }
@@ -74,7 +74,7 @@ export const tokenomicsBody = `
             <label>Use-case preset<select id="preset"></select></label>
             <label>Users<input id="users" type="number" min="0" max="1000000000" step="1"></label>
             <label><span id="runs-label">Runs per user per month</span><input id="runs" type="number" min="0" max="1000000000" step="any"></label>
-            <label>Harness<span class="harness-control"><select id="harness-choice" aria-describedby="harness-help"></select><a class="harness-info" href="/blog/copilot-studio-harnesses/" title="What's a harness and which one should I pick?" aria-label="What's a harness and which one should I pick?">ⓘ</a></span><span class="field-help" id="harness-help" hidden>Formerly the GitHub Copilot harness (renamed Oct 28, 2026). Same harness; no change to capabilities or billing.</span></label>
+            <div class="harness-field"><label for="harness-choice">Harness</label><span class="harness-control"><select id="harness-choice" aria-describedby="harness-help"></select><a class="harness-info" href="/blog/copilot-studio-harnesses/" title="What's a harness and which one should I pick?" aria-label="What's a harness and which one should I pick?">ⓘ</a></span><span class="field-help" id="harness-help" hidden>Formerly the GitHub Copilot harness (renamed Oct 28, 2026). Same harness; no change to capabilities or billing.</span></div>
           </div>
           <fieldset><legend>Editable illustrative credits per run (per minute for voice)</legend>
             <div class="planner-grid">
