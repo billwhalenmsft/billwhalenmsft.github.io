@@ -10,6 +10,9 @@ html[data-brand="atomic"] { --cp-accent: var(--cp-link); font-family: "Segoe UI"
 .planner select option, .theme-select option { background: var(--cp-surface); color: var(--cp-text); }
 .planner fieldset { min-width: 0; margin-inline: 0; }
 .field-help { font-size: .85rem; font-weight: 400; color: var(--cp-text-muted); }
+.harness-control { display: flex; align-items: center; gap: .5rem; }
+.harness-control select { flex: 1; }
+.harness-info { display: grid; flex: none; place-items: center; width: 2.5rem; aspect-ratio: 1; border: 1px solid var(--cp-border-strong); border-radius: 50%; text-decoration: none; }
 .estimate-layout > * { min-width: 0; }
 @media (min-width: 1024px) {
   .estimate-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 1.5rem; }
@@ -71,7 +74,7 @@ export const tokenomicsBody = `
             <label>Use-case preset<select id="preset"></select></label>
             <label>Users<input id="users" type="number" min="0" max="1000000000" step="1"></label>
             <label><span id="runs-label">Runs per user per month</span><input id="runs" type="number" min="0" max="1000000000" step="any"></label>
-            <label>Harness<select id="harness-choice" aria-describedby="harness-help"></select><span class="field-help" id="harness-help">Formerly the GitHub Copilot harness (renamed Oct 28, 2026). Same harness; no change to capabilities or billing.</span></label>
+            <label>Harness<span class="harness-control"><select id="harness-choice" aria-describedby="harness-help"></select><a class="harness-info" href="/blog/copilot-studio-harnesses/" title="What's a harness and which one should I pick?" aria-label="What's a harness and which one should I pick?">ⓘ</a></span><span class="field-help" id="harness-help" hidden>Formerly the GitHub Copilot harness (renamed Oct 28, 2026). Same harness; no change to capabilities or billing.</span></label>
           </div>
           <fieldset><legend>Editable illustrative credits per run (per minute for voice)</legend>
             <div class="planner-grid">
@@ -98,6 +101,7 @@ export const tokenomicsBody = `
       </section>
       <section id="harness" role="tabpanel" aria-labelledby="tab-harness" hidden>
         <h2>Harness picker</h2>
+        <p><a href="/blog/copilot-studio-harnesses/">New to harnesses? Read the plain-English guide →</a> <span class="field-help">· <a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview">Microsoft docs</a></span></p>
         <p><strong>Bigger isn't better.</strong> A simple task on the most capable harness can cost more without a better result.</p>
         <div id="harness-results"></div>
       </section>
@@ -117,6 +121,7 @@ export const tokenomicsBody = `
       <section id="sources" role="tabpanel" aria-labelledby="tab-sources" hidden>
         <h2>Sources &amp; how this changes</h2>
         <p>Last data refresh: <time id="last-refresh"></time>. As-of dates record the dataset snapshot, not a guarantee of current licensing.</p>
+        <p>Microsoft announcement: <a href="https://www.microsoft.com/en-us/copilot/blog/copilot-studio/the-github-copilot-harness-in-copilot-studio-is-now-the-microsoft-copilot-harness/">The GitHub Copilot harness in Copilot Studio is now the Microsoft Copilot harness</a>.</p>
         <h3>How I expect this to change</h3>
         <p>My view: the frontier costs the most; today's premium becomes tomorrow's default; cheaper capability drives more usage. Measure, then re-size quarterly.</p>
         <div id="source-results"></div>

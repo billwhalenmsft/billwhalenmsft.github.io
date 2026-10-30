@@ -1,4 +1,5 @@
 import { estimate, price, sizeFor } from "./calculate.js";
+import { syncHarnessHelp } from "./harness-ui.js";
 
 const $ = (id) => document.getElementById(id);
 const escape = (value) => String(value).replace(/[&<>"']/g, (char) => ({
@@ -20,10 +21,13 @@ function evidenceValue(value) {
 }
 
 function evidence(label, entry) {
-  const value = "value" in entry ? evidenceValue(entry.value)
+  const referencedRate = typeof entry.value === "string" ? rates[entry.value] : null;
+  const value = referencedRate && ["low", "likely", "high"].every((key) => Number.isFinite(referencedRate[key]))
+    ? `${number(referencedRate.low)}–${number(referencedRate.high)}× (likely ${number(referencedRate.likely)}×)`
+    : "value" in entry ? evidenceValue(entry.value)
     : escape(`${number(entry.low)} / ${number(entry.likely)} / ${number(entry.high)}`);
   return `<div class="planner-card"><h3>${escape(label)}</h3>
-    <div>${value}</div><p>${escape(entry.unit)} · <span class="badge">${badges[entry.confidence]}</span></p>
+    <div>${value}</div><p>${escape(referencedRate?.unit || entry.unit)} · <span class="badge">${badges[entry.confidence]}</span></p>
     <p>${escape(entry.why)}</p><p><a href="${escape(entry.source)}" rel="noreferrer">Source</a>
     · as of <time>${escape(entry.asOf)}</time></p></div>`;
 }
@@ -83,6 +87,7 @@ async function start() {
     $("runs-label").textContent = preset.voice ? "Minutes per user per month" : "Runs per user per month";
     editedBand = false;
     setBand();
+    syncHarnessHelp($("harness-choice"), $("harness-help"));
     render();
   }
 
@@ -220,6 +225,7 @@ async function start() {
     render();
   });
   $("preset").addEventListener("change", loadPreset);
+  $("harness-choice").addEventListener("change", () => syncHarnessHelp($("harness-choice"), $("harness-help")));
   $("value").addEventListener("input", (event) => {
     if (event.target.id === "value-method") {
       const method = $("value-method").value;
