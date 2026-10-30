@@ -7,7 +7,7 @@
     "generate": "node scripts/generate.mjs",
     "generate:check": "node scripts/generate.mjs --check",
     "validate": "node scripts/validate.mjs",
-    "test": "node --test tools/tokenomics/calculate.test.js && node scripts/generate.mjs --check && node scripts/validate.mjs"
+    "test": "node --test tools/tokenomics/calculate.test.js scripts/site-theme.test.mjs scripts/site-chrome.test.mjs && node scripts/generate.mjs --check && node scripts/validate.mjs"
   },
   "engines": {
     "node": ">=20"

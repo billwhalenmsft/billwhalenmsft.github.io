@@ -12,6 +12,47 @@ import {
 
 const errors = [];
 const checks = [];
+const chromeSource = await readFile(resolve(ROOT, "assets/site-chrome.js"), "utf8");
+
+function offersSharedTheme(html) {
+  return html.includes('<script src="/assets/site-theme.js"></script>')
+    && html.includes('<script src="/assets/site-chrome.js"></script>')
+    && ["Light", "Dark", "Auto"].every((theme) => chromeSource.includes(`>${theme}</option>`));
+}
+
+function validateSharedChrome(relativePath, html) {
+  check(/class="(?:skip-link|skip)"[^>]*href="#main"/.test(html),
+    `${relativePath}: shared navigation requires a skip link to main.`);
+  check((html.match(/<header data-site-header><\/header>/g) || []).length === 1,
+    `${relativePath}: expected one empty shared header placeholder.`);
+  check((html.match(/<footer data-site-footer><\/footer>/g) || []).length === 1,
+    `${relativePath}: expected one empty shared footer placeholder.`);
+  check(!/<nav\b/i.test(html), `${relativePath}: page must not define its own navigation markup.`);
+  check(!/id="(?:themeSelect|themeButton|mobileMenu)"/.test(html),
+    `${relativePath}: page must not define its own header controls.`);
+  check(offersSharedTheme(html), `${relativePath}: missing shared Light/Dark/Auto control.`);
+  for (const asset of ["site-theme.js", "site-chrome.js", "site-chrome.css"]) {
+    check(html.split(`/assets/${asset}`).length === 2, `${relativePath}: expected one reference to ${asset}.`);
+  }
+  check(html.indexOf('src="/assets/site-theme.js"') < html.indexOf("</head>"),
+    `${relativePath}: theme must initialize before first paint.`);
+  check(!/<script[^>]*\b(?:async|defer)[^>]*src="\/assets\/site-theme.js"/.test(html),
+    `${relativePath}: theme initialization must not be deferred.`);
+  check(!/(?:dataset\.theme\s*=|setAttribute\(["']data-theme)/.test(html),
+    `${relativePath}: page must not override shared theme behavior.`);
+}
+
+async function validateAllPageChrome(directory = "") {
+  for (const entry of await readdir(resolve(ROOT, directory), { withFileTypes: true })) {
+    if (entry.name.startsWith(".") || entry.name === "node_modules") continue;
+    const path = directory ? `${directory}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) await validateAllPageChrome(path);
+    else if (entry.name.endsWith(".html")) {
+      const html = await readFile(resolve(ROOT, path), "utf8");
+      if (/<!doctype html>/i.test(html)) validateSharedChrome(path, html);
+    }
+  }
+}
 
 function check(condition, message) {
   if (!condition) errors.push(message);
@@ -60,7 +101,7 @@ function validateHtml(relativePath, html) {
   check((html.match(/<main\b/gi) || []).length === 1, `${relativePath}: expected one main landmark.`);
   check((html.match(/<h1\b/gi) || []).length === 1, `${relativePath}: expected one h1.`);
   check(/class="skip-link"[^>]*href="#main"/i.test(html), `${relativePath}: missing skip link to main.`);
-  check(html.includes('new URLSearchParams(window.location.search).get("scoutTheme")'), `${relativePath}: missing required theme detection.`);
+  check(offersSharedTheme(html), `${relativePath}: missing required shared theme detection.`);
   check(html.includes("--cp-bg: #f7f4ef;"), `${relativePath}: missing canonical Clawpilot variables.`);
   check(/rel="alternate"[^>]+application\/rss\+xml/i.test(html), `${relativePath}: missing RSS discoverability link.`);
   check(/rel="alternate"[^>]+application\/atom\+xml/i.test(html), `${relativePath}: missing Atom discoverability link.`);
@@ -414,6 +455,29 @@ for (const relativePath of ["index.html", "404.html"]) {
   const html = await readFile(resolve(ROOT, relativePath), "utf8");
   diskHtml.set(relativePath, html);
 }
+await validateAllPageChrome();
+let previousNavIndex = -1;
+for (const href of ["/", "/#work", "/#capabilities", "/#resume", "/journal/", "/blog/", "/tools/", "/#connect"]) {
+  const navIndex = chromeSource.indexOf(`["${href}",`);
+  check(navIndex > previousNavIndex, `Shared header: missing or misordered navigation target ${href}.`);
+  previousNavIndex = navIndex;
+  const [path, fragment] = href.split("#");
+  if (fragment) {
+    check(idsIn(diskHtml.get("index.html")).includes(fragment), `Shared header: missing homepage anchor ${href}.`);
+  } else {
+    await access(resolve(ROOT, pathForHref(path)));
+  }
+}
+for (const href of ["/journal/", "/blog/", "/tools/", "/subscribe/", "/feeds/rss.xml",
+  "https://github.com/billwhalenmsft", "https://www.linkedin.com/in/williamjaywhalen/"]) {
+  check(chromeSource.includes(`href="${href}"`), `Shared footer: missing link ${href}.`);
+}
+check(chromeSource.includes('aria-controls="site-navigation"') && chromeSource.includes('aria-expanded="false"'),
+  "Shared header: mobile menu must expose its controlled navigation and expanded state.");
+check(chromeSource.includes('aria-current", "page"'), "Shared header: active links must expose aria-current.");
+check(chromeSource.includes("© 2026 Bill Whalen. Personal portfolio; views are my own. Community projects are provided as-is and are not Microsoft products or supported offerings."),
+  "Shared footer: portfolio boundary line must be preserved.");
+pass("Every deployed HTML page uses the shared header, footer, and theme assets without private nav markup.");
 
 const home = diskHtml.get("index.html");
 check((home.match(/class="project-card"/g) || []).length === 11, "Homepage must contain exactly eleven featured project cards.");
@@ -497,7 +561,7 @@ for (const [relativePath, html] of diskHtml) {
     check(/line-height: 1\.08;/.test(titleStyles), `${relativePath}: blog title must use compact line spacing.`);
     check(/text-wrap: balance;/.test(titleStyles), `${relativePath}: blog title must balance wrapped lines.`);
     check(html.includes("grid-template-columns: minmax(0, 1fr) min(100%, 72ch) minmax(0, 1fr);"), `${relativePath}: blog body must use the shared 72ch reading column.`);
-    check(html.includes('id="themeSelect"'), `${relativePath}: blog posts must offer Light, Dark and Auto.`);
+    check(offersSharedTheme(html), `${relativePath}: blog posts must offer Light, Dark and Auto.`);
   }
 }
 pass("Full-width responsive hero titles scoped to all blog posts checked.");
@@ -517,7 +581,7 @@ check(harnessHtml.includes("<h1>The Microsoft Copilot harness (formerly GitHub C
 check(harnessHtml.indexOf("Naming update (Oct 28)") < harnessHtml.indexOf("The short version"), "Naming update must precede the short version.");
 check((harnessHtml.match(/<div class="card">/g) || []).length === 3, "Harness article must retain all three harness cards.");
 check(harnessHtml.includes('<div class="table-wrap" role="region" aria-label="Harness comparison" tabindex="0">'), "Harness comparison must be a keyboard-scrollable table.");
-check(harnessHtml.includes('id="themeSelect"'), "Harness post must reuse the Light, Dark and Auto theme control.");
+check(offersSharedTheme(harnessHtml), "Harness post must reuse the Light, Dark and Auto theme control.");
 const readMoreLinks = [...harnessHtml.split("<h2>Read more</h2>")[1].matchAll(/<a href="([^"]+)"/g)];
 check(readMoreLinks[0]?.[1] === "https://www.microsoft.com/en-us/copilot/blog/copilot-studio/the-github-copilot-harness-in-copilot-studio-is-now-the-microsoft-copilot-harness/", "Microsoft announcement must be first under Read more.");
 check(salesSuiteHtml.includes("<h1>Sales agent, Dynamics 365 in Cowork, and the Sales Extension Suite: how the pieces fit</h1>"), "Sales Extension Suite article must use the exact headline.");
@@ -528,7 +592,7 @@ check((salesSuiteHtml.match(/class="table-wrap"/g) || []).length === 2, "Sales E
 check((salesSuiteHtml.match(/role="region" aria-label="Sales assistance /g) || []).length === 2, "Sales Extension Suite table wrappers must be keyboard-scrollable regions.");
 check(salesSuiteHtml.includes('<table class="article-table">') && salesSuiteHtml.includes("min-width: 38rem;"), "Sales Extension Suite tables must use the shared responsive table styles.");
 check(salesSuiteHtml.includes('<div class="callout"><p><strong>Boundary:</strong> Personal project showcase. The Sales Extension Suite is an independent preview accelerator I built. It is not a Microsoft product or supported offering, and it makes no production, adoption or results claims. Examples are fictional. Licensing and availability vary; confirm with your Microsoft account team or partner. Views are my own.</p></div>'), "Sales Extension Suite article must render the standard boundary callout verbatim.");
-check(salesSuiteHtml.includes('id="themeSelect"') && ["Light", "Dark", "Auto"].every((theme) => salesSuiteHtml.includes(`>${theme}</option>`)), "Sales Extension Suite article must provide Light, Dark and Auto theme choices.");
+check(offersSharedTheme(salesSuiteHtml), "Sales Extension Suite article must provide Light, Dark and Auto theme choices.");
 const salesSuiteArticleBody = salesSuiteHtml.match(/<div class="shell article-body">([\s\S]*?)<\/section>/)?.[1] || "";
 const salesSuiteLinks = [...salesSuiteArticleBody.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map((match) => match[1]);
 check(
@@ -570,7 +634,7 @@ check(
 const tokenomicsPlannerHtml = outputs.get("blog/tokenomics-planner/index.html");
 check(tokenomicsPlannerHtml.includes('href="/tools/tokenomics/">Try the live planner →</a>'), "Tokenomics post must link prominently to the live planner.");
 const livePlannerHtml = outputs.get("tools/tokenomics/index.html");
-check(livePlannerHtml.includes('href="/tools/">Tools</a>'), "Live planner must link to the tools directory.");
+check(livePlannerHtml.includes('src="/assets/site-chrome.js"') && chromeSource.includes('["/tools/", "Tools"]'), "Live planner must link to the tools directory.");
 check(livePlannerHtml.includes("font-size: clamp(2rem, 4vw, 3.25rem);"), "Planner title must use the requested sizing.");
 check(livePlannerHtml.includes('class="estimate-layout"'), "Planner must share an input/result layout.");
 check(livePlannerHtml.includes("@media (min-width: 1024px)"), "Planner must start the desktop layout at 1024px.");
@@ -593,7 +657,7 @@ check(blogHtml.includes("Size an AI agent&#39;s monthly running cost as an hones
 check(blogHtml.includes('<p class="eyebrow">Decision support</p>'), "Tokenomics planner card category is missing.");
 check(tokenomicsPlannerHtml.includes("<h2>⚠️ Read this first: why some numbers are ranges, not answers</h2>"), "Tokenomics planner must highlight its uncertainty callout.");
 check(tokenomicsPlannerHtml.includes('<table class="article-table">'), "Tokenomics planner facts must be rendered as a table.");
-check(tokenomicsPlannerHtml.includes('id="themeSelect"') && ["Light", "Dark", "Auto"].every((theme) => tokenomicsPlannerHtml.includes(`>${theme}</option>`)), "Tokenomics planner must provide working Light, Dark, and Auto theme choices.");
+check(offersSharedTheme(tokenomicsPlannerHtml), "Tokenomics planner must provide working Light, Dark, and Auto theme choices.");
 const tokenomicsPlannerBody = tokenomicsPlannerHtml.match(/<div class="shell article-body">([\s\S]*?)<\/section>/)?.[1] || "";
 const tokenomicsPlannerLinks = [...tokenomicsPlannerBody.matchAll(/<a href="([^"]+)"/g)]
   .map((match) => match[1])
@@ -652,7 +716,7 @@ for (const tool of tools) {
   }
 }
 for (const [relativePath, html] of diskHtml) {
-  check(html.includes('href="/tools/">Tools</a>'), `${relativePath}: missing Tools directory link.`);
+  check(html.includes('src="/assets/site-chrome.js"') && chromeSource.includes('["/tools/", "Tools"]'), `${relativePath}: missing shared Tools directory link.`);
   const pageIds = new Set(idsIn(html));
   for (const match of html.matchAll(/href="([^"]+)"/g)) {
     const href = match[1];

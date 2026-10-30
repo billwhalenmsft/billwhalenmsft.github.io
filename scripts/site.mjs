@@ -7,27 +7,6 @@ export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const SITE_URL = "https://billwhalenmsft.github.io";
 export const RELEASE_DATE = "2026-09-14";
 
-const themeScript = `<script>
-  (() => {
-    const param = new URLSearchParams(window.location.search).get("scoutTheme");
-    const theme =
-      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    document.documentElement.setAttribute("data-theme", theme);
-  })();
-</script>`;
-
-const themeModesScript = `<script>
-  (() => {
-    const param = new URLSearchParams(window.location.search).get("scoutTheme");
-    const preference = ["light", "dark", "auto"].includes(param) ? param : "auto";
-    const theme = preference === "auto"
-      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-      : preference;
-    document.documentElement.setAttribute("data-theme", theme);
-    document.documentElement.dataset.themePreference = preference;
-  })();
-</script>`;
-
 const themeVariables = `:root {
   color-scheme: light;
   --cp-bg: #f7f4ef;
@@ -372,7 +351,7 @@ h3 { font-size: 1.15rem; }
   font-weight: 700;
 }
 .flow-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.panel { padding: clamp(1.25rem, 3vw, 2rem); }
+.panel { min-width: 0; padding: clamp(1.25rem, 3vw, 2rem); overflow-wrap: anywhere; }
 .panel p:last-child, .panel ul:last-child { margin-bottom: 0; }
 .panel p, .plain-list, .source-list { color: var(--cp-text-muted); }
 .plain-list li, .source-list li { position: relative; padding: 0.65rem 0 0.65rem 1.1rem; border-bottom: 1px solid var(--cp-border); }
@@ -527,89 +506,6 @@ function evidenceUrls(release) {
   ];
 }
 
-function nav(themeModes = false) {
-  return `<header class="site-header">
-  <nav class="nav shell" aria-label="Primary navigation">
-    <a class="brand" href="/">
-      <span class="brand-mark" aria-hidden="true">BW</span>
-      <span class="brand-copy"><strong>Bill Whalen</strong><small>THE ATOMIC COLLECTION</small></span>
-    </a>
-    <div class="nav-links">
-      <a href="/">Home</a>
-      <a href="/journal/">Solution journal</a>
-      <a href="/blog/">Blog</a>
-      <a href="/tools/">Tools</a>
-      <a href="/subscribe/">Subscribe</a>
-      <a href="/feeds/rss.xml">RSS</a>
-    </div>
-    ${themeModes ? `<label class="theme-control">Theme <select class="theme-select" id="themeSelect" aria-label="Theme">
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-      <option value="auto" selected>Auto</option>
-    </select></label>` : `<button class="icon-button" id="themeButton" type="button" aria-label="Switch theme">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-      </svg>
-    </button>`}
-  </nav>
-</header>`;
-}
-
-function footer() {
-  return `<footer class="site-footer">
-  <div class="footer-inner shell">
-    <p>&copy; 2026 Bill Whalen. Personal portfolio; views are my own. Community projects are provided as-is and are not Microsoft products or supported offerings.</p>
-    <div class="footer-links">
-      <a href="/journal/">Journal</a>
-      <a href="/blog/">Blog</a>
-      <a href="/subscribe/">Feeds</a>
-      <a href="https://github.com/billwhalenmsft" rel="noreferrer">GitHub</a>
-    </div>
-  </div>
-</footer>`;
-}
-
-function behaviorScript(extra = "", themeModes = false) {
-  if (themeModes) {
-    return `<script>
-  const themeSelect = document.getElementById("themeSelect");
-  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
-  themeSelect.value = document.documentElement.dataset.themePreference;
-  function applyThemePreference() {
-    const preference = themeSelect.value;
-    document.documentElement.dataset.themePreference = preference;
-    document.documentElement.dataset.theme = preference === "auto"
-      ? (systemTheme.matches ? "dark" : "light")
-      : preference;
-    const url = new URL(window.location.href);
-    url.searchParams.set("scoutTheme", preference);
-    window.history.replaceState({}, "", url);
-  }
-  themeSelect.addEventListener("change", applyThemePreference);
-  systemTheme.addEventListener("change", () => {
-    if (themeSelect.value === "auto") applyThemePreference();
-  });
-  ${extra}
-</script>`;
-  }
-  return `<script>
-  const themeButton = document.getElementById("themeButton");
-  themeButton.addEventListener("click", () => {
-    const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = nextTheme;
-    const url = new URL(window.location.href);
-    url.searchParams.set("scoutTheme", nextTheme);
-    window.history.replaceState({}, "", url);
-    themeButton.setAttribute("aria-label", \`Switch to \${nextTheme === "dark" ? "light" : "dark"} theme\`);
-  });
-  themeButton.setAttribute(
-    "aria-label",
-    \`Switch to \${document.documentElement.dataset.theme === "dark" ? "light" : "dark"} theme\`
-  );
-  ${extra}
-</script>`;
-}
-
 const blogPostCss = `.hero.shell { grid-template-columns: minmax(0, 1fr); }
 .hero.shell h1 {
   max-width: none;
@@ -655,7 +551,7 @@ const blogComponentsCss = `.theme-control { color: var(--cp-text-muted); font-si
 .article-body .naming-update { border-left: 4px solid var(--cp-warning); }
 .article-body .src, .article-body footer { color: var(--cp-text-muted); font-size: 0.9rem; }`;
 
-function page({ title, description, canonical, type = "website", jsonLd, body, script = "", themeModes = type === "article" && canonical.startsWith(`${SITE_URL}/blog/`), styles = "" }) {
+function page({ title, description, canonical, type = "website", jsonLd, body, script = "", styles = "" }) {
   if (type === "article" && canonical.startsWith(`${SITE_URL}/blog/`)) {
     styles = `${blogPostCss}\n${blogComponentsCss}${styles ? `\n${styles}` : ""}`;
   }
@@ -679,22 +575,24 @@ function page({ title, description, canonical, type = "website", jsonLd, body, s
   <meta name="twitter:description" content="${escapeHtml(description)}">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
   <title>${escapeHtml(title)}</title>
-  ${themeModes ? themeModesScript : themeScript}
+  <script src="/assets/site-theme.js"></script>
   <script type="application/ld+json">
 ${safeJson(jsonLd).split("\n").map((line) => `    ${line}`).join("\n")}
   </script>
   <style>
 ${siteCss.split("\n").map((line) => `    ${line}`).join("\n")}${styles ? `\n${styles.split("\n").map((line) => `    ${line}`).join("\n")}` : ""}
   </style>
+  <link rel="stylesheet" href="/assets/site-chrome.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  ${nav(themeModes)}
+  <header data-site-header></header>
   <main id="main">
 ${body}
   </main>
-  ${footer()}
-  ${behaviorScript(script, themeModes)}
+  <footer data-site-footer></footer>
+  <script src="/assets/site-chrome.js"></script>
+  ${script ? `<script>\n${script}\n</script>` : ""}
 </body>
 </html>
 `;
@@ -1201,7 +1099,6 @@ function harnessPage(article) {
     description: harnessPost.summary,
     canonical,
     type: "article",
-    themeModes: true,
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -1234,7 +1131,6 @@ function salesSuitePage(article) {
     description: salesSuitePost.summary,
     canonical,
     type: "article",
-    themeModes: true,
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
@@ -1545,8 +1441,7 @@ function tokenomicsPlannerPage() {
       author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
       mainEntityOfPage: canonical
     },
-    body,
-    themeModes: true
+    body
   });
 }
 
@@ -1765,7 +1660,6 @@ function toolsPage(tools) {
     title: "Tools | Bill Whalen",
     description: "Live tools and public releases you can use, with write-ups, guides and public source.",
     canonical: `${SITE_URL}/tools/`,
-    themeModes: true,
     styles: `${blogComponentsCss}
 .tools-hero { padding-block: 3rem 2rem; }
 .tools-hero h1 { max-width: none; font-size: clamp(2rem, 4vw, 3.25rem); }
@@ -1822,8 +1716,7 @@ export async function buildOutputs() {
         operatingSystem: "Web browser"
       },
       body: tokenomicsBody,
-      styles: tokenomicsStyles,
-      themeModes: true
+      styles: tokenomicsStyles
     })],
     ["journal/index.html", journalIndex(catalog)],
     ["blog/index.html", blogIndex(catalog)],

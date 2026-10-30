@@ -18,17 +18,7 @@
   <meta name="twitter:description" content="Estimate Copilot Credit costs with transparent ranges, sources, harness choices, and business value.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
   <title>Tokenomics planner | Bill Whalen</title>
-  <script>
-  (() => {
-    const param = new URLSearchParams(window.location.search).get("scoutTheme");
-    const preference = ["light", "dark", "auto"].includes(param) ? param : "auto";
-    const theme = preference === "auto"
-      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-      : preference;
-    document.documentElement.setAttribute("data-theme", theme);
-    document.documentElement.dataset.themePreference = preference;
-  })();
-</script>
+  <script src="/assets/site-theme.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -382,7 +372,7 @@
       font-weight: 700;
     }
     .flow-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .panel { padding: clamp(1.25rem, 3vw, 2rem); }
+    .panel { min-width: 0; padding: clamp(1.25rem, 3vw, 2rem); overflow-wrap: anywhere; }
     .panel p:last-child, .panel ul:last-child { margin-bottom: 0; }
     .panel p, .plain-list, .source-list { color: var(--cp-text-muted); }
     .plain-list li, .source-list li { position: relative; padding: 0.65rem 0 0.65rem 1.1rem; border-bottom: 1px solid var(--cp-border); }
@@ -543,30 +533,11 @@
     @media (max-width: 600px) { .planner { width: calc(100% - 2rem); } .nav { flex-wrap: wrap; } .nav-links { display: flex; flex-wrap: wrap; } }
     
   </style>
+  <link rel="stylesheet" href="/assets/site-chrome.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-  <nav class="nav shell" aria-label="Primary navigation">
-    <a class="brand" href="/">
-      <span class="brand-mark" aria-hidden="true">BW</span>
-      <span class="brand-copy"><strong>Bill Whalen</strong><small>THE ATOMIC COLLECTION</small></span>
-    </a>
-    <div class="nav-links">
-      <a href="/">Home</a>
-      <a href="/journal/">Solution journal</a>
-      <a href="/blog/">Blog</a>
-      <a href="/tools/">Tools</a>
-      <a href="/subscribe/">Subscribe</a>
-      <a href="/feeds/rss.xml">RSS</a>
-    </div>
-    <label class="theme-control">Theme <select class="theme-select" id="themeSelect" aria-label="Theme">
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-      <option value="auto" selected>Auto</option>
-    </select></label>
-  </nav>
-</header>
+  <header data-site-header></header>
   <main id="main">
 
     <div class="shell planner">
@@ -646,36 +617,8 @@
     <p class="boundary" role="note">Estimates, not quotes or licensing guidance. List prices in USD, subject to change; for actual pricing, talk to your Microsoft account team or partner. Personal project; not a Microsoft product or supported offering; views are my own.</p>
     <script type="module" src="./app.js"></script>
   </main>
-  <footer class="site-footer">
-  <div class="footer-inner shell">
-    <p>&copy; 2026 Bill Whalen. Personal portfolio; views are my own. Community projects are provided as-is and are not Microsoft products or supported offerings.</p>
-    <div class="footer-links">
-      <a href="/journal/">Journal</a>
-      <a href="/blog/">Blog</a>
-      <a href="/subscribe/">Feeds</a>
-      <a href="https://github.com/billwhalenmsft" rel="noreferrer">GitHub</a>
-    </div>
-  </div>
-</footer>
-  <script>
-  const themeSelect = document.getElementById("themeSelect");
-  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
-  themeSelect.value = document.documentElement.dataset.themePreference;
-  function applyThemePreference() {
-    const preference = themeSelect.value;
-    document.documentElement.dataset.themePreference = preference;
-    document.documentElement.dataset.theme = preference === "auto"
-      ? (systemTheme.matches ? "dark" : "light")
-      : preference;
-    const url = new URL(window.location.href);
-    url.searchParams.set("scoutTheme", preference);
-    window.history.replaceState({}, "", url);
-  }
-  themeSelect.addEventListener("change", applyThemePreference);
-  systemTheme.addEventListener("change", () => {
-    if (themeSelect.value === "auto") applyThemePreference();
-  });
+  <footer data-site-footer></footer>
+  <script src="/assets/site-chrome.js"></script>
   
-</script>
 </body>
 </html>
