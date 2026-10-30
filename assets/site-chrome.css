@@ -1,3 +1,15 @@
+body > :is(.skip-link, .skip) {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  margin: 0;
+  padding: 12px;
+  transform: translateY(-200%);
+  background: var(--cp-accent);
+  color: var(--cp-accent-fg);
+}
+body > :is(.skip-link, .skip):focus { transform: translateY(0); }
 [data-site-header], [data-site-footer] {
   --site-bg: #ffffff;
   --site-text: #142d4e;
@@ -27,6 +39,7 @@ html[data-theme="dark"] :is([data-site-header], [data-site-footer]) {
   position: sticky;
   top: 0;
   z-index: 100;
+  min-height: 77px;
   border-bottom: 1px solid var(--site-border);
 }
 [data-site-header] *, [data-site-footer] * { box-sizing: border-box; }
@@ -111,6 +124,7 @@ html.project-hub { scroll-padding-top: calc(var(--hub-toolbar-height, 150px) + 9
   [data-site-header] .sc-nav { gap: 12px; }
 }
 @media (max-width: 900px) {
+  [data-site-header] { min-height: 69px; }
   html.project-hub { scroll-padding-top: calc(var(--hub-toolbar-height, 150px) + 84px); }
   [data-site-header] ~ .hub-toolbar { top: 68px; }
   [data-site-header] .sc-bar { min-height: 68px; gap: 8px; }

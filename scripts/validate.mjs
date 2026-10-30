@@ -21,6 +21,8 @@ function offersSharedTheme(html) {
 }
 
 function validateSharedChrome(relativePath, html) {
+  check(/class="(?:skip-link|skip)"[^>]*href="#main"/.test(html),
+    `${relativePath}: shared navigation requires a skip link to main.`);
   check((html.match(/<header data-site-header><\/header>/g) || []).length === 1,
     `${relativePath}: expected one empty shared header placeholder.`);
   check((html.match(/<footer data-site-footer><\/footer>/g) || []).length === 1,
