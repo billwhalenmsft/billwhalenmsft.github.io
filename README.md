@@ -35,6 +35,8 @@ Open `http://localhost:4173/`, then review `/journal/`, one public release, one 
 
 Canonical journal data lives in `content/releases.json`. Public releases carry exact repository creation and last-push dates from GitHub's public API; those dates describe repository history, not adoption. Info-only showcases carry an owner-reviewed as-of date, contain no source URLs, and are excluded from RSS and Atom. Generated output is committed so GitHub Pages can publish directly from the repository root. `npm run generate:check` fails when committed output does not match the catalog.
 
+Every deployed HTML page uses empty `<header data-site-header>` and `<footer data-site-footer>` placeholders rendered by `assets/site-chrome.js`, with `assets/site-chrome.css` loaded after page styles. Load `assets/site-theme.js` synchronously in the head to apply the shared `site-theme` preference before paint. It migrates legacy theme keys and `scoutTheme` URLs; Auto follows the system. Keep navigation markup in the shared renderer, not individual pages. Quick launch remains homepage-only because it searches that page's project cards. Validation checks all deployed HTML documents, including standalone pages.
+
 For each future release:
 
 1. Nominate one exact public project and add its canonical repository to `config/public-source-allowlist.json`.

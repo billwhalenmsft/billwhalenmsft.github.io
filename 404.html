@@ -6,14 +6,7 @@
   <meta name="robots" content="noindex">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
   <title>Page not found | Bill Whalen</title>
-  <script>
-    (() => {
-      const param = new URLSearchParams(window.location.search).get("scoutTheme");
-      const theme =
-        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-      document.documentElement.setAttribute("data-theme", theme);
-    })();
-  </script>
+  <script src="/assets/site-theme.js"></script>
   <style>
     :root {
       color-scheme: light;
@@ -103,17 +96,19 @@
     }
     * { box-sizing: border-box; }
     body {
-      display: grid;
+      display: flex;
+      flex-direction: column;
       min-height: 100vh;
       margin: 0;
-      place-items: center;
-      padding: 1rem;
+      padding: 0;
       background: var(--cp-bg);
       color: var(--cp-text);
       font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
     }
     main {
-      width: min(34rem, 100%);
+      width: min(34rem, 100% - 2rem);
+      margin: 3rem auto;
+      flex: 1;
       padding: clamp(1.5rem, 7vw, 3.5rem);
       border: 1px solid var(--cp-border);
       border-radius: 16px;
@@ -141,14 +136,18 @@
     a:hover { background: var(--cp-accent-hover); }
     a:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
   </style>
+  <link rel="stylesheet" href="/assets/site-chrome.css">
 </head>
 <body>
-  <main>
+  <header data-site-header></header>
+  <main id="main">
     <p>404 / ROUTE NOT FOUND</p>
     <h1>This path is between releases.</h1>
     <p>The Atomic Collection is still online. Return home to explore the current public work.</p>
     <a href="/">Back to the collection</a>
     <a href="/tools/">Tools</a>
   </main>
+  <footer data-site-footer></footer>
+  <script src="/assets/site-chrome.js"></script>
 </body>
 </html>
