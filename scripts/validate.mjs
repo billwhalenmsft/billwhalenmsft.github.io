@@ -520,8 +520,8 @@ check(harnessHtml.includes('<div class="table-wrap" role="region" aria-label="Ha
 check(harnessHtml.includes('id="themeSelect"'), "Harness post must reuse the Light, Dark and Auto theme control.");
 const readMoreLinks = [...harnessHtml.split("<h2>Read more</h2>")[1].matchAll(/<a href="([^"]+)"/g)];
 check(readMoreLinks[0]?.[1] === "https://www.microsoft.com/en-us/copilot/blog/copilot-studio/the-github-copilot-harness-in-copilot-studio-is-now-the-microsoft-copilot-harness/", "Microsoft announcement must be first under Read more.");
-check(salesSuiteHtml.includes(`<h1>${"Sales agent, Dynamics 365 in Cowork, and the Sales Extension Suite: how the pieces fit"}</h1>`), "Sales Extension Suite article must use the exact headline.");
-check(salesSuiteHtml.includes('<p class="eyebrow">Accelerators &amp; Prototypes · October 30, 2026</p>'), "Sales Extension Suite article must show its lane and date.");
+check(salesSuiteHtml.includes("<h1>Sales agent, Dynamics 365 in Cowork, and the Sales Extension Suite: how the pieces fit</h1>"), "Sales Extension Suite article must use the exact headline.");
+check(salesSuiteHtml.includes('<p class="eyebrow"><strong>Accelerators &amp; Prototypes</strong> · October 30, 2026</p>'), "Sales Extension Suite article must show its lane and date.");
 check(salesSuiteHtml.includes('<a class="button button-primary" href="https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/" rel="noreferrer">Try the Sales Extension Suite examples →</a>'), "Sales Extension Suite article must link prominently to the examples.");
 check(salesSuiteHtml.indexOf("Try the Sales Extension Suite examples") < salesSuiteHtml.indexOf('aria-label="Sales assistance layers"'), "The examples button must appear under the introduction.");
 check((salesSuiteHtml.match(/class="table-wrap"/g) || []).length === 2, "Sales Extension Suite article must wrap both tables for horizontal scrolling.");
@@ -529,6 +529,22 @@ check((salesSuiteHtml.match(/role="region" aria-label="Sales assistance /g) || [
 check(salesSuiteHtml.includes('<table class="article-table">') && salesSuiteHtml.includes("min-width: 38rem;"), "Sales Extension Suite tables must use the shared responsive table styles.");
 check(salesSuiteHtml.includes('<div class="callout"><p><strong>Boundary:</strong> Personal project showcase. The Sales Extension Suite is an independent preview accelerator I built. It is not a Microsoft product or supported offering, and it makes no production, adoption or results claims. Examples are fictional. Licensing and availability vary; confirm with your Microsoft account team or partner. Views are my own.</p></div>'), "Sales Extension Suite article must render the standard boundary callout verbatim.");
 check(salesSuiteHtml.includes('id="themeSelect"') && ["Light", "Dark", "Auto"].every((theme) => salesSuiteHtml.includes(`>${theme}</option>`)), "Sales Extension Suite article must provide Light, Dark and Auto theme choices.");
+const salesSuiteArticleBody = salesSuiteHtml.match(/<div class="shell article-body">([\s\S]*?)<\/section>/)?.[1] || "";
+const salesSuiteLinks = [...salesSuiteArticleBody.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map((match) => match[1]);
+check(
+  JSON.stringify(salesSuiteLinks) === JSON.stringify([
+    "https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/",
+    "https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/",
+    "https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/catalog.html",
+    "https://learn.microsoft.com/en-us/microsoft-sales-copilot/set-up-sales-chat",
+    "https://learn.microsoft.com/en-us/microsoft-sales-copilot/deploy-sales-app-d365",
+    "https://learn.microsoft.com/en-us/dynamics365/sales/copilot-overview",
+    "https://learn.microsoft.com/en-us/dynamics365/release-plan/2026wave1/sales/dynamics365-sales/use-dynamics-365-sales-skills-365-copilot-cowork",
+    "https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/10/08/bring-microsoft-dynamics-365-into-the-flow-of-work-with-30-new-crm-skills/",
+    "https://www.microsoft.com/en-us/copilot/blog/2026/10/08/bringing-crm-into-the-flow-of-work-and-agents-into-business-process-for-sales-and-service-teams/"
+  ]),
+  "Sales Extension Suite article must render each provided URL as a link."
+);
 const salesBlogCard = blogHtml.match(/<article class="release-card blog-card" data-lane="accelerators" data-date="2026-10-30">[\s\S]*?href="\/blog\/sales-agent-cowork-sales-suite\/"/)?.[0] || "";
 check(salesBlogCard.includes('<span class="status">Accelerators &amp; Prototypes</span>'), "Sales Extension Suite blog card must appear in the accelerator lane.");
 check(salesBlogCard.includes('<p class="eyebrow">Sales assistance</p>'), "Sales Extension Suite blog card must use the Sales assistance category.");

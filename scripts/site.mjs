@@ -1247,7 +1247,7 @@ function salesSuitePage(article) {
     body: `    <article>
       <header class="hero shell">
         <div>
-          <p class="eyebrow">Accelerators &amp; Prototypes · October 30, 2026</p>
+          <p class="eyebrow"><strong>Accelerators &amp; Prototypes</strong> · October 30, 2026</p>
           <h1>${salesSuitePost.title}</h1>
         </div>
       </header>
