@@ -59,5 +59,15 @@
       { "label": "Public repository", "url": "https://github.com/billwhalenmsft/jokeservermcp" }
     ],
     "tags": ["Model Context Protocol", "Copilot Studio", "Azure Container Apps", "TypeScript"]
+  },
+  {
+    "name": "Sales Extension Suite for Copilot",
+    "status": "Public release",
+    "description": "Optional Cowork plugins that package repeatable sales routines: account briefs, meeting follow-through, deal coaching and team handoffs.",
+    "links": [
+      { "label": "Open site", "url": "https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/" },
+      { "label": "Read the write-up", "url": "/blog/sales-agent-cowork-sales-suite/" }
+    ],
+    "tags": ["Copilot Cowork", "Sales assistance", "Accelerators"]
   }
 ]

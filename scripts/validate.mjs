@@ -479,7 +479,7 @@ check(
   "Journal directory set must exactly match approved public and info-only records."
 );
 const blogDirectories = await generatedPageDirectories("blog");
-const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner", "copilot-studio-harnesses"].sort();
+const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner", "copilot-studio-harnesses", "sales-agent-cowork-sales-suite"].sort();
 check(
   JSON.stringify(blogDirectories) === JSON.stringify(expectedBlogDirectories),
   "Blog directory set must exactly match public-release companion articles and Builder's Log posts."
@@ -502,7 +502,7 @@ for (const [relativePath, html] of diskHtml) {
 }
 pass("Full-width responsive hero titles scoped to all blog posts checked.");
 const blogLanes = [...blogHtml.matchAll(/class="release-card blog-card" data-lane="([^"]+)" data-date="([^"]+)"/g)];
-check(blogLanes.length === ordered.length + 3, "Blog cards must include every public article and all three Builder's Log posts.");
+check(blogLanes.length === ordered.length + 4, "Blog cards must include every public article, all three Builder's Log posts, and the Sales Extension Suite post.");
 check(
   blogLanes.every((item, index) => index === 0 || blogLanes[index - 1][2] >= item[2]),
   "Blog cards must be ordered newest first."
@@ -512,6 +512,7 @@ check(blogHtml.includes("Builder's Log"), "Blog must provide the Builder's Log f
 check(blogHtml.includes("Accelerators, prototypes, and build notes. Personal projects; views are my own."), "Blog intro must match the requested line.");
 const softwareFactoryHtml = outputs.get("blog/software-factory-pattern/index.html");
 const harnessHtml = outputs.get("blog/copilot-studio-harnesses/index.html");
+const salesSuiteHtml = outputs.get("blog/sales-agent-cowork-sales-suite/index.html");
 check(harnessHtml.includes("<h1>The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses</h1>"), "Harness article must use the exact headline.");
 check(harnessHtml.indexOf("Naming update (Oct 28)") < harnessHtml.indexOf("The short version"), "Naming update must precede the short version.");
 check((harnessHtml.match(/<div class="card">/g) || []).length === 3, "Harness article must retain all three harness cards.");
@@ -519,6 +520,19 @@ check(harnessHtml.includes('<div class="table-wrap" role="region" aria-label="Ha
 check(harnessHtml.includes('id="themeSelect"'), "Harness post must reuse the Light, Dark and Auto theme control.");
 const readMoreLinks = [...harnessHtml.split("<h2>Read more</h2>")[1].matchAll(/<a href="([^"]+)"/g)];
 check(readMoreLinks[0]?.[1] === "https://www.microsoft.com/en-us/copilot/blog/copilot-studio/the-github-copilot-harness-in-copilot-studio-is-now-the-microsoft-copilot-harness/", "Microsoft announcement must be first under Read more.");
+check(salesSuiteHtml.includes(`<h1>${"Sales agent, Dynamics 365 in Cowork, and the Sales Extension Suite: how the pieces fit"}</h1>`), "Sales Extension Suite article must use the exact headline.");
+check(salesSuiteHtml.includes('<p class="eyebrow">Accelerators &amp; Prototypes · October 30, 2026</p>'), "Sales Extension Suite article must show its lane and date.");
+check(salesSuiteHtml.includes('<a class="button button-primary" href="https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/" rel="noreferrer">Try the Sales Extension Suite examples →</a>'), "Sales Extension Suite article must link prominently to the examples.");
+check(salesSuiteHtml.indexOf("Try the Sales Extension Suite examples") < salesSuiteHtml.indexOf('aria-label="Sales assistance layers"'), "The examples button must appear under the introduction.");
+check((salesSuiteHtml.match(/class="table-wrap"/g) || []).length === 2, "Sales Extension Suite article must wrap both tables for horizontal scrolling.");
+check((salesSuiteHtml.match(/role="region" aria-label="Sales assistance /g) || []).length === 2, "Sales Extension Suite table wrappers must be keyboard-scrollable regions.");
+check(salesSuiteHtml.includes('<table class="article-table">') && salesSuiteHtml.includes("min-width: 38rem;"), "Sales Extension Suite tables must use the shared responsive table styles.");
+check(salesSuiteHtml.includes('<div class="callout"><p><strong>Boundary:</strong> Personal project showcase. The Sales Extension Suite is an independent preview accelerator I built. It is not a Microsoft product or supported offering, and it makes no production, adoption or results claims. Examples are fictional. Licensing and availability vary; confirm with your Microsoft account team or partner. Views are my own.</p></div>'), "Sales Extension Suite article must render the standard boundary callout verbatim.");
+check(salesSuiteHtml.includes('id="themeSelect"') && ["Light", "Dark", "Auto"].every((theme) => salesSuiteHtml.includes(`>${theme}</option>`)), "Sales Extension Suite article must provide Light, Dark and Auto theme choices.");
+const salesBlogCard = blogHtml.match(/<article class="release-card blog-card" data-lane="accelerators" data-date="2026-10-30">[\s\S]*?href="\/blog\/sales-agent-cowork-sales-suite\/"/)?.[0] || "";
+check(salesBlogCard.includes('<span class="status">Accelerators &amp; Prototypes</span>'), "Sales Extension Suite blog card must appear in the accelerator lane.");
+check(salesBlogCard.includes('<p class="eyebrow">Sales assistance</p>'), "Sales Extension Suite blog card must use the Sales assistance category.");
+check(salesBlogCard.includes("What to turn on for sellers: the Sales agent in Microsoft 365 Copilot, Dynamics 365 Sales skills in Copilot Cowork, and an optional accelerator that makes briefs, follow-ups and handoffs consistent."), "Sales Extension Suite blog card summary is missing.");
 check(softwareFactoryHtml.includes("Information-only / Private active build"), "Builder's Log post must show the information-only label.");
 check(softwareFactoryHtml.includes("Owner-reviewed as of <time datetime=\"2026-10-24\">2026-10-24</time>"), "Builder's Log post must show its as-of date.");
 check(blogHtml.includes("A private, issue-first pattern where every build request becomes a spec&#39;d GitHub issue, a coding agent opens a small pull request, and I review every one before merging."), "Builder's Log card summary is missing.");
@@ -589,8 +603,20 @@ const tools = await readJson("tools/tools.json");
 const toolsHtml = outputs.get("tools/index.html");
 check(tools[0]?.name === "Tokenomics planner" && tools[0]?.status === "Live", "The live planner must be the first tool.");
 check((toolsHtml.match(/class="release-card tool-card"/g) || []).length === tools.length, "Every tool data entry must render a card.");
+const salesSuiteTool = tools.find((tool) => tool.name === "Sales Extension Suite for Copilot");
+check(salesSuiteTool?.status === "Public release", "Sales Extension Suite must be listed as a Public release.");
+check(salesSuiteTool?.description === "Optional Cowork plugins that package repeatable sales routines: account briefs, meeting follow-through, deal coaching and team handoffs.", "Sales Extension Suite tool description must match the requested copy.");
+check(
+  JSON.stringify(salesSuiteTool?.links) === JSON.stringify([
+    { label: "Open site", url: "https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/" },
+    { label: "Read the write-up", url: "/blog/sales-agent-cowork-sales-suite/" }
+  ]),
+  "Sales Extension Suite tool card must link to the public site and write-up."
+);
 const approvedToolLinks = new Set([
   "/tools/tokenomics/", "/blog/tokenomics-planner/",
+  "/blog/sales-agent-cowork-sales-suite/",
+  "https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/",
   ...ordered.flatMap((release) => [
     `/journal/${release.slug}/`, `/blog/${release.article.slug}/`,
     ...release.sourceUrls,
@@ -673,6 +699,9 @@ check(tokenomicsPlannerSitemapEntry?.includes("<lastmod>2026-10-27</lastmod>"), 
 const harnessSitemapEntry = sitemapXml.split("<url>")
   .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/copilot-studio-harnesses/</loc>`));
 check(harnessSitemapEntry?.includes("<lastmod>2026-10-29</lastmod>"), "Harness post must have the requested sitemap lastmod.");
+const salesSuiteSitemapEntry = sitemapXml.split("<url>")
+  .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/sales-agent-cowork-sales-suite/</loc>`));
+check(salesSuiteSitemapEntry?.includes("<lastmod>2026-10-30</lastmod>"), "Sales Extension Suite post must have the requested sitemap lastmod.");
 check(!sitemapXml.includes("engagements/"), "Protected engagements must not appear in the sitemap.");
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));
