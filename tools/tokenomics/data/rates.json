@@ -1,15 +1,10 @@
 {
-  "lastRefresh": "2026-10-30",
+  "lastRefresh": "2026-10-31",
   "rates": {
     "payg": {
       "value": 0.01, "unit": "USD per Copilot Credit", "confidence": "published", "asOf": "2026-10-01",
       "source": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf",
       "why": "List-price pay-as-you-go baseline. Actual commercial pricing can differ."
-    },
-    "pack": {
-      "value": 25000, "unit": "credits per tenant per month", "confidence": "published", "asOf": "2026-10-01",
-      "source": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/en-us/ai/Copilot-Credits-Guide.pdf",
-      "why": "Capacity comes in monthly tenant packs. A pack price was not supplied in this dataset, so the planner shows capacity and a PAYG-equivalent value, not a pack quote."
     },
     "p3": {
       "value": [{"credits":300000,"discount":0.05},{"credits":1500000,"discount":0.06},{"credits":3000000,"discount":0.07},{"credits":15000000,"discount":0.08},{"credits":30000000,"discount":0.1},{"credits":75000000,"discount":0.12},{"credits":150000000,"discount":0.14},{"credits":225000000,"discount":0.17},{"credits":300000000,"discount":0.2}],
@@ -73,6 +68,8 @@
     {"id":"voice","name":"Voice agent (per minute)","low":10,"likely":35,"high":75,"harness":"conversation","voice":true,"unit":"credits per minute","confidence":"early","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/billing-credit-overview","why":"Each run represents one voice minute. The initial band follows published voice tiers; newer harness rates remain unsettled."},
     {"id":"analyst","name":"Reasoning analyst","low":100,"likely":180,"high":300,"harness":"github","reasoningHeavy":true,"unit":"credits per run before harness and widening","confidence":"range","asOf":"2026-10-29","source":"https://www.microsoft.com/en-us/research/publication/the-price-reversal-phenomenon-when-cheaper-reasoning-models-end-up-costing-more/","why":"Illustrative total including reasoning effort, not a published analyst price. Both harness effort and reasoning variability widen the band."},
     {"id":"documents","name":"Document flows / AI Builder","low":20,"likely":40,"high":75,"harness":"standard","aiBuilder":true,"unit":"credits per run","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/ai-builder/endofaibcredits","why":"Illustrative Copilot Credit equivalent, not a conversion from seeded AI Builder credits. Validate model-specific charges and remaining entitlement."},
-    {"id":"app","name":"Small business app","low":20,"likely":40,"high":75,"harness":"standard","unit":"credits per run","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management","why":"Illustrative lightweight answer/action workload; actual event mix determines consumption."}
+    {"id":"app","name":"Small business app","low":20,"likely":40,"high":75,"harness":"standard","unit":"credits per run","confidence":"range","asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management","why":"Illustrative lightweight answer/action workload; actual event mix determines consumption."},
+    {"id":"d365-customer-service","name":"Customer Service agent (Dynamics 365)","description":"Case triage, case summary, drafted reply for review","defaults":{"users":25,"runs":200},"low":40,"likely":80,"high":150,"harness":"standard","unit":"credits per case handled with agent assistance","confidence":"range","sampleLabel":"Illustrative sample, not measured","valueSample":{"method":"outcomes","quantityPerRun":1,"unitValue":6,"outcomesPerRun":1,"quantityLabel":"Cases resolved per month","unitLabel":"USD value per case","outcomesLabel":"Cases resolved per month"},"asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management","why":"Illustrative sample values. They assume a few generative answers, one or two grounded lookups and an agent action per run on the standard harness. Replace with your pilot's measured credits per run."},
+    {"id":"d365-field-service","name":"Field Service agent (Dynamics 365)","description":"Work order summary, parts and history lookup, follow-up draft","defaults":{"users":20,"runs":60},"low":30,"likely":60,"high":120,"harness":"standard","unit":"credits per work order","confidence":"range","sampleLabel":"Illustrative sample, not measured","valueSample":{"method":"hours","quantityPerRun":0.25,"unitValue":70,"outcomesPerRun":1,"quantityLabel":"Hours saved per month (0.25 h per work order)","unitLabel":"Loaded USD per hour","outcomesLabel":"Work orders completed per month"},"asOf":"2026-10-29","source":"https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management","why":"Illustrative sample values. They assume a few generative answers, one or two grounded lookups and an agent action per run on the standard harness. Replace with your pilot's measured credits per run."}
   ]
 }

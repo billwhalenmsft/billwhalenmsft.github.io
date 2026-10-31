@@ -111,7 +111,7 @@ export const tokenomicsBody = `
           <label>Value method<select id="value-method"><option value="hours">Hours saved × loaded rate</option><option value="outcomes">Outcomes × unit value</option><option value="custom">Custom monthly USD value</option></select></label>
           <label><span id="quantity-label">Hours saved per month</span><input id="quantity" type="number" min="0" max="1000000000" step="any" value="0"></label>
           <label><span id="unit-label">Loaded USD per hour</span><input id="unit-value" type="number" min="0" max="1000000000" step="any" value="0"></label>
-          <label>Successful outcomes per month<input id="outcomes" type="number" min="0" max="1000000000" step="any" value="0"></label>
+          <label><span id="outcomes-label">Successful outcomes per month</span><input id="outcomes" type="number" min="0" max="1000000000" step="any" value="0"></label>
         </div>
         <div id="value-results" aria-live="polite"></div>
         <h3>Portfolio across presets</h3>

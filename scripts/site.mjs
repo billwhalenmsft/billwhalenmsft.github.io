@@ -1361,7 +1361,7 @@ function tokenomicsPlannerPage() {
           <h2>What I built</h2>
           <p>A sample-data planner, built through my software factory, that turns a use case into a decision on one page.</p>
           <ul>
-            <li><strong>Estimate.</strong> Pick a use case (sales assist, daily briefing, customer care, voice, document flows, a small business app) and set how many people use it and how often. You get a <strong>T-shirt size (S/M/L/XL)</strong>, a <strong>low / likely / high</strong> monthly Copilot Credits range, list-price options (pay-as-you-go, capacity packs, pre-purchase), and governance controls that fit the size.<br>
+            <li><strong>Estimate.</strong> Pick a use case (sales assist, daily briefing, customer care, voice, document flows, a small business app, a Dynamics 365 Customer Service agent, or a Dynamics 365 Field Service agent) and set how many people use it and how often. You get a <strong>T-shirt size (S/M/L/XL)</strong>, a <strong>low / likely / high</strong> monthly Copilot Credits range, list-price options (pay-as-you-go and P3 pre-purchase), and governance controls that fit the size.<br>
               <code>credits per month = users × runs per user per month × credits per run × harness factor</code></li>
             <li><strong>Pick the right harness.</strong> The planner has a picker for Copilot Studio's three harnesses, with Microsoft's own guidance on when to use each:
               <ul>
@@ -1387,7 +1387,6 @@ function tokenomicsPlannerPage() {
                 <thead><tr><th>Item</th><th>Public figure</th><th>Confidence</th></tr></thead>
                 <tbody>
                   <tr><td>Pay-as-you-go</td><td>$0.01 per Copilot Credit</td><td>✅ Published</td></tr>
-                  <tr><td>Capacity pack</td><td>25,000 credits per month, per tenant</td><td>✅ Published</td></tr>
                   <tr><td>Pre-purchase plan</td><td>One-year pool, tiered discounts of about 5–20%</td><td>✅ Published</td></tr>
                   <tr><td>Standard harness rate card</td><td>1 / 2 / 5 / 10 credits (scripted answer / generative answer / action / tenant grounding)</td><td>✅ Published</td></tr>
                   <tr><td>Voice (standard harness)</td><td>Per minute, by tier (classic / generative / premium)</td><td>✅ Published</td></tr>
