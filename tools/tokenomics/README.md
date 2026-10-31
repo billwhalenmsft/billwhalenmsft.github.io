@@ -25,8 +25,9 @@ Use only the public Microsoft sources already listed in the dataset.
 
 To add a preset, append an object to `presets` with a unique `id`, `name`,
 `harness` ID, editable `low`/`likely`/`high`, and the same provenance metadata.
-Optional `voice`, `reasoningHeavy`, and `aiBuilder` flags select existing behavior.
-Presets appear automatically in the selector, sources, and value portfolio.
+Optional `description`, `sampleLabel`, `valueSample`, `voice`, `reasoningHeavy`,
+and `aiBuilder` fields provide context, sample business value, or select existing
+behavior. Presets appear automatically in the selector, sources, and value portfolio.
 For voice, a run is a minute and the initial band comes from `voiceStandard`
 or `voiceNew` according to harness. This per-minute band already includes the
 harness; it is not multiplied again.
@@ -52,8 +53,8 @@ The disclaimer remains in normal document flow.
   factor; likely is unchanged. The factor is illustrative, not a research rate.
 - A measured total includes all harness/reasoning consumption and replaces
   the entire band, even when it is zero.
-- Packs round up to monthly capacity. No actual pack price was supplied:
-  the dollar figure is explicitly only PAYG-equivalent capacity value.
+- Pricing compares pay-as-you-go with P3 pre-purchase commitments; pay-as-you-go
+  covers usage above the selected P3 pool.
 - P3 compares each whole listed commitment over the configured illustrative
   annual horizon, including unused paid capacity and PAYG overflow. It does
   not apply a discount to arbitrary monthly volume or assume marginal tiers.

@@ -1,4 +1,4 @@
-import { estimate, price, sizeFor } from "./calculate.js";
+import { buyGuidanceFor, estimate, price, sizeFor } from "./calculate.js";
 import { harnessRatePresentation, syncHarnessHelp } from "./harness-ui.js";
 
 const $ = (id) => document.getElementById(id);
@@ -27,7 +27,8 @@ function evidence(label, entry, rates = {}) {
     : "value" in entry ? evidenceValue(entry.value)
     : escape(`${number(entry.low)} / ${number(entry.likely)} / ${number(entry.high)}`);
   return `<div class="planner-card"><h3>${escape(label)}</h3>
-    <div>${value}</div><p>${escape(presentation?.unit || entry.unit)} · <span class="badge">${badges[entry.confidence]}</span></p>
+    <div>${value}</div><p>${escape(presentation?.unit || entry.unit)} · <span class="badge">${badges[entry.confidence]}</span>${entry.sampleLabel ? ` · ${escape(entry.sampleLabel)}` : ""}</p>
+    ${entry.description ? `<p>${escape(entry.description)}</p>` : ""}
     <p>${escape(entry.why)}</p><p><a href="${escape(entry.source)}" rel="noreferrer">Source</a>
     · as of <time>${escape(entry.asOf)}</time></p></div>`;
 }
@@ -69,6 +70,18 @@ async function start() {
 
   const selectedPreset = () => presets.find((preset) => preset.id === $("preset").value);
   const selectedHarness = () => harnesses.find((harness) => harness.id === $("harness-choice").value);
+  function updateValueLabels(sample = null) {
+    const method = $("value-method").value;
+    $("quantity-label").textContent = sample?.method === method && sample.quantityLabel
+      ? sample.quantityLabel
+      : method === "custom" ? "Custom monthly USD value" : method === "outcomes" ? "Outcomes per month" : "Hours saved per month";
+    $("unit-label").textContent = sample?.method === method && sample.unitLabel
+      ? sample.unitLabel
+      : method === "outcomes" ? "USD value per outcome" : "Loaded USD per hour";
+    $("outcomes-label").textContent = sample?.outcomesLabel || "Successful outcomes per month";
+    $("unit-value").disabled = method === "custom";
+    $("outcomes").disabled = method === "outcomes";
+  }
   const defaultBand = (preset, harness) => preset.voice
     ? (harness.id === "standard" ? rates.voiceStandard : rates.voiceNew) : preset;
   const factorFor = (preset, harness) => {
@@ -83,8 +96,21 @@ async function start() {
   function loadPreset() {
     const preset = selectedPreset();
     $("harness-choice").value = preset.harness;
+    if (preset.defaults) {
+      $("users").value = preset.defaults.users;
+      $("runs").value = preset.defaults.runs;
+    }
     $("measured").value = "";
     $("runs-label").textContent = preset.voice ? "Minutes per user per month" : "Runs per user per month";
+    if (preset.valueSample) {
+      const sample = preset.valueSample;
+      const monthlyRuns = Number($("users").value) * Number($("runs").value);
+      $("value-method").value = sample.method;
+      $("quantity").value = monthlyRuns * sample.quantityPerRun;
+      $("unit-value").value = sample.unitValue;
+      $("outcomes").value = monthlyRuns * (sample.outcomesPerRun ?? 1);
+    }
+    updateValueLabels(preset.valueSample);
     editedBand = false;
     setBand();
     syncHarnessHelp($("harness-choice"), $("harness-help"));
@@ -108,6 +134,7 @@ async function start() {
       const result = estimate({ users, runs, band, factor, measured, widening });
       const costs = price(result.likely, rates, policy.months);
       const size = sizeFor(result.likely, policy);
+      const guidance = buyGuidanceFor(size);
       const base = defaultBand(preset, harness);
       const inputs = `<p>Inputs: ${number(users)} users × ${number(runs)} ${preset.voice ? "minutes" : "runs"}/user/month.
         These are user-entered assumptions (↔ range), not independently verified.
@@ -125,14 +152,13 @@ async function start() {
         + (!preset.voice && typeof harness.value === "string" ? evidence("Harness planning factor", rates[harness.value]) : "")
         + (preset.reasoningHeavy ? evidence("Reasoning variability", rates.reasoningWidening) + evidence("Reasoning premium reference (not added again)", rates.reasoning) : "")
         + (preset.aiBuilder ? evidence("AI Builder transition", rates.aiBuilder) : "");
-      const costWhy = `<p>PAYG = likely credits × ${money(rates.payg.value)}.
-        Packs = round up (likely credits ÷ ${number(rates.pack.value)}); pack dollar value is only a PAYG-equivalent, not a quoted pack price.</p>
-        <p>P3: compare every listed commitment over ${number(policy.months)} months.
+      const costWhy = `<p>PAYG = likely credits × ${money(rates.payg.value)}.</p>
+        <p>P3 pre-purchase plan: compare every listed commitment over ${number(policy.months)} months.
         Monthly equivalent = (tier credits × PAYG rate × (1 − discount) + excess credits × PAYG rate) ÷ ${number(policy.months)}.
         Cheapest modeled tier: ${number(costs.p3.credits)} credits at ${number(costs.p3.discount * 100)}% off.
         Annual modeled demand: ${number(result.likely * policy.months)} credits.
         This pays for the entire commitment, including any unused capacity. It is not a marginal discount or a monthly cancellable offer.</p>`
-        + evidence("PAYG", rates.payg) + evidence("Capacity pack", rates.pack) + evidence("P3 tiers", rates.p3) + evidence("Planning horizon", planning);
+        + evidence("Pay-as-you-go", rates.payg) + evidence("P3 pre-purchase plan", rates.p3) + evidence("Planning horizon", planning);
       const ticks = policy.sizes.filter((entry) => entry.below !== null);
       const maximum = Math.max(result.high, ticks.at(-1).below * 2);
       const position = (credits) => 100 * Math.log1p(credits) / Math.log1p(maximum);
@@ -150,15 +176,15 @@ async function start() {
           ${bandGraphic}<p class="chart-note">Logarithmic scale; ticks mark size boundaries. The dark marker is likely.</p>
           <p class="size-key">${policy.sizes.map((entry, index) => `${entry.name}: ${index ? `≥${number(policy.sizes[index - 1].below)}` : "≥0"}${entry.below === null ? "" : ` and <${number(entry.below)}`}`).map(escape).join(" · ")}</p>
           ${explanation(assumptions + evidence("Size thresholds", planning))}</div>
-        <div class="planner-card"><h3>List-price comparison · likely scenario</h3>
-          <p>Packs: <strong>${number(costs.packs)}</strong> for ${number(costs.packs * rates.pack.value)} credits/month.
-          Pack price unavailable; PAYG-equivalent capacity value ${money(costs.packEquivalent)}/month — not a pack quote.</p>
-          <p>P3: <strong>${money(costs.p3.cost)}/month equivalent</strong>, ${number(costs.p3.credits)}-credit commitment at ${number(costs.p3.discount * 100)}% off, including modeled PAYG overflow.</p>
+        <div class="planner-card"><h3>Pricing comparison · likely scenario</h3>
+          <p>Pay-as-you-go: <strong>${money(costs.payg)}/month</strong>.</p>
+          <p>P3 pre-purchase plan: <strong>${money(costs.p3.cost)}/month equivalent</strong>, ${number(costs.p3.credits)}-credit commitment at ${number(costs.p3.discount * 100)}% off, including modeled pay-as-you-go overflow.</p>
           ${explanation(costWhy + inputs)}</div>
         <div class="planner-card"><h3>Suggested starting buy</h3>
-          <p>${result.likely === 0 ? "No capacity needed at zero modeled usage." : `Start with a capped PAYG pilot around ${money(costs.payg)}/month; validate the high case of ${money(result.high * rates.payg.value)} before rollout. Consider ${number(costs.packs)} packs only after confirming their actual price.${costs.p3.cost < costs.payg ? " P3 may save at sustained volume, but validate term and utilization before committing." : " This P3 commitment is not cheaper than PAYG at this volume."}`}</p>
+          <p>${escape(guidance.text)}</p><p>${escape(guidance.why)}</p>
           ${explanation(costWhy + evidence("Recommendation is a planning heuristic", planning))}</div>
-        <div class="planner-card"><h3>Default governance · ${escape(size.name)}</h3><p>${escape(size.controls)}</p>
+        <div class="planner-card"><h3>Default governance · ${escape(size.name)}</h3><p>${escape(guidance.text)}</p>
+          <p>${escape(guidance.why)}</p><p>${escape(size.controls)}</p>
           ${explanation(evidence("Governance and size policy", planning))}</div>
         ${preset.aiBuilder ? evidence("AI Builder transition notice", rates.aiBuilder) : ""}`;
       $("why-results").innerHTML = explanation(assumptions + evidence("Standard event rate card (reference, not preset arithmetic)", rates.standard) + costWhy);
@@ -185,8 +211,9 @@ async function start() {
         : value / cost >= policy.expandRatio ? `Expand ≥${policy.expandRatio}×`
           : value / cost < policy.holdRatio ? `Scale back <${policy.holdRatio}×` : "Hold";
       const ratio = (cost) => cost === 0 ? "N/A" : `${number(value / cost)}×`;
+      const outcomeLabel = $("outcomes-label").textContent.replace(/ per month$/, "");
       const valueWhy = `<p>User-entered monthly value = ${number(quantity)} × ${money(unit)} = ${money(value)}.
-        ${number(outcomes)} successful outcomes/month. Source: your value inputs (↔ range; not independently verified).
+        ${number(outcomes)} ${escape(outcomeLabel.toLowerCase())}/month. Source: your value inputs (↔ range; not independently verified).
         Cost per outcome = monthly PAYG ÷ successful outcomes; ratio = monthly value ÷ monthly PAYG.
         Zero denominators show N/A. Value excludes implementation, labor, and other non-credit costs.</p>`
         + evidence("Decision thresholds are illustrative", planning);
@@ -228,11 +255,7 @@ async function start() {
   $("harness-choice").addEventListener("change", () => syncHarnessHelp($("harness-choice"), $("harness-help")));
   $("value").addEventListener("input", (event) => {
     if (event.target.id === "value-method") {
-      const method = $("value-method").value;
-      $("quantity-label").textContent = method === "custom" ? "Custom monthly USD value" : method === "outcomes" ? "Outcomes per month" : "Hours saved per month";
-      $("unit-label").textContent = method === "outcomes" ? "USD value per outcome" : "Loaded USD per hour";
-      $("unit-value").disabled = method === "custom";
-      $("outcomes").disabled = method === "outcomes";
+      updateValueLabels();
     }
     render();
   });
