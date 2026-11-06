@@ -174,7 +174,7 @@ const allowedEvidence = new Set(["measured", "observed", "designed"]);
 check(catalog.version === 6, "Catalog version must be 6.");
 check(dateIsValid(catalog.updated), "Catalog updated date must use YYYY-MM-DD.");
 check(catalog.expectedPublicReleaseCount === 10, "Catalog must expect exactly 10 public releases.");
-check(catalog.expectedInfoOnlyCount === 11, "Catalog must expect exactly 11 info-only showcases.");
+check(catalog.expectedInfoOnlyCount === 12, "Catalog must expect exactly 12 info-only showcases.");
 check(Array.isArray(catalog.releases), "Catalog records must be an array.");
 
 const releaseSlugs = new Set();
@@ -328,7 +328,8 @@ for (const release of catalog.releases) {
     check(/Information-only/i.test(release.maturity), `${slug}: maturity must visibly say Information-only.`);
     const approvedMaturity = {
       "atomic-blueprint": "Information-only / Local discovery prototype",
-      "sales-suite": "Information-only / Controlled evaluation"
+      "sales-suite": "Information-only / Controlled evaluation",
+      "copilot-tenant-to-tenant-migration": "Information-only / Public documentation summary"
     }[slug];
     check(
       approvedMaturity ? release.maturity === approvedMaturity : /Private active build/i.test(release.maturity),
@@ -376,10 +377,10 @@ pass("Publication modes, approvals, evidence labels, and public-safe record sche
 const ordered = orderedReleases(catalog);
 const orderedInfo = orderedInfoOnly(catalog);
 check(ordered.length === catalog.expectedPublicReleaseCount, "Catalog must contain exactly 10 public releases.");
-check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 11 info-only showcases.");
+check(orderedInfo.length === catalog.expectedInfoOnlyCount, "Catalog must contain exactly 12 info-only showcases.");
 check(
   catalog.releases.length === catalog.expectedPublicReleaseCount + catalog.expectedInfoOnlyCount,
-  "Catalog must contain exactly 21 total records."
+  "Catalog must contain exactly 22 total records."
 );
 check(
   allowlist.repositories.length === catalog.expectedPublicReleaseCount,
@@ -490,8 +491,8 @@ check(
   "Homepage initial featured-work count must agree with the eleven-card gallery."
 );
 check(
-  home.includes("Explore all 21 journal entries"),
-  "Homepage full-journal CTA must agree with the twenty-one-record catalog."
+  home.includes("Explore all 22 journal entries"),
+  "Homepage full-journal CTA must agree with the twenty-two-record catalog."
 );
 check(
   home.includes('<a href="https://github.com/kody-w/rapp-1"'),
@@ -532,6 +533,11 @@ check(
 check(journalHtml.includes('data-filter="public-release"'), "Journal requires a Public releases filter.");
 check(journalHtml.includes('data-filter="info-only"'), "Journal requires an Info-only active work filter.");
 check(
+  journalHtml.includes('data-release="copilot-tenant-to-tenant-migration"')
+    && journalHtml.includes("Information-only / Public documentation summary"),
+  "Tenant migration must appear as an information-only Journal entry."
+);
+check(
   outputs.get("subscribe/index.html").includes(`all ${catalog.expectedPublicReleaseCount} approved public releases`),
   "Subscription page must state the exact approved release count."
 );
@@ -543,7 +549,7 @@ check(
   "Journal directory set must exactly match approved public and info-only records."
 );
 const blogDirectories = await generatedPageDirectories("blog");
-const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner", "copilot-studio-harnesses", "sales-agent-cowork-sales-suite"].sort();
+const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner", "copilot-studio-harnesses", "copilot-tenant-to-tenant-migration", "sales-agent-cowork-sales-suite"].sort();
 check(
   JSON.stringify(blogDirectories) === JSON.stringify(expectedBlogDirectories),
   "Blog directory set must exactly match public-release companion articles and Builder's Log posts."
@@ -566,7 +572,7 @@ for (const [relativePath, html] of diskHtml) {
 }
 pass("Full-width responsive hero titles scoped to all blog posts checked.");
 const blogLanes = [...blogHtml.matchAll(/class="release-card blog-card" data-lane="([^"]+)" data-date="([^"]+)"/g)];
-check(blogLanes.length === ordered.length + 4, "Blog cards must include every public article, all three Builder's Log posts, and the Sales Extension Suite post.");
+check(blogLanes.length === ordered.length + 5, "Blog cards must include every public article, all four Builder's Log posts, and the Sales Extension Suite post.");
 check(
   blogLanes.every((item, index) => index === 0 || blogLanes[index - 1][2] >= item[2]),
   "Blog cards must be ordered newest first."
@@ -576,6 +582,7 @@ check(blogHtml.includes("Builder's Log"), "Blog must provide the Builder's Log f
 check(blogHtml.includes("Accelerators, prototypes, and build notes. Personal projects; views are my own."), "Blog intro must match the requested line.");
 const softwareFactoryHtml = outputs.get("blog/software-factory-pattern/index.html");
 const harnessHtml = outputs.get("blog/copilot-studio-harnesses/index.html");
+const tenantMigrationHtml = outputs.get("blog/copilot-tenant-to-tenant-migration/index.html");
 const salesSuiteHtml = outputs.get("blog/sales-agent-cowork-sales-suite/index.html");
 check(harnessHtml.includes("<h1>The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses</h1>"), "Harness article must use the exact headline.");
 check(harnessHtml.indexOf("Naming update (Oct 28)") < harnessHtml.indexOf("The short version"), "Naming update must precede the short version.");
@@ -630,6 +637,39 @@ check(
 check(
   softwareFactoryArticleBody.includes("<strong>Public boundary: Information-only.</strong> Source and operational materials are not published. Personal project showcase. Built and demonstrated with fictional data. Not a Microsoft product or supported offering; views are my own."),
   "Builder's Log post must include the complete public boundary."
+);
+check(
+  tenantMigrationHtml.includes("<h1>Moving Copilot between tenants after an acquisition: what moves, what doesn't</h1>")
+    && tenantMigrationHtml.includes('<p class="hero-copy">There\'s no single "move Copilot" button. Copilot moves in three pieces, and each piece has its own path.</p>'),
+  "Tenant migration post must use the requested headline and dek."
+);
+const tenantMigrationBlogCard = blogHtml.match(/<article class="release-card blog-card" data-lane="builders-log" data-date="2026-11-05">[\s\S]*?href="\/blog\/copilot-tenant-to-tenant-migration\/"/)?.[0] || "";
+check(
+  tenantMigrationBlogCard.includes('<span class="status status-info">Builder\'s Log</span>')
+    && tenantMigrationBlogCard.includes('<p class="eyebrow">Microsoft 365 Copilot</p>')
+    && tenantMigrationBlogCard.includes("Copilot moves in three pieces: people and content, memory, and agents. Here&#39;s what moves and what doesn&#39;t."),
+  "Tenant migration blog card must use the requested lane, date, category, and summary."
+);
+check(
+  tenantMigrationHtml.includes('<div class="table-wrap" role="region" aria-label="Copilot tenant migration overview" tabindex="0">')
+    && tenantMigrationHtml.includes(".table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }"),
+  "Tenant migration table must scroll horizontally within the page."
+);
+check(offersSharedTheme(tenantMigrationHtml), "Tenant migration post must offer the shared Light, Dark and Auto themes.");
+const tenantMigrationBody = tenantMigrationHtml.match(/<div class="shell article-body">([\s\S]*?)<\/section>/)?.[1] || "";
+const tenantMigrationLinks = [...tenantMigrationBody.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map((match) => match[1]);
+check(
+  JSON.stringify(tenantMigrationLinks) === JSON.stringify([
+    "https://learn.microsoft.com/en-us/microsoft-365/migration/microsoft-365-tenant-to-tenant-migrations",
+    "https://learn.microsoft.com/en-us/microsoft-365/migration/migration-orchestrator-1-overview",
+    "https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-solutions-import-export",
+    "https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-personalization-memory"
+  ]),
+  "Tenant migration post must contain only the four requested Microsoft Learn links."
+);
+check(
+  tenantMigrationHtml.includes("Information-only personal project log. Views are my own and summarize Microsoft's public documentation as of November 5, 2026; features in preview (including Copilot memory) may change. Not an official Microsoft publication. Check Microsoft Learn for the latest."),
+  "Tenant migration post must include the requested information-only footer."
 );
 const tokenomicsPlannerHtml = outputs.get("blog/tokenomics-planner/index.html");
 check(tokenomicsPlannerHtml.includes('href="/tools/tokenomics/">Try the live planner →</a>'), "Tokenomics post must link prominently to the live planner.");
@@ -756,12 +796,14 @@ check((rssXml.match(/<item>/g) || []).length === ordered.length, "RSS item count
 check(!rssXml.includes("software-factory-pattern"), "Builder's Log post must not appear in RSS.");
 check(!rssXml.includes("tokenomics-planner"), "Tokenomics planner must not appear in RSS.");
 check(!rssXml.includes("copilot-studio-harnesses"), "Harness Builder's Log must not appear in RSS.");
+check(!rssXml.includes("copilot-tenant-to-tenant-migration"), "Tenant migration Builder's Log post must not appear in RSS.");
 check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(atomXml), "Atom must declare UTF-8 XML.");
 check(/<feed xmlns="http:\/\/www.w3.org\/2005\/Atom">/.test(atomXml), "Atom root is missing.");
 check((atomXml.match(/<entry>/g) || []).length === ordered.length, "Atom entry count must match public releases.");
 check(!atomXml.includes("software-factory-pattern"), "Builder's Log post must not appear in Atom.");
 check(!atomXml.includes("tokenomics-planner"), "Tokenomics planner must not appear in Atom.");
 check(!atomXml.includes("copilot-studio-harnesses"), "Harness Builder's Log must not appear in Atom.");
+check(!atomXml.includes("copilot-tenant-to-tenant-migration"), "Tenant migration Builder's Log post must not appear in Atom.");
 
 const sitemapXml = outputs.get("sitemap.xml");
 const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
@@ -779,6 +821,9 @@ check(tokenomicsPlannerSitemapEntry?.includes("<lastmod>2026-10-27</lastmod>"), 
 const harnessSitemapEntry = sitemapXml.split("<url>")
   .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/copilot-studio-harnesses/</loc>`));
 check(harnessSitemapEntry?.includes("<lastmod>2026-10-29</lastmod>"), "Harness post must have the requested sitemap lastmod.");
+const tenantMigrationSitemapEntry = sitemapXml.split("<url>")
+  .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/copilot-tenant-to-tenant-migration/</loc>`));
+check(tenantMigrationSitemapEntry?.includes("<lastmod>2026-11-05</lastmod>"), "Tenant migration post must appear in the sitemap with the requested date.");
 const salesSuiteSitemapEntry = sitemapXml.split("<url>")
   .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/sales-agent-cowork-sales-suite/</loc>`));
 check(salesSuiteSitemapEntry?.includes("<lastmod>2026-10-30</lastmod>"), "Sales Extension Suite post must have the requested sitemap lastmod.");
@@ -786,9 +831,9 @@ check(!sitemapXml.includes("engagements/"), "Protected engagements must not appe
 check(outputs.get("releases.json").endsWith("\n"), "Public release manifest must end with a newline.");
 const publicManifest = JSON.parse(outputs.get("releases.json"));
 check(publicManifest.version === 6, "Public release manifest version must be 6.");
-check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 21.");
+check(publicManifest.recordCount === catalog.releases.length, "Manifest record count must be exactly 22.");
 check(publicManifest.releaseCount === catalog.expectedPublicReleaseCount, "Manifest public release count must be exactly 10.");
-check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 11.");
+check(publicManifest.infoOnlyCount === catalog.expectedInfoOnlyCount, "Manifest info-only count must be exactly 12.");
 check(
   JSON.stringify(publicManifest.releases.map((release) => release.slug))
     === JSON.stringify(ordered.map((release) => release.slug)),

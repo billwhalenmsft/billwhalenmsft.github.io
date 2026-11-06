@@ -1,0 +1,43 @@
+<p>When one company acquires another, someone soon asks: "How do we move Copilot from their tenant into ours?" The short answer: there's no single button. Copilot moves in three separate pieces, and each one has its own path.</p>
+
+<h2>The three pieces at a glance</h2>
+<div class="table-wrap" role="region" aria-label="Copilot tenant migration overview" tabindex="0">
+<table class="article-table">
+<thead><tr><th>What</th><th>How it moves</th><th>What to know</th></tr></thead>
+<tbody>
+<tr><td><strong>People and their content</strong> (mail, OneDrive, Teams chats and meetings)</td><td>Microsoft 365 <strong>Migration Orchestrator</strong> (or the cross-tenant mailbox and OneDrive tools)</td><td>It moves <strong>content, not identities</strong>. You create and license the users in the target tenant first, then map identities. It needs the per-user Cross-Tenant User Data Migration add-on. Mailboxes on hold are blocked from moving.</td></tr>
+<tr><td><strong>Copilot memory and personalization</strong> (saved memories, chat-history details, custom instructions)</td><td><strong>No documented migration path.</strong> Plan as if it doesn't move.</td><td>Memories are stored in a hidden folder in the user's Exchange mailbox, and a cross-tenant mailbox move carries user-visible content (mail, contacts, calendar, tasks, notes). Users can export their custom instructions themselves under Settings &gt; Personalization. Test with pilot users.</td></tr>
+<tr><td><strong>Copilot Studio agents</strong></td><td><strong>Solutions:</strong> export from the source environment, import into the target tenant's environment</td><td>Not everything carries over. Reconnect connections, re-set authentication, re-publish and re-share.</td></tr>
+<tr><td><strong>Agent Builder agents, Power Automate flows, Power Apps</strong></td><td>Rebuild, or export and import as solutions where supported</td><td>The Microsoft 365 migration tools don't cover Power Platform. Connections and connection references must be rebuilt.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Step by step</h2>
+<ol>
+<li><strong>Inventory the source tenant.</strong> Copilot-licensed users; Copilot Studio environments and agents (note each agent's harness); Agent Builder agents, flows and connectors; and any holds on mailboxes and OneDrive. Holds block migration and are usually the critical path.</li>
+<li><strong>Identity first.</strong> Create and license the users in the target tenant, decide the UPN and domain plan, and run cross-tenant identity mapping.</li>
+<li><strong>Move user content with Migration Orchestrator.</strong> Run mailboxes, OneDrive, Teams chats and meetings together in the same batch, and set a CompleteAfterDate for when users will feel the cutover.</li>
+<li><strong>Tell users what won't follow them.</strong> Before cutover, users export their custom instructions and note any saved memories they rely on. Copilot rebuilds chat-history context over time in the new tenant.</li>
+<li><strong>Move Copilot Studio agents with solutions.</strong>
+  <ol>
+  <li>Put each agent in an <strong>unmanaged</strong> solution and choose "Add required objects" so topics, flows and environment variables come along.</li>
+  <li>If the agent uses custom connectors, import those first, then the agent solution.</li>
+  <li>Export, then import into a target environment (use a Managed Environment).</li>
+  <li>After import, reconfigure user authentication, re-create connections, and check that knowledge sources and channels came across (the icon and channel details may be empty). Then publish and share.</li>
+  </ol>
+</li>
+<li><strong>Rebuild what solutions don't carry.</strong> That includes Agent Builder agents, personal flows, and any knowledge source that points to the old tenant's SharePoint. Re-point it to the migrated sites.</li>
+<li><strong>Re-set governance in the target tenant.</strong> Copilot Studio capacity and Copilot Credits allocation per environment, agent-level limits and spending alerts, and DLP policies and sharing rules.</li>
+<li><strong>Pilot, then cut over in waves.</strong> Test 5–10 users end to end: mail, files, Copilot answers and the agents they use.</li>
+</ol>
+
+<h2>Read more on Microsoft Learn</h2>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-365/migration/microsoft-365-tenant-to-tenant-migrations">Plan a Microsoft 365 tenant-to-tenant migration</a></li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-365/migration/migration-orchestrator-1-overview">Migration Orchestrator overview</a></li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/authoring-solutions-import-export">Export and import agents using solutions</a></li>
+<li><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-personalization-memory">Manage Copilot personalization and memory</a></li>
+</ul>
+
+<footer>Information-only personal project log. Views are my own and summarize Microsoft's public documentation as of November 5, 2026; features in preview (including Copilot memory) may change. Not an official Microsoft publication. Check Microsoft Learn for the latest.</footer>
