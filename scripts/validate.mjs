@@ -582,8 +582,15 @@ check(harnessHtml.indexOf("Naming update (Oct 28)") < harnessHtml.indexOf("The s
 check((harnessHtml.match(/<div class="card">/g) || []).length === 3, "Harness article must retain all three harness cards.");
 check(harnessHtml.includes('<div class="table-wrap" role="region" aria-label="Harness comparison" tabindex="0">'), "Harness comparison must be a keyboard-scrollable table.");
 check(offersSharedTheme(harnessHtml), "Harness post must reuse the Light, Dark and Auto theme control.");
+const migrationSection = harnessHtml.split('<h2>"Can we convert our existing agents?"</h2>')[1]?.split("<h2>A word on cost</h2>")[0] || "";
+check(migrationSection.includes("Short answer: you can rebuild them, but only do it when there's a reason. A working agent doesn't need to move, and the standard harness stays supported. It's a rebuild, not a toggle: agents can't be transferred between the Microsoft Copilot harness and the standard harness."), "Harness migration section must use the requested short answer.");
+check(migrationSection.includes("<h3>How to migrate</h3>"), "Harness migration section must include the How to migrate heading.");
+const migrationSteps = migrationSection.match(/<ol>([\s\S]*?)<\/ol>/)?.[1] || "";
+check((migrationSteps.match(/<li>/g) || []).length === 9, "Harness migration guidance must contain exactly nine numbered steps.");
 const readMoreLinks = [...harnessHtml.split("<h2>Read more</h2>")[1].matchAll(/<a href="([^"]+)"/g)];
 check(readMoreLinks[0]?.[1] === "https://www.microsoft.com/en-us/copilot/blog/copilot-studio/the-github-copilot-harness-in-copilot-studio-is-now-the-microsoft-copilot-harness/", "Microsoft announcement must be first under Read more.");
+check(readMoreLinks.some((link) => link[1] === "https://github.com/microsoft/copilot-studio-plugin"), "Read more must link to copilot-studio-plugin.");
+check(harnessHtml.includes("as of November 5, 2026"), "Harness post footer must show the November 5, 2026 as-of date.");
 check(salesSuiteHtml.includes("<h1>Sales agent, Dynamics 365 in Cowork, and the Sales Extension Suite: how the pieces fit</h1>"), "Sales Extension Suite article must use the exact headline.");
 check(salesSuiteHtml.includes('<p class="eyebrow"><strong>Accelerators &amp; Prototypes</strong> · October 30, 2026</p>'), "Sales Extension Suite article must show its lane and date.");
 check(salesSuiteHtml.includes('<a class="button button-primary" href="https://billwhalenmsft.github.io/copilot-sales-service-agent-extensions/" rel="noreferrer">Try the Sales Extension Suite examples →</a>'), "Sales Extension Suite article must link prominently to the examples.");
