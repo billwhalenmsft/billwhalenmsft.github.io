@@ -596,13 +596,19 @@
 </ul>
 
 <h2>"Can we convert our existing agents?"</h2>
-<p>Short answer: you can rebuild them, but only do it when there's a reason.</p>
-<ul>
-<li><b>A working agent doesn't need to move.</b> Microsoft's guidance is to migrate only for a scenario-level benefit: better quality, more efficient orchestration, long-running execution, or a model or capability you need.</li>
-<li><b>It's a rebuild, not a toggle.</b> Agents can't be transferred between the Microsoft Copilot harness and the standard harness. Start from the outcomes the agent must deliver, inventory what your topics, flows, variables and prompts are <i>for</i>, then map those to instructions, skills, tools, workflows and memory. You're done when the new agent handles its core journeys, not when every old component has been copied.</li>
-<li><b>Some building blocks change names.</b> In the Microsoft Copilot harness, prompts are replaced by skills, and topics and system triggers are replaced by hooks. A few features differ too. For example, Azure AI Search as a knowledge source isn't supported there, and computer use is planned. Check the features you depend on before you start.</li>
-<li><b>There's tooling to help.</b> Microsoft's open-source <a href="https://github.com/microsoft/copilot-studio-plugin">copilot-studio-plugin</a> helps create, validate and migrate classic agents to the Microsoft Copilot harness. It's a work in progress, supported through GitHub Issues, and needs Power Platform CLI 2.9.3 or later. Always review the YAML it generates before you push it.</li>
-</ul>
+<p>Short answer: you can rebuild them, but only do it when there's a reason. A working agent doesn't need to move, and the standard harness stays supported. It's a rebuild, not a toggle: agents can't be transferred between the Microsoft Copilot harness and the standard harness.</p>
+<h3>How to migrate</h3>
+<ol>
+<li><b>Only move for a reason.</b> Microsoft's guidance is to migrate only for a scenario-level benefit: better quality, more efficient orchestration, long-running execution, or a model or capability you need. If there's no clear gain, stay put.</li>
+<li><b>Set up cost controls before you build.</b> The Microsoft Copilot harness uses Copilot Credits on a usage basis, and building, testing and evaluating use credits too, not just running. Build in a Managed Environment with its own capacity allocation, and set agent-level limits and alerts first.</li>
+<li><b>Start from outcomes.</b> List the journeys the agent must handle and write down its pass/fail tests.</li>
+<li><b>Inventory what the old agent's pieces do:</b> topics, flows, variables, prompts, knowledge and connectors.</li>
+<li><b>Map them to the new building blocks.</b> Topics and system triggers become <b>hooks</b>; prompts become <b>skills</b>; deterministic steps become <b>workflows</b>; plus instructions, tools and memory. Check the features you depend on first (for example, Azure AI Search as a knowledge source isn't supported there).</li>
+<li><b>Use the copilot-studio-plugin, and review its output.</b> Microsoft's open-source <a href="https://github.com/microsoft/copilot-studio-plugin">copilot-studio-plugin</a> helps create, validate and migrate classic agents. It's a work in progress, supported through GitHub Issues, and needs Power Platform CLI 2.9.3 or later. Always review the YAML it generates before you push it.</li>
+<li><b>Test against the old agent's pass/fail set,</b> and track credits per test run.</li>
+<li><b>Run both side by side briefly,</b> then switch the channel and retire the old agent.</li>
+<li><b>You're done when the core journeys work,</b> not when every old component has been copied.</li>
+</ol>
 
 <h2>A word on cost</h2>
 <p>The Microsoft Copilot and Customer Conversation harnesses use Copilot Credits on a usage basis, and building, testing and evaluating an agent can consume credits too, not just running it. Plan for that. Set up the right environments and capacity controls before agents go to production, and size the harness to the job.</p>
@@ -615,9 +621,10 @@
 <li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/choose-harness">Compare Copilot Studio agent harnesses</a> (includes migration guidance)</li>
 <li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/overview">Agents powered by the Microsoft Copilot harness</a></li>
 <li><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/overview-customer-conversation">Agents powered by the Customer Conversation harness (preview)</a></li>
+<li><a href="https://github.com/microsoft/copilot-studio-plugin">copilot-studio-plugin</a></li>
 </ul>
 
-<footer>Information-only personal project log. Views are my own and summarize Microsoft's public documentation as of October 29, 2026; features in preview may change. Not an official Microsoft publication. Check Microsoft Learn for the latest.</footer>
+<footer>Information-only personal project log. Views are my own and summarize Microsoft's public documentation as of November 5, 2026; features in preview may change. Not an official Microsoft publication. Check Microsoft Learn for the latest.</footer>
 
         </div>
       </section>
