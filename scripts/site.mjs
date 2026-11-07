@@ -672,7 +672,7 @@ function journalIndex(catalog) {
   const filters = [
     `<button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All</button>`,
     `<button class="filter-chip" type="button" data-filter="public-release" aria-pressed="false">Public releases</button>`,
-    `<button class="filter-chip" type="button" data-filter="info-only" aria-pressed="false">Info-only active work</button>`,
+    `<button class="filter-chip" type="button" data-filter="info-only" aria-pressed="false">Info-only entries</button>`,
     ...categories.map((category) => `<button class="filter-chip" type="button" data-filter="${escapeHtml(category)}" aria-pressed="false">${escapeHtml(category)}</button>`)
   ].join("\n");
   const body = `    <section class="hero shell" aria-labelledby="journal-title">
@@ -688,7 +688,7 @@ function journalIndex(catalog) {
       <aside class="evidence-card" aria-label="Journal evidence policy">
         <span class="label">Evidence policy</span>
         <strong>Two clearly separated lanes.</strong>
-        <p>Public releases cite public proof. Info-only active work has no source or download links and discloses that source and operational materials are not published.</p>
+        <p>Public releases cite public proof. Info-only entries provide no source or download links and disclose what is not published.</p>
       </aside>
     </section>
     <section class="section" id="releases" aria-labelledby="releases-title">
@@ -711,10 +711,10 @@ function journalIndex(catalog) {
         </section>
         <section class="journal-lane" id="infoLane" aria-labelledby="info-lane-title">
           <div class="lane-heading">
-            <h3 id="info-lane-title">Info-only active work</h3>
+            <h3 id="info-lane-title">Info-only entries</h3>
             <p>Owner-reviewed descriptions ordered by the disclosed as-of date, not by code, deployment, adoption, or results.</p>
           </div>
-          <p class="info-boundary"><strong>Information-only.</strong> Source and operational materials are not published. These private active builds are not Microsoft products or officially supported offerings.</p>
+          <p class="info-boundary"><strong>Information-only.</strong> Source and operational materials are not published. These descriptions do not establish deployment, adoption, or results.</p>
           <div class="release-grid">${infoOnly.map(releaseCard).join("\n")}</div>
         </section>
         <div class="no-results" id="noResults" hidden>No journal entries match that filter. Try another category or clear the search.</div>
@@ -905,20 +905,21 @@ ${(release.publicLinks || []).map((link) => `<a class="button" href="${escapeHtm
 
 function infoOnlyPage(release) {
   const canonical = `${SITE_URL}/journal/${release.slug}/`;
+  const isDocumentationSummary = release.maturity === "Information-only / Public documentation summary";
   const body = `    <article>
       <header class="hero shell">
         <div>
-          <p class="eyebrow">Info-only active work &middot; ${escapeHtml(release.category)}</p>
+          <p class="eyebrow">${isDocumentationSummary ? "Info-only journal entry" : "Info-only active work"} &middot; ${escapeHtml(release.category)}</p>
           <h1>${escapeHtml(release.title)}</h1>
           <p class="hero-copy">${escapeHtml(release.summary)}</p>
           <div class="meta-row">
             <span>Information-only</span>
-            <span>Private active build</span>
+            <span>${isDocumentationSummary ? "Public documentation summary" : "Private active build"}</span>
             <span>Owner-reviewed as of ${release.ownerReviewedAsOf}</span>
             <span>Not a code, adoption, or activity signal</span>
           </div>
           <div class="hero-actions">
-            <a class="button button-primary" href="/journal/#infoLane">Browse info-only work</a>
+            <a class="button button-primary" href="/journal/#infoLane">Browse ${isDocumentationSummary ? "info-only entries" : "info-only work"}</a>
           </div>
         </div>
         <aside class="evidence-card">
@@ -930,12 +931,12 @@ function infoOnlyPage(release) {
       <section class="section" aria-labelledby="${release.slug}-flow">
         <div class="shell">
           <div class="section-heading">
-            <div><span class="section-kicker">Original state to designed value</span><h2 id="${release.slug}-flow">What the private build is exploring.</h2></div>
+            <div><span class="section-kicker">Original state to designed value</span><h2 id="${release.slug}-flow">${isDocumentationSummary ? "What this entry explores." : "What the private build is exploring."}</h2></div>
             <p>Customer-neutral framing only. This description does not establish deployment, adoption, or results.</p>
           </div>
           <div class="flow-grid">
             <article class="panel"><span class="label">01 / Original state</span><h3>Before the pattern</h3><p>${escapeHtml(release.originalState)}</p></article>
-            <article class="panel"><span class="label">02 / Being built</span><h3>What is being delivered</h3><p>${escapeHtml(release.delivered)}</p></article>
+            <article class="panel"><span class="label">${isDocumentationSummary ? "02 / Description" : "02 / Being built"}</span><h3>${isDocumentationSummary ? "What this entry covers" : "What is being delivered"}</h3><p>${escapeHtml(release.delivered)}</p></article>
             <article class="panel"><span class="label">03 / Designed value</span><h3>Value hypothesis</h3><p>${escapeHtml(release.outcome)}</p></article>
           </div>
           <div class="callout"><p><strong>Evidence label:</strong> ${escapeHtml(release.valueEvidence.statement)}</p></div>
@@ -974,7 +975,7 @@ ${release.foundationNote ? `<div class="callout"><p><strong>Foundation attributi
     </article>`;
 
   return page({
-    title: `${release.title} | Info-only active work`,
+    title: `${release.title} | ${isDocumentationSummary ? "Info-only journal entry" : "Info-only active work"}`,
     description: release.summary,
     canonical,
     type: "article",
@@ -1084,6 +1085,16 @@ const harnessPost = {
   date: "2026-10-29"
 };
 
+const tenantMigrationPost = {
+  slug: "copilot-tenant-to-tenant-migration",
+  title: "Moving Copilot between tenants after an acquisition",
+  headline: "Moving Copilot between tenants after an acquisition: what moves, what doesn't",
+  summary: "Copilot moves in three pieces: people and content, memory, and agents. Here's what moves and what doesn't.",
+  dek: "There's no single \"move Copilot\" button. Copilot moves in three pieces, and each piece has its own path.",
+  category: "Microsoft 365 Copilot",
+  date: "2026-11-05"
+};
+
 const salesSuitePost = {
   slug: "sales-agent-cowork-sales-suite",
   title: "Sales agent, Dynamics 365 in Cowork, and the Sales Extension Suite: how the pieces fit",
@@ -1113,6 +1124,40 @@ function harnessPage(article) {
         <div>
           <p class="eyebrow">Builder's Log · Copilot Studio · October 2026</p>
           <h1>${harnessPost.title}</h1>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell article-body">
+${article}
+        </div>
+      </section>
+    </article>`
+  });
+}
+
+function tenantMigrationPage(article) {
+  const canonical = `${SITE_URL}/blog/${tenantMigrationPost.slug}/`;
+  return page({
+    title: tenantMigrationPost.headline,
+    description: tenantMigrationPost.dek,
+    canonical,
+    type: "article",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: tenantMigrationPost.headline,
+      description: tenantMigrationPost.dek,
+      datePublished: tenantMigrationPost.date,
+      dateModified: tenantMigrationPost.date,
+      author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
+      mainEntityOfPage: canonical
+    },
+    body: `    <article>
+      <header class="hero shell">
+        <div>
+          <p class="eyebrow">Builder's Log · ${tenantMigrationPost.category} · November 2026</p>
+          <h1>${tenantMigrationPost.headline}</h1>
+          <p class="hero-copy">${tenantMigrationPost.dek}</p>
         </div>
       </header>
       <section class="section">
@@ -1190,6 +1235,11 @@ function blogIndex(catalog) {
     {
       ...harnessPost,
       href: `/blog/${harnessPost.slug}/`,
+      lane: "builders-log"
+    },
+    {
+      ...tenantMigrationPost,
+      href: `/blog/${tenantMigrationPost.slug}/`,
       lane: "builders-log"
     },
     {
@@ -1597,7 +1647,7 @@ export function sitemapEntries(catalog) {
   return [
     { url: `${SITE_URL}/`, updated: catalog.updated, priority: "1.0" },
     { url: `${SITE_URL}/journal/`, updated: catalog.updated, priority: "0.9" },
-    { url: `${SITE_URL}/blog/`, updated: softwareFactoryPost.date, priority: "0.8" },
+    { url: `${SITE_URL}/blog/`, updated: tenantMigrationPost.date, priority: "0.8" },
     { url: `${SITE_URL}/subscribe/`, updated: catalog.updated, priority: "0.5" },
     { url: `${SITE_URL}/tools/tokenomics/`, updated: "2026-10-29", priority: "0.7" },
     { url: `${SITE_URL}/tools/`, updated: "2026-10-29", priority: "0.7" },
@@ -1623,6 +1673,11 @@ export function sitemapEntries(catalog) {
     {
       url: `${SITE_URL}/blog/${harnessPost.slug}/`,
       updated: harnessPost.date,
+      priority: "0.7"
+    },
+    {
+      url: `${SITE_URL}/blog/${tenantMigrationPost.slug}/`,
+      updated: tenantMigrationPost.date,
       priority: "0.7"
     },
     {
@@ -1698,6 +1753,7 @@ export async function loadCatalog() {
 export async function buildOutputs() {
   const catalog = await loadCatalog();
   const harnessArticle = await readFile(resolve(ROOT, "content", "copilot-studio-harnesses.html"), "utf8");
+  const tenantMigrationArticle = await readFile(resolve(ROOT, "content", "copilot-tenant-to-tenant-migration.html"), "utf8");
   const salesSuiteArticle = await readFile(resolve(ROOT, "content", "sales-agent-cowork-sales-suite.html"), "utf8");
   const tools = JSON.parse(await readFile(resolve(ROOT, "tools", "tools.json"), "utf8"));
   const outputs = new Map([
@@ -1722,6 +1778,7 @@ export async function buildOutputs() {
     [`blog/${softwareFactoryPost.slug}/index.html`, softwareFactoryPage()],
     [`blog/${tokenomicsPlannerPost.slug}/index.html`, tokenomicsPlannerPage()],
     [`blog/${harnessPost.slug}/index.html`, harnessPage(harnessArticle)],
+    [`blog/${tenantMigrationPost.slug}/index.html`, tenantMigrationPage(tenantMigrationArticle)],
     [`blog/${salesSuitePost.slug}/index.html`, salesSuitePage(salesSuiteArticle)],
     ["subscribe/index.html", subscribePage(catalog)],
     ["feeds/rss.xml", rss(catalog)],

@@ -1,7 +1,7 @@
 {
   "version": 6,
   "title": "Bill Whalen solution journal manifest",
-  "updated": "2026-10-21",
+  "updated": "2026-11-05",
   "policy": {
     "publicationModes": [
       "public-release",
@@ -23,9 +23,9 @@
       "live MCP endpoint"
     ]
   },
-  "recordCount": 21,
+  "recordCount": 22,
   "releaseCount": 10,
-  "infoOnlyCount": 11,
+  "infoOnlyCount": 12,
   "releases": [
     {
       "slug": "d365-administrator-suite",
@@ -1031,6 +1031,78 @@
     }
   ],
   "infoOnly": [
+    {
+      "slug": "copilot-tenant-to-tenant-migration",
+      "publicationMode": "info-only",
+      "featuredOnHome": false,
+      "title": "Moving Copilot between tenants after an acquisition",
+      "summary": "Copilot moves in three pieces: people and content, memory, and agents. Here's what moves and what doesn't.",
+      "category": "Microsoft 365 Copilot",
+      "tags": [
+        "Tenant migration",
+        "Copilot memory",
+        "Copilot Studio",
+        "Agent Builder"
+      ],
+      "status": "approved",
+      "maturity": "Information-only / Public documentation summary",
+      "ownerReviewedAsOf": "2026-11-05",
+      "originalState": "Acquisition planning can treat Copilot as one movable product even though user content, personalization, and agent assets follow separate processes.",
+      "delivered": "A customer-neutral reading guide distinguishes the migration paths for Microsoft 365 content, Copilot memory and personalization, Copilot Studio agents, and other Power Platform assets.",
+      "outcome": "The design is intended to help teams plan identity, content, agent, and governance work as separate migration steps.",
+      "valueEvidence": {
+        "level": "designed",
+        "statement": "Designed value: a concise map of distinct tenant migration paths and the decisions that remain for people to plan."
+      },
+      "capabilities": [
+        "Separates user content moves from identity creation and mapping.",
+        "Distinguishes Copilot memory and personalization from mailbox content.",
+        "Summarizes solution-based migration of Copilot Studio agents and required follow-up.",
+        "Highlights rebuild and governance work beyond Microsoft 365 migration tools."
+      ],
+      "architecture": [
+        {
+          "label": "People and content",
+          "detail": "Create target identities, map users, and plan Microsoft 365 content migration."
+        },
+        {
+          "label": "Memory and instructions",
+          "detail": "Set expectations for personalization that has no documented migration path."
+        },
+        {
+          "label": "Agents and flows",
+          "detail": "Move supported solutions, reconnect dependencies, and rebuild unsupported assets."
+        },
+        {
+          "label": "Govern and pilot",
+          "detail": "Restore target-tenant controls, test representative users, and cut over in waves."
+        }
+      ],
+      "guardrails": [
+        "Identity creation and content migration remain separate steps.",
+        "No migration path is claimed for Copilot memory or personalization.",
+        "The description contains no customer-specific tenant details or private migration links."
+      ],
+      "limitations": [
+        "Information-only summary of public documentation; no customer migration or tenant configuration is described.",
+        "This personal project log is not a Microsoft product or officially supported offering.",
+        "Migration requirements and preview features may change; verify current guidance before planning."
+      ],
+      "publicBoundary": "Information-only. Source and operational materials are not published.",
+      "visual": {
+        "type": "inline-svg",
+        "alt": "People and content, memory and instructions, agents and flows, then governance and a pilot form separate migration stages.",
+        "nodes": [
+          "People and content",
+          "Memory and instructions",
+          "Agents and flows",
+          "Govern and pilot"
+        ]
+      },
+      "urls": {
+        "showcase": "https://billwhalenmsft.github.io/journal/copilot-tenant-to-tenant-migration/"
+      }
+    },
     {
       "slug": "atomic-blueprint",
       "publicationMode": "info-only",
