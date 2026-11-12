@@ -1,0 +1,88 @@
+<p>I opened my demo tenant this week and found four new plugins already switched on in Copilot Cowork: Microsoft Dataverse, Business apps (preview), Sales and Service. In a demo tenant, that's fun. In a production tenant, each one is a decision about who can read and change customer records, and through what. Here's what each plugin does, how an admin turns it on, and what changes for your CRM, whether that's Dynamics 365, Salesforce or both.</p>
+
+<h2>The short version</h2>
+<ul>
+<li><strong>Cowork can now work directly with your CRM records</strong>: reading accounts, opportunities and cases, and proposing updates that a person approves.</li>
+<li><strong>Nothing turns on by itself.</strong> An admin installs each plugin in the Microsoft 365 admin center under <strong>Agents &gt; Tools &gt; Plugins</strong>, for everyone or for specific groups.</li>
+<li><strong>Your existing security model still decides what each person sees and can change.</strong> Review it before you switch anything on, not after.</li>
+<li><strong>Salesforce customers get a different setup.</strong> The Dynamics 365 plugins read and update Dynamics 365. For Salesforce, the documented routes today are CRM-agnostic sales skills, the Salesforce Copilot connector for search, and the Sales agent.</li>
+</ul>
+
+<h2>The four plugins, in plain terms</h2>
+<div class="table-wrap" role="region" aria-label="The four Cowork plugins" tabindex="0">
+<table class="article-table">
+<thead><tr><th scope="col">Plugin</th><th scope="col">What it's for</th><th scope="col">Status</th><th scope="col">Who it's for</th></tr></thead>
+<tbody>
+<tr><th scope="row">Dynamics 365 Sales (and Sales for Cowork)</th><td>Account and deal preparation, deal risk, competitive strategy and follow-ups, using Dynamics 365 Sales data plus email and meetings. "Sales for Cowork" provides the CRM-agnostic sales skills for people without a Dynamics 365 Sales license.</td><td>Generally available</td><td>Sellers and sales managers</td></tr>
+<tr><th scope="row">Dynamics 365 Customer Service (shown as "Service")</th><td>Case triage and summaries, suggested next steps, drafted resolutions and escalation handoff</td><td>Generally available</td><td>Service agents and supervisors</td></tr>
+<tr><th scope="row">Business apps (preview)</th><td>Natural-language questions and actions across Dynamics 365 and Power Apps data: find records and relationships, create follow-up tasks, reassign ownership, escalate cases</td><td>Preview</td><td>Anyone working across several business apps</td></tr>
+<tr><th scope="row">Microsoft Dataverse (preview)</th><td>Building on Dataverse: designing tables and relationships, loading sample data, setting up security roles and building apps</td><td>Preview; building and publishing apps requires the Frontier program</td><td>Makers and IT, ideally in a sandbox</td></tr>
+</tbody>
+</table>
+</div>
+<p>The first three are for <strong>doing work</strong> in business data. The Dataverse plugin is for <strong>building</strong> on it. Microsoft's guidance is to try the Dataverse plugin in a sandbox or developer environment rather than production.</p>
+
+<h2>How to turn them on</h2>
+<ol>
+<li><strong>Confirm Cowork access.</strong> Users need Microsoft 365 Copilot, and Cowork access is granted through a spending policy in the Microsoft 365 admin center. That policy is an access control as well as a budget.</li>
+<li><strong>Install the plugin.</strong> In the Microsoft 365 admin center, go to <strong>Agents &gt; Tools &gt; Plugins</strong>, select the plugin, choose <strong>Installed for</strong> (All users, or Specific users and groups), then install. Start with a pilot group.</li>
+<li><strong>Check the app-side prerequisites.</strong>
+<ul>
+<li><em>Dynamics 365 Sales:</em> users need a Sales Enterprise or Sales Premium license; the Dataverse MCP server must be enabled for the environment; and the Copilot Cowork setting must be on in the Sales agent admin settings.</li>
+<li><em>Business apps and Dataverse:</em> each user connects the plugin in <strong>Cowork &gt; Customize</strong> and signs in. For Dataverse, they also enter the environment URL.</li>
+</ul>
+</li>
+<li><strong>Users switch them on in Cowork &gt; Customize.</strong> On first use, Cowork asks which Dynamics 365 environment to use and remembers the choice.</li>
+</ol>
+
+<h2>The impact: what actually changes</h2>
+<p><strong>1. Cowork moves from reading about the customer to updating the customer record.</strong><br>
+These plugins can propose real changes: update an opportunity, create a task, reassign an account, escalate a case. Microsoft's design is that Cowork proposes and a person approves each change. That gate is real, but it shifts the risk to the approver. A rushed "approve" is now a CRM update.</p>
+<p><strong>2. Security roles become your AI policy.</strong><br>
+Cowork only sees and does what the signed-in person can already see and do. That's good news if your roles are tight. If you've been relying on "nobody would ever find that view", an assistant that can search across tables and environments will find it. Review roles, field security and environment access first.</p>
+<p><strong>3. Turning a plugin on is an access decision, not a feature flag.</strong><br>
+When an admin deploys a plugin to the whole organization, users can't remove it, although they can switch it off in their own conversations. Use security groups, start with a pilot, and decide who owns approvals for each plugin.</p>
+<p><strong>4. It runs on consumption.</strong><br>
+Cowork usage draws Copilot Credits. Set spending limits and alerts before broad rollout, and remember that someone in a Cowork spending policy has access no matter how small the limit is.</p>
+<p><strong>5. More environments mean more ways to pick the wrong one.</strong><br>
+Cowork can see every environment you can, including test and production. Teach people to check which environment Cowork is using, and keep makers on the Dataverse plugin in sandboxes.</p>
+<p><strong>6. Two kinds of CRM get two different experiences.</strong></p>
+<div class="table-wrap" role="region" aria-label="Dynamics 365 and Salesforce comparison" tabindex="0">
+<table class="article-table">
+<thead><tr><th scope="col">Capability</th><th scope="col">Dynamics 365</th><th scope="col">Salesforce</th></tr></thead>
+<tbody>
+<tr><th scope="row">Read records in Cowork</th><td>Sales, Customer Service and Business apps plugins</td><td>Salesforce Copilot connector indexes accounts, contacts, opportunities, leads and cases for Copilot search</td></tr>
+<tr><th scope="row">Propose updates to records</th><td>Yes, approved by a person</td><td>Not through the Dynamics 365 plugins. The Sales agent for Salesforce supports CRM updates through its own connector.</td></tr>
+<tr><th scope="row">Sales skills (prep, risk, strategy)</th><td>Full Dynamics 365 Sales plugin</td><td>CRM-agnostic "Sales for Cowork" skills, using connected and uploaded information</td></tr>
+<tr><th scope="row">Permissions</th><td>Dynamics 365 security roles</td><td>Salesforce record-level sharing. Watch one setting: if you opt in to index fields restricted by field-level security, the connector doesn't enforce field-level security when showing results.</td></tr>
+</tbody>
+</table>
+</div>
+<p>If you run both, decide which system is the record of truth for each process before people start asking Cowork to update anything.</p>
+
+<h2>A sensible first 30 days</h2>
+<ol>
+<li>Pick one team and one process, such as account prep for quarterly business reviews or case triage for one queue.</li>
+<li>Review security roles and environments for that team.</li>
+<li>Set a Cowork spending policy and alerts for the pilot group.</li>
+<li>Install only the plugin that process needs, for that group only.</li>
+<li>Agree who approves CRM changes, and spot-check approved changes weekly.</li>
+<li>Expand only after the first process works and the audit trail looks right.</li>
+</ol>
+
+<h2>The bottom line</h2>
+<p>These plugins turn Cowork from a smart reader of email and documents into a colleague that can work in your CRM. Microsoft has built in the right safeguards: admin-controlled installs, your existing permissions, and a person approving every change. Your job is to make sure the permissions and the approvers are ready before you switch them on.</p>
+
+<p><strong>Sources (Microsoft):</strong></p>
+<ul>
+<li>Turning Copilot into a system of action with Dynamics 365 Sales and Service plug-ins in Copilot Cowork (Dynamics 365 blog, June 16, 2026): <a href="https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/06/16/copilot-cowork-dynamics-365/">https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2026/06/16/copilot-cowork-dynamics-365/</a></li>
+<li>Use sales skills in Copilot Cowork (Learn): <a href="https://learn.microsoft.com/en-us/dynamics365/sales/use-copilot-cowork-sales-skills">https://learn.microsoft.com/en-us/dynamics365/sales/use-copilot-cowork-sales-skills</a></li>
+<li>Use the Business Applications in Work IQ plugin in Cowork (preview) (Learn): <a href="https://learn.microsoft.com/en-us/copilot/cowork/cowork-work-iq">https://learn.microsoft.com/en-us/copilot/cowork/cowork-work-iq</a></li>
+<li>Use the Microsoft Dataverse plugin in Cowork (preview) (Learn): <a href="https://learn.microsoft.com/en-us/copilot/cowork/dataverse-plugin">https://learn.microsoft.com/en-us/copilot/cowork/dataverse-plugin</a></li>
+<li>Manage plugins for Copilot Cowork (Learn): <a href="https://learn.microsoft.com/en-us/copilot/cowork/cowork-manage-plugins">https://learn.microsoft.com/en-us/copilot/cowork/cowork-manage-plugins</a></li>
+<li>Manage Copilot Cowork for your organization (Learn): <a href="https://learn.microsoft.com/en-us/copilot/cowork/cowork-admin-governance">https://learn.microsoft.com/en-us/copilot/cowork/cowork-admin-governance</a></li>
+<li>Salesforce CRM connector overview (Learn): <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/salesforce-crm-overview">https://learn.microsoft.com/en-us/microsoft-365/copilot/connectors/salesforce-crm-overview</a></li>
+<li>Sales agent deployment guide for Salesforce CRM customers (Learn): <a href="https://learn.microsoft.com/en-us/microsoft-sales-copilot/deploy-sales-app-sf">https://learn.microsoft.com/en-us/microsoft-sales-copilot/deploy-sales-app-sf</a></li>
+</ul>
+
+<footer><em>Information-only personal project log. Views are my own and summarize public Microsoft documentation as of November 11, 2026. Preview features can change.</em></footer>

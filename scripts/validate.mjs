@@ -538,6 +538,11 @@ check(
   "Tenant migration must appear as an information-only Journal entry."
 );
 check(
+  journalHtml.includes('aria-labelledby="journal-writing-title"')
+    && journalHtml.includes('href="/blog/cowork-crm-plugins/"'),
+  "Journal must link to the Cowork CRM Builder's Log post."
+);
+check(
   outputs.get("subscribe/index.html").includes(`all ${catalog.expectedPublicReleaseCount} approved public releases`),
   "Subscription page must state the exact approved release count."
 );
@@ -549,7 +554,7 @@ check(
   "Journal directory set must exactly match approved public and info-only records."
 );
 const blogDirectories = await generatedPageDirectories("blog");
-const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner", "copilot-studio-harnesses", "copilot-tenant-to-tenant-migration", "sales-agent-cowork-sales-suite"].sort();
+const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner", "copilot-studio-harnesses", "copilot-tenant-to-tenant-migration", "cowork-crm-plugins", "sales-agent-cowork-sales-suite"].sort();
 check(
   JSON.stringify(blogDirectories) === JSON.stringify(expectedBlogDirectories),
   "Blog directory set must exactly match public-release companion articles and Builder's Log posts."
@@ -572,7 +577,7 @@ for (const [relativePath, html] of diskHtml) {
 }
 pass("Full-width responsive hero titles scoped to all blog posts checked.");
 const blogLanes = [...blogHtml.matchAll(/class="release-card blog-card" data-lane="([^"]+)" data-date="([^"]+)"/g)];
-check(blogLanes.length === ordered.length + 5, "Blog cards must include every public article, all four Builder's Log posts, and the Sales Extension Suite post.");
+check(blogLanes.length === ordered.length + 6, "Blog cards must include every public article, all five Builder's Log posts, and the Sales Extension Suite post.");
 check(
   blogLanes.every((item, index) => index === 0 || blogLanes[index - 1][2] >= item[2]),
   "Blog cards must be ordered newest first."
@@ -583,7 +588,23 @@ check(blogHtml.includes("Accelerators, prototypes, and build notes. Personal pro
 const softwareFactoryHtml = outputs.get("blog/software-factory-pattern/index.html");
 const harnessHtml = outputs.get("blog/copilot-studio-harnesses/index.html");
 const tenantMigrationHtml = outputs.get("blog/copilot-tenant-to-tenant-migration/index.html");
+const coworkCrmHtml = outputs.get("blog/cowork-crm-plugins/index.html");
 const salesSuiteHtml = outputs.get("blog/sales-agent-cowork-sales-suite/index.html");
+check(coworkCrmHtml.includes("<h1>Your CRM just joined Cowork: what to turn on, and what it changes</h1>")
+  && coworkCrmHtml.includes("Builder's Log · Copilot Cowork and business apps · Draft for review, November 2026"),
+  "Cowork CRM post must retain its requested title and draft label.");
+check(blogHtml.includes('data-lane="builders-log" data-date="2026-11-11"')
+  && blogHtml.includes('href="/blog/cowork-crm-plugins/"'),
+  "Cowork CRM post must appear in the Builder's Log blog index.");
+const coworkCrmTables = [...coworkCrmHtml.matchAll(/<div class="table-wrap" role="region" aria-label="[^"]+" tabindex="0">\s*<table class="article-table">([\s\S]*?)<\/table>\s*<\/div>/g)];
+check(coworkCrmTables.length === 2
+  && coworkCrmTables.every((table) => table[1].includes('<th scope="col">') && table[1].includes('<th scope="row">')),
+  "Cowork CRM post must have two keyboard-scrollable tables with row and column headers.");
+check((coworkCrmHtml.match(/<h2>/g) || []).length === 6
+  && (coworkCrmHtml.match(/<a href="https:\/\/(?:www\.microsoft\.com|learn\.microsoft\.com)\//g) || []).length === 8
+  && !/<img\b/i.test(coworkCrmHtml)
+  && coworkCrmHtml.includes("Information-only personal project log. Views are my own and summarize public Microsoft documentation as of November 11, 2026. Preview features can change."),
+  "Cowork CRM post must retain its sections, eight Microsoft sources, and information-only boundary without screenshots.");
 check(harnessHtml.includes("<h1>The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses</h1>"), "Harness article must use the exact headline.");
 check(harnessHtml.indexOf("Naming update (Oct 28)") < harnessHtml.indexOf("The short version"), "Naming update must precede the short version.");
 check((harnessHtml.match(/<div class="card">/g) || []).length === 3, "Harness article must retain all three harness cards.");
@@ -804,6 +825,7 @@ check(!rssXml.includes("software-factory-pattern"), "Builder's Log post must not
 check(!rssXml.includes("tokenomics-planner"), "Tokenomics planner must not appear in RSS.");
 check(!rssXml.includes("copilot-studio-harnesses"), "Harness Builder's Log must not appear in RSS.");
 check(!rssXml.includes("copilot-tenant-to-tenant-migration"), "Tenant migration Builder's Log post must not appear in RSS.");
+check(!rssXml.includes("cowork-crm-plugins"), "Cowork CRM Builder's Log post must not appear in RSS.");
 check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(atomXml), "Atom must declare UTF-8 XML.");
 check(/<feed xmlns="http:\/\/www.w3.org\/2005\/Atom">/.test(atomXml), "Atom root is missing.");
 check((atomXml.match(/<entry>/g) || []).length === ordered.length, "Atom entry count must match public releases.");
@@ -811,6 +833,7 @@ check(!atomXml.includes("software-factory-pattern"), "Builder's Log post must no
 check(!atomXml.includes("tokenomics-planner"), "Tokenomics planner must not appear in Atom.");
 check(!atomXml.includes("copilot-studio-harnesses"), "Harness Builder's Log must not appear in Atom.");
 check(!atomXml.includes("copilot-tenant-to-tenant-migration"), "Tenant migration Builder's Log post must not appear in Atom.");
+check(!atomXml.includes("cowork-crm-plugins"), "Cowork CRM Builder's Log post must not appear in Atom.");
 
 const sitemapXml = outputs.get("sitemap.xml");
 const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
@@ -831,6 +854,9 @@ check(harnessSitemapEntry?.includes("<lastmod>2026-10-29</lastmod>"), "Harness p
 const tenantMigrationSitemapEntry = sitemapXml.split("<url>")
   .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/copilot-tenant-to-tenant-migration/</loc>`));
 check(tenantMigrationSitemapEntry?.includes("<lastmod>2026-11-05</lastmod>"), "Tenant migration post must appear in the sitemap with the requested date.");
+const coworkCrmSitemapEntry = sitemapXml.split("<url>")
+  .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/cowork-crm-plugins/</loc>`));
+check(coworkCrmSitemapEntry?.includes("<lastmod>2026-11-11</lastmod>"), "Cowork CRM post must appear in the sitemap.");
 const salesSuiteSitemapEntry = sitemapXml.split("<url>")
   .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/sales-agent-cowork-sales-suite/</loc>`));
 check(salesSuiteSitemapEntry?.includes("<lastmod>2026-10-30</lastmod>"), "Sales Extension Suite post must have the requested sitemap lastmod.");

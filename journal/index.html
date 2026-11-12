@@ -953,12 +953,25 @@
         <div class="no-results" id="noResults" hidden>No journal entries match that filter. Try another category or clear the search.</div>
       </div>
     </section>
+    <section class="section" aria-labelledby="journal-writing-title">
+      <div class="shell">
+        <div class="section-heading"><div><span class="section-kicker">Recent writing</span><h2 id="journal-writing-title">Builder's Log.</h2></div></div>
+        <div class="release-grid"><article class="release-card blog-card" data-lane="builders-log" data-date="2026-11-11">
+  <span class="status status-info">Builder's Log</span>
+  <p class="eyebrow">Copilot Cowork and business apps</p>
+  <h2>Your CRM just joined Cowork: what to turn on, and what it changes</h2>
+  <p>A guide to Cowork&#39;s CRM plugins, how to enable them, and the decisions they bring for Dynamics 365 and Salesforce.</p>
+  <p class="activity-line"><time datetime="2026-11-11">2026-11-11</time></p>
+  <div class="card-actions"><a class="button button-primary button-small" href="/blog/cowork-crm-plugins/">Read post</a></div>
+</article></div>
+      </div>
+    </section>
   </main>
   <footer data-site-footer></footer>
   <script src="/assets/site-chrome.js"></script>
   <script>
 
-  const cards = [...document.querySelectorAll(".release-card")];
+  const cards = [...document.querySelectorAll("#releases .release-card")];
   const filters = [...document.querySelectorAll(".filter-chip")];
   const search = document.getElementById("releaseSearch");
   const count = document.getElementById("releaseCount");
