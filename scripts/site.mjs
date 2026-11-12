@@ -719,10 +719,16 @@ function journalIndex(catalog) {
         </section>
         <div class="no-results" id="noResults" hidden>No journal entries match that filter. Try another category or clear the search.</div>
       </div>
+    </section>
+    <section class="section" aria-labelledby="journal-writing-title">
+      <div class="shell">
+        <div class="section-heading"><div><span class="section-kicker">Recent writing</span><h2 id="journal-writing-title">Builder's Log.</h2></div></div>
+        <div class="release-grid">${blogCard({ ...coworkCrmPost, href: `/blog/${coworkCrmPost.slug}/`, lane: "builders-log" })}</div>
+      </div>
     </section>`;
 
   const script = `
-  const cards = [...document.querySelectorAll(".release-card")];
+  const cards = [...document.querySelectorAll("#releases .release-card")];
   const filters = [...document.querySelectorAll(".filter-chip")];
   const search = document.getElementById("releaseSearch");
   const count = document.getElementById("releaseCount");
@@ -1103,6 +1109,46 @@ const salesSuitePost = {
   date: "2026-10-30"
 };
 
+const coworkCrmPost = {
+  slug: "cowork-crm-plugins",
+  title: "Your CRM just joined Cowork: what to turn on, and what it changes",
+  summary: "A guide to Cowork's CRM plugins, how to enable them, and the decisions they bring for Dynamics 365 and Salesforce.",
+  category: "Copilot Cowork and business apps",
+  date: "2026-11-11"
+};
+
+function coworkCrmPage(article) {
+  const canonical = `${SITE_URL}/blog/${coworkCrmPost.slug}/`;
+  return page({
+    title: coworkCrmPost.title,
+    description: coworkCrmPost.summary,
+    canonical,
+    type: "article",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: coworkCrmPost.title,
+      datePublished: coworkCrmPost.date,
+      dateModified: coworkCrmPost.date,
+      author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
+      mainEntityOfPage: canonical
+    },
+    body: `    <article>
+      <header class="hero shell">
+        <div>
+          <p class="eyebrow">Builder's Log · Copilot Cowork and business apps · Draft for review, November 2026</p>
+          <h1>${coworkCrmPost.title}</h1>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell article-body">
+${article}
+        </div>
+      </section>
+    </article>`
+  });
+}
+
 function harnessPage(article) {
   const canonical = `${SITE_URL}/blog/${harnessPost.slug}/`;
   return page({
@@ -1240,6 +1286,11 @@ function blogIndex(catalog) {
     {
       ...tenantMigrationPost,
       href: `/blog/${tenantMigrationPost.slug}/`,
+      lane: "builders-log"
+    },
+    {
+      ...coworkCrmPost,
+      href: `/blog/${coworkCrmPost.slug}/`,
       lane: "builders-log"
     },
     {
@@ -1647,7 +1698,7 @@ export function sitemapEntries(catalog) {
   return [
     { url: `${SITE_URL}/`, updated: catalog.updated, priority: "1.0" },
     { url: `${SITE_URL}/journal/`, updated: catalog.updated, priority: "0.9" },
-    { url: `${SITE_URL}/blog/`, updated: tenantMigrationPost.date, priority: "0.8" },
+    { url: `${SITE_URL}/blog/`, updated: coworkCrmPost.date, priority: "0.8" },
     { url: `${SITE_URL}/subscribe/`, updated: catalog.updated, priority: "0.5" },
     { url: `${SITE_URL}/tools/tokenomics/`, updated: "2026-10-29", priority: "0.7" },
     { url: `${SITE_URL}/tools/`, updated: "2026-10-29", priority: "0.7" },
@@ -1678,6 +1729,11 @@ export function sitemapEntries(catalog) {
     {
       url: `${SITE_URL}/blog/${tenantMigrationPost.slug}/`,
       updated: tenantMigrationPost.date,
+      priority: "0.7"
+    },
+    {
+      url: `${SITE_URL}/blog/${coworkCrmPost.slug}/`,
+      updated: coworkCrmPost.date,
       priority: "0.7"
     },
     {
@@ -1754,6 +1810,7 @@ export async function buildOutputs() {
   const catalog = await loadCatalog();
   const harnessArticle = await readFile(resolve(ROOT, "content", "copilot-studio-harnesses.html"), "utf8");
   const tenantMigrationArticle = await readFile(resolve(ROOT, "content", "copilot-tenant-to-tenant-migration.html"), "utf8");
+  const coworkCrmArticle = await readFile(resolve(ROOT, "content", "cowork-crm-plugins.html"), "utf8");
   const salesSuiteArticle = await readFile(resolve(ROOT, "content", "sales-agent-cowork-sales-suite.html"), "utf8");
   const tools = JSON.parse(await readFile(resolve(ROOT, "tools", "tools.json"), "utf8"));
   const outputs = new Map([
@@ -1779,6 +1836,7 @@ export async function buildOutputs() {
     [`blog/${tokenomicsPlannerPost.slug}/index.html`, tokenomicsPlannerPage()],
     [`blog/${harnessPost.slug}/index.html`, harnessPage(harnessArticle)],
     [`blog/${tenantMigrationPost.slug}/index.html`, tenantMigrationPage(tenantMigrationArticle)],
+    [`blog/${coworkCrmPost.slug}/index.html`, coworkCrmPage(coworkCrmArticle)],
     [`blog/${salesSuitePost.slug}/index.html`, salesSuitePage(salesSuiteArticle)],
     ["subscribe/index.html", subscribePage(catalog)],
     ["feeds/rss.xml", rss(catalog)],
