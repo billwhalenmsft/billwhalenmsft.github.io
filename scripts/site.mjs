@@ -1083,6 +1083,14 @@ const tokenomicsPlannerPost = {
   date: "2026-10-27"
 };
 
+const costEstimatorPost = {
+  slug: "which-ai-cost-estimator",
+  title: "Which AI cost estimator do I open?",
+  summary: "Five official estimators answer five different bills. Here is how I pick, and how I check the estimate once things are live.",
+  category: "AI cost planning",
+  date: "2026-11-13"
+};
+
 const harnessPost = {
   slug: "copilot-studio-harnesses",
   title: "The Microsoft Copilot harness (formerly GitHub Copilot): a plain-English guide to Copilot Studio harnesses",
@@ -1279,6 +1287,11 @@ function blogIndex(catalog) {
       lane: "builders-log"
     },
     {
+      ...costEstimatorPost,
+      href: `/blog/${costEstimatorPost.slug}/`,
+      lane: "builders-log"
+    },
+    {
       ...harnessPost,
       href: `/blog/${harnessPost.slug}/`,
       lane: "builders-log"
@@ -1437,6 +1450,74 @@ function softwareFactoryPage() {
       description: softwareFactoryPost.summary,
       datePublished: softwareFactoryPost.date,
       dateModified: softwareFactoryPost.date,
+      author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
+      mainEntityOfPage: canonical
+    },
+    body
+  });
+}
+
+function costEstimatorPage() {
+  const canonical = `${SITE_URL}/blog/${costEstimatorPost.slug}/`;
+  const body = `    <article>
+      <header class="hero shell">
+        <div>
+          <p class="status status-info">Builder's Log</p>
+          <h1>${costEstimatorPost.title}</h1>
+          <p class="hero-copy">${costEstimatorPost.summary}</p>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell article-body">
+          <p>Every AI conversation I have ends at the same question: what will this cost to run? Microsoft and GitHub already publish good estimators. The mistake I see is opening the wrong one, or treating its answer as a quote.</p>
+          <h2>Pick by the bill</h2>
+          <div class="table-wrap estimator-table-wrap">
+            <table class="article-table estimator-table">
+              <thead><tr><th>If you're pricing…</th><th>Open this</th><th>Unit</th><th>See actual use in</th></tr></thead>
+              <tbody>
+                <tr><td data-label="If you're pricing…">Cowork, Work IQ API, Copilot Code, Teams Phone Agent, apps on Copilot Managed Runtime</td><td data-label="Open this"><a href="https://nptnlopcost-ppe-h8b6dtchacfcgqhk.b02.azurefd.net/#/estimator" target="_blank" rel="noopener">Copilot Credit Estimator</a> · <a href="https://learn.microsoft.com/en-us/copilot/plan/usage-based-billing-overview-copilot-credits" target="_blank" rel="noopener">Microsoft Learn</a></td><td data-label="Unit">Copilot Credits</td><td data-label="See actual use in">Microsoft 365 admin center → Copilot → Cost management; in Cowork, type /cost</td></tr>
+                <tr><td data-label="If you're pricing…">Copilot Studio and Dynamics 365 agents</td><td data-label="Open this"><a href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener">Copilot Studio agent usage estimator</a></td><td data-label="Unit">Copilot Credits ($0.01 each, list)</td><td data-label="See actual use in">Power Platform admin center → Licensing</td></tr>
+                <tr><td data-label="If you're pricing…">Security Copilot</td><td data-label="Open this"><a href="https://securitycopilot.microsoft.com/calculator" target="_blank" rel="noopener">Security Copilot SCU calculator</a></td><td data-label="Unit">Security Compute Units</td><td data-label="See actual use in">Security Copilot usage dashboard</td></tr>
+                <tr><td data-label="If you're pricing…">GitHub Copilot, Actions, Codespaces</td><td data-label="Open this"><a href="https://github.com/pricing/calculator" target="_blank" rel="noopener">GitHub pricing calculator</a></td><td data-label="Unit">Seats, minutes, AI credits</td><td data-label="See actual use in">GitHub billing settings</td></tr>
+                <tr><td data-label="If you're pricing…">Foundry models, Azure OpenAI</td><td data-label="Open this"><a href="https://azure.microsoft.com/en-us/pricing/calculator/" target="_blank" rel="noopener">Azure pricing calculator</a></td><td data-label="Unit">Azure meters</td><td data-label="See actual use in">Azure Cost Management + Billing</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h2>Try one in 60 seconds</h2>
+          <p>Open the <a href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener">Copilot Studio agent usage estimator</a>. Pick <em>Copilot Studio</em>, add one employee-facing agent, enter 500 users and 10 chats a user a month, and read the monthly total on the right. Then change how many users have Microsoft 365 Copilot and watch the total drop.</p>
+          <h2>Three habits that keep estimates honest</h2>
+          <ol>
+            <li><strong>Estimate a range, not a number.</strong> Run low, likely and high volumes. Microsoft's own guidance is to add a 10–20% buffer.</li>
+            <li><strong>Licenses change the math.</strong> Microsoft 365 Copilot licenses cover some Copilot Studio use for licensed employees, and Microsoft 365 E5/E7 includes a monthly SCU allowance for Security Copilot. Ask who's already licensed before you size.</li>
+            <li><strong>Measure after go-live.</strong> In Cowork, type /cost to see what a task used. Admins see the full picture in Microsoft 365 admin center → Copilot → Cost management, Power Platform admin center → Licensing, the Security Copilot usage dashboard, or GitHub billing settings. Re-size every quarter.</li>
+          </ol>
+          <h2>Fine print</h2>
+          <p>These are estimators, not price quotes. Rates and packaging change, so check each linked page before you share a number with anyone. Facts checked 2026-11-13. Personal project notes; views are my own.</p>
+        </div>
+      </section>
+    </article>`;
+
+  return page({
+    title: `${costEstimatorPost.title} | Builder's Log`,
+    description: costEstimatorPost.summary,
+    canonical,
+    type: "article",
+    styles: `.estimator-table { min-width: 0; }
+@media (max-width: 46rem) {
+  .estimator-table, .estimator-table tbody, .estimator-table tr { display: block; width: 100%; }
+  .estimator-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  .estimator-table tr { margin-bottom: 1rem; border: 1px solid var(--cp-border); border-radius: 0.625rem; overflow: hidden; }
+  .estimator-table td { display: grid; grid-template-columns: minmax(7rem, 35%) minmax(0, 1fr); gap: 0.5rem; border: 0; border-bottom: 1px solid var(--cp-border); }
+  .estimator-table td:last-child { border-bottom: 0; }
+  .estimator-table td::before { content: attr(data-label); color: var(--cp-text); font-weight: 700; }
+}`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: costEstimatorPost.title,
+      description: costEstimatorPost.summary,
+      datePublished: costEstimatorPost.date,
+      dateModified: costEstimatorPost.date,
       author: { "@type": "Person", name: "Bill Whalen", url: SITE_URL },
       mainEntityOfPage: canonical
     },
@@ -1722,6 +1803,11 @@ export function sitemapEntries(catalog) {
       priority: "0.7"
     },
     {
+      url: `${SITE_URL}/blog/${costEstimatorPost.slug}/`,
+      updated: costEstimatorPost.date,
+      priority: "0.7"
+    },
+    {
       url: `${SITE_URL}/blog/${harnessPost.slug}/`,
       updated: harnessPost.date,
       priority: "0.7"
@@ -1766,6 +1852,54 @@ function toolsPage(tools) {
           <ul class="tag-list">${tool.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join("")}</ul>
           <div class="card-actions">${tool.links.map((link, index) => `<a class="button${index === 0 ? " button-primary" : ""} button-small" href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("")}</div>
         </article>`).join("\n");
+  const estimators = [
+    {
+      title: "Copilot Credit Estimator",
+      description: "Cowork, Work IQ API, Copilot Code, Teams Phone Agent and apps on Copilot Managed Runtime, in Copilot Credits. If the tool link ever stops working, the Learn page has the current one.",
+      tags: ["Microsoft", "Copilot Credits", "Cowork"],
+      links: [
+        ["Open tool", "https://nptnlopcost-ppe-h8b6dtchacfcgqhk.b02.azurefd.net/#/estimator"],
+        ["Microsoft Learn", "https://learn.microsoft.com/en-us/copilot/plan/usage-based-billing-overview-copilot-credits"]
+      ]
+    },
+    {
+      title: "Copilot Studio agent usage estimator",
+      description: "Copilot Studio and Dynamics 365 agents. Counts what Microsoft 365 Copilot licenses already cover, and exports a PDF.",
+      tags: ["Microsoft", "Copilot Studio", "Dynamics 365"],
+      links: [
+        ["Open tool", "https://microsoft.github.io/copilot-studio-estimator/"],
+        ["Read the guide", "https://learn.microsoft.com/en-us/microsoft-copilot-studio/agent-usage-estimator"]
+      ]
+    },
+    {
+      title: "Security Copilot SCU calculator",
+      description: "Peak SCUs per hour and provisioned/overage options from your user counts. Sign-in required.",
+      tags: ["Microsoft", "Security", "SCUs"],
+      links: [
+        ["Open tool", "https://securitycopilot.microsoft.com/calculator"],
+        ["FAQ", "https://learn.microsoft.com/en-us/copilot/security/faq-security-copilot"],
+        ["Pricing", "https://www.microsoft.com/en-us/security/pricing/microsoft-security-copilot/"]
+      ]
+    },
+    {
+      title: "GitHub pricing calculator",
+      description: "Seats, GitHub Copilot plans and AI credits, Actions, Codespaces and Advanced Security. Exports CSV.",
+      tags: ["GitHub", "Developer"],
+      links: [["Open tool", "https://github.com/pricing/calculator"]]
+    },
+    {
+      title: "Azure pricing calculator",
+      description: "Foundry models, Azure OpenAI and every other Azure meter. Sign in to see your agreement pricing.",
+      tags: ["Microsoft", "Azure"],
+      links: [["Open tool", "https://azure.microsoft.com/en-us/pricing/calculator/"]]
+    }
+  ];
+  const estimatorCards = estimators.map((estimator) => `<article class="release-card official-estimator-card">
+          <h3>${estimator.title}</h3>
+          <p>${estimator.description}</p>
+          <ul class="tag-list">${estimator.tags.map((tag) => `<li>${tag}</li>`).join("")}</ul>
+          <div class="card-actions">${estimator.links.map(([label, url], index) => `<a class="button${index === 0 ? " button-primary" : ""} button-small" href="${url}" target="_blank" rel="noopener">${label} →</a>`).join("")}</div>
+        </article>`).join("\n");
   return page({
     title: "Tools | Bill Whalen",
     description: "Live tools and public releases you can use, with write-ups, guides and public source.",
@@ -1773,9 +1907,10 @@ function toolsPage(tools) {
     styles: `${blogComponentsCss}
 .tools-hero { padding-block: 3rem 2rem; }
 .tools-hero h1 { max-width: none; font-size: clamp(2rem, 4vw, 3.25rem); }
-.tool-card { min-width: 0; }
-.tool-card h2 { font-size: 1.65rem; }
-.tool-card .card-actions { margin-top: auto; }`,
+.tool-card, .official-estimator-card { min-width: 0; }
+.tool-card h2, .tool-card h3 { font-size: 1.65rem; }
+.official-estimator-card h3 { font-size: 1.65rem; }
+.tool-card .card-actions, .official-estimator-card .card-actions { margin-top: auto; }`,
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
@@ -1798,6 +1933,16 @@ function toolsPage(tools) {
     </header>
     <section class="section" aria-label="Available tools">
       <div class="shell release-grid">${cards}</div>
+    </section>`
+      + `\n    <section class="section" aria-labelledby="official-estimators-title">
+      <div class="shell">
+        <div class="section-heading">
+          <div><span class="section-kicker">Official tools</span><h2 id="official-estimators-title">Official cost estimators</h2></div>
+          <p>Not mine. These are the official Microsoft and GitHub estimators I open before every AI cost conversation. Pick by the bill you're trying to predict. They give estimates, not quotes.</p>
+        </div>
+        <div class="release-grid">${estimatorCards}</div>
+        <p class="meta-row">Need a low / likely / high range with the reason behind every number? Use my <a href="/tools/tokenomics/">Tokenomics planner</a>. Facts checked 2026-11-13.</p>
+      </div>
     </section>`
   });
 }
@@ -1834,6 +1979,7 @@ export async function buildOutputs() {
     ["blog/index.html", blogIndex(catalog)],
     [`blog/${softwareFactoryPost.slug}/index.html`, softwareFactoryPage()],
     [`blog/${tokenomicsPlannerPost.slug}/index.html`, tokenomicsPlannerPage()],
+    [`blog/${costEstimatorPost.slug}/index.html`, costEstimatorPage()],
     [`blog/${harnessPost.slug}/index.html`, harnessPage(harnessArticle)],
     [`blog/${tenantMigrationPost.slug}/index.html`, tenantMigrationPage(tenantMigrationArticle)],
     [`blog/${coworkCrmPost.slug}/index.html`, coworkCrmPage(coworkCrmArticle)],
