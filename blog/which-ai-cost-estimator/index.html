@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" data-brand="atomic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Five official estimators answer five different bills. Here is how I pick, and how I check the estimate once things are live.">
+  <meta name="author" content="Bill Whalen">
+  <meta name="theme-color" content="#0057B8">
+  <link rel="canonical" href="https://billwhalenmsft.github.io/blog/which-ai-cost-estimator/">
+  <link rel="alternate" type="application/rss+xml" title="Bill Whalen solution journal RSS" href="https://billwhalenmsft.github.io/feeds/rss.xml">
+  <link rel="alternate" type="application/atom+xml" title="Bill Whalen solution journal Atom" href="https://billwhalenmsft.github.io/feeds/atom.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Which AI cost estimator do I open? | Builder&#39;s Log">
+  <meta property="og:description" content="Five official estimators answer five different bills. Here is how I pick, and how I check the estimate once things are live.">
+  <meta property="og:url" content="https://billwhalenmsft.github.io/blog/which-ai-cost-estimator/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Which AI cost estimator do I open? | Builder&#39;s Log">
+  <meta name="twitter:description" content="Five official estimators answer five different bills. Here is how I pick, and how I check the estimate once things are live.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M10 12h18c9 0 14 4 14 11 0 5-3 8-7 10 6 1 10 5 10 11 0 8-6 12-16 12H10V12Zm10 9v8h8c3 0 5-1 5-4s-2-4-5-4h-8Zm0 17v9h9c4 0 6-1 6-4 0-4-2-5-6-5h-9Z' fill='currentColor'/%3E%3C/svg%3E">
+  <title>Which AI cost estimator do I open? | Builder&#39;s Log</title>
+  <script src="/assets/site-theme.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Which AI cost estimator do I open?",
+      "description": "Five official estimators answer five different bills. Here is how I pick, and how I check the estimate once things are live.",
+      "datePublished": "2026-11-13",
+      "dateModified": "2026-11-13",
+      "author": {
+        "@type": "Person",
+        "name": "Bill Whalen",
+        "url": "https://billwhalenmsft.github.io"
+      },
+      "mainEntityOfPage": "https://billwhalenmsft.github.io/blog/which-ai-cost-estimator/"
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+    html[data-brand="atomic"] {
+      color-scheme: light;
+      --cp-bg: #FFFFFF;
+      --cp-bg-elevated: #FFFFFF;
+      --cp-surface: #FFFFFF;
+      --cp-surface-soft: #EAF3FF;
+      --cp-border: #B9CAE0;
+      --cp-border-strong: #0057B8;
+      --cp-text: #142D4E;
+      --cp-text-muted: #003B7A;
+      --cp-text-soft: #142D4E;
+      --cp-accent: #0057B8;
+      --cp-accent-hover: #003B7A;
+      --cp-accent-soft: #EAF3FF;
+      --cp-accent-fg: #FFFFFF;
+      --cp-link: #003B7A;
+      --cp-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.14);
+      --cp-overlay: rgba(20, 45, 78, 0.48);
+      --cp-panel: #FFFFFF;
+      --cp-panel-strong: #FFFFFF;
+      --cp-sheen: #FFFFFF;
+      --cp-highlight: #EAF3FF;
+      --cp-grid: rgba(185, 202, 224, 0.42);
+    }
+    html[data-brand="atomic"][data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #07182C;
+      --cp-bg-elevated: #0A1E36;
+      --cp-surface: #0D2745;
+      --cp-surface-soft: #122F52;
+      --cp-border: #365D85;
+      --cp-border-strong: #78B4F8;
+      --cp-text: #F5F9FF;
+      --cp-text-muted: #B9D8FA;
+      --cp-text-soft: #DFEEFF;
+      --cp-accent: #78B4F8;
+      --cp-accent-hover: #A8D2FF;
+      --cp-accent-soft: #122F52;
+      --cp-accent-fg: #07182C;
+      --cp-link: #A8D2FF;
+      --cp-shadow: 0 0 2px rgba(120, 180, 248, 0.24), 0 1px 2px rgba(0, 0, 0, 0.3);
+      --cp-overlay: rgba(2, 12, 24, 0.78);
+      --cp-panel: #0D2745;
+      --cp-panel-strong: #0D2745;
+      --cp-sheen: #0D2745;
+      --cp-highlight: #173B64;
+      --cp-grid: rgba(54, 93, 133, 0.24);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    body {
+      min-width: 0;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      text-rendering: optimizeLegibility;
+    }
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(to right, var(--cp-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--cp-grid) 1px, transparent 1px);
+      background-size: 5rem 5rem;
+      content: "";
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    a { color: var(--cp-link); }
+    button, input { font: inherit; }
+    button, a { -webkit-tap-highlight-color: var(--cp-accent-soft); }
+    button { color: inherit; }
+    svg { display: block; max-width: 100%; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.08; letter-spacing: -0.035em; }
+    h1 { max-width: 15ch; font-size: clamp(2.75rem, 8vw, 5.5rem); }
+    h2 { font-size: clamp(1.85rem, 4vw, 3rem); }
+    h3 { font-size: 1.15rem; }
+    .shell { width: min(100% - 2rem, 77.5rem); margin-inline: auto; }
+    .skip-link {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 50;
+      padding: 0.65rem 0.85rem;
+      border-radius: 0.625rem;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font-weight: 800;
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    :focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-panel-strong);
+    }
+    .nav {
+      display: flex;
+      min-height: 5.5rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--cp-text);
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 2.55rem;
+      height: 2.55rem;
+      place-items: center;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-accent);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+    .brand-copy { display: grid; color: var(--cp-text); line-height: 1.1; }
+    .brand-copy small {
+      margin-top: 0.28rem;
+      color: var(--cp-text-muted);
+      font-size: 0.61rem;
+      font-weight: 700;
+      letter-spacing: 0.17em;
+    }
+    .nav-links, .footer-links, .hero-actions, .card-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+    .nav-links a, .footer-links a {
+      color: var(--cp-text-muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .nav-links a:hover, .footer-links a:hover { color: var(--cp-accent); }
+    .icon-button {
+      display: grid;
+      width: 2.75rem;
+      height: 2.75rem;
+      place-items: center;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      cursor: pointer;
+    }
+    .icon-button:hover { border-color: var(--cp-border-strong); color: var(--cp-accent); }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
+      align-items: center;
+      gap: clamp(2rem, 6vw, 5rem);
+      padding-block: clamp(4.5rem, 9vw, 7rem);
+    }
+    .hero-copy { max-width: 46rem; color: var(--cp-text-muted); font-size: clamp(1rem, 2.4vw, 1.22rem); }
+    .eyebrow, .section-kicker, .label {
+      color: var(--cp-accent);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .button {
+      display: inline-flex;
+      min-height: 2.75rem;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 0.95rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font-weight: 750;
+      text-decoration: none;
+    }
+    .button:hover { border-color: var(--cp-border-strong); }
+    .button-primary { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .button-primary:hover { background: var(--cp-accent-hover); }
+    .button-small { min-height: 2.75rem; padding: 0.48rem 0.72rem; font-size: 0.82rem; }
+    .evidence-card, .panel, .release-card {
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-shadow);
+    }
+    .evidence-card { padding: 1.5rem; }
+    .evidence-card strong { display: block; margin: 0.5rem 0; font-size: 1.25rem; }
+    .evidence-card p { margin-bottom: 0; color: var(--cp-text-muted); }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.7rem;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .status::before {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--cp-success);
+      content: "";
+    }
+    .status-info::before { background: var(--cp-warning); }
+    .section { padding-block: clamp(4rem, 8vw, 6.5rem); border-top: 1px solid var(--cp-border); }
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.65fr);
+      align-items: end;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .section-heading p { margin-bottom: 0; color: var(--cp-text-muted); }
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .filter-chip {
+      min-height: 2.75rem;
+      padding: 0.5rem 0.8rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface);
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .filter-chip[aria-pressed="true"] { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .search {
+      width: min(20rem, 100%);
+      min-height: 2.75rem;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+    }
+    .release-grid, .detail-grid, .flow-grid, .split-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .release-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .release-card {
+      display: flex;
+      min-height: 24rem;
+      flex-direction: column;
+      padding: 1.3rem;
+    }
+    .release-card p { color: var(--cp-text-muted); }
+    .release-card .card-actions { margin-top: auto; padding-top: 1rem; }
+    .tag-list, .plain-list, .source-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1rem; }
+    .tag-list li {
+      padding: 0.3rem 0.55rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .flow-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { min-width: 0; padding: clamp(1.25rem, 3vw, 2rem); overflow-wrap: anywhere; }
+    .panel p:last-child, .panel ul:last-child { margin-bottom: 0; }
+    .panel p, .plain-list, .source-list { color: var(--cp-text-muted); }
+    .plain-list li, .source-list li { position: relative; padding: 0.65rem 0 0.65rem 1.1rem; border-bottom: 1px solid var(--cp-border); }
+    .plain-list li:last-child, .source-list li:last-child { border-bottom: 0; }
+    .plain-list li::before, .source-list li::before {
+      position: absolute;
+      top: 1.28rem;
+      left: 0;
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 50%;
+      background: var(--cp-accent);
+      content: "";
+    }
+    .source-list small { display: block; margin-top: 0.25rem; color: var(--cp-text-muted); }
+    .detail-grid { grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.65fr); }
+    .split-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .architecture {
+      padding: clamp(1rem, 3vw, 2rem);
+      overflow: hidden;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface-soft);
+    }
+    .architecture svg { width: 100%; height: auto; color: var(--cp-text); }
+    .architecture .node { fill: var(--cp-surface); stroke: var(--cp-border-strong); }
+    .architecture .arrow { stroke: var(--cp-accent); }
+    .architecture text { fill: var(--cp-text); font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+    .architecture .node-index { fill: var(--cp-accent); font-family: Consolas, "Courier New", Courier, monospace; font-weight: 800; }
+    .architecture-notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+    .architecture-note { padding: 1rem; border: 1px solid var(--cp-border); border-radius: 0.625rem; background: var(--cp-surface); }
+    .architecture-note p { margin: 0.35rem 0 0; color: var(--cp-text-muted); font-size: 0.88rem; }
+    .callout {
+      margin: 1.5rem 0;
+      padding: 1rem 1.2rem;
+      border-left: 3px solid var(--cp-accent);
+      background: var(--cp-accent-soft);
+    }
+    .callout p:last-child { margin-bottom: 0; }
+    .article-body { width: min(100%, 52rem); }
+    .article-body > p { color: var(--cp-text-muted); font-size: 1.05rem; }
+    .article-body h2 { margin-top: 3rem; }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      margin: 1rem 0 1.5rem;
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.76rem;
+    }
+    .activity-line {
+      margin: 0 0 1rem;
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.76rem;
+    }
+    .result-count { margin: -0.5rem 0 1rem; color: var(--cp-text-muted); font-size: 0.82rem; }
+    .journal-lane + .journal-lane { margin-top: 3rem; }
+    .lane-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .lane-heading h3 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+    .lane-heading p { max-width: 40rem; margin: 0; color: var(--cp-text-muted); font-size: 0.88rem; }
+    .info-boundary {
+      margin: 0 0 1rem;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--cp-warning);
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+    }
+    .no-results { padding: 2rem; border: 1px dashed var(--cp-border-strong); border-radius: 16px; text-align: center; }
+    .site-footer { padding-block: 2rem; border-top: 1px solid var(--cp-border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    .footer-inner p { max-width: 48rem; margin: 0; color: var(--cp-text-muted); font-size: 0.8rem; }
+    @media (max-width: 62rem) {
+      .release-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero, .detail-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 46rem) {
+      html { scroll-padding-top: 5rem; }
+      .shell { width: min(100% - 1.25rem, 77.5rem); }
+      .nav { min-height: 4.5rem; flex-wrap: wrap; padding-block: 0.5rem; }
+      .nav-links { order: 3; width: 100%; justify-content: space-between; padding-bottom: 0.5rem; }
+      .section-heading, .flow-grid, .release-grid, .split-grid, .architecture-notes { grid-template-columns: 1fr; }
+      .filter-bar { align-items: stretch; flex-direction: column; }
+      .lane-heading { align-items: flex-start; flex-direction: column; }
+      .search { width: 100%; }
+      .release-card { min-height: auto; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 23rem) {
+      .brand-copy small { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+    .hero.shell { grid-template-columns: minmax(0, 1fr); }
+    .hero.shell h1 {
+      max-width: none;
+      font-size: clamp(2.25rem, 4.5vw, 4rem);
+      line-height: 1.08;
+      text-wrap: balance;
+    }
+    .article-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) min(100%, 72ch) minmax(0, 1fr);
+      width: min(100% - 2rem, 77.5rem);
+    }
+    .article-body > * { grid-column: 2; min-width: 0; }
+    .article-body > .table-wrap, .article-body > .cards { grid-column: 1 / -1; }
+    @media (max-width: 46rem) { .article-body { width: min(100% - 1.25rem, 77.5rem); } }
+    .theme-control { color: var(--cp-text-muted); font-size: 0.82rem; font-weight: 700; }
+    .theme-select {
+      min-height: 2.75rem;
+      margin-left: 0.35rem;
+      padding: 0.4rem 0.65rem;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font: inherit;
+    }
+    .theme-select:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 3px; }
+    .table-wrap { max-width: 100%; margin: 1rem 0; overflow-x: auto; }
+    .article-table { width: 100%; min-width: 38rem; border-collapse: collapse; }
+    .article-table th, .article-table td {
+      padding: 0.65rem 0.75rem;
+      border: 1px solid var(--cp-border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .article-table th { background: var(--cp-surface-soft); color: var(--cp-text); }
+    .article-table td { color: var(--cp-text-muted); }
+    .article-body a { overflow-wrap: anywhere; }
+    .article-body .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin-block: 1rem; }
+    .article-body .card, .article-body .tldr { padding: 1rem; border: 1px solid var(--cp-border); border-radius: 0.75rem; background: var(--cp-surface); }
+    .article-body .card p { margin: 0.75rem 0 0; }
+    .article-body .naming-update { border-left: 4px solid var(--cp-warning); }
+    .article-body .src, .article-body footer { color: var(--cp-text-muted); font-size: 0.9rem; }
+    .estimator-table { min-width: 0; }
+    @media (max-width: 46rem) {
+      .estimator-table, .estimator-table tbody, .estimator-table tr { display: block; width: 100%; }
+      .estimator-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+      .estimator-table tr { margin-bottom: 1rem; border: 1px solid var(--cp-border); border-radius: 0.625rem; overflow: hidden; }
+      .estimator-table td { display: grid; grid-template-columns: minmax(7rem, 35%) minmax(0, 1fr); gap: 0.5rem; border: 0; border-bottom: 1px solid var(--cp-border); }
+      .estimator-table td:last-child { border-bottom: 0; }
+      .estimator-table td::before { content: attr(data-label); color: var(--cp-text); font-weight: 700; }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/site-chrome.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header data-site-header></header>
+  <main id="main">
+    <article>
+      <header class="hero shell">
+        <div>
+          <p class="status status-info">Builder's Log</p>
+          <h1>Which AI cost estimator do I open?</h1>
+          <p class="hero-copy">Five official estimators answer five different bills. Here is how I pick, and how I check the estimate once things are live.</p>
+        </div>
+      </header>
+      <section class="section">
+        <div class="shell article-body">
+          <p>Every AI conversation I have ends at the same question: what will this cost to run? Microsoft and GitHub already publish good estimators. The mistake I see is opening the wrong one, or treating its answer as a quote.</p>
+          <h2>Pick by the bill</h2>
+          <div class="table-wrap estimator-table-wrap">
+            <table class="article-table estimator-table">
+              <thead><tr><th>If you're pricing…</th><th>Open this</th><th>Unit</th><th>See actual use in</th></tr></thead>
+              <tbody>
+                <tr><td data-label="If you're pricing…">Cowork, Work IQ API, Copilot Code, Teams Phone Agent, apps on Copilot Managed Runtime</td><td data-label="Open this"><a href="https://nptnlopcost-ppe-h8b6dtchacfcgqhk.b02.azurefd.net/#/estimator" target="_blank" rel="noopener">Copilot Credit Estimator</a> · <a href="https://learn.microsoft.com/en-us/copilot/plan/usage-based-billing-overview-copilot-credits" target="_blank" rel="noopener">Microsoft Learn</a></td><td data-label="Unit">Copilot Credits</td><td data-label="See actual use in">Microsoft 365 admin center → Copilot → Cost management; in Cowork, type /cost</td></tr>
+                <tr><td data-label="If you're pricing…">Copilot Studio and Dynamics 365 agents</td><td data-label="Open this"><a href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener">Copilot Studio agent usage estimator</a></td><td data-label="Unit">Copilot Credits ($0.01 each, list)</td><td data-label="See actual use in">Power Platform admin center → Licensing</td></tr>
+                <tr><td data-label="If you're pricing…">Security Copilot</td><td data-label="Open this"><a href="https://securitycopilot.microsoft.com/calculator" target="_blank" rel="noopener">Security Copilot SCU calculator</a></td><td data-label="Unit">Security Compute Units</td><td data-label="See actual use in">Security Copilot usage dashboard</td></tr>
+                <tr><td data-label="If you're pricing…">GitHub Copilot, Actions, Codespaces</td><td data-label="Open this"><a href="https://github.com/pricing/calculator" target="_blank" rel="noopener">GitHub pricing calculator</a></td><td data-label="Unit">Seats, minutes, AI credits</td><td data-label="See actual use in">GitHub billing settings</td></tr>
+                <tr><td data-label="If you're pricing…">Foundry models, Azure OpenAI</td><td data-label="Open this"><a href="https://azure.microsoft.com/en-us/pricing/calculator/" target="_blank" rel="noopener">Azure pricing calculator</a></td><td data-label="Unit">Azure meters</td><td data-label="See actual use in">Azure Cost Management + Billing</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h2>Try one in 60 seconds</h2>
+          <p>Open the <a href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener">Copilot Studio agent usage estimator</a>. Pick <em>Copilot Studio</em>, add one employee-facing agent, enter 500 users and 10 chats a user a month, and read the monthly total on the right. Then change how many users have Microsoft 365 Copilot and watch the total drop.</p>
+          <h2>Three habits that keep estimates honest</h2>
+          <ol>
+            <li><strong>Estimate a range, not a number.</strong> Run low, likely and high volumes. Microsoft's own guidance is to add a 10–20% buffer.</li>
+            <li><strong>Licenses change the math.</strong> Microsoft 365 Copilot licenses cover some Copilot Studio use for licensed employees, and Microsoft 365 E5/E7 includes a monthly SCU allowance for Security Copilot. Ask who's already licensed before you size.</li>
+            <li><strong>Measure after go-live.</strong> In Cowork, type /cost to see what a task used. Admins see the full picture in Microsoft 365 admin center → Copilot → Cost management, Power Platform admin center → Licensing, the Security Copilot usage dashboard, or GitHub billing settings. Re-size every quarter.</li>
+          </ol>
+          <h2>Fine print</h2>
+          <p>These are estimators, not price quotes. Rates and packaging change, so check each linked page before you share a number with anyone. Facts checked 2026-11-13. Personal project notes; views are my own.</p>
+        </div>
+      </section>
+    </article>
+  </main>
+  <footer data-site-footer></footer>
+  <script src="/assets/site-chrome.js"></script>
+  
+</body>
+</html>
