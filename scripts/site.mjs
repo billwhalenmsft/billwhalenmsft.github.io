@@ -1894,7 +1894,7 @@ function toolsPage(tools) {
       links: [["Open tool", "https://azure.microsoft.com/en-us/pricing/calculator/"]]
     }
   ];
-  const estimatorCards = estimators.map((estimator) => `<article class="release-card tool-card">
+  const estimatorCards = estimators.map((estimator) => `<article class="release-card official-estimator-card">
           <h3>${estimator.title}</h3>
           <p>${estimator.description}</p>
           <ul class="tag-list">${estimator.tags.map((tag) => `<li>${tag}</li>`).join("")}</ul>
@@ -1907,9 +1907,10 @@ function toolsPage(tools) {
     styles: `${blogComponentsCss}
 .tools-hero { padding-block: 3rem 2rem; }
 .tools-hero h1 { max-width: none; font-size: clamp(2rem, 4vw, 3.25rem); }
-.tool-card { min-width: 0; }
+.tool-card, .official-estimator-card { min-width: 0; }
 .tool-card h2, .tool-card h3 { font-size: 1.65rem; }
-.tool-card .card-actions { margin-top: auto; }`,
+.official-estimator-card h3 { font-size: 1.65rem; }
+.tool-card .card-actions, .official-estimator-card .card-actions { margin-top: auto; }`,
     jsonLd: {
       "@context": "https://schema.org",
       "@type": "CollectionPage",

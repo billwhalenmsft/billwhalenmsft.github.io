@@ -554,7 +554,7 @@ check(
   "Journal directory set must exactly match approved public and info-only records."
 );
 const blogDirectories = await generatedPageDirectories("blog");
-const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner", "copilot-studio-harnesses", "copilot-tenant-to-tenant-migration", "cowork-crm-plugins", "sales-agent-cowork-sales-suite"].sort();
+const expectedBlogDirectories = [...ordered.map((release) => release.article.slug), "software-factory-pattern", "tokenomics-planner", "which-ai-cost-estimator", "copilot-studio-harnesses", "copilot-tenant-to-tenant-migration", "cowork-crm-plugins", "sales-agent-cowork-sales-suite"].sort();
 check(
   JSON.stringify(blogDirectories) === JSON.stringify(expectedBlogDirectories),
   "Blog directory set must exactly match public-release companion articles and Builder's Log posts."
@@ -577,7 +577,7 @@ for (const [relativePath, html] of diskHtml) {
 }
 pass("Full-width responsive hero titles scoped to all blog posts checked.");
 const blogLanes = [...blogHtml.matchAll(/class="release-card blog-card" data-lane="([^"]+)" data-date="([^"]+)"/g)];
-check(blogLanes.length === ordered.length + 6, "Blog cards must include every public article, all five Builder's Log posts, and the Sales Extension Suite post.");
+check(blogLanes.length === ordered.length + 7, "Blog cards must include every public article, all six Builder's Log posts, and the Sales Extension Suite post.");
 check(
   blogLanes.every((item, index) => index === 0 || blogLanes[index - 1][2] >= item[2]),
   "Blog cards must be ordered newest first."
@@ -723,6 +723,26 @@ check(tokenomicsPlannerHtml.includes("Builder's Log &middot; Information-only / 
 check(tokenomicsPlannerHtml.includes("Owner-reviewed as of <time datetime=\"2026-10-27\">2026-10-27</time>"), "Tokenomics planner must show its as-of date.");
 check(blogHtml.includes("Size an AI agent&#39;s monthly running cost as an honest low / likely / high range, pick the right harness, and weigh cost against business value. Unconfirmed rates are flagged on purpose, with the reason why."), "Tokenomics planner card summary is missing.");
 check(blogHtml.includes('<p class="eyebrow">Decision support</p>'), "Tokenomics planner card category is missing.");
+const costEstimatorHtml = outputs.get("blog/which-ai-cost-estimator/index.html");
+check(blogHtml.includes("Which AI cost estimator do I open?"), "Cost estimator post must appear in the blog index.");
+check(blogHtml.includes("Five official estimators answer five different bills. Here is how I pick, and how I check the estimate once things are live."), "Cost estimator post dek must appear in the blog index.");
+check(blogHtml.includes('<article class="release-card blog-card" data-lane="builders-log" data-date="2026-11-13">'), "Cost estimator post must be in the Builder's Log lane.");
+check(costEstimatorHtml.includes("<h1>Which AI cost estimator do I open?</h1>"), "Cost estimator post title is missing.");
+check(costEstimatorHtml.includes("Facts checked 2026-11-13."), "Cost estimator post must show the facts-checked date.");
+check(costEstimatorHtml.includes('<table class="article-table estimator-table">'), "Cost estimator comparison must use an article table.");
+check(
+  costEstimatorHtml.includes("@media (max-width: 46rem)") && costEstimatorHtml.includes(".estimator-table td::before { content: attr(data-label);"),
+  "Cost estimator table must stack its labeled cells on mobile."
+);
+check(offersSharedTheme(costEstimatorHtml), "Cost estimator post must provide Light, Dark and Auto theme choices.");
+const costEstimatorBody = costEstimatorHtml.match(/<div class="shell article-body">([\s\S]*?)<\/section>/)?.[1] || "";
+const costEstimatorLinks = [...costEstimatorBody.matchAll(/<a href="([^"]+)"/g)].map((match) => match[1]);
+check(costEstimatorLinks.length > 0 && costEstimatorLinks.every((href) => href.startsWith("https://")), "Cost estimator post must have no internal links.");
+check(
+  [...costEstimatorBody.matchAll(/<a\b[^>]*href="https:\/\/[^"]+"[^>]*>/g)]
+    .every((match) => /target="_blank"/.test(match[0]) && /rel="noopener"/.test(match[0])),
+  "External cost estimator links must open safely in a new tab."
+);
 check(tokenomicsPlannerHtml.includes("<h2>⚠️ Read this first: why some numbers are ranges, not answers</h2>"), "Tokenomics planner must highlight its uncertainty callout.");
 check(tokenomicsPlannerHtml.includes('<table class="article-table">'), "Tokenomics planner facts must be rendered as a table.");
 check(offersSharedTheme(tokenomicsPlannerHtml), "Tokenomics planner must provide working Light, Dark, and Auto theme choices.");
@@ -751,6 +771,19 @@ const tools = await readJson("tools/tools.json");
 const toolsHtml = outputs.get("tools/index.html");
 check(tools[0]?.name === "Tokenomics planner" && tools[0]?.status === "Live", "The live planner must be the first tool.");
 check((toolsHtml.match(/class="release-card tool-card"/g) || []).length === tools.length, "Every tool data entry must render a card.");
+const officialEstimatorSection = toolsHtml.match(/<section class="section" aria-labelledby="official-estimators-title">([\s\S]*?)<\/section>/)?.[1] || "";
+check(toolsHtml.includes("<h2 id=\"official-estimators-title\">Official cost estimators</h2>"), "Official cost estimators section heading is missing.");
+check(officialEstimatorSection.includes("Not mine. These are the official Microsoft and GitHub estimators I open before every AI cost conversation. Pick by the bill you're trying to predict. They give estimates, not quotes."), "Official estimator introduction is missing.");
+check((officialEstimatorSection.match(/class="release-card official-estimator-card"/g) || []).length === 5, "Official cost estimators section must contain exactly five cards.");
+check(["Copilot Credit Estimator", "Copilot Studio agent usage estimator", "Security Copilot SCU calculator", "GitHub pricing calculator", "Azure pricing calculator"].every((title) => officialEstimatorSection.includes(`<h3>${title}</h3>`)), "Official estimator cards must include all five requested tools.");
+check(["Microsoft", "GitHub"].every((tag) => officialEstimatorSection.includes(`<li>${tag}</li>`)), "Official estimator cards must include Microsoft and GitHub tags.");
+check(officialEstimatorSection.includes(">Open tool →</a>") && officialEstimatorSection.includes(">Microsoft Learn →</a>"), "Copilot Credit Estimator must have Open tool and Microsoft Learn buttons.");
+check(officialEstimatorSection.includes('href="/tools/tokenomics/">Tokenomics planner</a>') && officialEstimatorSection.includes("Facts checked 2026-11-13."), "Official estimator footer must link the planner and show the facts-checked date.");
+check(
+  [...officialEstimatorSection.matchAll(/<a\b[^>]*href="https:\/\/[^"]+"[^>]*>/g)]
+    .every((match) => /target="_blank"/.test(match[0]) && /rel="noopener"/.test(match[0])),
+  "External official estimator links must open safely in a new tab."
+);
 const salesSuiteTool = tools.find((tool) => tool.name === "Sales Extension Suite for Copilot");
 check(salesSuiteTool?.status === "Public release", "Sales Extension Suite must be listed as a Public release.");
 check(salesSuiteTool?.description === "Optional Cowork plugins that package repeatable sales routines: account briefs, meeting follow-through, deal coaching and team handoffs.", "Sales Extension Suite tool description must match the requested copy.");
@@ -826,6 +859,7 @@ check(!rssXml.includes("tokenomics-planner"), "Tokenomics planner must not appea
 check(!rssXml.includes("copilot-studio-harnesses"), "Harness Builder's Log must not appear in RSS.");
 check(!rssXml.includes("copilot-tenant-to-tenant-migration"), "Tenant migration Builder's Log post must not appear in RSS.");
 check(!rssXml.includes("cowork-crm-plugins"), "Cowork CRM Builder's Log post must not appear in RSS.");
+check(!rssXml.includes("which-ai-cost-estimator"), "Cost estimator Builder's Log post must not appear in RSS.");
 check(/^<\?xml version="1.0" encoding="UTF-8"\?>/.test(atomXml), "Atom must declare UTF-8 XML.");
 check(/<feed xmlns="http:\/\/www.w3.org\/2005\/Atom">/.test(atomXml), "Atom root is missing.");
 check((atomXml.match(/<entry>/g) || []).length === ordered.length, "Atom entry count must match public releases.");
@@ -834,6 +868,7 @@ check(!atomXml.includes("tokenomics-planner"), "Tokenomics planner must not appe
 check(!atomXml.includes("copilot-studio-harnesses"), "Harness Builder's Log must not appear in Atom.");
 check(!atomXml.includes("copilot-tenant-to-tenant-migration"), "Tenant migration Builder's Log post must not appear in Atom.");
 check(!atomXml.includes("cowork-crm-plugins"), "Cowork CRM Builder's Log post must not appear in Atom.");
+check(!atomXml.includes("which-ai-cost-estimator"), "Cost estimator Builder's Log post must not appear in Atom.");
 
 const sitemapXml = outputs.get("sitemap.xml");
 const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
@@ -848,6 +883,9 @@ check(softwareFactorySitemapEntry?.includes("<lastmod>2026-10-24</lastmod>"), "S
 const tokenomicsPlannerSitemapEntry = sitemapXml.split("<url>")
   .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/tokenomics-planner/</loc>`));
 check(tokenomicsPlannerSitemapEntry?.includes("<lastmod>2026-10-27</lastmod>"), "Sitemap must include the tokenomics planner post with the requested lastmod.");
+const costEstimatorSitemapEntry = sitemapXml.split("<url>")
+  .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/which-ai-cost-estimator/</loc>`));
+check(costEstimatorSitemapEntry?.includes("<lastmod>2026-11-13</lastmod>"), "Sitemap must include the cost estimator post with the facts-checked date.");
 const harnessSitemapEntry = sitemapXml.split("<url>")
   .find((entry) => entry.includes(`<loc>${SITE_URL}/blog/copilot-studio-harnesses/</loc>`));
 check(harnessSitemapEntry?.includes("<lastmod>2026-10-29</lastmod>"), "Harness post must have the requested sitemap lastmod.");

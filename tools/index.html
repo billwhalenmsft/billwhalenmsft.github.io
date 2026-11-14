@@ -554,9 +554,10 @@
     .article-body .src, .article-body footer { color: var(--cp-text-muted); font-size: 0.9rem; }
     .tools-hero { padding-block: 3rem 2rem; }
     .tools-hero h1 { max-width: none; font-size: clamp(2rem, 4vw, 3.25rem); }
-    .tool-card { min-width: 0; }
+    .tool-card, .official-estimator-card { min-width: 0; }
     .tool-card h2, .tool-card h3 { font-size: 1.65rem; }
-    .tool-card .card-actions { margin-top: auto; }
+    .official-estimator-card h3 { font-size: 1.65rem; }
+    .tool-card .card-actions, .official-estimator-card .card-actions { margin-top: auto; }
   </style>
   <link rel="stylesheet" href="/assets/site-chrome.css">
 </head>
@@ -626,31 +627,31 @@
           <div><span class="section-kicker">Official tools</span><h2 id="official-estimators-title">Official cost estimators</h2></div>
           <p>Not mine. These are the official Microsoft and GitHub estimators I open before every AI cost conversation. Pick by the bill you're trying to predict. They give estimates, not quotes.</p>
         </div>
-        <div class="release-grid"><article class="release-card tool-card">
+        <div class="release-grid"><article class="release-card official-estimator-card">
           <h3>Copilot Credit Estimator</h3>
           <p>Cowork, Work IQ API, Copilot Code, Teams Phone Agent and apps on Copilot Managed Runtime, in Copilot Credits. If the tool link ever stops working, the Learn page has the current one.</p>
           <ul class="tag-list"><li>Microsoft</li><li>Copilot Credits</li><li>Cowork</li></ul>
           <div class="card-actions"><a class="button button-primary button-small" href="https://nptnlopcost-ppe-h8b6dtchacfcgqhk.b02.azurefd.net/#/estimator" target="_blank" rel="noopener">Open tool →</a><a class="button button-small" href="https://learn.microsoft.com/en-us/copilot/plan/usage-based-billing-overview-copilot-credits" target="_blank" rel="noopener">Microsoft Learn →</a></div>
         </article>
-<article class="release-card tool-card">
+<article class="release-card official-estimator-card">
           <h3>Copilot Studio agent usage estimator</h3>
           <p>Copilot Studio and Dynamics 365 agents. Counts what Microsoft 365 Copilot licenses already cover, and exports a PDF.</p>
           <ul class="tag-list"><li>Microsoft</li><li>Copilot Studio</li><li>Dynamics 365</li></ul>
           <div class="card-actions"><a class="button button-primary button-small" href="https://microsoft.github.io/copilot-studio-estimator/" target="_blank" rel="noopener">Open tool →</a><a class="button button-small" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/agent-usage-estimator" target="_blank" rel="noopener">Read the guide →</a></div>
         </article>
-<article class="release-card tool-card">
+<article class="release-card official-estimator-card">
           <h3>Security Copilot SCU calculator</h3>
           <p>Peak SCUs per hour and provisioned/overage options from your user counts. Sign-in required.</p>
           <ul class="tag-list"><li>Microsoft</li><li>Security</li><li>SCUs</li></ul>
           <div class="card-actions"><a class="button button-primary button-small" href="https://securitycopilot.microsoft.com/calculator" target="_blank" rel="noopener">Open tool →</a><a class="button button-small" href="https://learn.microsoft.com/en-us/copilot/security/faq-security-copilot" target="_blank" rel="noopener">FAQ →</a><a class="button button-small" href="https://www.microsoft.com/en-us/security/pricing/microsoft-security-copilot/" target="_blank" rel="noopener">Pricing →</a></div>
         </article>
-<article class="release-card tool-card">
+<article class="release-card official-estimator-card">
           <h3>GitHub pricing calculator</h3>
           <p>Seats, GitHub Copilot plans and AI credits, Actions, Codespaces and Advanced Security. Exports CSV.</p>
           <ul class="tag-list"><li>GitHub</li><li>Developer</li></ul>
           <div class="card-actions"><a class="button button-primary button-small" href="https://github.com/pricing/calculator" target="_blank" rel="noopener">Open tool →</a></div>
         </article>
-<article class="release-card tool-card">
+<article class="release-card official-estimator-card">
           <h3>Azure pricing calculator</h3>
           <p>Foundry models, Azure OpenAI and every other Azure meter. Sign in to see your agreement pricing.</p>
           <ul class="tag-list"><li>Microsoft</li><li>Azure</li></ul>
