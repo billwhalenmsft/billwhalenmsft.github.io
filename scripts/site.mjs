@@ -1136,7 +1136,7 @@ function coworkCrmPage(article) {
     body: `    <article>
       <header class="hero shell">
         <div>
-          <p class="eyebrow">Builder's Log · Copilot Cowork and business apps · Draft for review, November 2026</p>
+          <p class="eyebrow">Builder's Log · Copilot Cowork and business apps · November 2026</p>
           <h1>${coworkCrmPost.title}</h1>
         </div>
       </header>

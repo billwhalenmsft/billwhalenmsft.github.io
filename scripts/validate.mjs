@@ -591,8 +591,10 @@ const tenantMigrationHtml = outputs.get("blog/copilot-tenant-to-tenant-migration
 const coworkCrmHtml = outputs.get("blog/cowork-crm-plugins/index.html");
 const salesSuiteHtml = outputs.get("blog/sales-agent-cowork-sales-suite/index.html");
 check(coworkCrmHtml.includes("<h1>Your CRM just joined Cowork: what to turn on, and what it changes</h1>")
-  && coworkCrmHtml.includes("Builder's Log · Copilot Cowork and business apps · Draft for review, November 2026"),
-  "Cowork CRM post must retain its requested title and draft label.");
+  && coworkCrmHtml.includes("Builder's Log · Copilot Cowork and business apps · November 2026")
+  && !coworkCrmHtml.includes("Draft for review")
+  && !blogHtml.includes("Draft for review"),
+  "Cowork CRM post and blog card must retain the requested title and publication label.");
 check(blogHtml.includes('data-lane="builders-log" data-date="2026-11-11"')
   && blogHtml.includes('href="/blog/cowork-crm-plugins/"'),
   "Cowork CRM post must appear in the Builder's Log blog index.");
@@ -836,6 +838,10 @@ check(!atomXml.includes("copilot-tenant-to-tenant-migration"), "Tenant migration
 check(!atomXml.includes("cowork-crm-plugins"), "Cowork CRM Builder's Log post must not appear in Atom.");
 
 const sitemapXml = outputs.get("sitemap.xml");
+check(!rssXml.includes("Draft for review")
+  && !atomXml.includes("Draft for review")
+  && !sitemapXml.includes("Draft for review"),
+  "Draft label must not appear in feeds or sitemap.");
 const sitemapUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 const expectedSitemapUrls = sitemapEntries(catalog).map((entry) => entry.url);
 check(
